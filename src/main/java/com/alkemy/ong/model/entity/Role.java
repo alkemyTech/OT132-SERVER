@@ -1,6 +1,7 @@
 package com.alkemy.ong.model.entity;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,6 +34,6 @@ public class Role {
 
   @Column(name = "ROLE_TIMESTAMP")
   @Temporal(TemporalType.TIMESTAMP)
-  private Timestamp ROLE_TIMESTAMP;
+  private Calendar ROLE_TIMESTAMP;
 
 }
