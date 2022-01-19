@@ -22,7 +22,8 @@ public class Role {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long ID;
+  @Column(name = "ID_ROLE")
+  private Long ID_ROLE;
 
   @Column(name = "NAME", nullable = false)
   private String NAME;
@@ -30,8 +31,8 @@ public class Role {
   @Column(name = "DESCRIPTION", nullable = true)
   private String DESCRIPTION;
 
-  @Column(name = "TIMESTAMP")
+  @Column(name = "ROLE_TIMESTAMP")
   @Temporal(TemporalType.TIMESTAMP)
-  private Timestamp TIMESTAMP;
+  private Timestamp ROLE_TIMESTAMP;
 
 }
