@@ -34,6 +34,9 @@ public class New {
     @Column(name = "IMAGE", nullable = false)
     private String image;
 
+    @Column(name = "CATEGORY_ID",nullable = false)
+    private long categoryId;
+
     @Column(name = "SOFT_DELETE")
     private boolean softDelete;
 
