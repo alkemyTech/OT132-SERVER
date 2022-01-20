@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "categories")
+@Table(name = "CATEGORIES")
 public class Category {
 
     @Column(name = "CATEGORY_ID")
@@ -27,7 +27,8 @@ public class Category {
     private String image;
 
     private Timestamp timestamp;
-
+    
+    @Column(name = "SOFT_DELETE")
     private boolean softDelete;
 
     public Integer getCategoryId() {
