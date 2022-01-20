@@ -9,29 +9,32 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "Testimonials")
+@Table(name = "TESTIMONIAL")
 public class Testimonial {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "ID", nullable = false)
   private Long id;
 
   @Column(name = "NAME", nullable = false)
   private String name;
 
-  @Column(name = "IMAGE")
+  @Column(name = "IMAGE", nullable = true)
   private String image;
 
-  @Column(name = "CONTENT")
+  @Column(name = "CONTENT", nullable = true)
   private String content;
 
-  @Column(name = "TESTIMONIAL_TIMESTAMP")
+  @Column(name = "TIMESTAMP")
+  @CreationTimestamp
   private Timestamp timestamp;
 
-  @Column(name = "TESTIMONIAL_DELETE")
+  @Column(name = "SOFT_DELETE")
   private Boolean softDelete = Boolean.FALSE;
 }
