@@ -1,6 +1,7 @@
 package com.alkemy.ong.model.entity;
 
-import java.security.Timestamp;
+
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 @Entity
 @Table(name = "CATEGORIES")
 public class Category {
@@ -16,18 +19,19 @@ public class Category {
     @Column(name = "CATEGORY_ID")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer categoryId;
+    private long categoryId;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false)
     private String name;
 
-    @Column(name = "DESCRIPTION", nullable = true)
+    @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "IMAGE", nullable = true)
+    @Column(name = "IMAGE")
     private String image;
 
     @Column(name = "TIMESTAMP")
+    @CreationTimestamp
     private Timestamp timestamp;
 
     @Column(name = "SOFT_DELETE")
