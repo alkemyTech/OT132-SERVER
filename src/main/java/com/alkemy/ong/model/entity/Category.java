@@ -18,61 +18,19 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer categoryId;
 
+    @Column(name = "NAME")
     private String name;
 
-    @Column(nullable = true)
+    @Column(name = "DESCRIPTION", nullable = true)
     private String description;
 
-    @Column(nullable = true)
+    @Column(name = "IMAGE", nullable = true)
     private String image;
 
+    @Column(name = "TIMESTAMP")
     private Timestamp timestamp;
-    
+
     @Column(name = "SOFT_DELETE")
     private boolean softDelete;
-
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public Timestamp getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public boolean isSoftDelete() {
-        return softDelete;
-    }
-
-    public void setSoftDelete(boolean softDelete) {
-        this.softDelete = softDelete;
-    }
 
 }
