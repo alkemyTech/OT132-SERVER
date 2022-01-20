@@ -1,6 +1,7 @@
 package com.alkemy.ong.model.entity;
 
-import java.security.Timestamp;
+
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,6 +40,7 @@ public class Member {
     private String description;
 
     @Column(name = "TIMESTAMP", nullable = false)
+    @CreationTimestamp
     private Timestamp timestamp;
 
     @Column(name = "SOFT_DELETE")
