@@ -38,14 +38,14 @@ public class News {
     @Column(name = "IMAGE", nullable = false)
     private String image;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "CATEGORY_ID")
     private Category category; 
 
     @Column(name = "SOFT_DELETE")
     private boolean softDelete;
 
-    @Column(name = "TIMESTAMP")
+    @Column(name = "NEWS_TIMESTAMP")
     @CreationTimestamp
-    private Timestamp timestamp;
+    private Timestamp newsTimestamp;
 }
