@@ -21,17 +21,17 @@ public class Role {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "ID_ROLE")
-  private Long Id;
+  @Column(name = "ID_ROLE", nullable = false)
+  private Long id;
 
   @Column(name = "NAME", nullable = false)
-  private String Name;
+  private String name;
 
   @Column(name = "DESCRIPTION", nullable = true)
-  private String Description;
+  private String description;
 
   @CreationTimestamp
   @Column(name = "ROLE_TIMESTAMP")
-  private Timestamp TimeStamp;
+  private Timestamp timeStamp;
 
 }
