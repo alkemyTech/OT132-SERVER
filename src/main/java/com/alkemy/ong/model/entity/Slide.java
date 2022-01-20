@@ -19,8 +19,8 @@ public class Slide {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "ID_SLIDE", nullable = false)
-  private Long id;
+  @Column(name = "SLIDE_ID", nullable = false)
+  private Long slideId;
 
   @Column(name = "IMAGE_URL", nullable = false)
   private String imageUrl;
@@ -30,4 +30,5 @@ public class Slide {
 
   @Column(name = "SLIDE_ORDER", nullable = false)
   private Integer order;
+
 }
