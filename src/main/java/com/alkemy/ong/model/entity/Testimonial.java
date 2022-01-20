@@ -14,12 +14,12 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @Getter
 @Setter
-@Table(name = "TESTIMONIAL")
+@Table(name = "TESTIMONIALS")
 public class Testimonial {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "ID", nullable = false)
+  @Column(name = "TESTIMONIAL_ID", nullable = false)
   private Long id;
 
   @Column(name = "NAME", nullable = false)
@@ -36,5 +36,5 @@ public class Testimonial {
   private Timestamp timestamp;
 
   @Column(name = "SOFT_DELETE")
-  private Boolean softDelete = Boolean.FALSE;
+  private boolean softDelete;
 }
