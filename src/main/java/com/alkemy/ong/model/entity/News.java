@@ -15,15 +15,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "news")
+@Table(name = "NEWS")
 @Getter
 @Setter
-public class New {
+public class News {
 
-    @Column(name = "NEW_ID")
+    @Column(name = "NEWS_ID")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long newsId;
 
     @Column(name = "NAME", nullable = false)
     private String name;
@@ -40,7 +40,7 @@ public class New {
     @Column(name = "SOFT_DELETE")
     private boolean softDelete;
 
-    @Column(name = "NEW_TIMESTAMP")
+    @Column(name = "TIMESTAMP")
     @CreationTimestamp
     private Timestamp timestamp;
 }
