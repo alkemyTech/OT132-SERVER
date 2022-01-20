@@ -2,11 +2,15 @@ package com.alkemy.ong.model.entity;
 
 import java.sql.Timestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -34,8 +38,9 @@ public class News {
     @Column(name = "IMAGE", nullable = false)
     private String image;
 
-    @Column(name = "CATEGORY_ID",nullable = false)
-    private long categoryId;
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "CATEGORY_ID")
+    private Category category; 
 
     @Column(name = "SOFT_DELETE")
     private boolean softDelete;
