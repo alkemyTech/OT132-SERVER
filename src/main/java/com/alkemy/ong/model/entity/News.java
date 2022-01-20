@@ -45,7 +45,7 @@ public class News {
     @Column(name = "SOFT_DELETE")
     private boolean softDelete;
 
-    @Column(name = "NEWS_TIMESTAMP")
+    @Column(name = "TIMESTAMP")
     @CreationTimestamp
-    private Timestamp newsTimestamp;
+    private Timestamp timestamp;
 }
