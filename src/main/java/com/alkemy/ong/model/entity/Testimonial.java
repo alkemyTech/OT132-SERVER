@@ -20,7 +20,7 @@ public class Testimonial {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "TESTIMONIAL_ID", nullable = false)
-  private Long id;
+  private Long testimonialId;
 
   @Column(name = "NAME", nullable = false)
   private String name;
