@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Slides")
+@Table(name = "SLIDES")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,15 +19,15 @@ public class Slide {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "ID_SLIDE")
-  private Long ID_SLIDE;
+  @Column(name = "ID_SLIDE", nullable = false)
+  private Long id;
 
   @Column(name = "IMAGE_URL", nullable = false)
-  private String IMAGE_URL;
+  private String imageUrl;
 
   @Column(name = "TEXT")
-  private String TEXT;
+  private String text;
 
   @Column(name = "SLIDE_ORDER", nullable = false)
-  private Integer SLIDE_ORDER;
+  private Integer order;
 }
