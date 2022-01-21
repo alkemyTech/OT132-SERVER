@@ -50,6 +50,4 @@ public class Organization {
   @Column(name = "SOFT_DELETE")
   private boolean softDelete;
 
-
-
 }

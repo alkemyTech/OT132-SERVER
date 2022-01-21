@@ -1,4 +1,3 @@
-
 package com.alkemy.ong.repository;
 
 import com.alkemy.ong.model.entity.Activity;

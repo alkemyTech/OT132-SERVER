@@ -35,4 +35,5 @@ public class Contact {
 
   @Column(name = "DELETED_AT")
   private Timestamp deletedAt;
+
 }
