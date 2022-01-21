@@ -2,5 +2,5 @@ amazonPropperties:
     aws_endpoint_URL: POO
     aws_access_key: POO
     aws_secret_key: POO
-    aws_s3_bucket: POO
-    aws_s3_region: POO
+    aws_bucket: POO
+    aws_region: US-EAST-1
