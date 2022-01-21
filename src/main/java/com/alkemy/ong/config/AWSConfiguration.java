@@ -15,9 +15,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AWSConfiguration {
 
-    private AmazonS3 s3client;
-
-    @Value("${}")
+    @Value("${aws.endpointURL}")
     private String endpointURL;
 
     @Value("${aws.s3.bucket}")
