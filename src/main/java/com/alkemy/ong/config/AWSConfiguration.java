@@ -12,19 +12,19 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AWSConfiguration {
 
-    @Value("${aws.endpointURL}")
+    @Value("${aws_endpoint_URL}")
     private String endpointURL;
 
-    @Value("${aws.s3.bucket}")
+    @Value("${aws_s3_bucket}")
     private String bucketName;
 
-    @Value("${aws.access_key_id}")
+    @Value("${aws_access_key}")
     private String accessKey;
 
-    @Value("${aws.secret_key}")
+    @Value("${aws_secret_key}")
     private String secretKey;
 
-    @Value("${aws.s3.region}")
+    @Value("${aws_s3_region}")
     private String region;
 
     
