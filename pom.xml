@@ -98,6 +98,11 @@
       <artifactId>spring-boot-starter-validation</artifactId>
       <groupId>org.springframework.boot</groupId>
     </dependency>
+    <dependency>
+      <groupId>com.sendgrid</groupId>
+      <artifactId>java-http-client</artifactId>
+      <version>4.3.9</version>
+    </dependency>
   </dependencies>
   <description>ONG project with Spring Boot</description>
   <groupId>com.alkemy</groupId>
