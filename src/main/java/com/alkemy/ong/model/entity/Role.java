@@ -8,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -16,7 +15,6 @@ import org.hibernate.annotations.CreationTimestamp;
 @Table(name = "ROLES")
 @Getter
 @Setter
-@NoArgsConstructor
 public class Role {
 
   @Id
@@ -32,6 +30,6 @@ public class Role {
 
   @CreationTimestamp
   @Column(name = "TIMESTAMP")
-  private Timestamp timeStamp;
+  private Timestamp timestamp;
 
 }
