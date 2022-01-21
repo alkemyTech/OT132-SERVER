@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Getter
@@ -34,7 +33,6 @@ public class Contact {
   @Column(name = "MESSAGE", nullable = false)
   private String message;
 
-  @Column(name = "DELETE_AT")
-  @CreationTimestamp
-  private Timestamp deleteAt;
+  @Column(name = "DELETED_AT")
+  private Timestamp deletedAt;
 }
