@@ -32,6 +32,17 @@ public class AWSConfiguration {
     @Value("${aws.s3.region}")
     private String region;
 
+    
+    public String getBucketName(){
+        return this.bucketName;
+    }
+
+    @Bean
+    public AmazonS3 initializeAmazon() {
+        BasicAWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
+        return AmazonS3ClientBuilder.standard().withRegion(Regions.fromName(region))
+                .withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
+    }
 
 
 
