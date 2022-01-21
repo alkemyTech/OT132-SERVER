@@ -28,8 +28,8 @@ public class Organization {
   @Column(name = "IMAGE", nullable = false)
   private String image;
 
-  @Column(name = "ADRESS")
-  private String adress;
+  @Column(name = "ADDRESS")
+  private String address;
 
   @Column(name = "PHONE")
   private Integer phone;
@@ -43,7 +43,7 @@ public class Organization {
   @Column(name = "ABOUT_US_TEXT")
   private String aboutUsText;
 
-  @Column(name = "TIME_STAMP")
+  @Column(name = "TIMESTAMP")
   @CreationTimestamp
   private Timestamp timeStamp;
 
