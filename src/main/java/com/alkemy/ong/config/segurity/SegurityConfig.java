@@ -1,6 +1,10 @@
 package com.alkemy.ong.config.segurity;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -8,6 +12,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 public class SegurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserDetailsServices userDetailsService;
+
+    @Autowired
+    private JwtFilter jwtFilter;
 
 
     @Override
@@ -15,7 +27,7 @@ public class SegurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                /*.antMatchers("/auth/**",
+                .antMatchers("/auth/**",
                         "/register",
                         "/login",
                         "/v3/api-docs/swagger-config",
@@ -24,7 +36,7 @@ public class SegurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/docs",
                         "/api/docs/**",
                         "/contacts")
-                .permitAll()*/
+                .permitAll()
                 .antMatchers(HttpMethod.GET,
                         "/categories/{id}",
                         "/categories",
@@ -64,7 +76,21 @@ public class SegurityConfig extends WebSecurityConfigurerAdapter {
                         "/comments/{id}").hasAnyAuthority("ADMIN","USER")
                 .anyRequest().authenticated().and().sessionManagement();
 
-        /*http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);*/
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        @Bean
+        @Override
+        public AuthenticationManager authenticationManagerBean() throws Exception {
+            return super.authenticationManagerBean();
+        }
+
+        @Bean
+        public DaoAuthenticationProvider authProvider() {
+            DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+            authProvider.setUserDetailsService(userDetailsService);
+            authProvider.setPasswordEncoder(passwordEncoder);
+            return authProvider;
+        }
+
 
     }
 
