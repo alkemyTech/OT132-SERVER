@@ -9,27 +9,31 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
-@Table(name = "ROLES")
 @Getter
 @Setter
-public class Role {
+@Table(name = "CONTACTS")
+public class Contact {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "ROLE_ID", nullable = false)
-  private Long roleId;
+  @Column(name = "CONTACT_ID", nullable = false)
+  private Long contactId;
 
   @Column(name = "NAME", nullable = false)
   private String name;
 
-  @Column(name = "DESCRIPTION", nullable = true)
-  private String description;
+  @Column(name = "PHONE", nullable = false)
+  private Integer phone;
 
-  @CreationTimestamp
-  @Column(name = "TIMESTAMP")
-  private Timestamp timestamp;
+  @Column(name = "EMAIL", nullable = false)
+  private String email;
+
+  @Column(name = "MESSAGE", nullable = false)
+  private String message;
+
+  @Column(name = "DELETED_AT")
+  private Timestamp deletedAt;
 
 }

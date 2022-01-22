@@ -7,29 +7,39 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
-@Entity
-@Table(name = "ROLES")
 @Getter
 @Setter
-public class Role {
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "ACTIVITIES")
+public class Activity {
 
   @Id
+  @Column(name = "ACTIVITY_ID")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "ROLE_ID", nullable = false)
-  private Long roleId;
+  private Long activityId;
 
   @Column(name = "NAME", nullable = false)
   private String name;
 
-  @Column(name = "DESCRIPTION", nullable = true)
-  private String description;
+  @Column(name = "CONTENT", nullable = false)
+  private String content;
 
-  @CreationTimestamp
+  @Column(name = "IMAGE", nullable = false)
+  private String image;
+
   @Column(name = "TIMESTAMP")
+  @CreationTimestamp
   private Timestamp timestamp;
+
+  @Column(name = "SOFT_DELETE")
+  private boolean softDelete;
 
 }

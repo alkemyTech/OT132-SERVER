@@ -38,10 +38,31 @@
         <groupId>com.rudikershaw.gitbuildhook</groupId>
         <version>3.0.0</version>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
+          <configLocation>google_checks.xml</configLocation>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
 
   </build>
+
   <dependencies>
+    <dependency>
+      <artifactId>jjwt</artifactId>
+      <groupId>io.jsonwebtoken</groupId>
+      <version>0.9.1</version>
+    </dependency>
     <dependency>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
       <groupId>org.springframework.boot</groupId>
@@ -121,4 +142,16 @@
 
   <version>0.0.1-SNAPSHOT</version>
 
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
+          <configLocation>google_checks.xml</configLocation>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>
