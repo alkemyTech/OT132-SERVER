@@ -1,41 +1,49 @@
 package com.alkemy.ong.model.entity;
 
 import java.sql.Timestamp;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
+@Table(name = "NEWS")
 @Getter
 @Setter
-@Table(name = "TESTIMONIALS")
-public class Testimonial {
+public class News {
 
   @Id
+  @Column(name = "NEWS_ID")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "TESTIMONIAL_ID", nullable = false)
-  private Long testimonialId;
+  private Long newsId;
 
   @Column(name = "NAME", nullable = false)
   private String name;
 
-  @Column(name = "IMAGE", nullable = true)
+  @Column(name = "TEXT", nullable = false)
+  private String text;
+
+  @Column(name = "IMAGE", nullable = false)
   private String image;
 
-  @Column(name = "CONTENT", nullable = true)
-  private String content;
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+  @JoinColumn(name = "CATEGORY_ID")
+  private Category category;
+
+  @Column(name = "SOFT_DELETE")
+  private boolean softDelete;
 
   @Column(name = "TIMESTAMP")
   @CreationTimestamp
   private Timestamp timestamp;
-
-  @Column(name = "SOFT_DELETE")
-  private boolean softDelete;
 
 }
