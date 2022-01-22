@@ -1,56 +1,61 @@
 package com.alkemy.ong.filter;
 
 import com.alkemy.ong.util.JwtUtil;
+import io.jsonwebtoken.Claims;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-	////////////////MyUserDetailsService PART OF ANOTHER TICKET/////////
-  //	@Autowired private MyUserDetailsService userDetailsService;
+  private static final String BEARER_PART = "Bearer ";
+  private static final String EMPTY = "";
+  private static final String AUTHORITIES = "authorities";
 
-  @Autowired private JwtUtil jwtUtil;
+  @Autowired
+  private JwtUtil jwtUtil;
 
   @Override
-  protected void doFilterInternal(
-      HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-      throws ServletException, IOException {
+  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+      FilterChain filterChain) throws ServletException, IOException {
+    String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-    final String authorizationHeader = request.getHeader("Authorization");
-
-    String username = null;
-    String jwt = null;
-
-    if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-      jwt = authorizationHeader.substring(7);
-      username = jwtUtil.extractUsername(jwt);
+    if (isTokenSet(authorizationHeader)) {
+      authentication(authorizationHeader);
+    } else {
+      SecurityContextHolder.clearContext();
     }
 
-    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-      //  UserDetails userDetails = this.userDetailsService.loadByUsername(username);
-      //    if (jwtUtil.validateToken(jwt, userDetails)) {
-      //
-      //      UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-      //          new UsernamePasswordAuthenticationToken(UserDetails,null,
-      // UserDetails.getAuthorities());
-      //
-      //      usernamePasswordAuthenticationToken.setDetails(
-      //          new WebAuthenticationDetailsSource().buildDetails(request));
-      //
-      // SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-      //
-      //    }
+    filterChain.doFilter(request, response);
+  }
+
+  private void authentication(String authorizationHeader) {
+    String jwtToken = authorizationHeader.replace(BEARER_PART, EMPTY);
+    Claims claims = jwtUtil.extractAllClaims(jwtToken);
+    List<String> authorities = (List) claims.get(AUTHORITIES);
+    if (authorities != null) {
+      UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+          claims.getSubject(), null,
+          authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
+      SecurityContextHolder.getContext().setAuthentication(auth);
+    } else {
+      SecurityContextHolder.clearContext();
     }
+  }
+
+  private boolean isTokenSet(String authorizationHeader) {
+    return authorizationHeader != null && authorizationHeader.startsWith(BEARER_PART);
   }
 }
