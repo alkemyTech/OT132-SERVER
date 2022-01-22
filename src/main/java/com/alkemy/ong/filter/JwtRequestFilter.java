@@ -1,6 +1,6 @@
 package com.alkemy.ong.filter;
 
-import com.alkemy.ong.util.JwtUtil;
+import com.alkemy.ong.common.JwtUtil;
 import io.jsonwebtoken.Claims;
 import java.io.IOException;
 import java.util.List;
