@@ -1,6 +1,6 @@
-amazonPropperties:
-    aws_endpoint_URL: POO
-    aws_access_key: POO
-    aws_secret_key: POO
-    aws_bucket: POO
-    aws_region: US-EAST-1
+amazonProperties:
+    endpointURL: https://s3.us-east-1.amazonaws.com
+    accessKey: foo
+    secretKey: foo
+    bucket: cohorte-enero
+    region: us-east-1
