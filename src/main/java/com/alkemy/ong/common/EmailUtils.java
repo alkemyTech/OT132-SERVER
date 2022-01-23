@@ -19,7 +19,7 @@ public class EmailUtils {
   @Value("${app.sendgrid.key}")
   private String apiKey;
 
-  public void send(Class<?> iMail) throws ExternalServiceException {
+  public void send(Class<?> IMail) throws ExternalServiceException {
 
     try {
 
