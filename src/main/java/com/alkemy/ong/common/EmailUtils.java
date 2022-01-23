@@ -9,6 +9,7 @@ import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +19,40 @@ public class EmailUtils {
   @Value("${app.sendgrid.key}")
   private String apiKey;
 
-  public void send(Class<?> IMail) throws ExternalServiceException {
+  public void send(Class<?> iMail) throws ExternalServiceException {
+
+    try {
+
+      Field subject = iMail.getField("subject");
+      Field to = iMail.getField("to");
+      Field content = iMail.getField("content");
+      Field contentType = iMail.getField("contentType");
+
+      prepareMail(subject.toString(), to.toString(), content.toString(), contentType.toString());
+
+    } catch (NoSuchFieldException | IOException | RuntimeException e) {
+      throw new ExternalServiceException(e.getMessage());
+    }
+  }
+
+  public void prepareMail(String subject, String to, String content, String contentType)
+      throws ExternalServiceException {
+
+    validateInformation(subject, to, content, contentType);
+
+    Mail mail = new Mail();
+    Content content0 = new Content();
+
+    content0.setType(contentType);
+    content0.setValue(content);
+
+    mail.setFrom(new Email(subject));
+    mail.setReplyTo(new Email(to));
+    mail.addContent(content0);
 
     Response response = null;
     try {
+
       Request request = new Request();
       request.setMethod(Method.POST);
       request.setEndpoint("mail/send");
@@ -41,24 +72,7 @@ public class EmailUtils {
     }
   }
 
-  public Mail prepareMail(String subject, String to, String content, String contentType)
-      throws ExternalServiceException {
-
-    validateData(subject, to, content, contentType);
-
-    Mail mail = new Mail();
-    Content content0 = new Content();
-
-    content0.setType(contentType);
-    content0.setValue(content);
-
-    mail.setFrom(new Email(subject));
-    mail.setReplyTo(new Email(to));
-    mail.addContent(content0);
-    return mail;
-  }
-
-  private void validateData(String subject, String to, String content, String contentType)
+  private void validateInformation(String subject, String to, String content, String contentType)
       throws ExternalServiceException {
     if (subject == null || subject.isEmpty() || subject.contains("@") == false) {
       throw new ExternalServiceException("The field 'subject' is not valid");
