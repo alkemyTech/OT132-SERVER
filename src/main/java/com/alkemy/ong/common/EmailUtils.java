@@ -1,5 +1,6 @@
 package com.alkemy.ong.common;
 
+import com.alkemy.ong.common.mail.IMail;
 import com.alkemy.ong.exception.ExternalServiceException;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
@@ -9,7 +10,6 @@ import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -19,73 +19,38 @@ public class EmailUtils {
   @Value("${app.sendgrid.key}")
   private String apiKey;
 
-  public void send(Class<?> IMail) throws ExternalServiceException {
+  @Value("${organization.mail}")
+  private String from;
 
+  public void send(IMail mail) throws ExternalServiceException {
     try {
+      Mail sendgridMail = new Mail();
+      Content content = new Content();
 
-      Field subject = iMail.getField("subject");
-      Field to = iMail.getField("to");
-      Field content = iMail.getField("content");
-      Field contentType = iMail.getField("contentType");
+      content.setType(mail.getContent().getContentType());
+      content.setValue(mail.getContent().getBody());
 
-      prepareMail(subject.toString(), to.toString(), content.toString(), contentType.toString());
-
-    } catch (NoSuchFieldException | IOException | RuntimeException e) {
-      throw new ExternalServiceException(e.getMessage());
-    }
-  }
-
-  public void prepareMail(String subject, String to, String content, String contentType)
-      throws ExternalServiceException {
-
-    validateInformation(subject, to, content, contentType);
-
-    Mail mail = new Mail();
-    Content content0 = new Content();
-
-    content0.setType(contentType);
-    content0.setValue(content);
-
-    mail.setFrom(new Email(subject));
-    mail.setReplyTo(new Email(to));
-    mail.addContent(content0);
-
-    Response response = null;
-    try {
+      sendgridMail.setSubject(mail.getSubject());
+      sendgridMail.setFrom(new Email(from));
+      sendgridMail.setReplyTo(new Email(mail.getTo()));
+      sendgridMail.addContent(content);
 
       Request request = new Request();
       request.setMethod(Method.POST);
-      request.setEndpoint("mail/send");
-      request.setBody(mail.build());
+      request.setEndpoint("sendgridMail/send");
+      request.setBody(sendgridMail.build());
 
       SendGrid sendGrid = new SendGrid(apiKey);
+      Response response = sendGrid.api(request);
 
-      response = sendGrid.api(request);
-
-      if ((response.getStatusCode() != 202)) {
+      if (response.getStatusCode() != 202) {
         throw new ExternalServiceException("Fails to send email: " + response.getBody());
       }
 
-    } catch (IOException | RuntimeException ex) {
-      throw new ExternalServiceException(ex.getMessage());
+    } catch (IOException | RuntimeException e) {
+      throw new ExternalServiceException(e.getMessage());
+    }
 
-    }
-  }
-
-  private void validateInformation(String subject, String to, String content, String contentType)
-      throws ExternalServiceException {
-    if (subject == null || subject.isEmpty() || subject.contains("@") == false) {
-      throw new ExternalServiceException("The field 'subject' is not valid");
-    }
-    if (to == null || to.isEmpty() || to.contains("@") == false) {
-      throw new ExternalServiceException("The field 'to' subject is not valid");
-    }
-    if (content == null || content.isEmpty()) {
-      throw new ExternalServiceException("The field 'content' is empty");
-    }
-    if (contentType == null || contentType.isEmpty()) {
-      throw new ExternalServiceException("The field 'contentType' is empty");
-    }
   }
 
 }
