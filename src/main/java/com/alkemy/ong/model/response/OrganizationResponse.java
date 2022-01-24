@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class OrganizationDTO {
+public class OrganizationResponse {
 	
 	private String name;
 	private String image;
