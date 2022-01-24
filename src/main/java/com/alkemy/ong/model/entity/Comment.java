@@ -28,7 +28,7 @@ public class Comment {
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
   @JoinColumn(name = "USER_ID")
-  private User userId;
+  private User user;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
   @JoinColumn(name = "NEWS_ID")
