@@ -35,7 +35,7 @@ public class ActivitySeeder implements CommandLineRunner {
     Activity activity = new Activity();
     activity.setName(name);
     activity.setContent(content);
-    activity.setImage("-");
+    activity.setImage("https://foo.com/");
     activityRepository.save(activity);
   }
 
