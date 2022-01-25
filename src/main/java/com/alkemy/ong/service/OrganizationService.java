@@ -9,20 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class OrganizationService implements IGetOrganizationDetails{
-	
-	@Autowired
-	private IOrganizationRepository organizationRepository;
-	
-	@Autowired
-	private OrganizationMapper mapper;
+public class OrganizationService implements IGetOrganizationDetails {
 
+  @Autowired
+  private IOrganizationRepository organizationRepository;
 
-	@Override
-	public OrganizationResponse find(){
-		Organization organization = organizationRepository.findAll().get(0);
-		OrganizationResponse organizationResponse = mapper.map(organization);
-		return organizationResponse;
-	}
+  @Autowired
+  private OrganizationMapper mapper;
+
+  @Override
+  public OrganizationResponse find() {
+    Organization organization = organizationRepository.findAll().get(0);
+    return mapper.map(organization);
+  }
 
 }

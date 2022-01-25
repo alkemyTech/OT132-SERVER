@@ -4,6 +4,6 @@ import com.alkemy.ong.model.response.OrganizationResponse;
 
 public interface IGetOrganizationDetails {
 
-  public OrganizationResponse find();
+  OrganizationResponse find();
 
 }

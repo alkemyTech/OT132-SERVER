@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrganizationMapper {
 
-	public OrganizationResponse map(Organization organization){
-		OrganizationResponse organizationResponse = new OrganizationResponse();
-		organizationResponse.setName(organization.getName());
-		organizationResponse.setImage(organization.getImage());
-		organizationResponse.setAddress(organization.getAddress());
-		organizationResponse.setPhone(organization.getPhone());
-		return organizationResponse;
-	}
+  public OrganizationResponse map(Organization organization) {
+    OrganizationResponse organizationResponse = new OrganizationResponse();
+    organizationResponse.setName(organization.getName());
+    organizationResponse.setImage(organization.getImage());
+    organizationResponse.setAddress(organization.getAddress());
+    organizationResponse.setPhone(organization.getPhone());
+    return organizationResponse;
+  }
 
 }
