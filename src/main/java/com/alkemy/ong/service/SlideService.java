@@ -22,6 +22,6 @@ public class SlideService implements IGetSlideDetails {
     @Override
     public List<SlideResponse> findAll() {
         List<Slide> slides = slideRepository.findAll();
-        return mapper.map(slides);
+        return null;
     }
 }
