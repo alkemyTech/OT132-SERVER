@@ -19,7 +19,8 @@ public class CategoryService implements IGetCategoryDetails {
 	@Override
 	public List<CategoryResponse> findAllCategories(){
 
-    List<Category> categories = categoryRepository.findAll();
+    List<Category> categories = categoryRepository.findAllActiveCategories();
+		
 
 		return mapper.map(categories);
 	}
