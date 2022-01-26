@@ -20,8 +20,14 @@ public class SlideService implements IGetSlideDetails {
 
 
     @Override
-    public List<SlideResponse> findAll() {
+    public List<SlideResponse> find() {
         List<Slide> slides = slideRepository.findAll();
-        return null;
+        return mapper.mapList(slides);
+    }
+
+    @Override
+    public List<SlideResponse> findImageOrder() {
+        List<Slide> slides = slideRepository.findAll();
+        return mapper.mapAllImageOrder(slides);
     }
 }

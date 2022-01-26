@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.alkemy.ong.model.entity.Slide;
 import com.alkemy.ong.model.response.SlideResponse;
 
@@ -28,6 +29,21 @@ public class SlideMapper {
         List<SlideResponse> slideResponses = new ArrayList<SlideResponse>(slides.size());
         for (Slide slide : slides) {
             slideResponses.add(this.map(slide));
+        }
+        return slideResponses;
+    }
+
+    public SlideResponse mapOneImageOrder(Slide slide) {
+        SlideResponse slideResponse = new SlideResponse();
+        slideResponse.setImageUrl(slide.getImageUrl());
+        slideResponse.setOrder(slide.getOrder());
+        return slideResponse;
+    }
+
+    public List<SlideResponse> mapAllImageOrder(List<Slide> slides) {
+        List<SlideResponse> slideResponses = new ArrayList<SlideResponse>(slides.size());
+        for (Slide slide : slides) {
+            slideResponses.add(this.mapOneImageOrder(slide));
         }
         return slideResponses;
     }

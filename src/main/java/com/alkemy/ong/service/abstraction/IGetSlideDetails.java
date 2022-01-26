@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface IGetSlideDetails {
 
-    List<SlideResponse> findAll();
+    List<SlideResponse> find();
+
+    List<SlideResponse> findImageOrder();
 }
