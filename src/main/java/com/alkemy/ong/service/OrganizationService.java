@@ -29,7 +29,7 @@ public class OrganizationService implements IGetOrganizationDetails {
   public OrganizationResponse find() {
     Organization organization = organizationRepository.findAll().get(0);
     List<Slide> slides = slideRepository.findAll(Sort.by("order"));
-    return mapper.map(organization,slides);
+    return mapper.map(organization, slides);
   }
 
 }

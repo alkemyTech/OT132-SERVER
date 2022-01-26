@@ -15,7 +15,7 @@ public class OrganizationMapper {
   @Autowired
   private SlideMapper slideMapper;
 
-  public OrganizationResponse map(Organization organization,List<Slide> slides) {
+  public OrganizationResponse map(Organization organization, List<Slide> slides) {
     OrganizationResponse organizationResponse = new OrganizationResponse();
     organizationResponse.setName(organization.getName());
     organizationResponse.setImage(organization.getImage());

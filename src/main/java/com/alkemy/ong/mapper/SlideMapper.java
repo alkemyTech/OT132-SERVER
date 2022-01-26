@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SlideMapper {
-    
-    public SlideResponse map(Slide slide){
+
+    public SlideResponse map(Slide slide) {
         SlideResponse slideResponse = new SlideResponse();
         slideResponse.setImageUrl(slide.getImageUrl());
         slideResponse.setText(slide.getText());
@@ -19,11 +19,11 @@ public class SlideMapper {
         return slideResponse;
     }
 
-    public List<SlideResponse> mapList(List<Slide> slides){
-        List<SlideResponse> listSlides = new ArrayList<SlideResponse>();
-        for(Slide slide : slides){
-            listSlides.add(this.map(slide));
+    public List<SlideResponse> mapList(List<Slide> slides) {
+        List<SlideResponse> slideResponses = new ArrayList<SlideResponse>(slides.size());
+        for (Slide slide : slides) {
+            slideResponses.add(this.map(slide));
         }
-        return listSlides;
+        return slideResponses;
     }
 }
