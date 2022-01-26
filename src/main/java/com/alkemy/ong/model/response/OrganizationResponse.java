@@ -16,6 +16,6 @@ public class OrganizationResponse {
   private String image;
   private String address;
   private Integer phone;
-  List<Slide> slides;
+  List<SlideResponse> slides;
 
 }

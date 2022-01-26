@@ -5,10 +5,15 @@ import java.util.List;
 import com.alkemy.ong.model.entity.Organization;
 import com.alkemy.ong.model.entity.Slide;
 import com.alkemy.ong.model.response.OrganizationResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class OrganizationMapper {
+
+  @Autowired
+  private SlideMapper slideMapper;
 
   public OrganizationResponse map(Organization organization,List<Slide> slides) {
     OrganizationResponse organizationResponse = new OrganizationResponse();
@@ -16,7 +21,7 @@ public class OrganizationMapper {
     organizationResponse.setImage(organization.getImage());
     organizationResponse.setAddress(organization.getAddress());
     organizationResponse.setPhone(organization.getPhone());
-    organizationResponse.setSlides(slides);
+    organizationResponse.setSlides(slideMapper.mapList(slides));
     return organizationResponse;
   }
 
