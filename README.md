@@ -38,3 +38,11 @@ In this project run:
 ```
 mvn spring-boot:run
 ```
+
+### CHECKSTYLE
+
+You can generate the Checkstyle report by explicitly executing below command from the command line.
+
+```
+mvn checkstyle:checkstyle
+```
