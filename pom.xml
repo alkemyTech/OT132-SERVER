@@ -42,11 +42,26 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>3.0.0</version>
+        <dependencies>
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>8.12</version>
+          </dependency>
+        </dependencies>
         <configuration>
-          <configLocation>google_checks.xml</configLocation>
+          <configLocation>etc/style/google_style.xml</configLocation>
+          <encoding>UTF-8</encoding>
+          <consoleOutput>true</consoleOutput>
+          <failsOnError>true</failsOnError>
+          <failOnViolation>true</failOnViolation>
+          <violationSeverity>warning</violationSeverity>
+          <linkXRef>false</linkXRef>
         </configuration>
         <executions>
           <execution>
+            <id>validate</id>
+            <phase>validate</phase>
             <goals>
               <goal>check</goal>
             </goals>
@@ -128,34 +143,25 @@
       <groupId>com.amazonaws</groupId>
       <artifactId>aws-java-sdk</artifactId>
       <version>1.11.133</version>
-   </dependency>
+    </dependency>
   </dependencies>
+
   <description>ONG project with Spring Boot</description>
   <groupId>com.alkemy</groupId>
   <modelVersion>4.0.0</modelVersion>
   <name>ong</name>
+
   <parent>
     <artifactId>spring-boot-starter-parent</artifactId>
     <groupId>org.springframework.boot</groupId>
     <relativePath/>
     <version>2.5.4</version> <!-- lookup parent from repository -->
   </parent>
+
   <properties>
     <java.version>11</java.version>
   </properties>
 
   <version>0.0.1-SNAPSHOT</version>
 
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>3.0.0</version>
-        <configuration>
-          <configLocation>google_checks.xml</configLocation>
-        </configuration>
-      </plugin>
-    </plugins>
-  </reporting>
 </project>
