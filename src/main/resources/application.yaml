@@ -1,5 +1,5 @@
 amazonProperties:
-    endpointURL: https://s3.us-east-1.amazonaws.com
+    endpointUrl: https://s3.us-east-1.amazonaws.com
     accessKey: foo
     secretKey: foo
     bucket: cohorte-enero

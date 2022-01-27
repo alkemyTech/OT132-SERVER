@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class SlideResponse {
 
-    private String imageUrl;
-    private String text;
-    private Integer order;
+  private String imageUrl;
+  private String text;
+  private Integer order;
 
 }
