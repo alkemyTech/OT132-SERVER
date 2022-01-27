@@ -1,11 +1,9 @@
 package com.alkemy.ong.mapper;
 
-import java.util.List;
-
 import com.alkemy.ong.model.entity.Organization;
 import com.alkemy.ong.model.entity.Slide;
 import com.alkemy.ong.model.response.OrganizationResponse;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
