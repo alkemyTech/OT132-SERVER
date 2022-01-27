@@ -1,7 +1,5 @@
 package com.alkemy.ong.service;
 
-import java.util.List;
-
 import com.alkemy.ong.mapper.OrganizationMapper;
 import com.alkemy.ong.model.entity.Organization;
 import com.alkemy.ong.model.entity.Slide;
@@ -9,6 +7,7 @@ import com.alkemy.ong.model.response.OrganizationResponse;
 import com.alkemy.ong.repository.IOrganizationRepository;
 import com.alkemy.ong.repository.ISlideRepository;
 import com.alkemy.ong.service.abstraction.IGetOrganizationDetails;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
