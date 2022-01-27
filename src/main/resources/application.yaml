@@ -2,5 +2,5 @@ amazonProperties:
     endpointURL: https://s3.us-east-1.amazonaws.com
     accessKey: foo
     secretKey: foo
-    bucket: cohorte-enero
+    bucket: cohorte-enero-835eb560
     region: us-east-1
