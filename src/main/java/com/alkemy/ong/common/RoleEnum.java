@@ -4,7 +4,6 @@ public enum RoleEnum {
 	ADMIN, USER;
 
 	public String getRole() {
-
 		switch (this) {
 			case ADMIN:
 				return "ADMIN";
