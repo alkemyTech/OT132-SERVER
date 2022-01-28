@@ -1,7 +1,5 @@
 package com.alkemy.ong.common.mail;
 
-import java.lang.reflect.Field;
-
 public interface IMail {
 
   String getSubject();
@@ -9,4 +7,5 @@ public interface IMail {
   IContent getContent();
 
   String getTo();
+
 }
