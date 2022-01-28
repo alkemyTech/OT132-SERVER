@@ -1,5 +1,6 @@
 package com.alkemy.ong.integration.common;
 
+import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.model.entity.Role;
 import com.alkemy.ong.model.entity.User;
 import com.alkemy.ong.repository.IUserRepository;
@@ -32,8 +33,8 @@ public abstract class AbstractBaseIntegrationTest {
     return "http://localhost:" + port + uri;
   }
 
-  protected void setAuthorizationHeaderBasedOn(String role) {
-    String jwt = SecurityTestConfig.createToken("johnny@doe.com", role);
+  protected void setAuthorizationHeaderBasedOn(RoleType role) {
+    String jwt = SecurityTestConfig.createToken("johnny@doe.com", role.getFullRoleName());
     headers.set("Authorization", jwt);
   }
 

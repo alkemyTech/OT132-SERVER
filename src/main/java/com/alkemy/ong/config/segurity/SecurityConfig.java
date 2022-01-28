@@ -1,6 +1,5 @@
 package com.alkemy.ong.config.segurity;
 
-import com.alkemy.ong.common.RoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -59,7 +58,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET, "/organization/public")
         .permitAll()
         .antMatchers(HttpMethod.GET, "/contacts")
-        .hasAnyRole(RoleEnum.ADMIN.name())
+        .hasAnyRole(RoleType.ADMIN.name())
+        .antMatchers(HttpMethod.GET, "/users")
+        .hasRole(RoleType.ADMIN.name())
         .anyRequest()
         .authenticated()
         .and()
