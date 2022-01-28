@@ -1,7 +1,6 @@
 package com.alkemy.ong.config.segurity;
 
 import com.alkemy.ong.common.RoleEnum;
-import com.alkemy.ong.model.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
