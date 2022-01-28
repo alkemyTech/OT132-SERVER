@@ -7,24 +7,32 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "CATEGORIES")
-public class Category {
+@Table(name = "ACTIVITIES")
+public class Activity {
 
   @Id
-  @Column(name = "CATEGORY_ID")
+  @Column(name = "ACTIVITY_ID")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long categoryId;
+  private Long activityId;
 
   @Column(name = "NAME", nullable = false)
   private String name;
 
-  @Column(name = "DESCRIPTION")
-  private String description;
+  @Column(name = "CONTENT", nullable = false)
+  private String content;
 
-  @Column(name = "IMAGE")
+  @Column(name = "IMAGE", nullable = false)
   private String image;
 
   @Column(name = "TIMESTAMP")

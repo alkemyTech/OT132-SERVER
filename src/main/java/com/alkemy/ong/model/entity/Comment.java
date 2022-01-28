@@ -16,31 +16,26 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
-@Table(name = "NEWS")
 @Getter
 @Setter
-public class News {
+@Table(name = "COMMENTS")
+public class Comment {
 
   @Id
-  @Column(name = "NEWS_ID")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long newsId;
-
-  @Column(name = "NAME", nullable = false)
-  private String name;
-
-  @Column(name = "TEXT", nullable = false)
-  private String text;
-
-  @Column(name = "IMAGE", nullable = false)
-  private String image;
+  @Column(name = "COMMENT_ID")
+  private Long commentId;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-  @JoinColumn(name = "CATEGORY_ID")
-  private Category category;
+  @JoinColumn(name = "USER_ID")
+  private User user;
 
-  @Column(name = "SOFT_DELETE")
-  private boolean softDelete;
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+  @JoinColumn(name = "NEWS_ID")
+  private News news;
+
+  @Column(name = "BODY", nullable = false)
+  private String body;
 
   @Column(name = "TIMESTAMP")
   @CreationTimestamp
