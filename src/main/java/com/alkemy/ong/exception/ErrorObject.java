@@ -1,5 +1,7 @@
 package com.alkemy.ong.exception;
 
+import java.sql.Timestamp;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +11,6 @@ public class ErrorObject {
   
   private int status;
   private String message;
-  private long timestamp;
+  private Timestamp timestamp;
 
 }
