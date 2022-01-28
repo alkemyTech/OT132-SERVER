@@ -14,14 +14,17 @@ import org.springframework.stereotype.Service;
 public class ContactService implements IGetContact {
 
   @Autowired
-  IContactRepository repo;
+  IContactRepository contactRepository;
+
+  @Autowired
+  ContactMapper contactMapper;
 
   @Override
-  public List<ContactResponse> find() {
-    List<Contact> contacts = repo.findAll();
-    List<ContactResponse> contactResponse = new ArrayList<>();
+  public List<ContactResponse> list() {
+    List<Contact> contacts = contactRepository.findAll();
+    List<ContactResponse> contactResponse = new ArrayList<>(contacts.size());
     for (Contact contact : contacts) {
-      contactResponse.add(ContactMapper.map(contact));
+      contactResponse.add(contactMapper.map(contact));
     }
     return contactResponse;
 

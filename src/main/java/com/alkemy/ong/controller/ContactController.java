@@ -19,14 +19,11 @@ public class ContactController {
   public IGetContact getContact;
 
   @GetMapping
-  public ResponseEntity<Map<String, List<ContactResponse>>> getAll() {
-    List<ContactResponse> contactResponse = getContact.find();
+  public ResponseEntity<Map<String, List<ContactResponse>>> list() {
+    List<ContactResponse> contactResponse = getContact.list();
     Map<String, List<ContactResponse>> map = new HashMap<>();
     map.put("Contacts", contactResponse);
-    
-    if (contactResponse.isEmpty()) {
-      return ResponseEntity.noContent().build();
-    }
+
     return ResponseEntity.ok(map);
   }
 }

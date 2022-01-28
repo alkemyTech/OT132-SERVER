@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class ContactMapper {
 
-  public static ContactResponse map(Contact contact) {
+  public ContactResponse map(Contact contact) {
     ContactResponse contactResponse = new ContactResponse();
-    contactResponse.contactId = contact.getContactId();
-    contactResponse.name = contact.getName();
-    contactResponse.email = contact.getEmail();
-    contactResponse.phone = contact.getPhone();
-    contactResponse.message = contact.getMessage();
+    contactResponse.setContactId(contact.getContactId());
+    contactResponse.setName(contact.getName());
+    contactResponse.setEmail(contact.getEmail());
+    contactResponse.setPhone(contact.getPhone());
+    contactResponse.setMessage(contact.getMessage());
     return contactResponse;
   }
 

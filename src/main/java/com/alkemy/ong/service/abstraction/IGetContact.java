@@ -5,6 +5,6 @@ import java.util.List;
 
 public interface IGetContact {
 
-  List<ContactResponse> find();
+  List<ContactResponse> list();
 
 }

@@ -1,15 +1,20 @@
 package com.alkemy.ong.model.response;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ContactResponse {
 
-  public long contactId;
+  private long contactId;
 
-  public String name;
+  private String name;
 
-  public Integer phone;
+  private Integer phone;
 
-  public String email;
+  private String email;
 
-  public String message;
+  private String message;
 
 }
