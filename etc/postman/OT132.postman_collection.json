@@ -17,6 +17,25 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url-user}}users",
+              "host": [
+                "{{url-user}}users"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     }
   ]
 }
