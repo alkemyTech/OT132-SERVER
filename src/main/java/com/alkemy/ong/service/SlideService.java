@@ -1,7 +1,7 @@
 package com.alkemy.ong.service;
 
 import com.alkemy.ong.mapper.SlideMapper;
-import com.alkemy.ong.mapper.enums.SlideOperation;
+import com.alkemy.ong.mapper.enums.SlideAttributes;
 import com.alkemy.ong.model.entity.Slide;
 import com.alkemy.ong.model.response.ListSlideResponse;
 import com.alkemy.ong.model.response.SlideResponse;
@@ -11,19 +11,27 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class SlideService implements IGetSlideDetails {
 
   @Autowired
   private SlideMapper slideMapper;
+
   @Autowired
   private ISlideRepository slideRepository;
 
   @Override
   public ListSlideResponse list() {
     List<Slide> slide = slideRepository.findAll();
-    List<SlideResponse> slideResponses = slideMapper.mapList(slide, SlideOperation.LIST);
+    return buildListSlideResponse(slide);
+  }
+
+  private ListSlideResponse buildListSlideResponse(List<Slide> slide) {
+    List<SlideResponse> slideResponses = slideMapper.mapList(
+        slide,
+        SlideAttributes.IMAGE_URL,
+        SlideAttributes.ORDER);
+
     ListSlideResponse listSlideResponse = new ListSlideResponse();
     listSlideResponse.setSlideResponses(slideResponses);
     return listSlideResponse;
