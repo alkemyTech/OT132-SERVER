@@ -15,15 +15,19 @@ import org.springframework.stereotype.Service;
 public class ContactService implements IGetContact {
 
   @Autowired
-  IContactRepository contactRepository;
+  private IContactRepository contactRepository;
 
   @Autowired
-  ContactMapper contactMapper;
+  private ContactMapper contactMapper;
 
   @Override
   public ListContactResponse list() {
-
     List<Contact> contacts = contactRepository.findAll();
+    return buildListContactResponse(contacts);
+
+  }
+
+  private ListContactResponse buildListContactResponse(List<Contact> contacts) {
     List<ContactResponse> contactResponse = new ArrayList<>(contacts.size());
 
     for (Contact contact : contacts) {
@@ -31,10 +35,8 @@ public class ContactService implements IGetContact {
     }
 
     ListContactResponse listContactResponse = new ListContactResponse();
-    listContactResponse.setContacResponse(contactResponse);
-
+    listContactResponse.setContactResponses(contactResponse);
     return listContactResponse;
-
   }
 
 

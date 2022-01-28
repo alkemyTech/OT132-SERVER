@@ -17,9 +17,7 @@ public class ContactController {
 
   @GetMapping
   public ResponseEntity<ListContactResponse> list() {
-
     ListContactResponse contactResponse = getContact.list();
-
     return ResponseEntity.ok(contactResponse);
   }
 }

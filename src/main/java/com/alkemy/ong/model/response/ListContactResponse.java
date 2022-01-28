@@ -10,6 +10,6 @@ import lombok.Setter;
 public class ListContactResponse {
 
   @JsonProperty("contacts")
-  private List<ContactResponse> contacResponse;
+  private List<ContactResponse> contactResponses;
   
 }
