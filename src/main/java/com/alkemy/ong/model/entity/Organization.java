@@ -53,9 +53,10 @@ public class Organization {
   @Column(name = "FACEBOOK_URL")
   private String facebookUrl;
 
-  @Column(name = "LINKED_Ink_URL")
-  private String linkedInkUrl;
+  @Column(name = "LINKEDIN_URL")
+  private String linkedinUrl;
 
   @Column(name = "INSTAGRAM_URL")
   private String instagramUrl;
+
 }
