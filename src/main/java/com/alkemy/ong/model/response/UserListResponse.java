@@ -11,4 +11,5 @@ public class UserListResponse {
 
   @JsonProperty("users")
   private List<UserResponse> userResponses;
+
 }

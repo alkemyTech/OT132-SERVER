@@ -15,15 +15,16 @@ public class UserMapper {
     userResponse.setLastName(user.getLastName());
     userResponse.setEmail(user.getEmail());
     userResponse.setPhoto(user.getPhoto());
-    userResponse.setRoles(user.getRoles());
+    userResponse.setRole(user.getRoles().get(0).getName());
     return userResponse;
   }
 
   public List<UserResponse> mapToList(List<User> users) {
-    List<UserResponse> userResponses = new ArrayList<>();
+    List<UserResponse> userResponses = new ArrayList<>(users.size());
     for (User user : users) {
       userResponses.add(map(user));
     }
     return userResponses;
   }
+
 }

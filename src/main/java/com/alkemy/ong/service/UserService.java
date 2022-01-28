@@ -22,7 +22,7 @@ public class UserService implements UserDetailsService, IGetUserDetails {
   private IUserRepository userRepository;
 
   @Autowired
-  private UserMapper mapper;
+  private UserMapper userMapper;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -40,9 +40,14 @@ public class UserService implements UserDetailsService, IGetUserDetails {
   @Override
   public UserListResponse findAll() {
     List<User> users = userRepository.findBySoftDeleteFalse();
-    List<UserResponse> userResponses = mapper.mapToList(users);
+    return buildListResponse(users);
+  }
+
+  private UserListResponse buildListResponse(List<User> users) {
+    List<UserResponse> userResponses = userMapper.mapToList(users);
     UserListResponse userListResponse = new UserListResponse();
     userListResponse.setUserResponses(userResponses);
     return userListResponse;
   }
+
 }

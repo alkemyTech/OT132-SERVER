@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET, "/organization/public")
         .permitAll()
         .antMatchers(HttpMethod.GET, "/users")
-        .hasRole(RoleEnum.ADMIN.toString())
+        .hasRole(RoleEnum.ADMIN.name())
         .anyRequest()
         .authenticated()
         .and()
