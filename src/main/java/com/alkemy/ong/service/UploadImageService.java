@@ -28,7 +28,7 @@ public class UploadImageService implements IUploadImageUrl {
     try {
       PutObjectRequest request = new PutObjectRequest(bucketName, fileName, input, contentType);
       amazonS3.putObject(request);
-    } catch (Exception e) {
+    } catch (RuntimeException e) {
       throw new UploadErrorException(e.getMessage());
     }
     return String.valueOf(amazonS3.getUrl(bucketName, (endpointUrl + fileName)));
