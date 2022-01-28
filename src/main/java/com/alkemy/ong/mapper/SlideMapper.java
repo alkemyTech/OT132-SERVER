@@ -14,18 +14,13 @@ public class SlideMapper {
   public SlideResponse map(Slide slide, SlideOperation slideOperation) {
     SlideResponse slideResponse = new SlideResponse();
     switch (slideOperation) {
-      case ALL:
+      case LIST_IN_ORGANIZATIONS:
         slideResponse.setText(slide.getText());
         slideResponse.setOrder(slide.getOrder());
         slideResponse.setImageUrl(slide.getImageUrl());
         break;
-      case TEXT:
-        slideResponse.setText(slide.getText());
-        break;
-      case ORDER:
+      case LIST:
         slideResponse.setOrder(slide.getOrder());
-        break;
-      case IMAGE_URL:
         slideResponse.setImageUrl(slide.getImageUrl());
         break;
       default:
