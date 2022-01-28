@@ -1,6 +1,6 @@
 package com.alkemy.ong.mapper;
 
-import com.alkemy.ong.mapper.enums.SlideAttributes;
+import com.alkemy.ong.mapper.attribute.SlideAttributes;
 import com.alkemy.ong.model.entity.Slide;
 import com.alkemy.ong.model.response.SlideResponse;
 import java.text.MessageFormat;

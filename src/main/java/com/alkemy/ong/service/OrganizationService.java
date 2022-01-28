@@ -1,7 +1,7 @@
 package com.alkemy.ong.service;
 
 import com.alkemy.ong.mapper.OrganizationMapper;
-import com.alkemy.ong.mapper.enums.SlideAttributes;
+import com.alkemy.ong.mapper.attribute.SlideAttributes;
 import com.alkemy.ong.model.entity.Organization;
 import com.alkemy.ong.model.entity.Slide;
 import com.alkemy.ong.model.response.OrganizationResponse;

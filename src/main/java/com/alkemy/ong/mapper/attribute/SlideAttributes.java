@@ -1,4 +1,4 @@
-package com.alkemy.ong.mapper.enums;
+package com.alkemy.ong.mapper.attribute;
 
 public enum SlideAttributes {
 
