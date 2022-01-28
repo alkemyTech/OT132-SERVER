@@ -27,9 +27,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{url-user}}users",
+              "raw": "http://localhost:8080/users",
+              "protocol": "http",
               "host": [
-                "{{url-user}}users"
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users"
               ]
             }
           },
