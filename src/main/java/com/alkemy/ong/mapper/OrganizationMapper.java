@@ -20,7 +20,7 @@ public class OrganizationMapper {
     organizationResponse.setImage(organization.getImage());
     organizationResponse.setAddress(organization.getAddress());
     organizationResponse.setPhone(organization.getPhone());
-    organizationResponse.setSlides(slideMapper.mapList(slides, SlideOperation.ALL.name()));
+    organizationResponse.setSlides(slideMapper.mapList(slides, SlideOperation.ALL));
     return organizationResponse;
   }
 

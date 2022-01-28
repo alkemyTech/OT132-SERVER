@@ -2,6 +2,6 @@ package com.alkemy.ong.mapper.enums;
 
 public enum SlideOperation {
 
-  ALL, IMAGEORDER;
+  ORDER, TEXT, IMAGE_URL, ALL;
 
 }
