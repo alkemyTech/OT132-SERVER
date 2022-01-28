@@ -50,4 +50,13 @@ public class Organization {
   @Column(name = "SOFT_DELETE")
   private boolean softDelete;
 
+  @Column(name = "FACEBOOK_URL")
+  private String facebookUrl;
+
+  @Column(name = "LINKEDIN_URL")
+  private String linkedinUrl;
+
+  @Column(name = "INSTAGRAM_URL")
+  private String instagramUrl;
+
 }
