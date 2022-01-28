@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserListResponse {
+public class ListUsersResponse {
 
   @JsonProperty("users")
   private List<UserResponse> userResponses;

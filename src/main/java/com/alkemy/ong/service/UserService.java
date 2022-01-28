@@ -2,7 +2,7 @@ package com.alkemy.ong.service;
 
 import com.alkemy.ong.mapper.UserMapper;
 import com.alkemy.ong.model.entity.User;
-import com.alkemy.ong.model.response.UserListResponse;
+import com.alkemy.ong.model.response.ListUsersResponse;
 import com.alkemy.ong.model.response.UserResponse;
 import com.alkemy.ong.repository.IUserRepository;
 import com.alkemy.ong.service.abstraction.IGetUserDetails;
@@ -38,16 +38,16 @@ public class UserService implements UserDetailsService, IGetUserDetails {
   }
 
   @Override
-  public UserListResponse findAll() {
+  public ListUsersResponse findAll() {
     List<User> users = userRepository.findBySoftDeleteFalse();
     return buildListResponse(users);
   }
 
-  private UserListResponse buildListResponse(List<User> users) {
+  private ListUsersResponse buildListResponse(List<User> users) {
     List<UserResponse> userResponses = userMapper.mapToList(users);
-    UserListResponse userListResponse = new UserListResponse();
-    userListResponse.setUserResponses(userResponses);
-    return userListResponse;
+    ListUsersResponse listUsersResponse = new ListUsersResponse();
+    listUsersResponse.setUserResponses(userResponses);
+    return listUsersResponse;
   }
 
 }

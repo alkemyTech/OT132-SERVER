@@ -1,9 +1,9 @@
 package com.alkemy.ong.service.abstraction;
 
-import com.alkemy.ong.model.response.UserListResponse;
+import com.alkemy.ong.model.response.ListUsersResponse;
 
 public interface IGetUserDetails {
 
-  UserListResponse findAll();
+  ListUsersResponse findAll();
 
 }

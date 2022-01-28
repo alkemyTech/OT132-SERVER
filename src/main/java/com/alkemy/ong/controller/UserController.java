@@ -1,6 +1,6 @@
 package com.alkemy.ong.controller;
 
-import com.alkemy.ong.model.response.UserListResponse;
+import com.alkemy.ong.model.response.ListUsersResponse;
 import com.alkemy.ong.service.abstraction.IGetUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +16,9 @@ public class UserController {
   private IGetUserDetails getUserDetails;
 
   @GetMapping("/users")
-  public ResponseEntity<UserListResponse> list() {
-    UserListResponse userListResponse = getUserDetails.findAll();
-    return ResponseEntity.ok().body(userListResponse);
+  public ResponseEntity<ListUsersResponse> list() {
+    ListUsersResponse listUsersResponse = getUserDetails.findAll();
+    return ResponseEntity.ok().body(listUsersResponse);
   }
 
 }
