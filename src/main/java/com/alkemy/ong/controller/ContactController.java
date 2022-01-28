@@ -1,10 +1,7 @@
 package com.alkemy.ong.controller;
 
-import com.alkemy.ong.model.response.ContactResponse;
+import com.alkemy.ong.model.response.ListContactResponse;
 import com.alkemy.ong.service.abstraction.IGetContact;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,11 +16,10 @@ public class ContactController {
   public IGetContact getContact;
 
   @GetMapping
-  public ResponseEntity<Map<String, List<ContactResponse>>> list() {
-    List<ContactResponse> contactResponse = getContact.list();
-    Map<String, List<ContactResponse>> map = new HashMap<>();
-    map.put("Contacts", contactResponse);
+  public ResponseEntity<ListContactResponse> list() {
 
-    return ResponseEntity.ok(map);
+    ListContactResponse contactResponse = getContact.list();
+
+    return ResponseEntity.ok(contactResponse);
   }
 }

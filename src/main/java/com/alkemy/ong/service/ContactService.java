@@ -3,6 +3,7 @@ package com.alkemy.ong.service;
 import com.alkemy.ong.mapper.ContactMapper;
 import com.alkemy.ong.model.entity.Contact;
 import com.alkemy.ong.model.response.ContactResponse;
+import com.alkemy.ong.model.response.ListContactResponse;
 import com.alkemy.ong.repository.IContactRepository;
 import com.alkemy.ong.service.abstraction.IGetContact;
 import java.util.ArrayList;
@@ -20,13 +21,19 @@ public class ContactService implements IGetContact {
   ContactMapper contactMapper;
 
   @Override
-  public List<ContactResponse> list() {
+  public ListContactResponse list() {
+
     List<Contact> contacts = contactRepository.findAll();
     List<ContactResponse> contactResponse = new ArrayList<>(contacts.size());
+
     for (Contact contact : contacts) {
       contactResponse.add(contactMapper.map(contact));
     }
-    return contactResponse;
+
+    ListContactResponse listContactResponse = new ListContactResponse();
+    listContactResponse.setContacResponse(contactResponse);
+
+    return listContactResponse;
 
   }
 

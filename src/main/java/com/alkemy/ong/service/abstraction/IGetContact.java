@@ -1,10 +1,9 @@
 package com.alkemy.ong.service.abstraction;
 
-import com.alkemy.ong.model.response.ContactResponse;
-import java.util.List;
+import com.alkemy.ong.model.response.ListContactResponse;
 
 public interface IGetContact {
 
-  List<ContactResponse> list();
+  ListContactResponse list();
 
 }
