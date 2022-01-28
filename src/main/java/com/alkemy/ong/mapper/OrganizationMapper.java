@@ -1,5 +1,6 @@
 package com.alkemy.ong.mapper;
 
+import com.alkemy.ong.mapper.enums.SlideOperation;
 import com.alkemy.ong.model.entity.Organization;
 import com.alkemy.ong.model.entity.Slide;
 import com.alkemy.ong.model.response.OrganizationResponse;
@@ -19,7 +20,7 @@ public class OrganizationMapper {
     organizationResponse.setImage(organization.getImage());
     organizationResponse.setAddress(organization.getAddress());
     organizationResponse.setPhone(organization.getPhone());
-    organizationResponse.setSlides(slideMapper.mapList(slides));
+    organizationResponse.setSlides(slideMapper.mapList(slides, SlideOperation.ALL.name()));
     return organizationResponse;
   }
 

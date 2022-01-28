@@ -1,7 +1,8 @@
 package com.alkemy.ong.service;
 
 import com.alkemy.ong.mapper.SlideMapper;
-import com.alkemy.ong.model.entity.Slide;
+import com.alkemy.ong.mapper.enums.SlideOperation;
+import com.alkemy.ong.model.response.ListSlideResponse;
 import com.alkemy.ong.model.response.SlideResponse;
 import com.alkemy.ong.repository.ISlideRepository;
 import com.alkemy.ong.service.abstraction.IGetSlideDetails;
@@ -14,20 +15,17 @@ import org.springframework.stereotype.Service;
 public class SlideService implements IGetSlideDetails {
 
   @Autowired
-  private SlideMapper mapper;
+  private SlideMapper slideMapper;
   @Autowired
   private ISlideRepository slideRepository;
 
-
   @Override
-  public List<SlideResponse> find() {
-    List<Slide> slides = slideRepository.findAll();
-    return mapper.mapList(slides);
+  public ListSlideResponse list() {
+    List<SlideResponse> slides = slideMapper.mapList(slideRepository.findAll(),
+        SlideOperation.IMAGEORDER.name());
+    ListSlideResponse listSlideResponse = new ListSlideResponse();
+    listSlideResponse.setSlideResponses(slides);
+    return listSlideResponse;
   }
 
-  @Override
-  public List<SlideResponse> findImageOrder() {
-    List<Slide> slides = slideRepository.findAll();
-    return mapper.mapAllImageOrder(slides);
-  }
 }
