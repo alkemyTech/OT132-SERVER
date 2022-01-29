@@ -1,7 +1,7 @@
 package com.alkemy.ong.common.amazon;
 
 import com.alkemy.ong.config.AwsConfiguration;
-import com.alkemy.ong.exception.UploadErrorException;
+import com.alkemy.ong.exception.ExternalServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -15,7 +15,7 @@ public class UploadImageService {
   @Autowired
   private AwsConfiguration config;
 
-  public String update(IUploadContent content) {
+  public String update(IUploadContent content) throws ExternalServiceException {
     try {
       AmazonS3 amazonS3 = config.initializeAmazon();
       String bucketName = config.getBucketName();
@@ -26,7 +26,7 @@ public class UploadImageService {
            content.getContentName(),content.getInputStream(), metadata));
       return amazonS3.getUrl(bucketName, content.getContentName()).toString();
     } catch (RuntimeException e) {
-      throw new UploadErrorException(e.getMessage());
+      throw new ExternalServiceException(e.getMessage());
     }
   }
 
