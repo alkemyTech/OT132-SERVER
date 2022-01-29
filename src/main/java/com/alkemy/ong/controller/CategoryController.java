@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("category")
+@RequestMapping("categories")
 public class CategoryController {
 
-	@Autowired private IGetCategoryDetails getCategoryDetails;
-	
-	@GetMapping("/categories")
-	public ResponseEntity<List<CategoryResponse>> getListOfCategories(){
-		
-		List<CategoryResponse> categoryList = getCategoryDetails.findAllCategories();
-		
-		return ResponseEntity.ok().body(categoryList);
-	}
+  @Autowired private IGetCategoryDetails getCategoryDetails;
+
+  @GetMapping("/list")
+  public ResponseEntity<List<CategoryResponse>> getListOfCategories() {
+
+    List<CategoryResponse> categoryList = getCategoryDetails.findAllCategories();
+
+    return ResponseEntity.ok().body(categoryList);
+  }
 }

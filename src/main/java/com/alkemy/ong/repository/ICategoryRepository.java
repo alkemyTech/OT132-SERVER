@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ICategoryRepository extends JpaRepository<Category, Long> {
 
-	@Query("SELECT c FROM Category c WHERE c.softDelete = :false ORDER BY name")
-    public List<Category> findAllActiveCategories();
-	
+  @Query("SELECT c FROM Category c WHERE c.softDelete = 0 ORDER BY name")
+  public List<Category> findAllActiveCategories();
 }

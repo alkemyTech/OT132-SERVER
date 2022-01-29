@@ -9,13 +9,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class CategoryMapper {
 
-  public List<CategoryResponse> map(List<Category> categories) {
+  public List<CategoryResponse> listMap(List<Category> categories) {
 
-    // Sort List. Add comparator
     List<CategoryResponse> categoryResponseList = new ArrayList<>();
-    CategoryResponse categoryResponse = new CategoryResponse();
 
     for (Category aux : categories) {
+      CategoryResponse categoryResponse = new CategoryResponse();
       categoryResponse.setName(aux.getName());
       categoryResponseList.add(categoryResponse);
     }

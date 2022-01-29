@@ -13,15 +13,14 @@ import org.springframework.stereotype.Service;
 public class CategoryService implements IGetCategoryDetails {
 
   @Autowired private CategoryMapper mapper;
-	
-	@Autowired private ICategoryRepository categoryRepository;
-	
-	@Override
-	public List<CategoryResponse> findAllCategories(){
+
+  @Autowired private ICategoryRepository categoryRepository;
+
+  @Override
+  public List<CategoryResponse> findAllCategories() {
 
     List<Category> categories = categoryRepository.findAllActiveCategories();
-		
 
-		return mapper.map(categories);
-	}
+    return mapper.listMap(categories);
+  }
 }
