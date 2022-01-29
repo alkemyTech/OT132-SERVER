@@ -1,6 +1,7 @@
 package com.alkemy.ong.service;
 
 import com.alkemy.ong.mapper.OrganizationMapper;
+import com.alkemy.ong.mapper.attribute.SlideAttributes;
 import com.alkemy.ong.model.entity.Organization;
 import com.alkemy.ong.model.entity.Slide;
 import com.alkemy.ong.model.response.OrganizationResponse;
@@ -27,7 +28,7 @@ public class OrganizationService implements IGetOrganizationDetails {
   @Override
   public OrganizationResponse find() {
     Organization organization = organizationRepository.findAll().get(0);
-    List<Slide> slides = slideRepository.findAll(Sort.by("order"));
+    List<Slide> slides = slideRepository.findAll(Sort.by(SlideAttributes.ORDER.getFieldName()));
     return mapper.map(organization, slides);
   }
 

@@ -23,11 +23,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/contacts")
 public class ContactController {
 
-  @Autowired
-  private IGetContact getContact;
-
+  
   @Autowired
   private ICreateContact createContact;
+
+  @Autowired
+  public IGetContact getContact;
+
+  @GetMapping
+  public ResponseEntity<ListContactResponse> list() {
+    ListContactResponse contactResponse = getContact.list();
+    return ResponseEntity.ok(contactResponse);
+  }
 
   @PostMapping
   public ResponseEntity<ContactResponse> add(@Valid @RequestBody ContactRequest contactRequest,
@@ -50,14 +57,5 @@ public class ContactController {
       return ResponseEntity.ok(contactResponse);
 
     }
-  }
-
-  @GetMapping
-  public ResponseEntity<ListContactResponse> list() {
-
-    ListContactResponse contactResponse = getContact.list();
-
-    return ResponseEntity.ok(contactResponse);
-  }
-
+  } 
 }

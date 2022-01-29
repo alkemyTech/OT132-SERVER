@@ -7,9 +7,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ListContactResponse {
+public class ListSlideResponse {
 
-  @JsonProperty("contacts")
-  private List<ContactResponse> contactResponses;
-  
+  @JsonProperty("slides")
+  private List<SlideResponse> slideResponses;
 }
