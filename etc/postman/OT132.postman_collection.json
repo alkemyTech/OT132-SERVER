@@ -17,6 +17,81 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {"name": "contacts",
+			"item": [
+				{
+					"name": "Get Contacts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/contacts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
     }
+      
   ]
-}
+},
+{
+      "name": "Slide",
+      "item": [
+        {
+          "name": "GET Slides",
+          "request": {
+            "auth": {
+              "type": "basic"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/slides",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "slides"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }

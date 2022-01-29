@@ -1,6 +1,5 @@
-package com.alkemy.ong.common;
+package com.alkemy.ong.common.mail;
 
-import com.alkemy.ong.common.mail.IMail;
 import com.alkemy.ong.exception.ExternalServiceException;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
