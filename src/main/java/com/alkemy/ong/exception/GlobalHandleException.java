@@ -32,6 +32,6 @@ public class GlobalHandleException extends ResponseEntityExceptionHandler {
     error.setMessage(ex.getBindingResult().getFieldError().getDefaultMessage());
     error.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
-    return super.handleMethodArgumentNotValid(ex, headers, status, request);
+    return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
   }
 }
