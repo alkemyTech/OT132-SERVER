@@ -18,4 +18,14 @@ public class GlobalExpection {
     error.setTimestamp(new Timestamp(System.currentTimeMillis()));
     return new ResponseEntity<ErrorObject>(error, HttpStatus.CONFLICT);
   }
+
+  @ExceptionHandler(value = InputErrorException.class)
+  public ResponseEntity<ErrorObject> handleInputErrorException(InputErrorException e) {
+    ErrorObject error = new ErrorObject();
+    error.setStatus(HttpStatus.BAD_REQUEST.value());
+    error.setMessage(e.getMessage());
+    error.setTimestamp(new Timestamp(System.currentTimeMillis()));
+    return new ResponseEntity<ErrorObject>(error, HttpStatus.BAD_REQUEST);
+  }
+
 }

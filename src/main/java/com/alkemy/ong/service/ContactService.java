@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ContactService implements IGetContact, ICreateContact{
+public class ContactService implements IGetContact, ICreateContact {
 
   @Autowired
   IContactRepository contactRepository;
@@ -41,14 +41,14 @@ public class ContactService implements IGetContact, ICreateContact{
 
   @Override
   public ContactResponse add(ContactRequest contactRequest) {
-  
+
     Contact contact = new Contact();
     contact.setName(contactRequest.getName());
     contact.setPhone(contactRequest.getPhone());
     contact.setEmail(contactRequest.getEmail());
     contact.setMessage(contactRequest.getMessage());
     contactRepository.save(contact);
-    
+
     return contactMapper.map(contact);
   }
 
