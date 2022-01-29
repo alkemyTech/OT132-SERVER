@@ -21,21 +21,13 @@ public class TestimonialService implements IPostTestimonial {
 
   @Override
   public TestimonialResponse create(TestimonialRequest testimonialRequest) {
-    if(testimonialRequest == null) {
-      throw new EmptyInputException("Input fields are empty");
-    } else {
-
-      Testimonial testimonial = null;
-      testimonial = testimonialMapper.mapAdd(testimonialRequest);
-      testimonialRepository.save(testimonial);
-      TestimonialResponse testimonialResponse = testimonialMapper.map(testimonial,
-          TestimonialAttributes.ID,
-          TestimonialAttributes.CONTENT,
-          TestimonialAttributes.IMAGE,
-          TestimonialAttributes.SOFTDELETE,
-          TestimonialAttributes.NAME,
-          TestimonialAttributes.TIMESTAMP);
-      return testimonialResponse;
-    }
+    Testimonial testimonial = null;
+    testimonial = testimonialMapper.mapAdd(testimonialRequest);
+    testimonialRepository.save(testimonial);
+    TestimonialResponse testimonialResponse = testimonialMapper.map(testimonial,
+        TestimonialAttributes.ID, TestimonialAttributes.CONTENT, TestimonialAttributes.IMAGE,
+        TestimonialAttributes.SOFTDELETE, TestimonialAttributes.NAME,
+        TestimonialAttributes.TIMESTAMP);
+    return testimonialResponse;
   }
 }

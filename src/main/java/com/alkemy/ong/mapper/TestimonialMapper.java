@@ -1,5 +1,6 @@
 package com.alkemy.ong.mapper;
 
+import com.alkemy.ong.exception.EmptyInputException;
 import com.alkemy.ong.mapper.attribute.TestimonialAttributes;
 import com.alkemy.ong.model.entity.Testimonial;
 import com.alkemy.ong.model.request.TestimonialRequest;
@@ -12,6 +13,12 @@ import org.springframework.stereotype.Component;
 public class TestimonialMapper {
 
   public Testimonial mapAdd(TestimonialRequest testimonialRequest) {
+    if (testimonialRequest.getName().isEmpty() || testimonialRequest.getName() == null) {
+      throw new EmptyInputException("the name field cannot be empty");
+    }
+    if (testimonialRequest.getContent().isEmpty() || testimonialRequest.getContent() == null) {
+      throw new EmptyInputException("the content field cannot be empty");
+    }
     Testimonial testimonial = new Testimonial();
     testimonial.setTestimonialId(testimonialRequest.getTestimonialId());
     testimonial.setContent(testimonialRequest.getContent());
