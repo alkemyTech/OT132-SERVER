@@ -1,8 +1,6 @@
 package com.alkemy.ong.exception;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -25,14 +23,6 @@ public class GlobalHandleException {
     return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
-  @ExceptionHandler(MethodArgumentNotValidException.class)
-  public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(
-      MethodArgumentNotValidException ex) {
-    
-    ErrorResponse errorResponse = buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getFieldErrors());
-    return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.BAD_REQUEST);
-  }
-
   @ExceptionHandler(value = MethodArgumentNotValidException.class)
   public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(
       MethodArgumentNotValidException e) {
@@ -51,23 +41,6 @@ public class GlobalHandleException {
     error.add(message);
     error.setTimestamp(new Timestamp(System.currentTimeMillis()));
     return error;
-  }
-
-  private ErrorResponse buildErrorResponse(HttpStatus status, List<FieldError> fieldErrors) {
-
-    ErrorResponse errorResponse = new ErrorResponse();
-    errorResponse.setStatus(status.value());
-    errorResponse.setTimestamp(new Timestamp(System.currentTimeMillis()));
-
-    List<String> errors = new ArrayList<>();
-
-    for (FieldError fieldError : fieldErrors) {
-      errors.add(fieldError.getDefaultMessage());
-    }
-
-    errorResponse.setMessages(errors);
-
-    return errorResponse;
   }
 
 }
