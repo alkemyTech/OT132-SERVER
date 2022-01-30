@@ -5,25 +5,26 @@ import com.alkemy.ong.exception.ExternalServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UploadImageService {
+public class UploadImageUtils {
 
   @Autowired
   private AwsConfiguration config;
 
-  public String update(IUploadContent content) throws ExternalServiceException {
+  public String upload(IUploadContent content) throws ExternalServiceException {
     try {
       AmazonS3 amazonS3 = config.initializeAmazon();
       String bucketName = config.getBucketName();
       ObjectMetadata metadata = new ObjectMetadata();
       metadata.setContentType(content.getContentType());
-      amazonS3
-          .putObject(new PutObjectRequest(bucketName,
-           content.getContentName(),content.getInputStream(), metadata));
+      amazonS3.putObject(
+          new PutObjectRequest(bucketName,
+              content.getContentName(),
+              content.getInputStream(),
+              metadata));
       return amazonS3.getUrl(bucketName, content.getContentName()).toString();
     } catch (RuntimeException e) {
       throw new ExternalServiceException(e.getMessage());
