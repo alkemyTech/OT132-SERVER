@@ -1,5 +1,7 @@
 package com.alkemy.ong.model.request;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -25,6 +27,9 @@ public class UserRegisterRequest {
   @Min(5)
   @Max(8)
   private String password;
+
+  @JsonInclude(Include.NON_EMPTY)
+  private String role;
 
 
 }

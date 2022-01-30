@@ -1,6 +1,6 @@
 package com.alkemy.ong.controller;
 
-import com.alkemy.ong.exception.ExternalServiceException;
+import com.alkemy.ong.exception.UserRegisterException;
 import com.alkemy.ong.model.request.UserRegisterRequest;
 import com.alkemy.ong.model.response.UserRegisterResponse;
 import com.alkemy.ong.service.abstraction.IRegisterUserService;
@@ -15,14 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("auth")
 public class AuthenticationController {
 
-
   @Autowired
   private IRegisterUserService iRegisterUserService;
 
-
   @PostMapping("/register")
   public ResponseEntity<UserRegisterResponse> getUserRegister(@RequestBody UserRegisterRequest user)
-      throws ExternalServiceException {
+      throws UserRegisterException {
 
     UserRegisterResponse userRegisterResponse = iRegisterUserService.dataRegister(user);
     return ResponseEntity.ok().body(userRegisterResponse);
