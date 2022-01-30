@@ -1,6 +1,6 @@
 package com.alkemy.ong.service;
 
-import com.alkemy.ong.common.JwtUtil;
+import com.alkemy.ong.common.JwtUtils;
 import com.alkemy.ong.exception.InvalidCredentialsException;
 import com.alkemy.ong.mapper.UserMapper;
 import com.alkemy.ong.model.entity.User;
@@ -35,7 +35,7 @@ public class UserService implements UserDetailsService, IGetUserDetails, ILoginS
   private AuthenticationManager authenticationManager;
 
   @Autowired
-  private JwtUtil jwtUtil;
+  private JwtUtils jwtUtil;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -51,7 +51,7 @@ public class UserService implements UserDetailsService, IGetUserDetails, ILoginS
   }
 
   @Override
-  public ListUsersResponse findAll() {
+  public ListUsersResponse findActiveUsers() {
     List<User> users = userRepository.findBySoftDeleteFalse();
     return buildListResponse(users);
   }

@@ -1,6 +1,6 @@
 package com.alkemy.ong.exception;
 
-import java.sql.Timestamp;
+import com.alkemy.ong.common.TimestampUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -31,7 +31,7 @@ public class GlobalHandleException {
     for (FieldError fieldError : e.getFieldErrors()) {
       error.add(fieldError.getDefaultMessage());
     }
-    error.setTimestamp(new Timestamp(System.currentTimeMillis()));
+    error.setTimestamp(TimestampUtils.now());
     return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
   }
 
@@ -46,7 +46,7 @@ public class GlobalHandleException {
     ErrorResponse error = new ErrorResponse();
     error.setStatus(httpStatus.value());
     error.add(message);
-    error.setTimestamp(new Timestamp(System.currentTimeMillis()));
+    error.setTimestamp(TimestampUtils.now());
     return error;
   }
 

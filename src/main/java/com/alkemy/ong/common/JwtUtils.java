@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
-public class JwtUtil {
+public class JwtUtils {
 
   private static final String SECRET_KEY = "somosmas";
   private static final String BEARER_TOKEN = "Bearer %s";

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("slides")
+@RequestMapping("/slides")
 public class SlideController {
 
   @Autowired
@@ -17,7 +17,6 @@ public class SlideController {
 
   @GetMapping
   public ResponseEntity<ListSlideResponse> list() {
-    ListSlideResponse response = getSlideDetails.list();
-    return ResponseEntity.ok().body(response);
+    return ResponseEntity.ok().body(getSlideDetails.list());
   }
 }
