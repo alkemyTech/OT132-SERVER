@@ -42,52 +42,23 @@
         }
       ]
     },
-    {"name": "contacts",
-			"item": [
-				{
-					"name": "Get Contacts",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/contacts",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"contacts"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-    }
-      
-  ]
-},
-{
-      "name": "Slide",
+    {
+      "name": "contacts",
       "item": [
         {
-          "name": "GET Slides",
+          "name": "Get Contacts",
           "request": {
-            "auth": {
-              "type": "basic"
-            },
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/slides",
+              "raw": "http://localhost:8080/contacts",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "slides"
+                "contacts"
               ]
             }
           },
@@ -95,3 +66,43 @@
         }
       ]
     }
+  ]
+},
+{
+"name": "Slide",
+"item": [
+{
+"name": "GET Slides",
+"request": {
+"auth": {
+"type": "basic"
+},
+"method": "GET",
+"header": [],
+"url": {
+"raw": "http://localhost:8080/slides",
+"protocol": "http",
+"host": [
+"localhost"
+],
+"port": "8080",
+"path": [
+"slides"
+]
+}
+},
+"response": []
+}
+]
+{
+"name": "Testimonial",
+"item": [
+{
+"name": "New Request",
+"request": {
+"method": "GET",
+"header": []
+},
+"response": []
+}
+}
