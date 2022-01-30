@@ -1,6 +1,6 @@
 package com.alkemy.ong.controller;
 
-import com.alkemy.ong.model.request.ContactRequest;
+import com.alkemy.ong.model.request.CreateContactRequest;
 
 import com.alkemy.ong.model.response.ContactResponse;
 import com.alkemy.ong.model.response.ListContactResponse;
@@ -8,6 +8,7 @@ import com.alkemy.ong.service.abstraction.ICreateContact;
 import com.alkemy.ong.service.abstraction.IGetContact;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,12 +35,13 @@ public class ContactController {
   }
 
   @PostMapping
-  public ResponseEntity<ContactResponse> add(@Valid @RequestBody ContactRequest contactRequest)
+  public ResponseEntity<ContactResponse> create(
+      @Valid @RequestBody CreateContactRequest contactRequest)
       throws MethodArgumentNotValidException {
 
-    ContactResponse contactResponse = createContact.add(contactRequest);
+    ContactResponse contactResponse = createContact.create(contactRequest);
 
-    return ResponseEntity.ok(contactResponse);
+    return ResponseEntity.status(HttpStatus.CREATED).body(contactResponse);
 
   }
 

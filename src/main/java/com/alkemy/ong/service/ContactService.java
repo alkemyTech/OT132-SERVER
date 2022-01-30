@@ -2,7 +2,7 @@ package com.alkemy.ong.service;
 
 import com.alkemy.ong.mapper.ContactMapper;
 import com.alkemy.ong.model.entity.Contact;
-import com.alkemy.ong.model.request.ContactRequest;
+import com.alkemy.ong.model.request.CreateContactRequest;
 import com.alkemy.ong.model.response.ContactResponse;
 import com.alkemy.ong.model.response.ListContactResponse;
 import com.alkemy.ong.repository.IContactRepository;
@@ -42,16 +42,15 @@ public class ContactService implements IGetContact, ICreateContact {
   }
 
   @Override
-  public ContactResponse add(ContactRequest contactRequest) {
+  public ContactResponse create(CreateContactRequest contactRequest) {
 
     Contact contact = new Contact();
     contact.setName(contactRequest.getName());
     contact.setPhone(contactRequest.getPhone());
     contact.setEmail(contactRequest.getEmail());
     contact.setMessage(contactRequest.getMessage());
-    contactRepository.save(contact);
-
-    return contactMapper.map(contact);
+    
+    return contactMapper.map(contactRepository.save(contact));
   }
   
 
