@@ -1,5 +1,6 @@
 package com.alkemy.ong.exception;
 
+import com.alkemy.ong.exception.advice.EmptyInputErrorResponse;
 import java.sql.Timestamp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +31,11 @@ public class GlobalHandleException {
   }
 
   @ExceptionHandler(EmptyInputException.class)
-  public ResponseEntity<ErrorResponse> handleEmptyInput(EmptyInputException e) {
-    ErrorResponse error = buildErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage());
-    return new ResponseEntity<ErrorResponse>(error, HttpStatus.BAD_REQUEST);
+  public ResponseEntity<EmptyInputErrorResponse> handleEmptyInput(EmptyInputException e) {
+    EmptyInputErrorResponse response = new EmptyInputErrorResponse();
+    response.setStatus(HttpStatus.BAD_REQUEST);
+    response.setMessage(e.getMessage());
+    response.setTimestamp(new Timestamp(System.currentTimeMillis()));
+    return new ResponseEntity<EmptyInputErrorResponse>(response, HttpStatus.BAD_REQUEST);
   }
 }
