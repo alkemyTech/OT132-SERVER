@@ -17,7 +17,7 @@ public class CategoryService implements IGetCategoryDetails {
   @Autowired private ICategoryRepository categoryRepository;
 
   @Override
-  public List<CategoryResponse> findAllCategories() {
+  public List<CategoryResponse> findAll() {
 
     List<Category> categories = categoryRepository.findAllActiveCategories();
 

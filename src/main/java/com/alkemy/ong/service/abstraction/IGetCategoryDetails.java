@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface IGetCategoryDetails {
 
-  List<CategoryResponse> findAllCategories();
+  List<CategoryResponse> findAll();
 }
