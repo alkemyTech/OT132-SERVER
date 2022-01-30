@@ -44,7 +44,7 @@ public class UserService implements UserDetailsService, IGetUserDetails {
   }
 
   private ListUsersResponse buildListResponse(List<User> users) {
-    List<UserResponse> userResponses = userMapper.mapToList(users);
+    List<UserResponse> userResponses = userMapper.map(users);
     ListUsersResponse listUsersResponse = new ListUsersResponse();
     listUsersResponse.setUserResponses(userResponses);
     return listUsersResponse;

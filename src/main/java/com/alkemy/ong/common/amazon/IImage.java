@@ -2,11 +2,12 @@ package com.alkemy.ong.common.amazon;
 
 import java.io.InputStream;
 
-public interface IUploadContent {
+public interface IImage {
 
-  String getContentName();
+  String getName();
 
   String getContentType();
 
   InputStream getInputStream();
+
 }
