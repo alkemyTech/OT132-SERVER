@@ -1,21 +1,24 @@
 package com.alkemy.ong.exception.advice;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
 public class ErrorResponse {
 
-  private int status;
-  private List<String> messages;
+  private HttpStatus status;
+  private String message;
   private Timestamp timestamp;
 
-  public void add(String message) {
-    messages.add(message);
+  public ErrorResponse(HttpStatus status, String message, Timestamp timestamp) {
+    this.status = status;
+    this.message = message;
+    this.timestamp = timestamp;
   }
+
 
 }

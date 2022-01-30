@@ -13,12 +13,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class GlobalHandleException extends ResponseEntityExceptionHandler {
 
-  @ExceptionHandler(value = EmptyInputException.class)
+  @ExceptionHandler(EmptyInputException.class)
   public ResponseEntity<ErrorResponse> handleEmptyInput(EmptyInputException e) {
-    ErrorResponse error = new ErrorResponse();
-    error.setStatus(HttpStatus.BAD_REQUEST.value());
-    error.add(e.getMessage());
-    error.setTimestamp(new Timestamp(System.currentTimeMillis()));
+    ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage(),
+        new Timestamp(System.currentTimeMillis()));
     return new ResponseEntity<ErrorResponse>(error, HttpStatus.BAD_REQUEST);
   }
 
