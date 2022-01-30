@@ -95,6 +95,19 @@
       ]
     },
     {
+      "name": "Testimonial",
+      "item": [
+        {
+          "name": "New Request",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
       "name": "Slide",
       "item": [
         {
@@ -116,19 +129,6 @@
                 "slides"
               ]
             }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Testimonial",
-      "item": [
-        {
-          "name": "New Request",
-          "request": {
-            "method": "GET",
-            "header": []
           },
           "response": []
         }
