@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("categories")
 public class CategoryController {
 
-  @Autowired private IGetCategoryDetails getCategoryDetails;
+  @Autowired 
+	private IGetCategoryDetails getCategoryDetails;
 
   @GetMapping
-  public ResponseEntity<List<CategoryResponse>> getListOfCategories() {
+  public ResponseEntity<List<CategoryResponse>> list() {
 
     List<CategoryResponse> categoryList = getCategoryDetails.findAll();
 
