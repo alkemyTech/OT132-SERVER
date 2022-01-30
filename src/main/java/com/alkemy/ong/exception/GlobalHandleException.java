@@ -35,6 +35,13 @@ public class GlobalHandleException {
     return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
   }
 
+  @ExceptionHandler(InvalidCredentialsException.class)
+  public ResponseEntity<ErrorResponse> handleInvalidCredentialsException(
+      InvalidCredentialsException e) {
+    ErrorResponse error = buildErrorResponse(HttpStatus.UNAUTHORIZED, e.getMessage());
+    return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+  }
+
   private ErrorResponse buildErrorResponse(HttpStatus httpStatus, String message) {
     ErrorResponse error = new ErrorResponse();
     error.setStatus(httpStatus.value());

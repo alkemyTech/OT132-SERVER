@@ -1,5 +1,6 @@
 package com.alkemy.ong.common;
 
+import com.alkemy.ong.model.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -60,6 +61,11 @@ public class JwtUtil {
         .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
         .signWith(SignatureAlgorithm.HS256, SECRET_KEY.getBytes(StandardCharsets.UTF_8)).compact();
     return String.format(BEARER_TOKEN, token);
+  }
+
+  public String generateToken(UserDetails userDetails) {
+    User user = (User) userDetails;
+    return createToken(user.getUsername(), user.getRoles().get(0).getName());
   }
 
   public boolean validateToken(String token, UserDetails userDetails) {
