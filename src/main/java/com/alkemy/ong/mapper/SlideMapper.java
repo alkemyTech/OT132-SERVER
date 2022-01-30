@@ -32,7 +32,7 @@ public class SlideMapper {
     return slideResponse;
   }
 
-  public List<SlideResponse> mapList(List<Slide> slides, SlideAttributes... slideAttributes) {
+  public List<SlideResponse> map(List<Slide> slides, SlideAttributes... slideAttributes) {
     List<SlideResponse> slideResponses = new ArrayList<>(slides.size());
     for (Slide slide : slides) {
       slideResponses.add(map(slide, slideAttributes));
