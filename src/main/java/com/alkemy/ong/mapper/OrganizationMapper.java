@@ -26,7 +26,7 @@ public class OrganizationMapper {
   }
 
   private List<SlideResponse> map(List<Slide> slides) {
-    return slideMapper.mapList(slides,
+    return slideMapper.map(slides,
         SlideAttributes.TEXT,
         SlideAttributes.IMAGE_URL,
         SlideAttributes.ORDER);
