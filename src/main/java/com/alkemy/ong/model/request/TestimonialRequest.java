@@ -4,21 +4,19 @@ import java.sql.Timestamp;
 import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
 
 @Getter
 @Setter
-@Component
 public class TestimonialRequest {
 
   private Long testimonialId;
 
-  @NotBlank
+  @NotBlank(message = "the name field cannot be empty")
   private String name;
 
   private String image;
 
-  @NotBlank
+  @NotBlank(message = "the content field cannot be empty")
   private String content;
 
   private Timestamp timestamp;

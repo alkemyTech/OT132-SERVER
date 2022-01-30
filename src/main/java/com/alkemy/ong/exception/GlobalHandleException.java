@@ -1,9 +1,9 @@
 package com.alkemy.ong.exception;
 
-import com.alkemy.ong.exception.advice.EmptyInputErrorResponse;
 import java.sql.Timestamp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -30,12 +30,10 @@ public class GlobalHandleException {
     return error;
   }
 
-  @ExceptionHandler(EmptyInputException.class)
-  public ResponseEntity<EmptyInputErrorResponse> handleEmptyInput(EmptyInputException e) {
-    EmptyInputErrorResponse response = new EmptyInputErrorResponse();
-    response.setStatus(HttpStatus.BAD_REQUEST);
-    response.setMessage(e.getMessage());
-    response.setTimestamp(new Timestamp(System.currentTimeMillis()));
-    return new ResponseEntity<EmptyInputErrorResponse>(response, HttpStatus.BAD_REQUEST);
+  @ExceptionHandler(value = MethodArgumentNotValidException.class)
+  public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(
+      MethodArgumentNotValidException e) {
+    ErrorResponse error = buildErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage());
+    return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
   }
 }
