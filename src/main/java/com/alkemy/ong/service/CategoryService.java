@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CategoryService implements IGetCategoryDetails {
 
-  @Autowired private CategoryMapper mapper;
+  @Autowired private CategoryMapper categoryMapper;
 
   @Autowired private ICategoryRepository categoryRepository;
 
@@ -21,6 +21,6 @@ public class CategoryService implements IGetCategoryDetails {
 
     List<Category> categories = categoryRepository.findAllActiveCategories();
 
-    return mapper.listMap(categories);
+    return categoryMapper.listMap(categories);
   }
 }
