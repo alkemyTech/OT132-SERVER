@@ -43,16 +43,8 @@ public class ContactService implements IGetContact, ICreateContact {
 
   @Override
   public ContactResponse create(CreateContactRequest contactRequest) {
-
-    Contact contact = new Contact();
-    contact.setName(contactRequest.getName());
-    contact.setPhone(contactRequest.getPhone());
-    contact.setEmail(contactRequest.getEmail());
-    contact.setMessage(contactRequest.getMessage());
-    
+    Contact contact = contactMapper.map(contactRequest);
     return contactMapper.map(contactRepository.save(contact));
   }
-  
-
 
 }

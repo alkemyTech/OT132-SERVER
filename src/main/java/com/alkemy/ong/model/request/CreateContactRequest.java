@@ -10,16 +10,15 @@ import lombok.Setter;
 @Setter
 public class CreateContactRequest {
 
-  @NotBlank(message = "Field NAME can't be null or empty")
-  @Size(min = 2, max = 70, message = "Name can have between 2 and 70 characters")
+  @NotBlank(message = "Name cannot be empty or null.")
+  @Size(min = 2, max = 70, message = "Name can have between 2 and 70 characters.")
   private String name;
-
 
   private Integer phone;
 
-  @Email(message = "Email is not valid")
-  @NotBlank(message = "Field EMAIL can't be null or empty")
-  @Size(min = 5, max = 150, message = "Email need to have between 5 and 150 characters")
+  @Email(message = "Email is not valid.")
+  @NotBlank(message = "Email cannot be empty or null.")
+  @Size(min = 5, max = 150, message = "Email need to have between 5 and 150 characters.")
   private String email;
 
   private String message;
