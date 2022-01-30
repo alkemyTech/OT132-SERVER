@@ -13,9 +13,9 @@ public class CategoryMapper {
 
     List<CategoryResponse> categoryResponseList = new ArrayList<>();
 
-    for (Category aux : categories) {
+    for (Category category : categories) {
       CategoryResponse categoryResponse = new CategoryResponse();
-      categoryResponse.setName(aux.getName());
+      categoryResponse.setName(category.getName());
       categoryResponseList.add(categoryResponse);
     }
 
