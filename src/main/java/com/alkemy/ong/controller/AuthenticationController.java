@@ -24,7 +24,7 @@ public class AuthenticationController {
   @PostMapping("/login")
   public ResponseEntity<AuthenticationResponse> login(
       @RequestBody @Valid AuthenticationRequest authenticationRequest)
-      throws InvalidCredentialsException{
+      throws InvalidCredentialsException {
     AuthenticationResponse user = loginService.login(authenticationRequest);
     return ResponseEntity.ok(user);
   }

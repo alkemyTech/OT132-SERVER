@@ -20,11 +20,9 @@ public class ErrorResponse {
   }
 
   public void add(String message) {
-<<<<<<< HEAD
-    messages.add(message);
-=======
+
     this.messages.add(message);
->>>>>>> main
+
   }
 
 }
