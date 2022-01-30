@@ -2,11 +2,12 @@ package com.alkemy.ong.mapper.attribute;
 
 public enum TestimonialAttributes {
 
+  ID("testimonialId"),
   NAME("name"),
   IMAGE("image"),
   CONTENT("content"),
   TIMESTAMP("timestamp"),
-  SOFTDELETE("SOFT_DELETE");
+  SOFT_DELETE("softDelete");
 
   private final String fieldName;
 
@@ -17,4 +18,5 @@ public enum TestimonialAttributes {
   public String getFieldName() {
     return this.fieldName;
   }
+
 }

@@ -1,6 +1,6 @@
 package com.alkemy.ong.controller;
 
-import com.alkemy.ong.model.request.TestimonialRequest;
+import com.alkemy.ong.model.request.CreateTestimonialRequest;
 import com.alkemy.ong.model.response.TestimonialResponse;
 import com.alkemy.ong.service.abstraction.ICreateTestimonial;
 import javax.validation.Valid;
@@ -17,12 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestimonialController {
 
   @Autowired
-  private ICreateTestimonial postTestimonial;
+  private ICreateTestimonial createTestimonial;
 
   @PostMapping
   public ResponseEntity<TestimonialResponse> create(
-      @RequestBody @Valid TestimonialRequest testimonialRequest) {
-    TestimonialResponse testimonialResponse = postTestimonial.create(testimonialRequest);
+      @RequestBody @Valid CreateTestimonialRequest createTestimonialRequest) {
+    TestimonialResponse testimonialResponse = createTestimonial.create(createTestimonialRequest);
     return ResponseEntity.status(HttpStatus.CREATED).body(testimonialResponse);
   }
+
 }

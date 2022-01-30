@@ -9,6 +9,8 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TestimonialResponse {
 
+  private Long testimonialsId;
+
   private String name;
 
   private String image;

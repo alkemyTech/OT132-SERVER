@@ -2,7 +2,7 @@ package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.mapper.attribute.TestimonialAttributes;
 import com.alkemy.ong.model.entity.Testimonial;
-import com.alkemy.ong.model.request.TestimonialRequest;
+import com.alkemy.ong.model.request.CreateTestimonialRequest;
 import com.alkemy.ong.model.response.TestimonialResponse;
 import java.text.MessageFormat;
 import org.springframework.stereotype.Component;
@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class TestimonialMapper {
 
-  public Testimonial map(TestimonialRequest testimonialRequest) {
+  public Testimonial map(CreateTestimonialRequest createTestimonialRequest) {
     Testimonial testimonial = new Testimonial();
-    testimonial.setContent(testimonialRequest.getContent());
-    testimonial.setImage(testimonialRequest.getImage());
-    testimonial.setName(testimonialRequest.getName());
+    testimonial.setContent(createTestimonialRequest.getContent());
+    testimonial.setImage(createTestimonialRequest.getImage());
+    testimonial.setName(createTestimonialRequest.getName());
     return testimonial;
   }
 
@@ -23,6 +23,9 @@ public class TestimonialMapper {
     TestimonialResponse testimonialResponse = new TestimonialResponse();
     for (TestimonialAttributes testimonialAttribute : testimonialAttributes) {
       switch (testimonialAttribute) {
+        case ID:
+          testimonialResponse.setTestimonialsId(testimonial.getTestimonialId());
+          break;
         case NAME:
           testimonialResponse.setName(testimonial.getName());
           break;
