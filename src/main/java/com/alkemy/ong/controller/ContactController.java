@@ -31,7 +31,7 @@ public class ContactController {
     ListContactResponse contactResponse = getContact.list();
     return ResponseEntity.ok(contactResponse);
   }
- 
+
   @PostMapping
   public ResponseEntity<ContactResponse> add(@Valid @RequestBody ContactRequest contactRequest)
       throws MethodArgumentNotValidException {
