@@ -8,10 +8,10 @@ import lombok.Setter;
 public class AuthenticationResponse {
 
   private String email;
-  private String jwt;
+  private String token;
 
-  public AuthenticationResponse(String email, String jwt) {
+  public AuthenticationResponse(String email, String token) {
     this.email = email;
-    this.jwt = jwt;
+    this.token = token;
   }
 }
