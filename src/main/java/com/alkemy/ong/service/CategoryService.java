@@ -19,7 +19,7 @@ public class CategoryService implements IGetCategoryDetails {
   @Override
   public List<CategoryResponse> findAll() {
 
-    List<Category> categories = categoryRepository.findAllActiveCategories();
+    List<Category> categories = categoryRepository.findBySoftDeleteFalseOrderByName();
 
     return categoryMapper.listMap(categories);
   }
