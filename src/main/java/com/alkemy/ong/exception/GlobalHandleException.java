@@ -1,23 +1,37 @@
 package com.alkemy.ong.exception;
 
-import com.alkemy.ong.exception.advice.ErrorResponse;
 import java.sql.Timestamp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-@Component
 @ControllerAdvice
-public class GlobalHandleException extends ResponseEntityExceptionHandler {
+public class GlobalHandleException {
+
+  @ExceptionHandler(value = ExternalServiceException.class)
+  public ResponseEntity<ErrorResponse> handleExternalServiceException(ExternalServiceException e) {
+    ErrorResponse error = buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+    return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  @ExceptionHandler(value = RuntimeException.class)
+  public ResponseEntity<ErrorResponse> handleRuntimeException(RuntimeException e) {
+    ErrorResponse error = buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+    return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  private ErrorResponse buildErrorResponse(HttpStatus httpStatus, String message) {
+    ErrorResponse error = new ErrorResponse();
+    error.setStatus(httpStatus.value());
+    error.add(message);
+    error.setTimestamp(new Timestamp(System.currentTimeMillis()));
+    return error;
+  }
 
   @ExceptionHandler(EmptyInputException.class)
   public ResponseEntity<ErrorResponse> handleEmptyInput(EmptyInputException e) {
-    ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage(),
-        new Timestamp(System.currentTimeMillis()));
+    ErrorResponse error = buildErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage());
     return new ResponseEntity<ErrorResponse>(error, HttpStatus.BAD_REQUEST);
   }
-
 }
