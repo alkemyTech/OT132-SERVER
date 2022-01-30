@@ -20,7 +20,6 @@ public class TestimonialMapper {
       throw new EmptyInputException("the content field cannot be empty");
     }
     Testimonial testimonial = new Testimonial();
-    testimonial.setTestimonialId(testimonialRequest.getTestimonialId());
     testimonial.setContent(testimonialRequest.getContent());
     testimonial.setImage(testimonialRequest.getImage());
     testimonial.setName(testimonialRequest.getName());

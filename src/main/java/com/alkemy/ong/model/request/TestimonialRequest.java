@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class TestimonialRequest {
 
-  @NotBlank
   private Long testimonialId;
 
   @NotBlank

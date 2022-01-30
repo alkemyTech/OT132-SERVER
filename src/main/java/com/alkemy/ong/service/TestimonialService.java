@@ -1,6 +1,5 @@
 package com.alkemy.ong.service;
 
-import com.alkemy.ong.exception.EmptyInputException;
 import com.alkemy.ong.mapper.TestimonialMapper;
 import com.alkemy.ong.mapper.attribute.TestimonialAttributes;
 import com.alkemy.ong.model.entity.Testimonial;
@@ -21,13 +20,11 @@ public class TestimonialService implements IPostTestimonial {
 
   @Override
   public TestimonialResponse create(TestimonialRequest testimonialRequest) {
-    Testimonial testimonial = null;
-    testimonial = testimonialMapper.mapAdd(testimonialRequest);
+    Testimonial testimonial = testimonial = testimonialMapper.mapAdd(testimonialRequest);
     testimonialRepository.save(testimonial);
-    TestimonialResponse testimonialResponse = testimonialMapper.map(testimonial,
+    return testimonialMapper.map(testimonial,
         TestimonialAttributes.ID, TestimonialAttributes.CONTENT, TestimonialAttributes.IMAGE,
         TestimonialAttributes.SOFTDELETE, TestimonialAttributes.NAME,
         TestimonialAttributes.TIMESTAMP);
-    return testimonialResponse;
   }
 }

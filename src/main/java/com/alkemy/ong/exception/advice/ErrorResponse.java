@@ -1,4 +1,4 @@
-package com.alkemy.ong.exception;
+package com.alkemy.ong.exception.advice;
 
 import java.sql.Timestamp;
 import java.util.List;
