@@ -27,7 +27,7 @@ public class SlideService implements IGetSlideDetails {
   }
 
   private ListSlideResponse buildListSlideResponse(List<Slide> slide) {
-    List<SlideResponse> slideResponses = slideMapper.mapList(
+    List<SlideResponse> slideResponses = slideMapper.map(
         slide,
         SlideAttributes.IMAGE_URL,
         SlideAttributes.ORDER);
