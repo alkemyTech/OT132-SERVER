@@ -15,7 +15,7 @@ public class CategoryController {
 
   @Autowired private IGetCategoryDetails getCategoryDetails;
 
-  @GetMapping("/list")
+  @GetMapping
   public ResponseEntity<List<CategoryResponse>> getListOfCategories() {
 
     List<CategoryResponse> categoryList = getCategoryDetails.findAllCategories();
