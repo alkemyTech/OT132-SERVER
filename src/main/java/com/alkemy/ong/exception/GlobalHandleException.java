@@ -25,12 +25,16 @@ public class GlobalHandleException {
     return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
-  @ExceptionHandler(MethodArgumentNotValidException.class)
+  @ExceptionHandler(value = MethodArgumentNotValidException.class)
   public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(
-      MethodArgumentNotValidException ex) {
-    
-    ErrorResponse errorResponse = buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getFieldErrors());
-    return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.BAD_REQUEST);
+      MethodArgumentNotValidException e) {
+    ErrorResponse error = new ErrorResponse();
+    error.setStatus(HttpStatus.BAD_REQUEST.value());
+    for (FieldError fieldError : e.getFieldErrors()) {
+      error.add(fieldError.getDefaultMessage());
+    }
+    error.setTimestamp(new Timestamp(System.currentTimeMillis()));
+    return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
   }
 
   private ErrorResponse buildErrorResponse(HttpStatus httpStatus, String message) {
@@ -39,23 +43,6 @@ public class GlobalHandleException {
     error.add(message);
     error.setTimestamp(new Timestamp(System.currentTimeMillis()));
     return error;
-  }
-
-  private ErrorResponse buildErrorResponse(HttpStatus status, List<FieldError> fieldErrors) {
-
-    ErrorResponse errorResponse = new ErrorResponse();
-    errorResponse.setStatus(status.value());
-    errorResponse.setTimestamp(new Timestamp(System.currentTimeMillis()));
-
-    List<String> errors = new ArrayList<>();
-
-    for (FieldError fieldError : fieldErrors) {
-      errors.add(fieldError.getDefaultMessage());
-    }
-
-    errorResponse.setMessages(errors);
-
-    return errorResponse;
   }
 
 }
