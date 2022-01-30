@@ -10,9 +10,9 @@ import lombok.Setter;
 public class AuthenticationRequest {
 
   @Email(message = "Email has invalid format.")
-  @NotBlank(message = "Emails can not be blank.")
+  @NotBlank(message = "Emails cannot be blank.")
   private String email;
 
-  @NotBlank(message = "Password can not be blank.")
+  @NotBlank(message = "Password cannot be blank.")
   private String password;
 }

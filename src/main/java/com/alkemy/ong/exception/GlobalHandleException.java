@@ -1,7 +1,6 @@
 package com.alkemy.ong.exception;
 
 import java.sql.Timestamp;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -36,22 +35,19 @@ public class GlobalHandleException {
     return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
   }
 
+  @ExceptionHandler(InvalidCredentialsException.class)
+  public ResponseEntity<ErrorResponse> handleInvalidCredentialsException(
+      InvalidCredentialsException e) {
+    ErrorResponse error = buildErrorResponse(HttpStatus.UNAUTHORIZED, e.getMessage());
+    return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+  }
+
   private ErrorResponse buildErrorResponse(HttpStatus httpStatus, String message) {
     ErrorResponse error = new ErrorResponse();
     error.setStatus(httpStatus.value());
     error.add(message);
     error.setTimestamp(new Timestamp(System.currentTimeMillis()));
     return error;
-  }
-
-  @ExceptionHandler(InvalidCredentialsException.class)
-  public ResponseEntity<ErrorResponse> handleInvalidCredentialsException(
-      InvalidCredentialsException e) {
-    ErrorResponse error = new ErrorResponse();
-    error.setStatus(HttpStatus.UNAUTHORIZED.value());
-    error.add(e.getMessage());
-    error.setTimestamp(new Timestamp(System.currentTimeMillis()));
-    return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
   }
 
 }

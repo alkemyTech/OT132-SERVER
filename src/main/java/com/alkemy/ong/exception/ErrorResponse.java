@@ -20,9 +20,7 @@ public class ErrorResponse {
   }
 
   public void add(String message) {
-
     this.messages.add(message);
-
   }
 
 }
