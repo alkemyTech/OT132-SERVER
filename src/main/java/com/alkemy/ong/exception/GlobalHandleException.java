@@ -1,10 +1,10 @@
 package com.alkemy.ong.exception;
 
-import com.alkemy.ong.model.response.ErrorResponse;
 import java.sql.Timestamp;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,7 +19,7 @@ public class GlobalHandleException extends ResponseEntityExceptionHandler {
       InvalidCredentialsException e) {
     ErrorResponse error = new ErrorResponse();
     error.setStatus(HttpStatus.UNAUTHORIZED.value());
-    error.setMessage(e.getMessage());
+    error.add(e.getMessage());
     error.setTimestamp(new Timestamp(System.currentTimeMillis()));
     return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
   }
@@ -28,10 +28,11 @@ public class GlobalHandleException extends ResponseEntityExceptionHandler {
   protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
       HttpHeaders headers, HttpStatus status, WebRequest request) {
     ErrorResponse error = new ErrorResponse();
-    error.setStatus(HttpStatus.BAD_REQUEST.value());
-    error.setMessage(ex.getBindingResult().getFieldError().getDefaultMessage());
-    error.setTimestamp(new Timestamp(System.currentTimeMillis()));
-
+    for (ObjectError objectError : ex.getBindingResult().getAllErrors()) {
+      error.setStatus(HttpStatus.BAD_REQUEST.value());
+      error.add(objectError.getDefaultMessage());
+      error.setTimestamp(new Timestamp(System.currentTimeMillis()));
+    }
     return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
   }
 }
