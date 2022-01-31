@@ -9,5 +9,4 @@ public class ActivityResponse {
 
   private String name;
   private String content;
-  private String image;
 }

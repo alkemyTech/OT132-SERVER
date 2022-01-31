@@ -1,6 +1,6 @@
 package com.alkemy.ong.controller;
 
-import com.alkemy.ong.model.request.ActivityRequest;
+import com.alkemy.ong.model.request.CreateActivityRequest;
 import com.alkemy.ong.model.response.ActivityResponse;
 import com.alkemy.ong.service.abstraction.ICreateActivityService;
 import javax.validation.Valid;
@@ -21,8 +21,8 @@ public class ActivityController {
 
   @PostMapping
   public ResponseEntity<ActivityResponse> create(
-      @RequestBody @Valid ActivityRequest activityRequest) {
-    ActivityResponse activityResponse = createActivityService.create(activityRequest);
+      @RequestBody @Valid CreateActivityRequest createActivityRequest) {
+    ActivityResponse activityResponse = createActivityService.create(createActivityRequest);
     return ResponseEntity.status(HttpStatus.CREATED).body(activityResponse);
   }
 }

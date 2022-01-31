@@ -11,7 +11,6 @@ public class ActivityMapper {
     ActivityResponse activityResponse = new ActivityResponse();
     activityResponse.setName(activity.getName());
     activityResponse.setContent(activity.getContent());
-    activityResponse.setImage(activity.getImage());
     return activityResponse;
   }
 }
