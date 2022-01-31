@@ -1,7 +1,7 @@
 package com.alkemy.ong.controller;
 
-import com.alkemy.ong.model.response.ListUsersResponse;
-import com.alkemy.ong.service.abstraction.IGetUserDetails;
+import com.alkemy.ong.model.response.ListSlideResponse;
+import com.alkemy.ong.service.abstraction.IGetSlideDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,15 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping
-public class UserController {
+@RequestMapping("/slides")
+public class SlideController {
 
   @Autowired
-  private IGetUserDetails getUserDetails;
+  private IGetSlideDetails getSlideDetails;
 
-  @GetMapping("/users")
-  public ResponseEntity<ListUsersResponse> list() {
-    return ResponseEntity.ok().body(getUserDetails.findActiveUsers());
+  @GetMapping
+  public ResponseEntity<ListSlideResponse> list() {
+    return ResponseEntity.ok().body(getSlideDetails.list());
   }
-
 }

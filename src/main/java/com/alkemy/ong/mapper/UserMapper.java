@@ -21,7 +21,7 @@ public class UserMapper {
     return userResponse;
   }
 
-  public List<UserResponse> mapToList(List<User> users) {
+  public List<UserResponse> map(List<User> users) {
     List<UserResponse> userResponses = new ArrayList<>(users.size());
     for (User user : users) {
       userResponses.add(map(user));

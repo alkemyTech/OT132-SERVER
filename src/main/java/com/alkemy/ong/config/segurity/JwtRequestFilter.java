@@ -1,6 +1,6 @@
 package com.alkemy.ong.config.segurity;
 
-import com.alkemy.ong.common.JwtUtil;
+import com.alkemy.ong.common.JwtUtils;
 import io.jsonwebtoken.Claims;
 import java.io.IOException;
 import java.util.List;
@@ -25,7 +25,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
   private static final String AUTHORITIES = "authorities";
 
   @Autowired
-  private JwtUtil jwtUtil;
+  private JwtUtils jwtUtil;
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
