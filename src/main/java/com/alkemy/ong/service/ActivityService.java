@@ -8,7 +8,9 @@ import com.alkemy.ong.repository.IActivityRepository;
 import com.alkemy.ong.service.abstraction.ICreateActivityService;
 import java.sql.Timestamp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ActivityService implements ICreateActivityService {
 
   @Autowired

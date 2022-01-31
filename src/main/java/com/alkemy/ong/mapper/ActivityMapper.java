@@ -2,10 +2,12 @@ package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.model.entity.Activity;
 import com.alkemy.ong.model.response.ActivityResponse;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ActivityMapper {
 
-  public ActivityResponse map (Activity activity){
+  public ActivityResponse map(Activity activity) {
     ActivityResponse activityResponse = new ActivityResponse();
     activityResponse.setName(activity.getName());
     activityResponse.setContent(activity.getContent());
