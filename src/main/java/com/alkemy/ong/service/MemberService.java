@@ -38,7 +38,7 @@ public class MemberService implements IGetMemberDetails, ICreateMember {
   @Override
   public MemberResponse save(CreateMemberRequest createMemberRequest) {
     Member member = memberMapper.map(createMemberRequest);
-    memberRepository.save(member);
-    return memberMapper.map(member);
+    member.setSoftDelete(false);
+    return memberMapper.map(memberRepository.save(member));
   }
 }
