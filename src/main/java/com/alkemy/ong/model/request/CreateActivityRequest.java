@@ -14,4 +14,6 @@ public class CreateActivityRequest {
   @NotBlank(message = "Content can not be empty or null")
   private String content;
 
+  private String image;
+
 }
