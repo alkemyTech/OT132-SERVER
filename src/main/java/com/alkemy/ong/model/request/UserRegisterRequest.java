@@ -1,10 +1,6 @@
 package com.alkemy.ong.model.request;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,23 +9,17 @@ import lombok.Setter;
 @Setter
 public class UserRegisterRequest {
 
-  @NotBlank
+  @NotBlank(message = "First name cannot be empty or null.")
   private String firstName;
 
-  @NotBlank
+  @NotBlank(message = "Last name cannot be empty or null.")
   private String lastName;
 
-  @NotBlank
-  @Email(message = "The e-mail is not valid")
+  @NotBlank(message = "Email cannot be empty or null.")
+  @Email(message = "Email is not valid.")
   private String email;
 
-  @NotBlank
-  @Min(5)
-  @Max(8)
+  @NotBlank(message = "Password cannot be empty or null.")
   private String password;
-
-  @JsonInclude(Include.NON_EMPTY)
-  private String role;
-
 
 }

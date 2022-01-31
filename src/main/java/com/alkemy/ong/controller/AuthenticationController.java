@@ -5,7 +5,7 @@ import com.alkemy.ong.exception.UserRegisterException;
 import com.alkemy.ong.model.request.AuthenticationRequest;
 import com.alkemy.ong.model.request.UserRegisterRequest;
 import com.alkemy.ong.model.response.AuthenticationResponse;
-import com.alkemy.ong.model.response.UserRegisterResponse;
+import com.alkemy.ong.model.response.UserResponse;
 import com.alkemy.ong.service.abstraction.ILoginService;
 import com.alkemy.ong.service.abstraction.IRegisterUserService;
 import javax.validation.Valid;
@@ -35,9 +35,10 @@ public class AuthenticationController {
   }
 
   @PostMapping("/register")
-  public ResponseEntity<UserRegisterResponse> register(@RequestBody UserRegisterRequest user)
+  public ResponseEntity<UserResponse> register(
+      @RequestBody @Valid UserRegisterRequest userRegisterRequest)
       throws UserRegisterException {
-    UserRegisterResponse response = userService.dataRegister(user);
+    UserResponse response = userService.register(userRegisterRequest);
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
