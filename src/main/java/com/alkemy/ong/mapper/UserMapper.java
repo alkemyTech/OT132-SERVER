@@ -1,6 +1,7 @@
 package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.model.entity.User;
+import com.alkemy.ong.model.request.UserRegisterRequest;
 import com.alkemy.ong.model.response.UserResponse;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,15 @@ public class UserMapper {
       userResponses.add(map(user));
     }
     return userResponses;
+  }
+
+  public User map(UserRegisterRequest userRequest, String passwordEncrypted) {
+    User userRegisterRequest = new User();
+    userRegisterRequest.setFirstName(userRequest.getFirstName());
+    userRegisterRequest.setLastName(userRequest.getLastName());
+    userRegisterRequest.setEmail(userRequest.getEmail());
+    userRegisterRequest.setPassword(passwordEncrypted);
+    return userRegisterRequest;
   }
 
 }
