@@ -17,7 +17,7 @@ public class MemberController {
 
   @GetMapping
   public ResponseEntity<ListMembersResponse> list() {
-    ListMembersResponse list = getMemberDetails.findAll();
-    return ResponseEntity.ok().body(list);
+    ListMembersResponse listMembersResponse = getMemberDetails.findAll();
+    return ResponseEntity.ok().body(listMembersResponse);
   }
 }
