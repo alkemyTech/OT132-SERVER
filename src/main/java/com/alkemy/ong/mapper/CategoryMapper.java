@@ -11,7 +11,7 @@ public class CategoryMapper {
 
   public List<CategoryResponse> map(List<Category> categories) {
 
-    List<CategoryResponse> response = new ArrayList<>();
+    List<CategoryResponse> response = new ArrayList<>(categories.size());
 
     for (Category category : categories) {
       CategoryResponse categoryResponse = new CategoryResponse();
