@@ -1,7 +1,7 @@
 package com.alkemy.ong.service;
 
 import com.alkemy.ong.config.segurity.RoleType;
-import com.alkemy.ong.exception.UserRegisterException;
+import com.alkemy.ong.exception.UserAlreadyExistException;
 import com.alkemy.ong.mapper.UserMapper;
 import com.alkemy.ong.model.entity.User;
 import com.alkemy.ong.model.request.UserRegisterRequest;
@@ -26,9 +26,9 @@ public class UserRegisterService implements IRegisterUserService {
 
   @Override
   public UserResponse register(UserRegisterRequest userRegisterRequest)
-      throws UserRegisterException {
+      throws UserAlreadyExistException {
     if (userRepository.findByEmail(userRegisterRequest.getEmail()) != null) {
-      throw new UserRegisterException("This e-mail is already in use");
+      throw new UserAlreadyExistException();
     }
 
     User user = userMapper.map(userRegisterRequest,
