@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CategoryMapper {
 
-  public List<CategoryResponse> listMap(List<Category> categories) {
+  public List<CategoryResponse> map(List<Category> categories) {
 
     List<CategoryResponse> categoryResponseList = new ArrayList<>();
 

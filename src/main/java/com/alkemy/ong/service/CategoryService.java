@@ -21,6 +21,6 @@ public class CategoryService implements IGetCategoryDetails {
 
     List<Category> categories = categoryRepository.findBySoftDeleteFalseOrderByName();
 
-    return categoryMapper.listMap(categories);
+    return categoryMapper.map(categories);
   }
 }
