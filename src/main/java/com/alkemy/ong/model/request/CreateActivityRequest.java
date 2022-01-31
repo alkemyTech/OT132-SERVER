@@ -8,12 +8,13 @@ import lombok.Setter;
 @Setter
 public class CreateActivityRequest {
 
-  @NotBlank(message = "Name can not be empty or null")
+  @NotBlank(message = "Name cannot be empty or null.")
   private String name;
 
-  @NotBlank(message = "Content can not be empty or null")
+  @NotBlank(message = "Content cannot be empty or null.")
   private String content;
 
+  @NotBlank(message = "Image cannot be empty or null.")
   private String image;
 
 }
