@@ -4,6 +4,6 @@ import com.alkemy.ong.model.response.ListUsersResponse;
 
 public interface IGetUserDetails {
 
-  ListUsersResponse findAll();
+  ListUsersResponse findActiveUsers();
 
 }

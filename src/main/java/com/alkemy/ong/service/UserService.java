@@ -1,20 +1,27 @@
 package com.alkemy.ong.service;
 
+import com.alkemy.ong.common.JwtUtils;
+import com.alkemy.ong.exception.InvalidCredentialsException;
 import com.alkemy.ong.mapper.UserMapper;
 import com.alkemy.ong.model.entity.User;
+import com.alkemy.ong.model.request.AuthenticationRequest;
+import com.alkemy.ong.model.response.AuthenticationResponse;
 import com.alkemy.ong.model.response.ListUsersResponse;
 import com.alkemy.ong.model.response.UserResponse;
 import com.alkemy.ong.repository.IUserRepository;
 import com.alkemy.ong.service.abstraction.IGetUserDetails;
+import com.alkemy.ong.service.abstraction.ILoginService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService implements UserDetailsService, IGetUserDetails {
+public class UserService implements UserDetailsService, IGetUserDetails, ILoginService {
 
   private static final String USER_NOT_FOUND_MESSAGE = "User not found.";
 
@@ -23,6 +30,12 @@ public class UserService implements UserDetailsService, IGetUserDetails {
 
   @Autowired
   private UserMapper userMapper;
+
+  @Autowired
+  private AuthenticationManager authenticationManager;
+
+  @Autowired
+  private JwtUtils jwtUtil;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -38,16 +51,30 @@ public class UserService implements UserDetailsService, IGetUserDetails {
   }
 
   @Override
-  public ListUsersResponse findAll() {
+  public ListUsersResponse findActiveUsers() {
     List<User> users = userRepository.findBySoftDeleteFalse();
     return buildListResponse(users);
   }
 
   private ListUsersResponse buildListResponse(List<User> users) {
-    List<UserResponse> userResponses = userMapper.mapToList(users);
+    List<UserResponse> userResponses = userMapper.map(users);
     ListUsersResponse listUsersResponse = new ListUsersResponse();
     listUsersResponse.setUserResponses(userResponses);
     return listUsersResponse;
   }
 
+  @Override
+  public AuthenticationResponse login(AuthenticationRequest authenticationRequest)
+      throws InvalidCredentialsException {
+    User user = userRepository.findByEmail(authenticationRequest.getEmail());
+    if (user == null) {
+      throw new InvalidCredentialsException("Invalid email or password");
+    }
+
+    authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),
+            authenticationRequest.getPassword()));
+
+    return new AuthenticationResponse(user.getEmail(), jwtUtil.generateToken(user));
+  }
 }

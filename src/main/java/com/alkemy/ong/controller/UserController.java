@@ -17,8 +17,7 @@ public class UserController {
 
   @GetMapping("/users")
   public ResponseEntity<ListUsersResponse> list() {
-    ListUsersResponse listUsersResponse = getUserDetails.findAll();
-    return ResponseEntity.ok().body(listUsersResponse);
+    return ResponseEntity.ok().body(getUserDetails.findActiveUsers());
   }
 
 }
