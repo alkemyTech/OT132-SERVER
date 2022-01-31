@@ -1,6 +1,7 @@
 package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.model.entity.Member;
+import com.alkemy.ong.model.request.CreateMemberRequest;
 import com.alkemy.ong.model.response.MemberResponse;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,5 +28,16 @@ public class MemberMapper {
       memberResponses.add(map(member));
     }
     return memberResponses;
+  }
+
+  public Member map(CreateMemberRequest createMemberRequest) {
+    Member member = new Member();
+    member.setName(createMemberRequest.getName());
+    member.setFacebookUrl(createMemberRequest.getFacebookUrl());
+    member.setInstagramUrl(createMemberRequest.getInstagramUrl());
+    member.setLinkedinUrl(createMemberRequest.getLinkedinUrl());
+    member.setImage(createMemberRequest.getImage());
+    member.setDescription(createMemberRequest.getDescription());
+    return member;
   }
 }
