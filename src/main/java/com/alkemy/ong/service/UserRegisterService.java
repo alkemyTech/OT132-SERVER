@@ -17,9 +17,9 @@ import org.springframework.stereotype.Service;
 public class UserRegisterService implements IRegisterUserService {
 
   @Autowired
-  private IUserRepository iUserRepository;
+  private IUserRepository userRepository;
   @Autowired
-  private IRoleRepository iRoleRepository;
+  private IRoleRepository roleRepository;
   @Autowired
   private UserMapper userMapper;
 
@@ -27,13 +27,14 @@ public class UserRegisterService implements IRegisterUserService {
   public UserRegisterResponse dataRegister(UserRegisterRequest dtoRequest)
       throws UserRegisterException {
 
-    if (iUserRepository.findByEmail(dtoRequest.getEmail()) == null) {
-      User user = userMapper.registerRequestMap(dtoRequest, new BCryptPasswordEncoder().encode(dtoRequest.getPassword()));
-      user.setRoles(iRoleRepository.findByName(RoleType.USER.name()));
-      iUserRepository.save(user);
+    if (userRepository.findByEmail(dtoRequest.getEmail()) == null) {
+      User user = userMapper.registerRequestMap(dtoRequest,
+          new BCryptPasswordEncoder().encode(dtoRequest.getPassword()));
+      user.setRoles(roleRepository.findByName(RoleType.USER.name()));
+      userRepository.save(user);
       return userMapper.registerResponseMap(user);
 
-    }else{
+    } else {
       throw new UserRegisterException("This e-mail is already in use");
 
     }

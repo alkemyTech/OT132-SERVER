@@ -29,7 +29,7 @@ public class UserMapper {
     return userResponses;
   }
 
-  public User registerRequestMap(UserRegisterRequest userRequest, String passwordEncrypted){
+  public User registerRequestMap(UserRegisterRequest userRequest, String passwordEncrypted) {
     User userRegisterRequest = new User();
     userRegisterRequest.setFirstName(userRequest.getFirstName());
     userRegisterRequest.setLastName(userRequest.getLastName());
@@ -38,7 +38,7 @@ public class UserMapper {
     return userRegisterRequest;
   }
 
-  public UserRegisterResponse registerResponseMap(User user){
+  public UserRegisterResponse registerResponseMap(User user) {
     UserRegisterResponse userRegisterResponse = new UserRegisterResponse();
     userRegisterResponse.setFirstName(user.getFirstName());
     userRegisterResponse.setLastName(user.getLastName());
