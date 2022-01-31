@@ -26,9 +26,8 @@ public class MemberService implements IGetMemberDetails {
     return buildListResponse(members);
   }
 
-
   private ListMembersResponse buildListResponse(List<Member> members) {
-    List<MemberResponse> memberResponses = memberMapper.mapToList(members);
+    List<MemberResponse> memberResponses = memberMapper.map(members);
     ListMembersResponse listMembersResponse = new ListMembersResponse();
     listMembersResponse.setMemberResponses(memberResponses);
     return listMembersResponse;

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
-
 @Component
 public class MemberMapper {
 
@@ -21,7 +20,7 @@ public class MemberMapper {
     return memberResponse;
   }
 
-  public List<MemberResponse> mapToList(List<Member> members) {
+  public List<MemberResponse> map(List<Member> members) {
     List<MemberResponse> memberResponses = new ArrayList<>(members.size());
     for (Member member : members) {
       memberResponses.add(map(member));

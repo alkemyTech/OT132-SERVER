@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping
+@RequestMapping("members")
 public class MemberController {
 
   @Autowired
   private IGetMemberDetails getMemberDetails;
 
-  @GetMapping("/members")
+  @GetMapping
   public ResponseEntity<ListMembersResponse> list() {
-    ListMembersResponse listMembersResponse = getMemberDetails.findAll();
-    return ResponseEntity.ok().body(listMembersResponse);
+    ListMembersResponse list = getMemberDetails.findAll();
+    return ResponseEntity.ok().body(list);
   }
 }
