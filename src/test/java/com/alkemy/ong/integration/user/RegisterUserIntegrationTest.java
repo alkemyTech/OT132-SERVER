@@ -34,7 +34,7 @@ public class RegisterUserIntegrationTest extends AbstractBaseIntegrationTest {
 
   @Test
   public void shouldRegisterUser() {
-    when(roleRepository.findByName(eq(RoleType.USER.name())))
+    when(roleRepository.findByName(eq(RoleType.USER.getFullRoleName())))
         .thenReturn(stubRole(RoleType.USER.name()));
     when(userRepository.findByEmail(eq(EMAIL))).thenReturn(null);
     when(userRepository.save(any(User.class))).thenReturn(stubUser(RoleType.USER.name()));

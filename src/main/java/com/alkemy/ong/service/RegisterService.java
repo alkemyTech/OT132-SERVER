@@ -15,7 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserRegisterService implements IRegisterUserService {
+public class RegisterService implements IRegisterUserService {
 
   @Autowired
   private IUserRepository userRepository;
@@ -33,7 +33,7 @@ public class UserRegisterService implements IRegisterUserService {
 
     User user = userMapper.map(userRegisterRequest,
         new BCryptPasswordEncoder().encode(userRegisterRequest.getPassword()));
-    user.setRoles(List.of(roleRepository.findByName(RoleType.USER.name())));
+    user.setRoles(List.of(roleRepository.findByName(RoleType.USER.getFullRoleName())));
     return userMapper.map(userRepository.save(user));
   }
 

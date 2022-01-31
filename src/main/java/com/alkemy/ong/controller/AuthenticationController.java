@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
   @Autowired
-  private IRegisterUserService userService;
+  private IRegisterUserService registerUserService;
 
   @Autowired
   private ILoginService loginService;
@@ -38,7 +38,7 @@ public class AuthenticationController {
   public ResponseEntity<UserResponse> register(
       @RequestBody @Valid UserRegisterRequest userRegisterRequest)
       throws UserAlreadyExistException {
-    UserResponse response = userService.register(userRegisterRequest);
+    UserResponse response = registerUserService.register(userRegisterRequest);
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
