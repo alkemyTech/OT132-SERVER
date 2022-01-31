@@ -11,6 +11,7 @@ public class MemberMapper {
 
   public MemberResponse map(Member member) {
     MemberResponse memberResponse = new MemberResponse();
+    memberResponse.setMemberId(member.getMemberId());
     memberResponse.setName(member.getName());
     memberResponse.setFacebookUrl(member.getFacebookUrl());
     memberResponse.setInstagramUrl(member.getInstagramUrl());
