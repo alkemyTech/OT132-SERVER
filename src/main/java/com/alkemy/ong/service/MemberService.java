@@ -5,6 +5,7 @@ import com.alkemy.ong.model.entity.Member;
 
 import com.alkemy.ong.model.response.ListMembersResponse;
 
+import com.alkemy.ong.model.response.MemberResponse;
 import com.alkemy.ong.repository.IMemberRepository;
 import com.alkemy.ong.service.abstraction.IGetMemberDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,23 +16,23 @@ import java.util.List;
 @Service
 public class MemberService implements IGetMemberDetails {
 
-    @Autowired
-    private IMemberRepository memberRepository;
+  @Autowired
+  private IMemberRepository memberRepository;
 
-    @Autowired
-    private MemberMapper memberMapper;
+  @Autowired
+  private MemberMapper memberMapper;
 
-    @Override
-    public ListMembersResponse findAll() {
-        List<Member> members = memberRepository.findBySoftDeleteFalse();
-        return buildListResponse(members);
-    }
+  @Override
+  public ListMembersResponse findAll() {
+    List<Member> members = memberRepository.findBySoftDeleteFalse();
+    return buildListResponse(members);
+  }
 
 
-    private ListMembersResponse  buildListResponse(List<Member> members) {
-        List<MemberResponse> memberResponses = memberMapper.mapToList(members);
-        ListMembersResponse listMembersResponse = new ListMembersResponse();
-        listMembersResponse.setMemberResponses(memberResponses);
-        return listMembersResponse;
-    }
+  private ListMembersResponse buildListResponse(List<Member> members) {
+    List<MemberResponse> memberResponses = memberMapper.mapToList(members);
+    ListMembersResponse listMembersResponse = new ListMembersResponse();
+    listMembersResponse.setMemberResponses(memberResponses);
+    return listMembersResponse;
+  }
 }

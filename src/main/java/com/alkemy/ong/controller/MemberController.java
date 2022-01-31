@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping
 public class MemberController {
 
-    @Autowired
-    private IGetMemberDetails iGetMemberDetails;
+  @Autowired
+  private IGetMemberDetails iGetMemberDetails;
 
-    @GetMapping("/members")
-    public ResponseEntity <ListMembersResponse> list() {
-        ListMembersResponse listMembersResponse = iGetMemberDetails.findAll();
-        return ResponseEntity.ok().body(listMembersResponse);
-      }
-    }
+  @GetMapping("/members")
+  public ResponseEntity<ListMembersResponse> list() {
+    ListMembersResponse listMembersResponse = iGetMemberDetails.findAll();
+    return ResponseEntity.ok().body(listMembersResponse);
+  }
 }

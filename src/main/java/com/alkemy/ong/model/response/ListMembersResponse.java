@@ -11,6 +11,6 @@ import java.util.List;
 @Setter
 public class ListMembersResponse {
 
-    @JsonProperty("members")
-    private List<ListMembersResponse> memberResponses;
+  @JsonProperty("members")
+  private List<MemberResponse> memberResponses;
 }
