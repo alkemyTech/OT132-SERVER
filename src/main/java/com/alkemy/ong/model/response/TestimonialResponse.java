@@ -1,17 +1,21 @@
 package com.alkemy.ong.model.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class SlideResponse {
+public class TestimonialResponse {
 
-  private String imageUrl;
-  private String text;
-  private Integer order;
+  private Long testimonialsId;
+
+  private String name;
+
+  private String image;
+
+  private String content;
+
 
 }

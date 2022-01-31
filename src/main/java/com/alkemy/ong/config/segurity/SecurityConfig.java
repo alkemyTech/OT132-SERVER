@@ -1,6 +1,5 @@
 package com.alkemy.ong.config.segurity;
 
-import com.amazonaws.services.workdocs.model.RoleType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -56,13 +55,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .authorizeRequests()
+        .antMatchers(HttpMethod.POST, "/auth/login")
+        .permitAll()
         .antMatchers(HttpMethod.GET, "/organization/public")
         .permitAll()
-            .antMatchers(HttpMethod.GET, "/users")
-            .hasRole(RoleType.ADMIN.name())
-            .antMatchers(HttpMethod.GET, "/members" )
-            .hasRole(RoleType.ADMIN.name())
-            .anyRequest()
+        .antMatchers(HttpMethod.GET, "/users")
+        .hasRole(RoleType.ADMIN.name())
+        .antMatchers(HttpMethod.POST, "/contacts")
+        .hasAnyRole(RoleType.USER.name())
+        .antMatchers(HttpMethod.GET, "/contacts")
+        .hasAnyRole(RoleType.ADMIN.name())
+        .antMatchers(HttpMethod.GET, "/users")
+        .hasRole(RoleType.ADMIN.name())
+        .antMatchers(HttpMethod.GET, "/slides")
+        .hasAnyRole(RoleType.ADMIN.name(), RoleType.USER.name())
+        .antMatchers(HttpMethod.POST, "/testimonials")
+        .hasAnyRole(RoleType.ADMIN.name(), RoleType.USER.name())
+        .antMatchers(HttpMethod.GET, "/members")
+        .hasRole(RoleType.ADMIN.name())
+        .anyRequest()
         .authenticated()
         .and()
         .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
