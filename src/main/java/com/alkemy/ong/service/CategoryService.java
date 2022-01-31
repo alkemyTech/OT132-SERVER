@@ -3,6 +3,7 @@ package com.alkemy.ong.service;
 import com.alkemy.ong.mapper.CategoryMapper;
 import com.alkemy.ong.model.entity.Category;
 import com.alkemy.ong.model.response.CategoryResponse;
+import com.alkemy.ong.model.response.ListCategoriesResponse;
 import com.alkemy.ong.repository.ICategoryRepository;
 import com.alkemy.ong.service.abstraction.IGetCategoryDetails;
 import java.util.List;
@@ -17,10 +18,9 @@ public class CategoryService implements IGetCategoryDetails {
   @Autowired private ICategoryRepository categoryRepository;
 
   @Override
-  public List<CategoryResponse> findAll() {
-
+  public ListCategoriesResponse findAll() {
     List<Category> categories = categoryRepository.findBySoftDeleteFalseOrderByName();
-
-    return categoryMapper.map(categories);
+    List<CategoryResponse> categoryResponses = categoryMapper.map(categories);
+    return new ListCategoriesResponse(categoryResponses);
   }
 }
