@@ -5,12 +5,12 @@ import com.alkemy.ong.model.entity.Activity;
 import com.alkemy.ong.model.request.CreateActivityRequest;
 import com.alkemy.ong.model.response.ActivityResponse;
 import com.alkemy.ong.repository.IActivityRepository;
-import com.alkemy.ong.service.abstraction.ICreateActivityService;
+import com.alkemy.ong.service.abstraction.ICreateActivity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ActivityService implements ICreateActivityService {
+public class ActivityService implements ICreateActivity {
 
   @Autowired
   private IActivityRepository activityRepository;

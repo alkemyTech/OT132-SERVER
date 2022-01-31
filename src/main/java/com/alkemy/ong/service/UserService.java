@@ -10,7 +10,7 @@ import com.alkemy.ong.model.response.ListUsersResponse;
 import com.alkemy.ong.model.response.UserResponse;
 import com.alkemy.ong.repository.IUserRepository;
 import com.alkemy.ong.service.abstraction.IGetUserDetails;
-import com.alkemy.ong.service.abstraction.ILoginService;
+import com.alkemy.ong.service.abstraction.ILogin;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,7 +21,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService implements UserDetailsService, IGetUserDetails, ILoginService {
+public class UserService implements UserDetailsService, IGetUserDetails, ILogin {
 
   private static final String USER_NOT_FOUND_MESSAGE = "User not found.";
 

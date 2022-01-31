@@ -5,7 +5,7 @@ import com.alkemy.ong.model.request.UserRegisterRequest;
 import com.alkemy.ong.model.response.UserResponse;
 
 
-public interface IRegisterUserService {
+public interface IRegisterUser {
 
   UserResponse register(UserRegisterRequest dtoRequest) throws UserAlreadyExistException;
 

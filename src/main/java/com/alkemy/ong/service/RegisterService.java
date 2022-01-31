@@ -8,14 +8,14 @@ import com.alkemy.ong.model.request.UserRegisterRequest;
 import com.alkemy.ong.model.response.UserResponse;
 import com.alkemy.ong.repository.IRoleRepository;
 import com.alkemy.ong.repository.IUserRepository;
-import com.alkemy.ong.service.abstraction.IRegisterUserService;
+import com.alkemy.ong.service.abstraction.IRegisterUser;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RegisterService implements IRegisterUserService {
+public class RegisterService implements IRegisterUser {
 
   @Autowired
   private IUserRepository userRepository;

@@ -4,7 +4,7 @@ import com.alkemy.ong.model.request.CreateContactRequest;
 import com.alkemy.ong.model.response.ContactResponse;
 import com.alkemy.ong.model.response.ListContactResponse;
 import com.alkemy.ong.service.abstraction.ICreateContact;
-import com.alkemy.ong.service.abstraction.IGetContact;
+import com.alkemy.ong.service.abstraction.IGetContactDetails;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,11 +23,11 @@ public class ContactController {
   private ICreateContact createContact;
 
   @Autowired
-  public IGetContact getContact;
+  public IGetContactDetails getContactDetails;
 
   @GetMapping
   public ResponseEntity<ListContactResponse> list() {
-    return ResponseEntity.ok(getContact.list());
+    return ResponseEntity.ok(getContactDetails.list());
   }
 
   @PostMapping

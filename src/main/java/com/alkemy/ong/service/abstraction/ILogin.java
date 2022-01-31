@@ -4,7 +4,7 @@ import com.alkemy.ong.exception.InvalidCredentialsException;
 import com.alkemy.ong.model.request.AuthenticationRequest;
 import com.alkemy.ong.model.response.AuthenticationResponse;
 
-public interface ILoginService {
+public interface ILogin {
 
   AuthenticationResponse login(AuthenticationRequest authenticationRequest)
       throws InvalidCredentialsException;
