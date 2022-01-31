@@ -3,7 +3,7 @@ package com.alkemy.ong.service.abstraction;
 import com.alkemy.ong.model.request.NewsRequest;
 import com.alkemy.ong.model.response.NewsResponse;
 
-public interface IPostNews {
+public interface ICreateNews {
 
-  NewsResponse postNews(NewsRequest newsRequest);
+  NewsResponse create(NewsRequest newsRequest);
 }
