@@ -139,7 +139,7 @@
       "name": "Testimonial",
       "item": [
         {
-          "name": "New Request",
+          "name": "List",
           "request": {
             "method": "GET",
             "header": []
@@ -152,7 +152,7 @@
       "name": "Slide",
       "item": [
         {
-          "name": "GET Slides",
+          "name": "List",
           "request": {
             "auth": {
               "type": "basic"
@@ -207,6 +207,31 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "Member",
+      "item": [
+        {
+          "name": "All Members",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/members",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "members"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     }
+
   ]
 }
