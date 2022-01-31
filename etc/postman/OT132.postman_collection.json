@@ -6,7 +6,6 @@
     },
     "item": [
         {
-<<<<<<< HEAD
             "name": "Organization",
             "item": [
                 {
@@ -95,130 +94,125 @@
                 }
             ]
         },
-=======
-          "name": "All Users",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/users",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "users"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "contacts",
-      "item": [
         {
-          "name": "Get Contacts",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/contacts",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "contacts"
-              ]
-            }
-          },
-          "response": []
+            "name": "All Users",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8080/users",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "users"
+                    ]
+                }
+            },
+            "response": []
         },
         {
-          "name": "Post Contacts",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"name\" : \"Jane\",\r\n    \"phone\" : 110303456,\r\n    \"email\" : \"jane@mail.com\",\r\n    \"message\" : \"Este endpoint funciona\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:8080/contacts",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "contacts"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Testimonial",
-      "item": [
-        {
-          "name": "New Request",
-          "request": {
-            "method": "GET",
-            "header": []
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Slide",
-      "item": [
->>>>>>> main
-        {
-            "name": "Slide",
+            "name": "contacts",
             "item": [
                 {
-                    "name": "GET Slides",
+                    "name": "Get Contacts",
                     "request": {
-                        "auth": {
-                            "type": "basic"
-                        },
                         "method": "GET",
                         "header": [],
                         "url": {
-                            "raw": "http://localhost:8080/slides",
+                            "raw": "http://localhost:8080/contacts",
                             "protocol": "http",
                             "host": [
                                 "localhost"
                             ],
                             "port": "8080",
                             "path": [
-                                "slides"
+                                "contacts"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Post Contacts",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"name\" : \"Jane\",\r\n    \"phone\" : 110303456,\r\n    \"email\" : \"jane@mail.com\",\r\n    \"message\" : \"Este endpoint funciona\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:8080/contacts",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "contacts"
                             ]
                         }
                     },
                     "response": []
                 }
             ]
+        },
+        {
+            "name": "Testimonial",
+            "item": [
+                {
+                    "name": "New Request",
+                    "request": {
+                        "method": "GET",
+                        "header": []
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Slide",
+            "item": [
+                {
+                    "name": "Slide",
+                    "item": [
+                        {
+                            "name": "GET Slides",
+                            "request": {
+                                "auth": {
+                                    "type": "basic"
+                                },
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "http://localhost:8080/slides",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8080",
+                                    "path": [
+                                        "slides"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ]
+                }
+
+            ]
         }
-<<<<<<< HEAD
     ]
 }
 
-=======
-      ]
-    }
-  ]
-}
->>>>>>> main
+
+

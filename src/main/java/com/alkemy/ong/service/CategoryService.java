@@ -12,9 +12,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class CategoryService implements IGetCategoryDetails {
 
-  @Autowired private CategoryMapper categoryMapper;
+  @Autowired
+	private CategoryMapper categoryMapper;
 
-  @Autowired private ICategoryRepository categoryRepository;
+  @Autowired
+	private ICategoryRepository categoryRepository;
 
   @Override
   public List<CategoryResponse> findAll() {
