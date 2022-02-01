@@ -21,36 +21,46 @@ import com.alkemy.ong.model.entity.Category;
 import com.alkemy.ong.model.entity.News;
 import com.alkemy.ong.model.request.NewsRequest;
 import com.alkemy.ong.model.response.NewsResponse;
+import com.alkemy.ong.repository.ICategoryRepository;
 import com.alkemy.ong.repository.INewsRepository;
+import com.alkemy.ong.service.abstraction.IAddCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.alkemy.ong.service.abstraction.ICreateNews;
 
 @Service
-public class NewsService implements ICreateNews {
-	
-	@Autowired
-	private INewsRepository newsRepository;
+public class NewsService implements ICreateNews, IAddCategory {
 
-	@Autowired
-	private NewsMapper newsMapper;
-	
-	@Override
-	public NewsResponse create(NewsRequest newsRequest) {
-		
-		
-		NewsResponse newsResponse = newsMapper.responseMapper(newsRequest);
-		News news = newsMapper.map(newsResponse);
-		//Don't forget to add category to news.
-		newsRepository.save(news);
-		//Maybe it actually should be mapped differently from newsRequest to News, save and then to NewsResponse. also NewsResponse might need to travel with the ID .CHECK!!
-		
-		return new NewsResponse();
-	}
-	
-	public Category addCategory(){
-		
-		// add query to ICategoryRepository findByName; add method addCategory to ICreateNews
-		return null;
-	}
+  @Autowired private INewsRepository newsRepository;
+
+  @Autowired private NewsMapper newsMapper;
+
+  @Autowired private ICategoryRepository categoryRepository;
+
+  @Override
+  public NewsResponse create(NewsRequest newsRequest) {
+
+    NewsResponse newsResponse = newsMapper.responseMapper(newsRequest);
+    create(newsResponse);
+
+    return new NewsResponse();
+  }
+
+  @Override
+  public Category add() {
+
+    Category category = categoryRepository.findByNameIgnoreCase("news");
+
+    return category;
+  }
+
+  @Override
+  public void create(NewsResponse newsResponse) {
+
+    News news = newsMapper.map(newsResponse);
+
+    news.setCategory(add());
+
+    newsRepository.save(news);
+  }
 }

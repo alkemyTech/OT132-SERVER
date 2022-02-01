@@ -10,4 +10,5 @@ public interface ICategoryRepository extends JpaRepository<Category, Long> {
 
   List<Category> findBySoftDeleteFalseOrderByName();
 
+  Category findByNameIgnoreCase(String name);
 }

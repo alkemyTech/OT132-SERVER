@@ -15,7 +15,8 @@ import com.alkemy.ong.service.abstraction.ICreateNews;
 @RequestMapping("news")
 public class NewsController {
 
-  @Autowired private ICreateNews createNews;
+  @Autowired 
+  private ICreateNews createNews;
 
   @PostMapping
   public ResponseEntity<NewsResponse> postNews(@RequestBody @Valid NewsRequest newsRequest) {
