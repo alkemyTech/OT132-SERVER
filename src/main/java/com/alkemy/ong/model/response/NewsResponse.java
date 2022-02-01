@@ -13,6 +13,6 @@ public class NewsResponse {
   private String text;
 
   private String image;
-	
-	private Timestamp timestamp;
+
+  private Timestamp timestamp;
 }

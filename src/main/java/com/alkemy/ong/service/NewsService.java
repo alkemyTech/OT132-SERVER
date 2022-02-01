@@ -4,7 +4,9 @@ QUIERO agregar una novedad en el sistema
 PARA poder informar las Novedades de la ONG
 
 Criterios de aceptación:
-POST /news - Deberá validar la existencia de los campos enviados: text, image y name, para almacenar el registro en la tabla News. Antes de almacenarla, deberá asignarle la columna category con el valor "news".
+POST /news - Deberá validar la existencia de los campos enviados: text, image y name,
+para almacenar el registro en la tabla News. Antes de almacenarla, deberá asignarle la columna
+category con el valor "news".
 
 Los mensajes de error deben estar en inglés.
 
@@ -24,12 +26,13 @@ import com.alkemy.ong.model.response.NewsResponse;
 import com.alkemy.ong.repository.ICategoryRepository;
 import com.alkemy.ong.repository.INewsRepository;
 import com.alkemy.ong.service.abstraction.IAddCategory;
+import com.alkemy.ong.service.abstraction.ICreateNews;
+import com.alkemy.ong.service.abstraction.ISaveNews;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.alkemy.ong.service.abstraction.ICreateNews;
 
 @Service
-public class NewsService implements ICreateNews, IAddCategory {
+public class NewsService implements ICreateNews, IAddCategory, ISaveNews {
 
   @Autowired private INewsRepository newsRepository;
 
@@ -41,7 +44,7 @@ public class NewsService implements ICreateNews, IAddCategory {
   public NewsResponse create(NewsRequest newsRequest) {
 
     NewsResponse newsResponse = newsMapper.responseMapper(newsRequest);
-    create(newsResponse);
+    save(newsResponse);
 
     return new NewsResponse();
   }
@@ -55,7 +58,7 @@ public class NewsService implements ICreateNews, IAddCategory {
   }
 
   @Override
-  public void create(NewsResponse newsResponse) {
+  public void save(NewsResponse newsResponse) {
 
     News news = newsMapper.map(newsResponse);
 

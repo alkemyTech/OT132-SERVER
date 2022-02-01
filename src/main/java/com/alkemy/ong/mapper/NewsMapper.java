@@ -19,17 +19,15 @@ public class NewsMapper {
 
     return newsResponse;
   }
-	
-	public News map(NewsResponse newsResponse){
-		
-		News news = new News();
+
+  public News map(NewsResponse newsResponse) {
+
+    News news = new News();
     news.setName(newsResponse.getName());
-		news.setImage(newsResponse.getImage());
-		news.setText(newsResponse.getText());
+    news.setImage(newsResponse.getImage());
+    news.setText(newsResponse.getText());
     news.setTimestamp(newsResponse.getTimestamp());
-		
-		//Wait for CategoryService to merge and create method to get news Category. findByName in repository
-		
-		return news;
-	}
+
+    return news;
+  }
 }

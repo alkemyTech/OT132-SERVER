@@ -7,6 +7,5 @@ import com.alkemy.ong.model.response.NewsResponse;
 public interface ICreateNews {
 
   NewsResponse create(NewsRequest newsRequest);
-	
-	void create(NewsResponse newsResponse);
+
 }
