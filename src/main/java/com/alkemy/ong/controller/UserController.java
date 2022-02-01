@@ -9,16 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping
+@RequestMapping("/users")
 public class UserController {
 
   @Autowired
   private IGetUserDetails getUserDetails;
 
-  @GetMapping("/users")
+  @GetMapping()
   public ResponseEntity<ListUsersResponse> list() {
-    ListUsersResponse listUsersResponse = getUserDetails.findAll();
-    return ResponseEntity.ok().body(listUsersResponse);
+    return ResponseEntity.ok().body(getUserDetails.findActiveUsers());
   }
 
 }

@@ -14,18 +14,18 @@ public class ImageUtils {
   @Autowired
   private AwsConfiguration config;
 
-  public String upload(IImage content) throws ExternalServiceException {
+  public String upload(IImage image) throws ExternalServiceException {
     try {
       AmazonS3 amazonS3 = config.initializeAmazon();
       String bucketName = config.getBucketName();
       ObjectMetadata metadata = new ObjectMetadata();
-      metadata.setContentType(content.getContentType());
+      metadata.setContentType(image.getContentType());
       amazonS3.putObject(
           new PutObjectRequest(bucketName,
-              content.getName(),
-              content.getInputStream(),
+              image.getName(),
+              image.getInputStream(),
               metadata));
-      return amazonS3.getUrl(bucketName, content.getName()).toString();
+      return amazonS3.getUrl(bucketName, image.getName()).toString();
     } catch (RuntimeException e) {
       throw new ExternalServiceException(e.getMessage());
     }
