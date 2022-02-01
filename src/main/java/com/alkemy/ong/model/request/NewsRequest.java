@@ -8,12 +8,12 @@ import lombok.Setter;
 @Setter
 public class NewsRequest {
 
-  @NotBlank(message = "This field cannot be blank.")
+  @NotBlank(message = "The field name cannot be blank.")
   private String name;
 
-  @NotBlank(message = "This field cannot be blank.")
+  @NotBlank(message = "The field text cannot be blank.")
   private String text;
 
-  @NotBlank(message = "This field cannot be blank.")
+  @NotBlank(message = "The field image cannot be blank.")
   private String image;
 }

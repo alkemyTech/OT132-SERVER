@@ -9,24 +9,24 @@ import org.springframework.stereotype.Component;
 @Component
 public class NewsMapper {
 
-  public NewsResponse responseMapper(NewsRequest newsRequest) {
+  public NewsResponse responseMapper(News news) {
 
     NewsResponse newsResponse = new NewsResponse();
-    newsResponse.setImage(newsRequest.getImage());
-    newsResponse.setName(newsRequest.getName());
-    newsResponse.setText(newsRequest.getText());
-    newsResponse.setTimestamp(new Timestamp(System.currentTimeMillis()));
+    newsResponse.setImage(news.getImage());
+    newsResponse.setName(news.getName());
+    newsResponse.setText(news.getText());
+    newsResponse.setTimestamp(news.getTimestamp());
 
     return newsResponse;
   }
 
-  public News map(NewsResponse newsResponse) {
+  public News map(NewsRequest newsRequest) {
 
     News news = new News();
-    news.setName(newsResponse.getName());
-    news.setImage(newsResponse.getImage());
-    news.setText(newsResponse.getText());
-    news.setTimestamp(newsResponse.getTimestamp());
+    news.setName(newsRequest.getName());
+    news.setImage(newsRequest.getImage());
+    news.setText(newsRequest.getText());
+    news.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
     return news;
   }
