@@ -23,6 +23,7 @@ public class ActivityService implements ICreateActivity {
     Activity activity = new Activity();
     activity.setName(createActivityRequest.getName());
     activity.setContent(createActivityRequest.getContent());
+    activity.setImage(createActivityRequest.getImage());
     activity.setSoftDelete(false);
     return activityMapper.map(activityRepository.save(activity));
   }
