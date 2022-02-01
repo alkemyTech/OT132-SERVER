@@ -229,6 +229,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "new member",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"New Jersey\",\r\n    \"facebookUrl\": \"https://www.facebook.com/newjersey\",\r\n    \"instagramUrl\": \"https://www.instagram.com/newjersey/\",\r\n    \"linkedinUrl\": \"https://www.linkedin.com/company/newjersey/mycompany/\",\r\n    \"image\": \"image.jpg\",\r\n    \"description\": \"Dorime ....\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/members",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "members"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     }
