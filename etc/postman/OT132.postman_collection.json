@@ -1,265 +1,297 @@
 {
-  "info": {
-    "_postman_id": "82b08f3a-41ba-40bf-922b-2b181f335303",
-    "name": "SomosMas",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "Organization",
-      "item": [
-        {
-          "name": "Organization Details",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/organization/public",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "organization",
-                "public"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
+    "info": {
+        "_postman_id": "82b08f3a-41ba-40bf-922b-2b181f335303",
+        "name": "SomosMas",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
-    {
-      "name": "User",
-      "item": [
+    "item": [
         {
-          "name": "All Users",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/users",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "users"
-              ]
-            }
-          },
-          "response": []
+            "name": "Organization",
+            "item": [
+                {
+                    "name": "Organization Details",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/organization/public",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "organization",
+                                "public"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
         },
         {
-          "name": "Authentication Login",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"email\":\"hola@gmail.com\",\r\n    \"password\":\"123456\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
+            "name": "User",
+            "item": [
+                {
+                    "name": "All Users",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/users",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "users"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Authentication Login",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"email\":\"hola@gmail.com\",\r\n    \"password\":\"123456\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:8080/auth/login",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "auth",
+                                "login"
+                            ]
+                        }
+                    },
+                    "response": []
                 }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:8080/auth/login",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "auth",
-                "login"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "contacts",
-      "item": [
-        {
-          "name": "Get Contacts",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/contacts",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "contacts"
-              ]
-            }
-          },
-          "response": []
+            ]
         },
         {
-          "name": "Post Contacts",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"name\" : \"Jane\",\r\n    \"phone\" : 110303456,\r\n    \"email\" : \"jane@mail.com\",\r\n    \"message\" : \"Este endpoint funciona\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
+            "name": "contacts",
+            "item": [
+                {
+                    "name": "Get Contacts",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/contacts",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "contacts"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Post Contacts",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"name\" : \"Jane\",\r\n    \"phone\" : 110303456,\r\n    \"email\" : \"jane@mail.com\",\r\n    \"message\" : \"Este endpoint funciona\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:8080/contacts",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "contacts"
+                            ]
+                        }
+                    },
+                    "response": []
                 }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:8080/contacts",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "contacts"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Testimonial",
-      "item": [
-        {
-          "name": "List",
-          "request": {
-            "method": "GET",
-            "header": []
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Slide",
-      "item": [
-        {
-          "name": "List",
-          "request": {
-            "auth": {
-              "type": "basic"
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/slides",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "slides"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Activity",
-      "item": [
-        {
-          "name": "new activity",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"name\":\"random activity\",\r\n    \"content\":\"all ok\",\r\n    \"image\":\"URL...\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:8080/activities",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "activities"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Member",
-      "item": [
-        {
-          "name": "All Members",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/members",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "members"
-              ]
-            }
-          },
-          "response": []
+            ]
         },
         {
-          "name": "new member",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"name\": \"New Jersey\",\r\n    \"facebookUrl\": \"https://www.facebook.com/newjersey\",\r\n    \"instagramUrl\": \"https://www.instagram.com/newjersey/\",\r\n    \"linkedinUrl\": \"https://www.linkedin.com/company/newjersey/mycompany/\",\r\n    \"image\": \"image.jpg\",\r\n    \"description\": \"Dorime ....\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
+            "name": "Testimonial",
+            "item": [
+                {
+                    "name": "List",
+                    "request": {
+                        "method": "GET",
+                        "header": []
+                    },
+                    "response": []
                 }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:8080/members",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "members"
-              ]
-            }
-          },
-          "response": []
+            ]
+        },
+        {
+            "name": "Slide",
+            "item": [
+                {
+                    "name": "List",
+                    "request": {
+                        "auth": {
+                            "type": "basic"
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/slides",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "slides"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Activity",
+            "item": [
+                {
+                    "name": "new activity",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"name\":\"random activity\",\r\n    \"content\":\"all ok\",\r\n    \"image\":\"URL...\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:8080/activities",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "activities"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Member",
+            "item": [
+                {
+                    "name": "All Members",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/members",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "members"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "new member",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"name\": \"New Jersey\",\r\n    \"facebookUrl\": \"https://www.facebook.com/newjersey\",\r\n    \"instagramUrl\": \"https://www.instagram.com/newjersey/\",\r\n    \"linkedinUrl\": \"https://www.linkedin.com/company/newjersey/mycompany/\",\r\n    \"image\": \"image.jpg\",\r\n    \"description\": \"Dorime ....\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:8080/members",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "members"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "News",
+            "item": [
+                {
+                    "name": "POST News",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"name\":\"Generic Title\",\r\n    \"text\": \"Generic text.\",\r\n    \"image\":\"http://foourl.com/img\"\r\n\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:8080/news",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "news"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
         }
-      ]
-    }
-
-  ]
+    ]
 }
