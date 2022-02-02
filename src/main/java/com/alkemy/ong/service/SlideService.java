@@ -6,6 +6,7 @@ import com.alkemy.ong.exception.ExternalServiceException;
 import com.alkemy.ong.mapper.SlideMapper;
 import com.alkemy.ong.mapper.attribute.SlideAttributes;
 import com.alkemy.ong.model.entity.Slide;
+import com.alkemy.ong.model.request.CreateSlideRequest;
 import com.alkemy.ong.model.response.ListSlideResponse;
 import com.alkemy.ong.model.response.SlideResponse;
 import com.alkemy.ong.repository.ISlideRepository;
@@ -46,14 +47,14 @@ public class SlideService implements IGetSlideDetails, ICreateSlide {
   }
 
   @Override
-  public SlideResponse create(String file, String fileName, String contentType, Integer order)
+  public SlideResponse create(CreateSlideRequest request, String fileName, String contentType)
       throws ExternalServiceException {
-    Image image = new Image(file, fileName, contentType);
+    Image image = new Image(request.getFile(), fileName, contentType);
     SlideResponse slide = new SlideResponse();
     try {
       slide.setImageUrl(utils.upload(image));
       slide.setText(fileName);
-      slide.setOrder(getOrder(order));
+      slide.setOrder(getOrder(request.getOrder()));
       return slide;
     } catch (ExternalServiceException e) {
       throw new ExternalServiceException(e.getMessage());
