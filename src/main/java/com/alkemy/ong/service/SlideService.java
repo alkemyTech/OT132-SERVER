@@ -50,7 +50,7 @@ public class SlideService implements IGetSlideDetails, ICreateSlide {
       throws ExternalServiceException {
     Image image = new Image(request.getFileEncodeBase64(), fileName, contentType);
     return slideMapper.map(
-        slideRepository.save(buildSlideResponse(imageUtils.upload(image),
+        slideRepository.save(buildSlide(imageUtils.upload(image),
             fileName,
             getOrderOrDefault(request.getOrder()))),
         SlideAttributes.IMAGE_URL,
@@ -59,7 +59,7 @@ public class SlideService implements IGetSlideDetails, ICreateSlide {
 
   }
 
-  private Slide buildSlideResponse(String imageUrl, String text, Integer order) {
+  private Slide buildSlide(String imageUrl, String text, Integer order) {
     Slide slide = new Slide();
     slide.setImageUrl(imageUrl);
     slide.setText(text);
