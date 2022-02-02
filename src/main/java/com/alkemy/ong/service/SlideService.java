@@ -14,7 +14,6 @@ import com.alkemy.ong.service.abstraction.ICreateSlide;
 import com.alkemy.ong.service.abstraction.IGetSlideDetails;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -70,8 +69,6 @@ public class SlideService implements IGetSlideDetails, ICreateSlide {
 
   private Integer getOrderOrDefault(Integer order) {
     if (order == null) {
-      // List<Slide> slides = slideRepository.findOne(Sort.by(direction, properties))
-      // order = slides.get(slides.size() - 1).getOrder() + 1;
       order = slideRepository.getMaxOrder() + 1;
     }
     return order;
