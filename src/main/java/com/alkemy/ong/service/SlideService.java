@@ -27,7 +27,7 @@ public class SlideService implements IGetSlideDetails, ICreateSlide {
   private ISlideRepository slideRepository;
 
   @Autowired
-  private ImageUtils utils;
+  private ImageUtils imageUtils;
 
   @Override
   public ListSlideResponse list() {
@@ -49,27 +49,30 @@ public class SlideService implements IGetSlideDetails, ICreateSlide {
   @Override
   public SlideResponse create(CreateSlideRequest request, String fileName, String contentType)
       throws ExternalServiceException {
-    Image image = new Image(request.getFile(), fileName, contentType);
-    Slide slide = new Slide();
-    try {
-      slide.setImageUrl(utils.upload(image));
-      slide.setText(fileName);
-      slide.setOrder(getOrder(request.getOrder()));
-
-      return slideMapper.map(slideRepository.save(slide),
-          SlideAttributes.IMAGE_URL,
-          SlideAttributes.ORDER,
-          SlideAttributes.TEXT);
-    } catch (ExternalServiceException e) {
-      throw new ExternalServiceException(e.getMessage());
-    }
+    Image image = new Image(request.getFileEncodeBase64(), fileName, contentType);
+    return slideMapper.map(
+        slideRepository.save(buildSlideResponse(imageUtils.upload(image),
+            fileName,
+            getOrderOrDefault(request.getOrder()))),
+        SlideAttributes.IMAGE_URL,
+        SlideAttributes.ORDER,
+        SlideAttributes.TEXT);
 
   }
 
-  private Integer getOrder(Integer order) {
+  private Slide buildSlideResponse(String imageUrl, String text, Integer order) {
+    Slide slide = new Slide();
+    slide.setImageUrl(imageUrl);
+    slide.setText(text);
+    slide.setOrder(order);
+    return slide;
+  }
+
+  private Integer getOrderOrDefault(Integer order) {
     if (order == null) {
-      List<Slide> slides = slideRepository.findAll(Sort.by(SlideAttributes.ORDER.getFieldName()));
-      order = slides.get(slides.size() - 1).getOrder() + 1;
+      // List<Slide> slides = slideRepository.findOne(Sort.by(direction, properties))
+      // order = slides.get(slides.size() - 1).getOrder() + 1;
+      order = slideRepository.getMaxOrder() + 1;
     }
     return order;
   }

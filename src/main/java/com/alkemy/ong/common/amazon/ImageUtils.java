@@ -19,6 +19,7 @@ public class ImageUtils {
       AmazonS3 amazonS3 = config.initializeAmazon();
       String bucketName = config.getBucketName();
       ObjectMetadata metadata = new ObjectMetadata();
+      metadata.setContentLength(image.getName().getBytes().length);
       metadata.setContentType(image.getContentType());
       amazonS3.putObject(
           new PutObjectRequest(bucketName,

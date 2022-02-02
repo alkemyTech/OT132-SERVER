@@ -37,10 +37,10 @@ public class SlideController {
   @PostMapping
   public ResponseEntity<SlideResponse> create(
       @RequestBody @Valid CreateSlideRequest request,
-      @RequestHeader("x-filename") String name,
-      @RequestHeader("x-contenttype") String contentType) throws ExternalServiceException {
+      @RequestHeader("x-file-name") String fileName,
+      @RequestHeader("x-content-type") String contentType) throws ExternalServiceException {
     return ResponseEntity
            .status(HttpStatus.CREATED)
-           .body(createSlide.create(request, name, contentType));
+           .body(createSlide.create(request, fileName, contentType));
   }
 }
