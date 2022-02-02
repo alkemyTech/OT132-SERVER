@@ -1,6 +1,6 @@
 {
     "info": {
-        "_postman_id": "82b08f3a-41ba-40bf-922b-2b181f335303",
+        "_postman_id": "553bfd53-47ce-492c-9842-05312b1cd5a3",
         "name": "SomosMas",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
@@ -31,11 +31,21 @@
             ]
         },
         {
-            "name": "User",
+            "name": "Users",
             "item": [
                 {
                     "name": "All Users",
                     "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDM3NDQ3NzAsImV4cCI6MTY0Mzc4MDc3MH0.yEhagDVGB8C8PesWTa2B4W2QHch3gTDsPgbb1GzWOYU",
+                                    "type": "string"
+                                }
+                            ]
+                        },
                         "method": "GET",
                         "header": [],
                         "url": {
@@ -59,7 +69,7 @@
                         "header": [],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\r\n    \"email\":\"hola@gmail.com\",\r\n    \"password\":\"123456\"\r\n}",
+                            "raw": "{\r\n    \"email\":\"user1@gmail.com\",\r\n    \"password\":\"1234950312312\"\r\n}",
                             "options": {
                                 "raw": {
                                     "language": "json"
@@ -80,15 +90,54 @@
                         }
                     },
                     "response": []
+                },
+                {
+                    "name": "Authentication Register",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"firstName\":\"User5\",\r\n    \"lastName\":\"User5\",\r\n    \"email\":\"user5@gmail.com\",\r\n    \"password\":\"0983123701\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:8080/auth/register",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "auth",
+                                "register"
+                            ]
+                        }
+                    },
+                    "response": []
                 }
             ]
         },
         {
-            "name": "contacts",
+            "name": "Contacts",
             "item": [
                 {
-                    "name": "Get Contacts",
+                    "name": "All Contacts",
                     "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDM3NDQ3NzAsImV4cCI6MTY0Mzc4MDc3MH0.yEhagDVGB8C8PesWTa2B4W2QHch3gTDsPgbb1GzWOYU",
+                                    "type": "string"
+                                }
+                            ]
+                        },
                         "method": "GET",
                         "header": [],
                         "url": {
@@ -106,13 +155,23 @@
                     "response": []
                 },
                 {
-                    "name": "Post Contacts",
+                    "name": "New Contact",
                     "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNjQzNzQ0ODcwLCJleHAiOjE2NDM3ODA4NzB9.moLZdvNpb5xS2h2Mff7S0wTbzDPJInFB7VKSjnllHRs",
+                                    "type": "string"
+                                }
+                            ]
+                        },
                         "method": "POST",
                         "header": [],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\r\n    \"name\" : \"Jane\",\r\n    \"phone\" : 110303456,\r\n    \"email\" : \"jane@mail.com\",\r\n    \"message\" : \"Este endpoint funciona\"\r\n}",
+                            "raw": "{\r\n    \"name\" : \"Contact#5\",\r\n    \"phone\" : 3435,\r\n    \"email\" : \"email1@mail.com\",\r\n    \"message\" : \"I'm a message #4\"\r\n}",
                             "options": {
                                 "raw": {
                                     "language": "json"
@@ -136,29 +195,73 @@
             ]
         },
         {
-            "name": "Testimonial",
+            "name": "Testimonials",
             "item": [
                 {
-                    "name": "List",
+                    "name": "New Testimonial",
                     "request": {
-                        "method": "GET",
-                        "header": []
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNjQzNzQ0ODcwLCJleHAiOjE2NDM3ODA4NzB9.moLZdvNpb5xS2h2Mff7S0wTbzDPJInFB7VKSjnllHRs",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"name\": \"Testimonial\",\r\n    \"image\":\"Image\",\r\n    \"content\": \"Content\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:8080/testimonials",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "testimonials"
+                            ]
+                        }
                     },
                     "response": []
                 }
             ]
         },
         {
-            "name": "Slide",
+            "name": "Slides",
             "item": [
                 {
-                    "name": "List",
+                    "name": "All Slides",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
                     "request": {
                         "auth": {
-                            "type": "basic"
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNjQzNzQ0ODcwLCJleHAiOjE2NDM3ODA4NzB9.moLZdvNpb5xS2h2Mff7S0wTbzDPJInFB7VKSjnllHRs",
+                                    "type": "string"
+                                }
+                            ]
                         },
                         "method": "GET",
                         "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": ""
+                        },
                         "url": {
                             "raw": "http://localhost:8080/slides",
                             "protocol": "http",
@@ -176,16 +279,26 @@
             ]
         },
         {
-            "name": "Activity",
+            "name": "Activities",
             "item": [
                 {
-                    "name": "new activity",
+                    "name": "New Activity",
                     "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNjQzNzQ0ODcwLCJleHAiOjE2NDM3ODA4NzB9.moLZdvNpb5xS2h2Mff7S0wTbzDPJInFB7VKSjnllHRs",
+                                    "type": "string"
+                                }
+                            ]
+                        },
                         "method": "POST",
                         "header": [],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\r\n    \"name\":\"random activity\",\r\n    \"content\":\"all ok\",\r\n    \"image\":\"URL...\"\r\n}",
+                            "raw": "{\r\n    \"name\": \"Activity 4\",\r\n    \"content\": \"Content 4\",\r\n    \"image\": \"Image 4\"\r\n}",
                             "options": {
                                 "raw": {
                                     "language": "json"
@@ -209,11 +322,55 @@
             ]
         },
         {
-            "name": "Member",
+            "name": "Categories",
+            "item": [
+                {
+                    "name": "All Categories",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNjQzNzQ0ODcwLCJleHAiOjE2NDM3ODA4NzB9.moLZdvNpb5xS2h2Mff7S0wTbzDPJInFB7VKSjnllHRs",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/categories",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "categories"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Members",
             "item": [
                 {
                     "name": "All Members",
                     "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDM3NDQ3NzAsImV4cCI6MTY0Mzc4MDc3MH0.yEhagDVGB8C8PesWTa2B4W2QHch3gTDsPgbb1GzWOYU",
+                                    "type": "string"
+                                }
+                            ]
+                        },
                         "method": "GET",
                         "header": [],
                         "url": {
@@ -231,13 +388,23 @@
                     "response": []
                 },
                 {
-                    "name": "new member",
+                    "name": "New Member",
                     "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNjQzNzQ0ODcwLCJleHAiOjE2NDM3ODA4NzB9.moLZdvNpb5xS2h2Mff7S0wTbzDPJInFB7VKSjnllHRs",
+                                    "type": "string"
+                                }
+                            ]
+                        },
                         "method": "POST",
                         "header": [],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\r\n    \"name\": \"New Jersey\",\r\n    \"facebookUrl\": \"https://www.facebook.com/newjersey\",\r\n    \"instagramUrl\": \"https://www.instagram.com/newjersey/\",\r\n    \"linkedinUrl\": \"https://www.linkedin.com/company/newjersey/mycompany/\",\r\n    \"image\": \"image.jpg\",\r\n    \"description\": \"Dorime ....\"\r\n}",
+                            "raw": "{\r\n    \"name\":\"Member\",\r\n    \"facebookUrl\":\"Facebook Url 5\",\r\n    \"instagramUrl\":\"Instagram Url 5\",\r\n    \"linkedinUrl\":\"Linkedin Url 5\",\r\n    \"image\":\"Image 7\",\r\n    \"description\":\"Description\"\r\n}",
                             "options": {
                                 "raw": {
                                     "language": "json"
@@ -258,6 +425,7 @@
                     },
                     "response": []
                 }
+
             ]
         },
         {
