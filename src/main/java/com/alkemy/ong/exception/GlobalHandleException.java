@@ -42,6 +42,12 @@ public class GlobalHandleException {
     return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
   }
 
+  @ExceptionHandler(NotFoundException.class)
+  public ResponseEntity<ErrorResponse> handleNotFoundException(NotFoundException e){
+    ErrorResponse error = buildErrorResponse(HttpStatus.NOT_FOUND, e.getMessage());
+    return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+  }
+
   private ErrorResponse buildErrorResponse(HttpStatus httpStatus, String message) {
     ErrorResponse error = new ErrorResponse();
     error.setStatus(httpStatus.value());
