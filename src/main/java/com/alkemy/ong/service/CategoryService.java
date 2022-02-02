@@ -32,12 +32,12 @@ public class CategoryService implements IGetCategoryDetails {
   @Override
   public CategoryResponse getBy(Long id) {
     Optional<Category> result = categoryRepository.findById(id);
-    if (result.isPresent()) {
+    if (result.isEmpty() || result.get().isSoftDelete()) {
+      throw new NotFoundException("Category could not be found.");
+    } else {
       return categoryMapper.map(result.get(),
           CategoryAttributes.CATEGORY_ID, CategoryAttributes.IMAGE, CategoryAttributes.NAME,
           CategoryAttributes.DESCRIPTION);
-    } else {
-      throw new NotFoundException("the id entered is not present");
     }
   }
 }

@@ -39,9 +39,7 @@ public class CategoryMapper {
   public List<CategoryResponse> map(List<Category> categories) {
     List<CategoryResponse> categoryResponses = new ArrayList<>(categories.size());
     for (Category category : categories) {
-      CategoryResponse categoryResponse = new CategoryResponse();
-      categoryResponse.setName(category.getName());
-      categoryResponses.add(categoryResponse);
+      categoryResponses.add(map(category, CategoryAttributes.NAME));
     }
     return categoryResponses;
   }
