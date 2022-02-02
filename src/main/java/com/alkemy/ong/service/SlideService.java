@@ -50,12 +50,16 @@ public class SlideService implements IGetSlideDetails, ICreateSlide {
   public SlideResponse create(CreateSlideRequest request, String fileName, String contentType)
       throws ExternalServiceException {
     Image image = new Image(request.getFile(), fileName, contentType);
-    SlideResponse slide = new SlideResponse();
+    Slide slide = new Slide();
     try {
       slide.setImageUrl(utils.upload(image));
       slide.setText(fileName);
       slide.setOrder(getOrder(request.getOrder()));
-      return slide;
+
+      return slideMapper.map(slideRepository.save(slide),
+          SlideAttributes.IMAGE_URL,
+          SlideAttributes.ORDER,
+          SlideAttributes.TEXT);
     } catch (ExternalServiceException e) {
       throw new ExternalServiceException(e.getMessage());
     }
@@ -65,7 +69,7 @@ public class SlideService implements IGetSlideDetails, ICreateSlide {
   private Integer getOrder(Integer order) {
     if (order == null) {
       List<Slide> slides = slideRepository.findAll(Sort.by(SlideAttributes.ORDER.getFieldName()));
-      order = slides.get(slides.size() - 1).getOrder();
+      order = slides.get(slides.size() - 1).getOrder() + 1;
     }
     return order;
   }
