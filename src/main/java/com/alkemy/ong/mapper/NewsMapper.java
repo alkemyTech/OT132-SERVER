@@ -3,13 +3,12 @@ package com.alkemy.ong.mapper;
 import com.alkemy.ong.model.entity.News;
 import com.alkemy.ong.model.request.NewsRequest;
 import com.alkemy.ong.model.response.NewsResponse;
-import java.sql.Timestamp;
 import org.springframework.stereotype.Component;
 
 @Component
 public class NewsMapper {
 
-  public NewsResponse responseMapper(News news) {
+  public NewsResponse map(News news) {
 
     NewsResponse newsResponse = new NewsResponse();
     newsResponse.setImage(news.getImage());
@@ -26,7 +25,6 @@ public class NewsMapper {
     news.setName(newsRequest.getName());
     news.setImage(newsRequest.getImage());
     news.setText(newsRequest.getText());
-    news.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
     return news;
   }

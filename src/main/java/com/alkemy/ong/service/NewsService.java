@@ -23,7 +23,7 @@ public class NewsService implements IAddCategory, ICreateNews {
 
   private NewsResponse buildResponse(News news) {
 
-    NewsResponse newsResponse = newsMapper.responseMapper(news);
+    NewsResponse newsResponse = newsMapper.map(news);
 
     return newsResponse;
   }

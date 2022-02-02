@@ -18,7 +18,7 @@ public class NewsController {
   @Autowired private ICreateNews createNews;
 
   @PostMapping
-  public ResponseEntity<NewsResponse> postNews(@RequestBody @Valid NewsRequest newsRequest) {
+  public ResponseEntity<NewsResponse> create(@RequestBody @Valid NewsRequest newsRequest) {
 
     NewsResponse newsResponse = createNews.create(newsRequest);
 
