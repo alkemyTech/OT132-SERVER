@@ -82,10 +82,4 @@ public class UserService implements UserDetailsService, IGetUserDetails, ILogin 
   public UserResponse findBy(String username) {
     return userMapper.map(this.getUser(username));
   }
-
-  @Override
-  public UserResponse findAuthenticatedUser(String authentication) {
-    String username = jwtUtil.extractUsername(authentication);
-    return userMapper.map(((User)this.loadUserByUsername(username)));
-  }
 }

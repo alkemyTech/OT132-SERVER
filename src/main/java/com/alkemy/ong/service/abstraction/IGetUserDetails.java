@@ -9,6 +9,4 @@ public interface IGetUserDetails {
 
   UserResponse findBy(String username);
 
-  UserResponse findAuthenticatedUser(String authentication);
-
 }
