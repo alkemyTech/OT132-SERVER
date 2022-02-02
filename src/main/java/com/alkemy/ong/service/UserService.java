@@ -80,6 +80,6 @@ public class UserService implements UserDetailsService, IGetUserDetails, ILogin 
 
   @Override
   public UserResponse findBy(String username) {
-    return userMapper.map(this.getUser(username));
+    return userMapper.map(getUser(username));
   }
 }
