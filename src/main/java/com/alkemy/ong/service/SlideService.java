@@ -6,13 +6,14 @@ import com.alkemy.ong.model.entity.Slide;
 import com.alkemy.ong.model.response.ListSlideResponse;
 import com.alkemy.ong.model.response.SlideResponse;
 import com.alkemy.ong.repository.ISlideRepository;
+import com.alkemy.ong.service.abstraction.ICreateSlide;
 import com.alkemy.ong.service.abstraction.IGetSlideDetails;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SlideService implements IGetSlideDetails {
+public class SlideService implements IGetSlideDetails,ICreateSlide {
 
   @Autowired
   private SlideMapper slideMapper;
@@ -36,5 +37,11 @@ public class SlideService implements IGetSlideDetails {
     listSlideResponse.setSlideResponses(slideResponses);
     return listSlideResponse;
   }
+
+  @Override
+  public SlideResponse create(String file, String fileName, String contentType) {
+    return null;
+  }
+  
 
 }
