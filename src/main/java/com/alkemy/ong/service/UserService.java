@@ -90,4 +90,9 @@ public class UserService implements UserDetailsService, IGetUserDetails, ILogin,
       throw new NotFoundException("User not found");
     }
   }
+
+  @Override
+  public UserResponse findBy(String username) {
+    return userMapper.map(getUser(username));
+  }
 }
