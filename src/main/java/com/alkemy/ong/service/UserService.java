@@ -81,13 +81,13 @@ public class UserService implements UserDetailsService, IGetUserDetails, ILogin,
   }
 
   @Override
-  public boolean delete(Long id) {
+  public void delete(Long id) {
     User user = userRepository.findById(id).orElse(null);
     if (user != null) {
       user.setSoftDelete(true);
-      return true;
+      userRepository.save(user);
+    } else {
+      throw new NotFoundException("User not found");
     }
-    throw new NotFoundException("User not found");
-
   }
 }

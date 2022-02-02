@@ -5,7 +5,6 @@ import com.alkemy.ong.model.response.ListUsersResponse;
 import com.alkemy.ong.service.abstraction.IDeleteUser;
 import com.alkemy.ong.service.abstraction.IGetUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +20,7 @@ public class UserController {
   private IGetUserDetails getUserDetails;
 
   @Autowired
-  IDeleteUser deleteUser;
+  private IDeleteUser deleteUser;
 
   @GetMapping()
   public ResponseEntity<ListUsersResponse> list() {
@@ -29,7 +28,8 @@ public class UserController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity delete(@PathVariable Long id) throws NotFoundException {
+  public ResponseEntity<?> delete(@PathVariable Long id) throws NotFoundException {
+    deleteUser.delete(id);
     return ResponseEntity.ok().build();
   }
 }
