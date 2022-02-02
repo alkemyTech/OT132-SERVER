@@ -7,6 +7,8 @@ public interface IGetUserDetails {
 
   ListUsersResponse findActiveUsers();
 
-  UserResponse findBy(String email);
+  UserResponse findBy(String username);
+
+  UserResponse findAuthenticatedUser(String authentication);
 
 }

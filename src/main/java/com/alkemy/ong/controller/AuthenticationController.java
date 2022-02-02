@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -48,21 +49,14 @@ public class AuthenticationController {
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
-  /*
-   * @GetMapping("/me") public ResponseEntity<User> getUserDetails(@RequestHeader ("Authorization")
-   * String auth) {
-   * 
-   * //@AuthenticationPrincipal //TODO: process POST request
-   * 
-   * return
-   * ResponseEntity.ok((User)SecurityContextHolder.getContext()
-   * .getAuthentication().getDetails()); }
-   */
-
   @GetMapping("/me")
   public ResponseEntity<UserResponse> getUserDetails(Principal user) {
     UserResponse userResponse = getUserDetails.findBy(user.getName());
     return ResponseEntity.ok(userResponse);
   }
 
+  @GetMapping("/me2")
+  public ResponseEntity<UserResponse> getUserDetails(@RequestHeader ("Authorization") String auth) {   
+    return ResponseEntity.ok(getUserDetails.findAuthenticatedUser(auth));    
+  }
 }
