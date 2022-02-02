@@ -22,7 +22,7 @@ public class Image implements IImage {
 
   @Override
   public String getContentType() {
-    return this.getContentType();
+    return this.contentType;
   }
 
   @Override
