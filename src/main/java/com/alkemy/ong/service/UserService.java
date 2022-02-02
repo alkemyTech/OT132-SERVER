@@ -77,4 +77,9 @@ public class UserService implements UserDetailsService, IGetUserDetails, ILogin 
 
     return new AuthenticationResponse(user.getEmail(), jwtUtil.generateToken(user));
   }
+
+  @Override
+  public UserResponse findBy(String username) {
+    return userMapper.map(this.getUser(username));
+  }
 }
