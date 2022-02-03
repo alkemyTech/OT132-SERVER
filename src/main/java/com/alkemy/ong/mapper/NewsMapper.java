@@ -25,6 +25,7 @@ public class NewsMapper {
     news.setName(createNewsRequest.getName());
     news.setImage(createNewsRequest.getImage());
     news.setText(createNewsRequest.getText());
+    news.setSoftDelete(false);
 
     return news;
   }
