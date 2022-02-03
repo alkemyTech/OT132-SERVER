@@ -1,9 +1,10 @@
 package com.alkemy.ong.service.abstraction;
 
 import com.alkemy.ong.model.response.ListCategoriesResponse;
+import org.springframework.data.domain.Pageable;
 
 public interface IGetCategoryDetails {
 
-  ListCategoriesResponse findAll();
+  ListCategoriesResponse findAll(Pageable pageable);
 
 }
