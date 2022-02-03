@@ -34,10 +34,9 @@ public class CategoryService implements IGetCategoryDetails {
     Optional<Category> result = categoryRepository.findById(id);
     if (result.isEmpty() || result.get().isSoftDelete()) {
       throw new NotFoundException("Category could not be found.");
-    } else {
-      return categoryMapper.map(result.get(),
-          CategoryAttributes.CATEGORY_ID, CategoryAttributes.IMAGE, CategoryAttributes.NAME,
-          CategoryAttributes.DESCRIPTION);
     }
+    return categoryMapper.map(result.get(),
+        CategoryAttributes.CATEGORY_ID, CategoryAttributes.IMAGE, CategoryAttributes.NAME,
+        CategoryAttributes.DESCRIPTION);
   }
 }
