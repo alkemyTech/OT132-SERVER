@@ -13,6 +13,7 @@ import com.alkemy.ong.repository.ISlideRepository;
 import com.alkemy.ong.service.abstraction.ICreateSlide;
 import com.alkemy.ong.service.abstraction.IGetSlideDetails;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
