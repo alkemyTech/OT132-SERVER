@@ -39,5 +39,4 @@ public class SlideMapper {
     }
     return slideResponses;
   }
-
 }

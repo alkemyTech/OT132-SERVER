@@ -22,9 +22,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-  @Autowired private UserDetailsService userDetailsService;
+  @Autowired
+  private UserDetailsService userDetailsService;
 
-  @Autowired private JwtRequestFilter jwtRequestFilter;
+  @Autowired
+  private JwtRequestFilter jwtRequestFilter;
 
   @Bean
   public BCryptPasswordEncoder passwordEncoder() {
@@ -72,6 +74,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .hasRole(RoleType.ADMIN.name())
         .antMatchers(HttpMethod.GET, "/slides")
         .hasAnyRole(RoleType.ADMIN.name(), RoleType.USER.name())
+        .antMatchers(HttpMethod.POST, "/slides")
+        .hasAnyRole(RoleType.ADMIN.name())
         .antMatchers(HttpMethod.POST, "/testimonials")
         .hasAnyRole(RoleType.ADMIN.name(), RoleType.USER.name())
         .antMatchers(HttpMethod.GET, "/members")
@@ -79,6 +83,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.POST, "/members")
         .hasRole(RoleType.USER.name())
         .antMatchers(HttpMethod.POST, "/news")
+        .hasRole(RoleType.ADMIN.name())
+        .antMatchers(HttpMethod.GET, "/categories/{\\d+}")
         .hasRole(RoleType.ADMIN.name())
         .anyRequest()
         .authenticated()
