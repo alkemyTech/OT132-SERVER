@@ -14,7 +14,6 @@ public class NewsMapper {
     newsResponse.setImage(news.getImage());
     newsResponse.setName(news.getName());
     newsResponse.setText(news.getText());
-    newsResponse.setTimestamp(news.getTimestamp());
 
     return newsResponse;
   }
