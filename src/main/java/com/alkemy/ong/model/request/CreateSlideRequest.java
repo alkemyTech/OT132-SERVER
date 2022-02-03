@@ -11,7 +11,7 @@ import org.springframework.lang.Nullable;
 @Setter
 public class CreateSlideRequest {
 
-  @NotBlank(message = "This text cannot be empty")
+  @NotBlank(message = "File encoded in base64 must be provided.")
   private String fileEncodeBase64;
 
   @Nullable
