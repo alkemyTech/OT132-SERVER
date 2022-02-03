@@ -27,6 +27,6 @@ public class NewsController {
 
     NewsResponse newsResponse = createNews.create(createNewsRequest);
 
-    return ResponseEntity.ok(newsResponse);
+    return ResponseEntity.status(HttpStatus.CREATED).body(newsResponse);
   }
 }
