@@ -70,7 +70,7 @@ public class UserService implements UserDetailsService, IGetUserDetails, ILogin,
       throws InvalidCredentialsException {
     User user = userRepository.findByEmail(authenticationRequest.getEmail());
     if (user == null) {
-      throw new InvalidCredentialsException("Invalid email or password");
+      throw new InvalidCredentialsException("Invalid email or password.");
     }
 
     authenticationManager.authenticate(
