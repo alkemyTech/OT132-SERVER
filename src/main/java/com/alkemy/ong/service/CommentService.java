@@ -18,9 +18,10 @@ public class CommentService implements IGetComment {
   @Autowired
   private CommentMapper commentMapper;
 
-  public ListCommentResponse listAll(){
-    List<Comment> comments = commentRepository.findAllByOrderByTimestamp();
-    List<CommentResponse> commentResponse = commentMapper.
+  public ListCommentResponse findAll() {
+    List<Comment> comments = commentRepository.findAllOrderByTimestampAsc();
+    List<CommentResponse> commentResponse = commentMapper.map(comments);
+    return new ListCommentResponse(commentResponse);
   }
 
 }
