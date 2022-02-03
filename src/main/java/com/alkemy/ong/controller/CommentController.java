@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping
+@RequestMapping("/comments")
 public class CommentController {
 
   @Autowired
   private IGetComment getComment;
 
-  @GetMapping("/comments")
+  @GetMapping
   public ResponseEntity<ListCommentResponse> list() {
     ListCommentResponse listResponse = getComment.findAll();
     return ResponseEntity.ok().body(listResponse);
