@@ -2,6 +2,7 @@ package com.alkemy.ong.service;
 
 import com.alkemy.ong.common.JwtUtils;
 import com.alkemy.ong.exception.InvalidCredentialsException;
+import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.UserMapper;
 import com.alkemy.ong.model.entity.User;
 import com.alkemy.ong.model.request.AuthenticationRequest;
@@ -9,6 +10,7 @@ import com.alkemy.ong.model.response.AuthenticationResponse;
 import com.alkemy.ong.model.response.ListUsersResponse;
 import com.alkemy.ong.model.response.UserResponse;
 import com.alkemy.ong.repository.IUserRepository;
+import com.alkemy.ong.service.abstraction.IDeleteUser;
 import com.alkemy.ong.service.abstraction.IGetUserDetails;
 import com.alkemy.ong.service.abstraction.ILogin;
 import java.util.List;
@@ -21,7 +23,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService implements UserDetailsService, IGetUserDetails, ILogin {
+public class UserService implements UserDetailsService, IGetUserDetails, ILogin, IDeleteUser {
 
   private static final String USER_NOT_FOUND_MESSAGE = "User not found.";
 
@@ -68,7 +70,7 @@ public class UserService implements UserDetailsService, IGetUserDetails, ILogin 
       throws InvalidCredentialsException {
     User user = userRepository.findByEmail(authenticationRequest.getEmail());
     if (user == null) {
-      throw new InvalidCredentialsException("Invalid email or password");
+      throw new InvalidCredentialsException("Invalid email or password.");
     }
 
     authenticationManager.authenticate(
@@ -76,6 +78,16 @@ public class UserService implements UserDetailsService, IGetUserDetails, ILogin 
             authenticationRequest.getPassword()));
 
     return new AuthenticationResponse(user.getEmail(), jwtUtil.generateToken(user));
+  }
+
+  @Override
+  public void delete(Long id) {
+    User user = userRepository.findByUserIdAndSoftDeleteFalse(id);
+    if (user == null || user.isSoftDelete()) {
+      throw new NotFoundException("User not found");
+    }
+    user.setSoftDelete(true);
+    userRepository.save(user);
   }
 
   @Override
