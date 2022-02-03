@@ -34,10 +34,10 @@ public class AwsConfiguration {
   @Bean
   public AmazonS3 initializeAmazon() {
     BasicAWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
-
-    return AmazonS3ClientBuilder.standard().withRegion(Regions.fromName(region))
-        .withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
-
+    return AmazonS3ClientBuilder.standard()
+        .withRegion(Regions.fromName(region))
+        .withCredentials(new AWSStaticCredentialsProvider(credentials))
+        .build();
   }
 
 }
