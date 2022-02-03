@@ -1,7 +1,9 @@
 package com.alkemy.ong.controller;
 
+import com.alkemy.ong.model.response.CommentResponse;
 import com.alkemy.ong.model.response.ListCommentResponse;
 import com.alkemy.ong.repository.ICommentRepository;
+import com.alkemy.ong.service.abstraction.IGetComment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,12 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommentController {
 
   @Autowired
-  private ICommentRepository commentRepository;
+  private IGetComment getComment;
 
   @GetMapping("/comments")
-  public ResponseEntity<ListCommentResponse> listComments(){
-    ListCommentResponse response = commentRepository.MetodoParaTraerListado();
-    return ResponseEntity.ok().body(response);
+  public ResponseEntity<ListCommentResponse> list(){
+    ListCommentResponse listResponse = getComment.list();
+    return ResponseEntity.ok().body(listResponse);
   }
-
 }
