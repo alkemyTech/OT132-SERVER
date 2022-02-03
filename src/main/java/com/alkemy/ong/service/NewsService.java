@@ -3,7 +3,7 @@ package com.alkemy.ong.service;
 import com.alkemy.ong.mapper.NewsMapper;
 import com.alkemy.ong.model.entity.Category;
 import com.alkemy.ong.model.entity.News;
-import com.alkemy.ong.model.request.NewsRequest;
+import com.alkemy.ong.model.request.CreateNewsRequest;
 import com.alkemy.ong.model.response.NewsResponse;
 import com.alkemy.ong.repository.ICategoryRepository;
 import com.alkemy.ong.repository.INewsRepository;
@@ -15,17 +15,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class NewsService implements IAddCategory, ICreateNews {
 
-  @Autowired private INewsRepository newsRepository;
+  @Autowired
+  private INewsRepository newsRepository;
 
-  @Autowired private NewsMapper newsMapper;
+  @Autowired
+  private NewsMapper newsMapper;
 
-  @Autowired private ICategoryRepository categoryRepository;
+  @Autowired
+  private ICategoryRepository categoryRepository;
 
   private NewsResponse buildResponse(News news) {
 
-    NewsResponse newsResponse = newsMapper.map(news);
-
-    return newsResponse;
+    return newsMapper.map(news);
   }
 
   @Override
@@ -37,9 +38,9 @@ public class NewsService implements IAddCategory, ICreateNews {
   }
 
   @Override
-  public NewsResponse create(NewsRequest newsRequest) {
+  public NewsResponse create(CreateNewsRequest createNewsRequest) {
 
-    News news = newsMapper.map(newsRequest);
+    News news = newsMapper.map(createNewsRequest);
 
     news.setCategory(add());
 

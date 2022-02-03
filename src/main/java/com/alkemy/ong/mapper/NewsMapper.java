@@ -1,7 +1,7 @@
 package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.model.entity.News;
-import com.alkemy.ong.model.request.NewsRequest;
+import com.alkemy.ong.model.request.CreateNewsRequest;
 import com.alkemy.ong.model.response.NewsResponse;
 import org.springframework.stereotype.Component;
 
@@ -19,12 +19,12 @@ public class NewsMapper {
     return newsResponse;
   }
 
-  public News map(NewsRequest newsRequest) {
+  public News map(CreateNewsRequest createNewsRequest) {
 
     News news = new News();
-    news.setName(newsRequest.getName());
-    news.setImage(newsRequest.getImage());
-    news.setText(newsRequest.getText());
+    news.setName(createNewsRequest.getName());
+    news.setImage(createNewsRequest.getImage());
+    news.setText(createNewsRequest.getText());
 
     return news;
   }

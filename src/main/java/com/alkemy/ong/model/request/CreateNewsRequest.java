@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class NewsRequest {
+public class CreateNewsRequest {
 
   @NotBlank(message = "Name cannot be null or empty.")
   private String name;
