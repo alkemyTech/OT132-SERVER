@@ -1,19 +1,17 @@
 package com.alkemy.ong.service;
 
 import com.alkemy.ong.mapper.NewsMapper;
-import com.alkemy.ong.model.entity.Category;
 import com.alkemy.ong.model.entity.News;
 import com.alkemy.ong.model.request.CreateNewsRequest;
 import com.alkemy.ong.model.response.NewsResponse;
 import com.alkemy.ong.repository.ICategoryRepository;
 import com.alkemy.ong.repository.INewsRepository;
-import com.alkemy.ong.service.abstraction.IAddCategory;
 import com.alkemy.ong.service.abstraction.ICreateNews;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NewsService implements IAddCategory, ICreateNews {
+public class NewsService implements ICreateNews {
 
   @Autowired
   private INewsRepository newsRepository;
@@ -30,19 +28,11 @@ public class NewsService implements IAddCategory, ICreateNews {
   }
 
   @Override
-  public Category add() {
-
-    Category category = categoryRepository.findByNameIgnoreCase("news");
-
-    return category;
-  }
-
-  @Override
   public NewsResponse create(CreateNewsRequest createNewsRequest) {
 
     News news = newsMapper.map(createNewsRequest);
 
-    news.setCategory(add());
+    news.setCategory(categoryRepository.findByNameIgnoreCase("news"));
 
     return buildResponse(newsRepository.save(news));
   }
