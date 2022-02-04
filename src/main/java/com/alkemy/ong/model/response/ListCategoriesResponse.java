@@ -15,5 +15,8 @@ public class ListCategoriesResponse {
 
   @JsonProperty("categories")
   private List<CategoryResponse> categoryResponses;
+  private int page;
+  private int totalPages;
+  private int size;
 
 }
