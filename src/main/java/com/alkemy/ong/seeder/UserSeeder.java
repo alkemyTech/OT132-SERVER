@@ -41,21 +41,22 @@ public class UserSeeder implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
+    createRole(RoleType.ADMIN);
+    createRole(RoleType.USER);
     seedUserTable();
   }
 
   private void seedUserTable() {
     if (userRepository.count() == 0) {
+      List<Role> roleAdmin = List.of(roleRepository.findByName(RoleType.ADMIN.getFullRoleName()));
+      List<Role> roleUser = List.of(roleRepository.findByName(RoleType.USER.getFullRoleName()));
       for (int i = 0; i < 20; i++) {
-        List<Role> rolesAdmin = List.of(
-            roleRepository.findByName(RoleType.ADMIN.getFullRoleName()));
-        List<Role> rolesUser = List.of(roleRepository.findByName(RoleType.USER.getFullRoleName()));
         if (i < 10) {
           createUser(NAMES[i], LASTNAMES[i], EMAILS[i], PASSWORDS[i],
-              "image.jpg", rolesAdmin);
+              "image.jpg", roleAdmin);
         } else {
           createUser(NAMES[i], LASTNAMES[i], EMAILS[i], PASSWORDS[i],
-              "image.jpg", rolesUser);
+              "image.jpg", roleUser);
         }
       }
     }
@@ -73,5 +74,12 @@ public class UserSeeder implements CommandLineRunner {
     userRepository.save(user);
     user.setRoles(role);
     userRepository.save(user);
+  }
+
+  private void createRole(RoleType roleType) {
+    Role role = new Role();
+    role.setName(roleType.getFullRoleName());
+    role.setDescription(roleType.name());
+    roleRepository.save(role);
   }
 }
