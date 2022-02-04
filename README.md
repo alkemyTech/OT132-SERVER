@@ -46,3 +46,35 @@ You can generate the Checkstyle report by explicitly executing below command fro
 ```
 mvn checkstyle:checkstyle
 ```
+
+### DEFAULT USERS
+
+- Admin users:
+
+| Email                   | Password   |
+|-------------------------|------------|
+| etluit12@gmail.com      | t0400e3ps  |
+| epchristel15@gmail.com  | p00846e4p  |
+| jfstefanie5@gmail.com   | f94475j9f  |
+| gkelsenbach10@gmail.com | k15564g6k  |
+| jjottomar9@gmail.com    | j654110j9j |
+| erleitner17@gmail.com   | r05400e4r  |
+| hamoses0@gmail.com      | a987103h7a |
+| behoyt4@gmail.com       | e62685b1e  |
+| adblanchette3@gmail.com | d25548a0d  |
+| dkpauling10@gmail.com   | k97165d3k  |
+
+- Standard users:
+
+| Email                     | Password   |
+|---------------------------|------------|
+| bskunigunde18@gmail.com   | s30103b1s  |
+| jpschell15@gmail.com      | p96776j9p  |
+| airupel8@gmail.com        | i117107a0i |
+| cpcarina15@gmail.com      | p09919c2p  |
+| hrgastelu17@gmail.com     | r80744h7r  |
+| huweinmeier-r20@gmail.com | u83385h7u  |
+| esplatz18@gmail.com       | s23664e4s  |
+| cysonje24@gmail.com       | y59736c2y  |
+| gdgitte3@gmail.com        | d30762g6d  |
+| clsarvott11@gmail.com     | l22929c2l  |
