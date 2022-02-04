@@ -18,6 +18,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping("/categories")
 public class CategoryController {
 
+  private static final String CATEGORIES_PATH = "/categories";
+
   @Autowired
   private IGetCategoryDetails getCategoryDetails;
 
@@ -28,9 +30,14 @@ public class CategoryController {
   public ResponseEntity<ListCategoriesResponse> list(Pageable pageable,
       UriComponentsBuilder uriBuilder, HttpServletResponse response) {
     ListCategoriesResponse listCategoriesResponse = getCategoryDetails.findAll(pageable);
-    resultsRetrieved.addLinkHeaderOnPagedResourceRetrieval(uriBuilder, response, "/categories",
-        listCategoriesResponse.getPage(), listCategoriesResponse.getTotalPages(),
+
+    resultsRetrieved.addLinkHeaderOnPagedResourceRetrieval(uriBuilder,
+        response,
+        CATEGORIES_PATH,
+        listCategoriesResponse.getPage(),
+        listCategoriesResponse.getTotalPages(),
         listCategoriesResponse.getSize());
+
     return ResponseEntity.ok().body(listCategoriesResponse);
   }
 
