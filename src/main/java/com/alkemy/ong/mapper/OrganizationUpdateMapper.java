@@ -2,10 +2,12 @@ package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.model.request.OrganizationRequest;
 import com.alkemy.ong.model.response.OrganizationUpdateResponse;
+import org.springframework.stereotype.Component;
 
+@Component
 public class OrganizationUpdateMapper {
 
-  public OrganizationUpdateResponse map(OrganizationRequest organizationRequest){
+  public OrganizationUpdateResponse map(OrganizationRequest organizationRequest) {
     OrganizationUpdateResponse updateResponse = new OrganizationUpdateResponse();
     updateResponse.setName(organizationRequest.getName());
     updateResponse.setImage(organizationRequest.getImage());

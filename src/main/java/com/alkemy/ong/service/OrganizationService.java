@@ -37,7 +37,7 @@ public class OrganizationService implements IGetOrganizationDetails, IOrganizati
 
 
   @Override
-  public void update(OrganizationRequest organizationRequest) throws NotFoundException{
+  public void update(OrganizationRequest organizationRequest) throws NotFoundException {
     Organization organization = getOrganization();
     organization.setName(organizationRequest.getName());
     organization.setImage(organizationRequest.getImage());
@@ -52,7 +52,7 @@ public class OrganizationService implements IGetOrganizationDetails, IOrganizati
     organizationRepository.save(organization);
   }
 
-  private Organization getOrganization() throws NotFoundException{
+  private Organization getOrganization() throws NotFoundException {
     List<Organization> organizations = organizationRepository.findAll();
     if (organizations.isEmpty()) {
       throw new NotFoundException("The requested resource could not be found.");
