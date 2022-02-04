@@ -10,4 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface ICategoryRepository extends JpaRepository<Category, Long> {
 
   Page<Category> findBySoftDeleteFalseOrderByName(Pageable pageable);
+
+  Category findByNameIgnoreCase(String name);
+
 }
