@@ -5,6 +5,7 @@ import com.alkemy.ong.model.entity.Role;
 import com.alkemy.ong.model.entity.User;
 import com.alkemy.ong.repository.IRoleRepository;
 import com.alkemy.ong.repository.IUserRepository;
+import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -46,8 +47,10 @@ public class UserSeeder implements CommandLineRunner {
 
   private void seedUserTable() {
     if (userRepository.count() == 0) {
-      List<Role> roleAdmin = List.of(roleRepository.findByName(RoleType.ADMIN.getFullRoleName()));
-      List<Role> roleUser = List.of(roleRepository.findByName(RoleType.USER.getFullRoleName()));
+      List<Role> roleAdmin = Collections.singletonList(
+          roleRepository.findByName(RoleType.ADMIN.getFullRoleName()));
+      List<Role> roleUser = Collections.singletonList(
+          roleRepository.findByName(RoleType.USER.getFullRoleName()));
       for (int i = 0; i < 20; i++) {
         if (i < 10) {
           createUser(NAMES.get(i), LASTNAMES.get(i), EMAILS.get(i), PASSWORDS.get(i),
