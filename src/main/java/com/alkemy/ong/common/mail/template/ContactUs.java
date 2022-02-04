@@ -1,10 +1,8 @@
 package com.alkemy.ong.common.mail.template;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 public class ContactUs {
 
   private final String organizationName;
