@@ -46,8 +46,11 @@ You can generate the Checkstyle report by explicitly executing below command fro
 ```
 mvn checkstyle:checkstyle
 ```
-### Default Users
-#### Admin
+
+### DEFAULT USERS
+
+- Admin users:
+
 | Email                   | Password   |
 |-------------------------|------------|
 | etluit12@gmail.com      | t0400e3ps  |
@@ -61,7 +64,8 @@ mvn checkstyle:checkstyle
 | adblanchette3@gmail.com | d25548a0d  |
 | dkpauling10@gmail.com   | k97165d3k  |
 
-#### User
+- Standard users:
+
 | Email                     | Password   |
 |---------------------------|------------|
 | bskunigunde18@gmail.com   | s30103b1s  |

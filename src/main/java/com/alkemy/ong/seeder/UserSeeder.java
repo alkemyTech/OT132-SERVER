@@ -18,7 +18,7 @@ public class UserSeeder implements CommandLineRunner {
   private static final List<String> NAMES = List.of("Luitgard", "Christel", "Stefanie", "Oswald",
       "Ottomar", "Johann", "Moses", "Ianis", "Ashlyn", "Maria", "Kunigunde", "Marlies",
       "Lieselotte", "Carina", "Gabriele", "Gertrud", "Cecilia", "Sonje", "Gitte", "Auguste");
-  private static final List<String> LASTNAMES = List.of("Dettler", "Kampmann", "Wesener",
+  private static final List<String> LAST_NAMES = List.of("Dettler", "Kampmann", "Wesener",
       "Wagner-Kesler", "Redel", "Macht", "Galloway", "Ianis", "Blanchette", "Pauling", "Alderborn",
       "Holseiner", "Heberle", "Milanovich", "Andes", "Castro", "Baumler", "Sonje", "Wagner-Schell",
       "Wagner-Kees");
@@ -40,37 +40,54 @@ public class UserSeeder implements CommandLineRunner {
   @Autowired
   private IRoleRepository roleRepository;
 
+  @Autowired
+  private BCryptPasswordEncoder passwordEncoder;
+
   @Override
-  public void run(String... args) throws Exception {
+  public void run(String... args) {
     seedUserTable();
   }
 
   private void seedUserTable() {
     if (userRepository.count() == 0) {
-      List<Role> roleAdmin = Collections.singletonList(
-          roleRepository.findByName(RoleType.ADMIN.getFullRoleName()));
-      List<Role> roleUser = Collections.singletonList(
-          roleRepository.findByName(RoleType.USER.getFullRoleName()));
-      for (int i = 0; i < 20; i++) {
-        if (i < 10) {
-          createUser(NAMES.get(i), LASTNAMES.get(i), EMAILS.get(i), PASSWORDS.get(i),
-              "image.jpg", roleAdmin);
-        } else {
-          createUser(NAMES.get(i), LASTNAMES.get(i), EMAILS.get(i), PASSWORDS.get(i),
-              "image.jpg", roleUser);
-        }
-      }
+      createAdminUsers();
+      createStandardUsers();
+    }
+  }
+
+  private void createAdminUsers() {
+    List<Role> roleAdmin = Collections.singletonList(
+        roleRepository.findByName(RoleType.ADMIN.getFullRoleName()));
+    for (int index = 0; index < 10; index++) {
+      createUser(NAMES.get(index),
+          LAST_NAMES.get(index),
+          EMAILS.get(index),
+          PASSWORDS.get(index),
+          roleAdmin);
+    }
+  }
+
+  private void createStandardUsers() {
+    List<Role> roleUser = Collections.singletonList(
+        roleRepository.findByName(RoleType.USER.getFullRoleName()));
+
+    for (int index = 10; index < 20; index++) {
+      createUser(NAMES.get(index),
+          LAST_NAMES.get(index),
+          EMAILS.get(index),
+          PASSWORDS.get(index),
+          roleUser);
     }
   }
 
   private void createUser(String firstName, String lastName, String email, String password,
-      String photo, List<Role> role) {
+      List<Role> role) {
     User user = new User();
     user.setFirstName(firstName);
     user.setLastName(lastName);
     user.setEmail(email);
-    user.setPassword(new BCryptPasswordEncoder().encode(password));
-    user.setPhoto(photo);
+    user.setPassword(passwordEncoder.encode(password));
+    user.setPhoto("image.jpg");
     user.setSoftDelete(false);
     userRepository.save(user);
     user.setRoles(role);

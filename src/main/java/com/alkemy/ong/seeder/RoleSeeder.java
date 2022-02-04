@@ -16,7 +16,7 @@ public class RoleSeeder implements CommandLineRunner {
 
   @Override
   @Order(1)
-  public void run(String... args) throws Exception {
+  public void run(String... args) {
     seedRoleTable();
   }
 
@@ -33,4 +33,5 @@ public class RoleSeeder implements CommandLineRunner {
     role.setDescription(roleType.name());
     roleRepository.save(role);
   }
+
 }
