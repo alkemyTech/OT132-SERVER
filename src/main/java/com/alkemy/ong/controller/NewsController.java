@@ -27,7 +27,7 @@ public class NewsController {
   @Autowired
   private IDeleteNews deleteNews;
 
-  @DeleteMapping("news/:id")
+  @DeleteMapping("/{id}")
   public ResponseEntity<?> delete(@PathVariable Long id) throws NotFoundException {
 
     deleteNews.delete(id);
