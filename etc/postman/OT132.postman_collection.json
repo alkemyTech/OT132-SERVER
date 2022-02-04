@@ -503,40 +503,41 @@
             }
           },
           "response": []
-        },
-        ,
+        }
+      ]
+    },
+    {
+      "name": "News",
+      "item": [
         {
-          "name": "News",
-          "item": [
-            {
-              "name": "POST News",
-              "request": {
-                "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n    \"name\":\"Generic Title\",\r\n    \"text\": \"Generic text.\",\r\n    \"image\":\"http://foourl.com/img\"\r\n\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "http://localhost:8080/news",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "8080",
-                  "path": [
-                    "news"
-                  ]
+          "name": "POST News",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\":\"Generic Title\",\r\n    \"text\": \"Generic text.\",\r\n    \"image\":\"http://foourl.com/img\"\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
                 }
-              },
-              "response": []
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/news",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "news"
+              ]
             }
-          ]
+          },
+          "response": []
         }
       ]
     }
+  ]
+}
