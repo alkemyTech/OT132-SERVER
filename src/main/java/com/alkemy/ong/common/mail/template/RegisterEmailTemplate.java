@@ -1,6 +1,8 @@
-package com.alkemy.ong.common.mail;
+package com.alkemy.ong.common.mail.template;
 
-import com.alkemy.ong.model.request.ContactUs;
+import com.alkemy.ong.common.mail.IContent;
+import com.alkemy.ong.common.mail.IMail;
+import com.alkemy.ong.common.mail.template.ContactUs;
 import java.text.MessageFormat;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -13,6 +15,7 @@ public class RegisterEmailTemplate implements IContent, IMail {
   private static final String SUBJECT = "Register Successfully";
   private static final String WELCOME_TEXT = "Welcome to {0}";
   private static final String CONTACT_US = "Contact us:";
+
   private final String organizationName;
   private final String address;
   private final Integer phone;

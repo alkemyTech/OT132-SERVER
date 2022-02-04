@@ -1,4 +1,4 @@
-package com.alkemy.ong.model.request;
+package com.alkemy.ong.common.mail.template;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,9 +7,9 @@ import lombok.Setter;
 @Setter
 public class ContactUs {
 
-  private String organizationName;
-  private String address;
-  private int phone;
+  private final String organizationName;
+  private final String address;
+  private final int phone;
 
   public ContactUs(String organizationName, String address, int phone) {
     this.organizationName = organizationName;
