@@ -13,7 +13,6 @@ import com.alkemy.ong.repository.ISlideRepository;
 import com.alkemy.ong.service.abstraction.ICreateSlide;
 import com.alkemy.ong.service.abstraction.IGetSlideDetails;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +34,20 @@ public class SlideService implements IGetSlideDetails, ICreateSlide {
     return buildListSlideResponse(slide);
   }
 
+  @Override
+  public SlideResponse create(CreateSlideRequest request, String fileName, String contentType)
+      throws ExternalServiceException {
+    Image image = new Image(request.getFileEncodeBase64(), fileName, contentType);
+    Slide slide = slideRepository.save(buildSlide(imageUtils.upload(image),
+        fileName,
+        getOrderOrDefault(request.getOrder())));
+    return slideMapper.map(
+        slide,
+        SlideAttributes.IMAGE_URL,
+        SlideAttributes.ORDER,
+        SlideAttributes.TEXT);
+  }
+
   private ListSlideResponse buildListSlideResponse(List<Slide> slide) {
     List<SlideResponse> slideResponses = slideMapper.map(
         slide,
@@ -46,20 +59,6 @@ public class SlideService implements IGetSlideDetails, ICreateSlide {
     return listSlideResponse;
   }
 
-  @Override
-  public SlideResponse create(CreateSlideRequest request, String fileName, String contentType)
-      throws ExternalServiceException {
-    Image image = new Image(request.getFileEncodeBase64(), fileName, contentType);
-    return slideMapper.map(
-        slideRepository.save(buildSlide(imageUtils.upload(image),
-            fileName,
-            getOrderOrDefault(request.getOrder()))),
-        SlideAttributes.IMAGE_URL,
-        SlideAttributes.ORDER,
-        SlideAttributes.TEXT);
-
-  }
-
   private Slide buildSlide(String imageUrl, String text, Integer order) {
     Slide slide = new Slide();
     slide.setImageUrl(imageUrl);
@@ -69,10 +68,7 @@ public class SlideService implements IGetSlideDetails, ICreateSlide {
   }
 
   private Integer getOrderOrDefault(Integer order) {
-    if (order == null) {
-      order = slideRepository.getMaxOrder() + 1;
-    }
-    return order;
+    return (order == null) ? slideRepository.getMaxOrder() + 1 : order;
   }
 
 }
