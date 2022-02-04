@@ -28,17 +28,17 @@ public class MemberService implements IGetMemberDetails, ICreateMember {
     return buildListResponse(members);
   }
 
-  private ListMembersResponse buildListResponse(List<Member> members) {
-    List<MemberResponse> memberResponses = memberMapper.map(members);
-    ListMembersResponse listMembersResponse = new ListMembersResponse();
-    listMembersResponse.setMemberResponses(memberResponses);
-    return listMembersResponse;
-  }
-
   @Override
   public MemberResponse save(CreateMemberRequest createMemberRequest) {
     Member member = memberMapper.map(createMemberRequest);
     member.setSoftDelete(false);
     return memberMapper.map(memberRepository.save(member));
+  }
+
+  private ListMembersResponse buildListResponse(List<Member> members) {
+    List<MemberResponse> memberResponses = memberMapper.map(members);
+    ListMembersResponse listMembersResponse = new ListMembersResponse();
+    listMembersResponse.setMemberResponses(memberResponses);
+    return listMembersResponse;
   }
 }

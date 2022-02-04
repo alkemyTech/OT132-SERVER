@@ -29,7 +29,7 @@ public class UserController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<?> delete(@PathVariable Long id) throws NotFoundException {
+  public ResponseEntity<Void> delete(@PathVariable Long id) throws NotFoundException {
     deleteUser.delete(id);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }

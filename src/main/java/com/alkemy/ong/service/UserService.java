@@ -44,25 +44,10 @@ public class UserService implements UserDetailsService, IGetUserDetails, ILogin,
     return getUser(username);
   }
 
-  private User getUser(String username) {
-    User user = userRepository.findByEmail(username);
-    if (user == null) {
-      throw new UsernameNotFoundException(USER_NOT_FOUND_MESSAGE);
-    }
-    return user;
-  }
-
   @Override
   public ListUsersResponse findActiveUsers() {
     List<User> users = userRepository.findBySoftDeleteFalse();
     return buildListResponse(users);
-  }
-
-  private ListUsersResponse buildListResponse(List<User> users) {
-    List<UserResponse> userResponses = userMapper.map(users);
-    ListUsersResponse listUsersResponse = new ListUsersResponse();
-    listUsersResponse.setUserResponses(userResponses);
-    return listUsersResponse;
   }
 
   @Override
@@ -94,4 +79,20 @@ public class UserService implements UserDetailsService, IGetUserDetails, ILogin,
   public UserResponse findBy(String username) {
     return userMapper.map(getUser(username));
   }
+
+  private User getUser(String username) {
+    User user = userRepository.findByEmail(username);
+    if (user == null) {
+      throw new UsernameNotFoundException(USER_NOT_FOUND_MESSAGE);
+    }
+    return user;
+  }
+
+  private ListUsersResponse buildListResponse(List<User> users) {
+    List<UserResponse> userResponses = userMapper.map(users);
+    ListUsersResponse listUsersResponse = new ListUsersResponse();
+    listUsersResponse.setUserResponses(userResponses);
+    return listUsersResponse;
+  }
+
 }
