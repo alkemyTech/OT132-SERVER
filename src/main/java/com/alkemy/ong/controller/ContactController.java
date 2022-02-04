@@ -1,11 +1,16 @@
 package com.alkemy.ong.controller;
 
+import com.alkemy.ong.common.JwtUtils;
+import com.alkemy.ong.exception.ExternalServiceException;
 import com.alkemy.ong.model.request.CreateContactRequest;
 import com.alkemy.ong.model.response.ContactResponse;
 import com.alkemy.ong.model.response.ListContactResponse;
 import com.alkemy.ong.service.abstraction.ICreateContact;
 import com.alkemy.ong.service.abstraction.IGetContactDetails;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +30,9 @@ public class ContactController {
   @Autowired
   public IGetContactDetails getContactDetails;
 
+  @Autowired
+  public JwtUtils jwtUtils;
+
   @GetMapping
   public ResponseEntity<ListContactResponse> list() {
     return ResponseEntity.ok(getContactDetails.list());
@@ -32,8 +40,11 @@ public class ContactController {
 
   @PostMapping
   public ResponseEntity<ContactResponse> create(
-      @Valid @RequestBody CreateContactRequest contactRequest) {
-    ContactResponse contactResponse = createContact.create(contactRequest);
+      @Valid @RequestBody CreateContactRequest contactRequest,
+      HttpServletRequest request) 
+      throws ExternalServiceException {
+    String email = jwtUtils.extractUsername(request.getHeader("Authorization"));
+    ContactResponse contactResponse = createContact.create(contactRequest,email);
     return ResponseEntity.status(HttpStatus.CREATED).body(contactResponse);
   }
 
