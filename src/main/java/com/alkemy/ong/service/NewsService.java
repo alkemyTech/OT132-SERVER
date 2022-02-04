@@ -22,18 +22,12 @@ public class NewsService implements ICreateNews {
   @Autowired
   private ICategoryRepository categoryRepository;
 
-  private NewsResponse buildResponse(News news) {
-
-    return newsMapper.map(news);
-  }
-
   @Override
   public NewsResponse create(CreateNewsRequest createNewsRequest) {
-
     News news = newsMapper.map(createNewsRequest);
-
+    news.setSoftDelete(false);
     news.setCategory(categoryRepository.findByNameIgnoreCase("news"));
-
-    return buildResponse(newsRepository.save(news));
+    return newsMapper.map(newsRepository.save(news));
   }
+
 }

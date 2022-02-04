@@ -9,23 +9,19 @@ import org.springframework.stereotype.Component;
 public class NewsMapper {
 
   public NewsResponse map(News news) {
-
     NewsResponse newsResponse = new NewsResponse();
     newsResponse.setImage(news.getImage());
     newsResponse.setName(news.getName());
     newsResponse.setText(news.getText());
-
     return newsResponse;
   }
 
   public News map(CreateNewsRequest createNewsRequest) {
-
     News news = new News();
     news.setName(createNewsRequest.getName());
     news.setImage(createNewsRequest.getImage());
     news.setText(createNewsRequest.getText());
-    news.setSoftDelete(false);
-
     return news;
   }
+
 }
