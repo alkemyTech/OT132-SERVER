@@ -48,6 +48,12 @@ public class GlobalHandleException {
     return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
   }
 
+  @ExceptionHandler(value = UserAlreadyExistException.class)
+  public ResponseEntity<ErrorResponse> handleUserAlreadyExistException(UserAlreadyExistException e){
+    ErrorResponse error = buildErrorResponse(HttpStatus.CONFLICT, e.getMessage());
+    return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+  }
+
   private ErrorResponse buildErrorResponse(HttpStatus httpStatus, String message) {
     ErrorResponse error = new ErrorResponse();
     error.setStatus(httpStatus.value());
@@ -55,5 +61,5 @@ public class GlobalHandleException {
     error.setTimestamp(TimestampUtils.now());
     return error;
   }
-
+  
 }
