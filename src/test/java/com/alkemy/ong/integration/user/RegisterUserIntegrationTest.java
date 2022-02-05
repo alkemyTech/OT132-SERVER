@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 import com.alkemy.ong.config.segurity.RoleType;
+import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.integration.common.AbstractBaseIntegrationTest;
 import com.alkemy.ong.model.entity.User;
 import com.alkemy.ong.model.request.UserRegisterRequest;
@@ -41,20 +42,36 @@ public class RegisterUserIntegrationTest extends AbstractBaseIntegrationTest {
 
     UserRegisterRequest userRegisterRequest = buildRequestPayload();
 
-    HttpEntity<UserRegisterRequest> requestEntity =
-        new HttpEntity<>(userRegisterRequest, headers);
+    HttpEntity<UserRegisterRequest> requestEntity = new HttpEntity<>(userRegisterRequest, headers);
 
-    ResponseEntity<UserResponse> response = restTemplate.exchange(
-        createURLWithPort(PATH),
-        HttpMethod.POST,
-        requestEntity,
-        UserResponse.class);
+    ResponseEntity<UserResponse> response = restTemplate.exchange(createURLWithPort(PATH),
+        HttpMethod.POST, requestEntity, UserResponse.class);
 
     assertEquals(HttpStatus.CREATED, response.getStatusCode());
 
     UserResponse userResponse = response.getBody();
     assertNotNull(userResponse);
     assertEquals(userRegisterRequest.getEmail(), userResponse.getEmail());
+  }
+
+  @Test
+  public void shouldReturnConflictIfEmailAlreadyExist() {
+    // crea un user para reistrar
+    UserRegisterRequest userRegisterRequest = buildRequestPayload();
+    // CUANDO INVOCO A FINDBYEMAIL - ENTONCES ES LO QUE DEVUELVE ESE METODO. {User
+    // findByEmail(String)}
+    when(userRepository.findByEmail(eq("johnny@doe.com"))).thenReturn(new User());
+
+    // entity de entrada: DATOS QUE ESTOY CREANDO PARA INGRESAR Y PROBAR METODO REGISTER
+    HttpEntity<UserRegisterRequest> requestEntity = new HttpEntity<>(userRegisterRequest, headers);
+    // response: LO QUE ESPERO QUE ME DEVUELVA
+    ResponseEntity<ErrorResponse> response = restTemplate.exchange(createURLWithPort(PATH),
+        HttpMethod.POST, requestEntity, ErrorResponse.class);
+
+    assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+    assertNotNull(response);
+
+
   }
 
   private UserRegisterRequest buildRequestPayload() {
