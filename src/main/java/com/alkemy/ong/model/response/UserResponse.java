@@ -15,5 +15,6 @@ public class UserResponse {
   private String photo;
   @JsonInclude(Include.NON_EMPTY)
   private String role;
+  private String token;
 
 }

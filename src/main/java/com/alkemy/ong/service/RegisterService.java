@@ -1,5 +1,6 @@
 package com.alkemy.ong.service;
 
+import com.alkemy.ong.common.JwtUtils;
 import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.exception.UserAlreadyExistException;
 import com.alkemy.ong.mapper.UserMapper;
@@ -11,6 +12,8 @@ import com.alkemy.ong.repository.IUserRepository;
 import com.alkemy.ong.service.abstraction.IRegisterUser;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +28,10 @@ public class RegisterService implements IRegisterUser {
   private UserMapper userMapper;
   @Autowired
   private BCryptPasswordEncoder passwordEncoder;
+  @Autowired
+  private JwtUtils jwtUtil;
+  @Autowired
+  private AuthenticationManager authenticationManager;
 
   @Override
   public UserResponse register(UserRegisterRequest userRegisterRequest)
@@ -36,7 +43,15 @@ public class RegisterService implements IRegisterUser {
     User user = userMapper.map(userRegisterRequest,
         passwordEncoder.encode(userRegisterRequest.getPassword()));
     user.setRoles(List.of(roleRepository.findByName(RoleType.USER.getFullRoleName())));
-    return userMapper.map(userRepository.save(user));
+    UserResponse userResponse = userMapper.map(userRepository.save(user));
+
+    authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(userRegisterRequest.getEmail(),
+            userRegisterRequest.getPassword()));
+
+    userResponse.setToken(jwtUtil.generateToken(user));
+
+    return userResponse;
   }
 
 }
