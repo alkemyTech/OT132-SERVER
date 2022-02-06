@@ -12,4 +12,6 @@ public interface ISlideRepository extends JpaRepository<Slide, Long> {
   Integer getMaxOrder();
 
   Slide deleteSlidesBySlideId(Long id);
+
+  Slide findBySlideId(Long id);
 }

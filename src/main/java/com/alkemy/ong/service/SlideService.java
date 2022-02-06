@@ -7,7 +7,6 @@ import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.SlideMapper;
 import com.alkemy.ong.mapper.attribute.SlideAttributes;
 import com.alkemy.ong.model.entity.Slide;
-import com.alkemy.ong.model.entity.User;
 import com.alkemy.ong.model.request.CreateSlideRequest;
 import com.alkemy.ong.model.response.ListSlideResponse;
 import com.alkemy.ong.model.response.SlideResponse;
@@ -76,15 +75,11 @@ public class SlideService implements IGetSlideDetails, ICreateSlide, IDeleteSlid
 
   @Override
   public void delete(Long id) {
-    Slide slide = slideRepository.deleteSlidesBySlideId(id);
-    if (slide == null){
-      throw new NotFoundException("Slide ID: "+id.toString()+" does not exist.");
+    if (slideRepository.findBySlideId(id) != null) {
+      slideRepository.deleteSlidesBySlideId(id);
+    } else {
+      throw new NotFoundException("Slide ID: " + id.toString() + " does not exist.");
     }
-
-
-
-    user.setSoftDelete(true);
-    userRepository.save(user);
   }
 
 }

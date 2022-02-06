@@ -47,12 +47,13 @@ public class SlideController {
       @RequestHeader("x-file-name") String fileName,
       @RequestHeader("x-content-type") String contentType) throws ExternalServiceException {
     return ResponseEntity
-           .status(HttpStatus.CREATED)
-           .body(createSlide.create(request, fileName, contentType));
+        .status(HttpStatus.CREATED)
+        .body(createSlide.create(request, fileName, contentType));
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<> delete(@PathVariable Long id) throws NotFoundException {
+  public ResponseEntity<Void> delete(@PathVariable Long id) throws NotFoundException {
     deleteSlide.delete(id);
+    return ResponseEntity.ok().build();
   }
 }
