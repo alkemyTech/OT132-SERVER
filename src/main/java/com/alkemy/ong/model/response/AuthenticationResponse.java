@@ -1,5 +1,4 @@
 package com.alkemy.ong.model.response;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,5 +12,7 @@ public class AuthenticationResponse {
   public AuthenticationResponse(String email, String token) {
     this.email = email;
     this.token = token;
+  }
+  public AuthenticationResponse(){
   }
 }
