@@ -39,18 +39,14 @@ public class RegisterService implements IRegisterUser {
     if (userRepository.findByEmail(userRegisterRequest.getEmail()) != null) {
       throw new UserAlreadyExistException();
     }
-
     User user = userMapper.map(userRegisterRequest,
         passwordEncoder.encode(userRegisterRequest.getPassword()));
     user.setRoles(List.of(roleRepository.findByName(RoleType.USER.getFullRoleName())));
     UserResponse userResponse = userMapper.map(userRepository.save(user));
-
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(userRegisterRequest.getEmail(),
             userRegisterRequest.getPassword()));
-
     userResponse.setToken(jwtUtil.generateToken(user));
-
     return userResponse;
   }
 
