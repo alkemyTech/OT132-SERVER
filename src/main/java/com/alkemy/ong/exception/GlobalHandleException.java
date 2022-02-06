@@ -49,7 +49,8 @@ public class GlobalHandleException {
   }
 
   @ExceptionHandler(value = UserAlreadyExistException.class)
-  public ResponseEntity<ErrorResponse> handleUserAlreadyExistException(UserAlreadyExistException e){
+  public ResponseEntity<ErrorResponse> handleUserAlreadyExistException(
+      UserAlreadyExistException e) {
     ErrorResponse error = buildErrorResponse(HttpStatus.CONFLICT, e.getMessage());
     return new ResponseEntity<>(error, HttpStatus.CONFLICT);
   }
@@ -61,5 +62,5 @@ public class GlobalHandleException {
     error.setTimestamp(TimestampUtils.now());
     return error;
   }
-  
+
 }
