@@ -11,7 +11,4 @@ public interface ISlideRepository extends JpaRepository<Slide, Long> {
   @Query("SELECT COALESCE(MAX(s.order),0) FROM Slide s")
   Integer getMaxOrder();
 
-  Slide deleteSlidesBySlideId(Long id);
-
-  Slide findBySlideId(Long id);
 }

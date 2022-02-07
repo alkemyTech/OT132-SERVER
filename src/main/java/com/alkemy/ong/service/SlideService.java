@@ -14,6 +14,7 @@ import com.alkemy.ong.repository.ISlideRepository;
 import com.alkemy.ong.service.abstraction.ICreateSlide;
 import com.alkemy.ong.service.abstraction.IDeleteSlide;
 import com.alkemy.ong.service.abstraction.IGetSlideDetails;
+import java.text.MessageFormat;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -75,11 +76,10 @@ public class SlideService implements IGetSlideDetails, ICreateSlide, IDeleteSlid
 
   @Override
   public void delete(Long id) {
-    if (slideRepository.findBySlideId(id) != null) {
-      slideRepository.deleteSlidesBySlideId(id);
-    } else {
-      throw new NotFoundException("Slide ID: " + id.toString() + " does not exist.");
+    if (!slideRepository.existsById(id)) {
+      throw new NotFoundException(MessageFormat.format("Slide ID: {0} not found.", id));
     }
+    slideRepository.deleteById(id);
   }
-
 }
+

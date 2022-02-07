@@ -54,6 +54,6 @@ public class SlideController {
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Long id) throws NotFoundException {
     deleteSlide.delete(id);
-    return ResponseEntity.ok().build();
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 }
