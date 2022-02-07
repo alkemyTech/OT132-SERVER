@@ -23,6 +23,8 @@ public class RegisterService implements IRegisterUser {
   private IRoleRepository roleRepository;
   @Autowired
   private UserMapper userMapper;
+  @Autowired
+  private BCryptPasswordEncoder passwordEncoder;
 
   @Override
   public UserResponse register(UserRegisterRequest userRegisterRequest)
@@ -32,7 +34,7 @@ public class RegisterService implements IRegisterUser {
     }
 
     User user = userMapper.map(userRegisterRequest,
-        new BCryptPasswordEncoder().encode(userRegisterRequest.getPassword()));
+        passwordEncoder.encode(userRegisterRequest.getPassword()));
     user.setRoles(List.of(roleRepository.findByName(RoleType.USER.getFullRoleName())));
     return userMapper.map(userRepository.save(user));
   }
