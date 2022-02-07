@@ -28,7 +28,7 @@ public class NewsController {
   private IDeleteNews deleteNews;
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<?> delete(@PathVariable Long id) throws NotFoundException {
+  public ResponseEntity<Void> delete(@PathVariable Long id) throws NotFoundException {
 
     deleteNews.delete(id);
 
