@@ -36,7 +36,7 @@ public class NewsService implements ICreateNews, IDeleteNews {
   public void delete(Long id) {
     News news = newsRepository.findByNewsIdAndSoftDeleteFalse(id);
 
-    if (news == null || news.isSoftDelete()) {
+    if (news == null) {
       throw new NotFoundException("News not found");
     }
 
