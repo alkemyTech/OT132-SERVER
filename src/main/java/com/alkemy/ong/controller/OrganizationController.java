@@ -21,14 +21,3 @@ public class OrganizationController {
     return ResponseEntity.ok().body(organizationResponse);
   }
 }
-//Modificar endpoint público de organizations para devolver links de
-// redes sociales
-//Descripción
-//COMO usuario
-//QUIERO ver los links de las redes sociales al entrar a la página
-//PARA poder acceder a ellas.
-//Criterios de aceptación:
-//Modificar el GET organization/public//
-//COMO usuario
-// Al devolver los datos en el endpoint de datos públicos,
-// agregar los campos de redes sociales en la respuesta//
