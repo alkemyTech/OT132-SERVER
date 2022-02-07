@@ -1,6 +1,5 @@
 package com.alkemy.ong.controller;
 
-import com.alkemy.ong.common.JwtUtils;
 import com.alkemy.ong.model.request.CreateContactRequest;
 import com.alkemy.ong.model.response.ContactResponse;
 import com.alkemy.ong.model.response.ListContactResponse;
@@ -25,9 +24,6 @@ public class ContactController {
 
   @Autowired
   public IGetContactDetails getContactDetails;
-
-  @Autowired
-  public JwtUtils jwtUtils;
 
   @GetMapping
   public ResponseEntity<ListContactResponse> list() {
