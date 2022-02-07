@@ -12,8 +12,6 @@ import com.alkemy.ong.repository.IUserRepository;
 import com.alkemy.ong.service.abstraction.IRegisterUser;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +28,6 @@ public class RegisterService implements IRegisterUser {
   private BCryptPasswordEncoder passwordEncoder;
   @Autowired
   private JwtUtils jwtUtil;
-  @Autowired
-  private AuthenticationManager authenticationManager;
 
   @Override
   public UserResponse register(UserRegisterRequest userRegisterRequest)
