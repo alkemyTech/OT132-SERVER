@@ -3,6 +3,7 @@ package com.alkemy.ong.service;
 import com.alkemy.ong.common.amazon.Image;
 import com.alkemy.ong.common.amazon.ImageUtils;
 import com.alkemy.ong.exception.ExternalServiceException;
+import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.SlideMapper;
 import com.alkemy.ong.mapper.attribute.SlideAttributes;
 import com.alkemy.ong.model.entity.Slide;
@@ -11,13 +12,15 @@ import com.alkemy.ong.model.response.ListSlideResponse;
 import com.alkemy.ong.model.response.SlideResponse;
 import com.alkemy.ong.repository.ISlideRepository;
 import com.alkemy.ong.service.abstraction.ICreateSlide;
+import com.alkemy.ong.service.abstraction.IDeleteSlide;
 import com.alkemy.ong.service.abstraction.IGetSlideDetails;
+import java.text.MessageFormat;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SlideService implements IGetSlideDetails, ICreateSlide {
+public class SlideService implements IGetSlideDetails, ICreateSlide, IDeleteSlide {
 
   @Autowired
   private SlideMapper slideMapper;
@@ -71,4 +74,12 @@ public class SlideService implements IGetSlideDetails, ICreateSlide {
     return (order == null) ? slideRepository.getMaxOrder() + 1 : order;
   }
 
+  @Override
+  public void delete(Long id) {
+    if (!slideRepository.existsById(id)) {
+      throw new NotFoundException(MessageFormat.format("Slide ID: {0} not found.", id));
+    }
+    slideRepository.deleteById(id);
+  }
 }
+

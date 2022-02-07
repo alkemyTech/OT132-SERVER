@@ -2,14 +2,9 @@ package com.alkemy.ong.common.mail.template;
 
 import com.alkemy.ong.common.mail.IContent;
 import com.alkemy.ong.common.mail.IMail;
-import com.alkemy.ong.common.mail.template.ContactUs;
 import java.text.MessageFormat;
-import org.springframework.beans.factory.annotation.Value;
 
 public class RegisterEmailTemplate implements IContent, IMail {
-
-  @Value("${organization.mail}")
-  private String emailTo;
 
   private static final String TYPE = "text/plain";
   private static final String SUBJECT = "Register Successfully";
@@ -19,11 +14,13 @@ public class RegisterEmailTemplate implements IContent, IMail {
   private final String organizationName;
   private final String address;
   private final Integer phone;
+  private final String emailTo;
 
-  public RegisterEmailTemplate(ContactUs contactUs) {
+  public RegisterEmailTemplate(ContactUs contactUs, String emailTo) {
     this.organizationName = contactUs.getOrganizationName();
     this.address = contactUs.getAddress();
     this.phone = contactUs.getPhone();
+    this.emailTo = emailTo;
   }
 
   @Override
