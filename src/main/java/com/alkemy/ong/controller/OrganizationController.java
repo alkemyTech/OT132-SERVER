@@ -20,5 +20,4 @@ public class OrganizationController {
     OrganizationResponse organizationResponse = getOrganizationDetails.find();
     return ResponseEntity.ok().body(organizationResponse);
   }
-
 }

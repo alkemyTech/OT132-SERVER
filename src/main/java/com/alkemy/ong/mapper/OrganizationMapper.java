@@ -22,6 +22,9 @@ public class OrganizationMapper {
     organizationResponse.setAddress(organization.getAddress());
     organizationResponse.setPhone(organization.getPhone());
     organizationResponse.setSlides(map(slides));
+    organizationResponse.setInstagramUrl(organization.getInstagramUrl());
+    organizationResponse.setFacebookUrl(organization.getFacebookUrl());
+    organizationResponse.setLinkedinUrl(organization.getLinkedinUrl());
     return organizationResponse;
   }
 
