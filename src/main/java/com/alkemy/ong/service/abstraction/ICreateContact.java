@@ -6,7 +6,6 @@ import com.alkemy.ong.model.response.ContactResponse;
 
 public interface ICreateContact {
 
-  ContactResponse create(CreateContactRequest contactRequest, String email)
-      throws ExternalServiceException;
+  ContactResponse create(CreateContactRequest contactRequest);
 
 }

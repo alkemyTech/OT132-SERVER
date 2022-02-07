@@ -14,15 +14,16 @@ import com.alkemy.ong.service.abstraction.IGetContactDetails;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class ContactService implements IGetContactDetails, ICreateContact {
-
-  private final Logger logger = LoggerFactory.getLogger(ExternalServiceException.class);
 
   @Autowired
   private IContactRepository contactRepository;
@@ -53,14 +54,13 @@ public class ContactService implements IGetContactDetails, ICreateContact {
   }
 
   @Override
-  public ContactResponse create(CreateContactRequest contactRequest, String email)
-      throws ExternalServiceException {
+  public ContactResponse create(CreateContactRequest contactRequest) {
     Contact contact = contactMapper.map(contactRequest);
-    WelcomeEmailTemplate template = new WelcomeEmailTemplate(email, contact.getName());
+    WelcomeEmailTemplate template = new WelcomeEmailTemplate(contact.getEmail(),contact.getName());
     try {
       emailUtils.send(template);
     } catch (ExternalServiceException e) {
-      logger.error(e.getMessage());
+      log.error(e.getMessage());
     }
     return contactMapper.map(contactRepository.save(contact));
   }

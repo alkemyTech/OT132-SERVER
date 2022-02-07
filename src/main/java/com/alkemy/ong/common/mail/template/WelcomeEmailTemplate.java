@@ -3,20 +3,21 @@ package com.alkemy.ong.common.mail.template;
 import com.alkemy.ong.common.mail.IContent;
 import com.alkemy.ong.common.mail.IMail;
 
+import com.alkemy.ong.model.entity.Contact;
 import java.text.MessageFormat;
 
 public class WelcomeEmailTemplate implements IContent, IMail {
 
   private static final String TYPE = "text/plain";
   private static final String SUBJECT = "Contact successfully registered";
-  private static final String THANK_TEXT = "Thanks for register the contact {0}";
+  private static final String THANK_TEXT = "Thanks {0} for register in our contact list";
 
   private final String emailTo;
   private final String contactName;
 
-  public WelcomeEmailTemplate(String emailTo, String contactName) {
-    this.emailTo = emailTo;
-    this.contactName = contactName;
+  public WelcomeEmailTemplate(String email,String name) {
+    this.emailTo = email;
+    this.contactName = name;
   }
 
   @Override

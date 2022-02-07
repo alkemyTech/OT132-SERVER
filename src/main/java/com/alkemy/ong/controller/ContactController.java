@@ -40,11 +40,8 @@ public class ContactController {
 
   @PostMapping
   public ResponseEntity<ContactResponse> create(
-      @Valid @RequestBody CreateContactRequest contactRequest,
-      HttpServletRequest request) 
-      throws ExternalServiceException {
-    String email = jwtUtils.extractUsername(request.getHeader("Authorization"));
-    ContactResponse contactResponse = createContact.create(contactRequest,email);
+      @Valid @RequestBody CreateContactRequest contactRequest) {
+    ContactResponse contactResponse = createContact.create(contactRequest);
     return ResponseEntity.status(HttpStatus.CREATED).body(contactResponse);
   }
 
