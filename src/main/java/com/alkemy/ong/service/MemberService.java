@@ -5,6 +5,7 @@ import com.alkemy.ong.model.entity.Member;
 
 import com.alkemy.ong.model.response.ListMembersResponse;
 
+import com.alkemy.ong.model.response.MemberResponse;
 import com.alkemy.ong.repository.IMemberRepository;
 import com.alkemy.ong.service.abstraction.IGetMemberDetails;
 import org.springframework.beans.factory.annotation.Autowired;

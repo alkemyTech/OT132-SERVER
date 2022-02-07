@@ -20,5 +20,5 @@ public class MemberController {
         ListMembersResponse listMembersResponse = iGetMemberDetails.findAll();
         return ResponseEntity.ok().body(listMembersResponse);
       }
-    }
 }
+
