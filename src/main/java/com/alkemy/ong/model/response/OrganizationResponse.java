@@ -35,5 +35,4 @@ public class OrganizationResponse {
 
   @JsonInclude(Include.NON_NULL)
   private String instagramUrl;
-
 }
