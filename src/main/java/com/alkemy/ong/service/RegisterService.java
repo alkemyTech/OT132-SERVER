@@ -1,5 +1,6 @@
 package com.alkemy.ong.service;
 
+import com.alkemy.ong.common.JwtUtils;
 import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.exception.UserAlreadyExistException;
 import com.alkemy.ong.mapper.UserMapper;
@@ -25,6 +26,8 @@ public class RegisterService implements IRegisterUser {
   private UserMapper userMapper;
   @Autowired
   private BCryptPasswordEncoder passwordEncoder;
+  @Autowired
+  private JwtUtils jwtUtil;
 
   @Override
   public UserResponse register(UserRegisterRequest userRegisterRequest)
@@ -32,11 +35,12 @@ public class RegisterService implements IRegisterUser {
     if (userRepository.findByEmail(userRegisterRequest.getEmail()) != null) {
       throw new UserAlreadyExistException();
     }
-
     User user = userMapper.map(userRegisterRequest,
         passwordEncoder.encode(userRegisterRequest.getPassword()));
     user.setRoles(List.of(roleRepository.findByName(RoleType.USER.getFullRoleName())));
-    return userMapper.map(userRepository.save(user));
+    UserResponse userResponse = userMapper.map(userRepository.save(user));
+    userResponse.setToken(jwtUtil.generateToken(user));
+    return userResponse;
   }
 
 }
