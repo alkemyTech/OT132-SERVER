@@ -39,5 +39,3 @@ public class Category {
   private boolean softDelete;
 
 }
-
-

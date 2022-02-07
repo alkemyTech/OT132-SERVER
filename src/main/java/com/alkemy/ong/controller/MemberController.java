@@ -37,5 +37,4 @@ public class MemberController {
     MemberResponse memberResponse = createMember.save(createMemberRequest);
     return ResponseEntity.status(HttpStatus.CREATED).body(memberResponse);
   }
-
 }

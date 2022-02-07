@@ -2,7 +2,6 @@ package com.alkemy.ong.service;
 
 import com.alkemy.ong.mapper.MemberMapper;
 import com.alkemy.ong.model.entity.Member;
-
 import com.alkemy.ong.model.request.CreateMemberRequest;
 import com.alkemy.ong.model.response.ListMembersResponse;
 import com.alkemy.ong.model.response.MemberResponse;
