@@ -1,24 +1,24 @@
 package com.alkemy.ong.mapper;
 
-import com.alkemy.ong.model.request.OrganizationRequest;
-import com.alkemy.ong.model.response.OrganizationUpdateResponse;
+import com.alkemy.ong.model.request.OrganizationUpdateRequest;
+import com.alkemy.ong.model.response.OrganizationResponse;
 import org.springframework.stereotype.Component;
 
 @Component
 public class OrganizationUpdateMapper {
 
-  public OrganizationUpdateResponse map(OrganizationRequest organizationRequest) {
-    OrganizationUpdateResponse updateResponse = new OrganizationUpdateResponse();
-    updateResponse.setName(organizationRequest.getName());
-    updateResponse.setImage(organizationRequest.getImage());
-    updateResponse.setEmail(organizationRequest.getEmail());
-    updateResponse.setWelcomeText(organizationRequest.getWelcomeText());
-    updateResponse.setAddress(organizationRequest.getAddress());
-    updateResponse.setPhone(organizationRequest.getPhone());
-    updateResponse.setAboutUsText(organizationRequest.getAboutUsText());
-    updateResponse.setFacebookUrl(organizationRequest.getFacebookUrl());
-    updateResponse.setInstagramUrl(organizationRequest.getInstagramUrl());
-    updateResponse.setLinkedinUrl(organizationRequest.getLinkedinUrl());
+  public OrganizationResponse map(OrganizationUpdateRequest organizationUpdateRequest) {
+    OrganizationResponse updateResponse = new OrganizationResponse();
+    updateResponse.setName(organizationUpdateRequest.getName());
+    updateResponse.setImage(organizationUpdateRequest.getImage());
+    updateResponse.setEmail(organizationUpdateRequest.getEmail());
+    updateResponse.setWelcomeText(organizationUpdateRequest.getWelcomeText());
+    updateResponse.setAddress(organizationUpdateRequest.getAddress());
+    updateResponse.setPhone(organizationUpdateRequest.getPhone());
+    updateResponse.setAboutUsText(organizationUpdateRequest.getAboutUsText());
+    updateResponse.setFacebookUrl(organizationUpdateRequest.getFacebookUrl());
+    updateResponse.setInstagramUrl(organizationUpdateRequest.getInstagramUrl());
+    updateResponse.setLinkedinUrl(organizationUpdateRequest.getLinkedinUrl());
     return updateResponse;
   }
 

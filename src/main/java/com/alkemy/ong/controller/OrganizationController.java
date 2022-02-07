@@ -1,12 +1,10 @@
 package com.alkemy.ong.controller;
 
 import com.alkemy.ong.mapper.OrganizationUpdateMapper;
-import com.alkemy.ong.model.request.OrganizationRequest;
+import com.alkemy.ong.model.request.OrganizationUpdateRequest;
 import com.alkemy.ong.model.response.OrganizationResponse;
-import com.alkemy.ong.model.response.OrganizationUpdateResponse;
 import com.alkemy.ong.service.abstraction.IGetOrganizationDetails;
 import com.alkemy.ong.service.abstraction.IOrganizationUpdate;
-import javax.swing.text.html.parser.Entity;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,10 +34,10 @@ public class OrganizationController {
   }
 
   @PostMapping("/public")
-  public ResponseEntity<OrganizationUpdateResponse> update(
-      @RequestBody @Valid OrganizationRequest organizationRequest) {
-    organizationUpdate.update(organizationRequest);
-    return ResponseEntity.ok().body(mapper.map(organizationRequest));
+  public ResponseEntity<OrganizationResponse> update(
+      @RequestBody @Valid OrganizationUpdateRequest organizationUpdateRequest) {
+    organizationUpdate.update(organizationUpdateRequest);
+    return ResponseEntity.ok().body(mapper.map(organizationUpdateRequest));
   }
 
 }

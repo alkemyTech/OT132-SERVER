@@ -1,9 +1,10 @@
 package com.alkemy.ong.service.abstraction;
 
-import com.alkemy.ong.model.request.OrganizationRequest;
+import com.alkemy.ong.model.entity.Organization;
+import com.alkemy.ong.model.request.OrganizationUpdateRequest;
 
 public interface IOrganizationUpdate {
 
-  void update(OrganizationRequest organizationRequest);
+  Organization update(OrganizationUpdateRequest organizationUpdateRequest);
 
 }

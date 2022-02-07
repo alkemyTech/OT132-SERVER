@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class OrganizationRequest {
+public class OrganizationUpdateRequest {
 
   @NotBlank(message = "Name field can not be null or empty.")
   private String name;

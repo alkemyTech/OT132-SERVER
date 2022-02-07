@@ -5,7 +5,7 @@ import com.alkemy.ong.mapper.OrganizationMapper;
 import com.alkemy.ong.mapper.attribute.SlideAttributes;
 import com.alkemy.ong.model.entity.Organization;
 import com.alkemy.ong.model.entity.Slide;
-import com.alkemy.ong.model.request.OrganizationRequest;
+import com.alkemy.ong.model.request.OrganizationUpdateRequest;
 import com.alkemy.ong.model.response.OrganizationResponse;
 import com.alkemy.ong.repository.IOrganizationRepository;
 import com.alkemy.ong.repository.ISlideRepository;
@@ -37,26 +37,24 @@ public class OrganizationService implements IGetOrganizationDetails, IOrganizati
 
 
   @Override
-  public void update(OrganizationRequest organizationRequest) throws NotFoundException {
-    Organization organization = getOrganization();
-    organization.setName(organizationRequest.getName());
-    organization.setImage(organizationRequest.getImage());
-    organization.setAddress(organizationRequest.getAddress());
-    organization.setPhone(organizationRequest.getPhone());
-    organization.setEmail(organizationRequest.getEmail());
-    organization.setWelcomeText(organizationRequest.getWelcomeText());
-    organization.setAboutUsText(organizationRequest.getAboutUsText());
-    organization.setFacebookUrl(organizationRequest.getFacebookUrl());
-    organization.setLinkedinUrl(organizationRequest.getLinkedinUrl());
-    organization.setInstagramUrl(organizationRequest.getInstagramUrl());
-    organizationRepository.save(organization);
+  public Organization update(OrganizationUpdateRequest organizationUpdateRequest)
+      throws NotFoundException {
+    Organization organization = findOrganization();
+    organization.setName(organizationUpdateRequest.getName());
+    organization.setImage(organizationUpdateRequest.getImage());
+    organization.setAddress(organizationUpdateRequest.getAddress());
+    organization.setPhone(organizationUpdateRequest.getPhone());
+    organization.setEmail(organizationUpdateRequest.getEmail());
+    organization.setWelcomeText(organizationUpdateRequest.getWelcomeText());
+    organization.setAboutUsText(organizationUpdateRequest.getAboutUsText());
+    organization.setFacebookUrl(organizationUpdateRequest.getFacebookUrl());
+    organization.setLinkedinUrl(organizationUpdateRequest.getLinkedinUrl());
+    organization.setInstagramUrl(organizationUpdateRequest.getInstagramUrl());
+    return organizationRepository.save(organization);
   }
 
-  private Organization getOrganization() throws NotFoundException {
+  private Organization findOrganization() {
     List<Organization> organizations = organizationRepository.findAll();
-    if (organizations.isEmpty()) {
-      throw new NotFoundException("The requested resource could not be found.");
-    }
     return organizations.get(0);
   }
 
