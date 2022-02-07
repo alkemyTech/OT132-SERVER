@@ -2,7 +2,6 @@ package com.alkemy.ong.common.amazon;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-
 import org.apache.commons.codec.binary.Base64;
 
 public class Image implements IImage {

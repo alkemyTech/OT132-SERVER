@@ -52,7 +52,7 @@ public class ContactService implements IGetContactDetails, ICreateContact {
   @Override
   public ContactResponse create(CreateContactRequest contactRequest) {
     Contact contact = contactMapper.map(contactRequest);
-    WelcomeEmailTemplate template = new WelcomeEmailTemplate(contact.getEmail(),contact.getName());
+    WelcomeEmailTemplate template = new WelcomeEmailTemplate(contact.getEmail(), contact.getName());
     try {
       emailUtils.send(template);
     } catch (ExternalServiceException e) {

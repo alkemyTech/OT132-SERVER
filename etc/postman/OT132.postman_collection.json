@@ -1,7 +1,7 @@
 {
   "info": {
-    "_postman_id": "553bfd53-47ce-492c-9842-05312b1cd5a3",
-    "name": "SomosMas",
+    "_postman_id": "b6a16ccc-a4bf-45fa-a997-9f9305c25982",
+    "name": "OT132",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -510,7 +510,7 @@
       "name": "News",
       "item": [
         {
-          "name": "POST News",
+          "name": "News",
           "request": {
             "method": "POST",
             "header": [],
@@ -532,6 +532,36 @@
               "port": "8080",
               "path": [
                 "news"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove News",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDM5OTU2MzQsImV4cCI6MTY0NDAzMTYzNH0.hJQYIBEW1dplX5HgHc0bCne798AA9OWE4O_vo6i7taQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/news/4",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "news",
+                "4"
               ]
             }
           },

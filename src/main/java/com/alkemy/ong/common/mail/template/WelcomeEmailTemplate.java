@@ -2,8 +2,6 @@ package com.alkemy.ong.common.mail.template;
 
 import com.alkemy.ong.common.mail.IContent;
 import com.alkemy.ong.common.mail.IMail;
-
-import com.alkemy.ong.model.entity.Contact;
 import java.text.MessageFormat;
 
 public class WelcomeEmailTemplate implements IContent, IMail {
@@ -15,7 +13,7 @@ public class WelcomeEmailTemplate implements IContent, IMail {
   private final String emailTo;
   private final String contactName;
 
-  public WelcomeEmailTemplate(String email,String name) {
+  public WelcomeEmailTemplate(String email, String name) {
     this.emailTo = email;
     this.contactName = name;
   }
