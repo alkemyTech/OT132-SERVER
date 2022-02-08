@@ -49,7 +49,7 @@ public class AuthenticationController {
   }
 
   @GetMapping("/me")
-  public ResponseEntity<UserResponse> getUserDetails(Principal principal){
+  public ResponseEntity<UserResponse> getUserDetails(Principal principal) {
     return ResponseEntity.ok(getUserDetails.findBy(principal.getName()));
   }
 }
