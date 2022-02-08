@@ -55,23 +55,18 @@ public class RegisterUserIntegrationTest extends AbstractBaseIntegrationTest {
   }
 
   @Test
-  public void shouldReturnConflictIfEmailAlreadyExist() {
-    // crea un user para reistrar
+  public void shouldReturnBadRequestIfEmailAlreadyExist() {
+
     UserRegisterRequest userRegisterRequest = buildRequestPayload();
-    // CUANDO INVOCO A FINDBYEMAIL - ENTONCES ES LO QUE DEVUELVE ESE METODO. {User
-    // findByEmail(String)}
+
     when(userRepository.findByEmail(eq("johnny@doe.com"))).thenReturn(new User());
 
-    // entity de entrada: DATOS QUE ESTOY CREANDO PARA INGRESAR Y PROBAR METODO REGISTER
     HttpEntity<UserRegisterRequest> requestEntity = new HttpEntity<>(userRegisterRequest, headers);
-    // response: LO QUE ESPERO QUE ME DEVUELVA
+
     ResponseEntity<ErrorResponse> response = restTemplate.exchange(createURLWithPort(PATH),
         HttpMethod.POST, requestEntity, ErrorResponse.class);
-
-    assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     assertNotNull(response);
-
-
   }
 
   private UserRegisterRequest buildRequestPayload() {
