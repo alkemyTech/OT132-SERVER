@@ -2,7 +2,6 @@ package com.alkemy.ong.integration.user;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import com.alkemy.ong.common.JwtUtils;
 import com.alkemy.ong.config.segurity.RoleType;
@@ -12,7 +11,7 @@ import com.alkemy.ong.integration.common.SecurityTestConfig;
 import com.alkemy.ong.model.entity.User;
 import com.alkemy.ong.model.request.AuthenticationRequest;
 import com.alkemy.ong.model.response.AuthenticationResponse;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -46,7 +45,7 @@ public class LoginIntegrationTest extends AbstractBaseIntegrationTest {
     HttpEntity<AuthenticationRequest> requestEntity = new HttpEntity<>(authRequest, headers);
 
     ResponseEntity<ErrorResponse> response = restTemplate.exchange(createURLWithPort(PATH),
-        HttpMethod.POST, requestEntity, ErrorResponse.class); // lo que espero que devuelva
+        HttpMethod.POST, requestEntity, ErrorResponse.class);
 
     assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
 
@@ -74,11 +73,11 @@ public class LoginIntegrationTest extends AbstractBaseIntegrationTest {
     assertNotNull(response.getBody().getToken());
   }
 
+  
   @Test
-  public void shouldReturnBadRequestIfPasswordIsNull() {
+  public void shouldReturnBadRequestIfEmailIsNull() {
 
     AuthenticationRequest authRequest = new AuthenticationRequest();
-    authRequest.setEmail(EMAIL);
 
     when(userRepository.findByEmail(EMAIL)).thenReturn(null);
 
@@ -88,23 +87,6 @@ public class LoginIntegrationTest extends AbstractBaseIntegrationTest {
         HttpMethod.POST, requestEntity, ErrorResponse.class);
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-
-  }
-
-  @Test
-  public void shouldReturnBadRequestIfEmailIsNull() {
-
-    AuthenticationRequest authRequest = new AuthenticationRequest();
-
-    when(userRepository.findByEmail("")).thenReturn(null);
-
-    HttpEntity<AuthenticationRequest> requestEntity = new HttpEntity<>(authRequest, headers);
-
-    ResponseEntity<ErrorResponse> response = restTemplate.exchange(createURLWithPort(PATH),
-        HttpMethod.POST, requestEntity, ErrorResponse.class);
-
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals("Emails cannot be null or empty.", response.getBody().getMessages().get(0));
 
   }
 
