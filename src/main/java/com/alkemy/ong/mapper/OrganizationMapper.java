@@ -44,19 +44,4 @@ public class OrganizationMapper {
     return organizationResponse;
   }
 
-  public Organization map(UpdateOrganizationRequest updateOrganizationRequest,
-      Organization organization) {
-    organization.setName(updateOrganizationRequest.getName());
-    organization.setImage(updateOrganizationRequest.getImage());
-    organization.setAddress(updateOrganizationRequest.getAddress());
-    organization.setPhone(updateOrganizationRequest.getPhone());
-    organization.setEmail(updateOrganizationRequest.getEmail());
-    organization.setWelcomeText(updateOrganizationRequest.getWelcomeText());
-    organization.setAboutUsText(updateOrganizationRequest.getAboutUsText());
-    organization.setFacebookUrl(updateOrganizationRequest.getFacebookUrl());
-    organization.setLinkedinUrl(updateOrganizationRequest.getLinkedinUrl());
-    organization.setInstagramUrl(updateOrganizationRequest.getInstagramUrl());
-    return organization;
-  }
-
 }

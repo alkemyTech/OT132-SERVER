@@ -1,6 +1,5 @@
 package com.alkemy.ong.service;
 
-import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.OrganizationMapper;
 import com.alkemy.ong.mapper.attribute.SlideAttributes;
 import com.alkemy.ong.model.entity.Organization;
@@ -17,7 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ServiceOrganization implements IGetOrganizationDetails, IUpdateOrganization {
+public class OrganizationService implements IGetOrganizationDetails, IUpdateOrganization {
 
   @Autowired
   private IOrganizationRepository organizationRepository;
@@ -39,11 +38,20 @@ public class ServiceOrganization implements IGetOrganizationDetails, IUpdateOrga
   @Override
   public OrganizationResponse update(UpdateOrganizationRequest updateOrganizationRequest) {
     Organization organization = findOrganization();
-    mapper.map(updateOrganizationRequest, organization);
+    organization.setName(updateOrganizationRequest.getName());
+    organization.setImage(updateOrganizationRequest.getImage());
+    organization.setAddress(updateOrganizationRequest.getAddress());
+    organization.setPhone(updateOrganizationRequest.getPhone());
+    organization.setEmail(updateOrganizationRequest.getEmail());
+    organization.setWelcomeText(updateOrganizationRequest.getWelcomeText());
+    organization.setAboutUsText(updateOrganizationRequest.getAboutUsText());
+    organization.setFacebookUrl(updateOrganizationRequest.getFacebookUrl());
+    organization.setLinkedinUrl(updateOrganizationRequest.getLinkedinUrl());
+    organization.setInstagramUrl(updateOrganizationRequest.getInstagramUrl());
     return mapper.map(organizationRepository.save(organization));
   }
 
-  public Organization findOrganization() {
+  private Organization findOrganization() {
     return organizationRepository.findAll().get(0);
   }
 

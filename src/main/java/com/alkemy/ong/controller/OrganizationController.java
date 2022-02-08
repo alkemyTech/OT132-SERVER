@@ -24,8 +24,6 @@ public class OrganizationController {
   @Autowired
   private IUpdateOrganization updateOrganization;
 
-  @Autowired
-  private OrganizationMapper mapper;
 
   @GetMapping("/public")
   public ResponseEntity<OrganizationResponse> getOrganizationDetails() {
