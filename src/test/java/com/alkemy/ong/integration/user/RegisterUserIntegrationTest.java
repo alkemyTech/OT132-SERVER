@@ -28,7 +28,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class RegisterUserIntegrationTest extends AbstractBaseIntegrationTest {
 
   private static final String PATH = "/auth/register";
-  private static final String EMAIL = "johnny@doe.com";
 
   @MockBean
   protected IRoleRepository roleRepository;
@@ -36,9 +35,9 @@ public class RegisterUserIntegrationTest extends AbstractBaseIntegrationTest {
   @Test
   public void shouldRegisterUser() {
     when(roleRepository.findByName(eq(RoleType.USER.getFullRoleName())))
-        .thenReturn(stubRole(RoleType.USER.name()));
+        .thenReturn(stubRole(RoleType.USER));
     when(userRepository.findByEmail(eq(EMAIL))).thenReturn(null);
-    when(userRepository.save(any(User.class))).thenReturn(stubUser(RoleType.USER.name()));
+    when(userRepository.save(any(User.class))).thenReturn(stubUser(RoleType.USER));
 
     UserRegisterRequest userRegisterRequest = buildRequestPayload();
 
@@ -59,7 +58,7 @@ public class RegisterUserIntegrationTest extends AbstractBaseIntegrationTest {
 
     UserRegisterRequest userRegisterRequest = buildRequestPayload();
 
-    when(userRepository.findByEmail(eq("johnny@doe.com"))).thenReturn(new User());
+    when(userRepository.findByEmail(eq(EMAIL))).thenReturn(new User());
 
     HttpEntity<UserRegisterRequest> requestEntity = new HttpEntity<>(userRegisterRequest, headers);
 

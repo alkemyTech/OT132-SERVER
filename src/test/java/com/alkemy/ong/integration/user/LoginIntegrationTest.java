@@ -2,6 +2,7 @@ package com.alkemy.ong.integration.user;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import com.alkemy.ong.common.JwtUtils;
 import com.alkemy.ong.config.segurity.RoleType;
@@ -21,15 +22,15 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class LoginIntegrationTest extends AbstractBaseIntegrationTest {
 
   @MockBean
   private JwtUtils jwtUtils;
-
-  private static final String EMAIL = "johnny@doe.com";
-  private static final String ROLE = RoleType.USER.getFullRoleName();
+;
+  private static final RoleType ROLE = RoleType.USER;
   private static final String PATH = "/auth/login";
   private String token = SecurityTestConfig.createToken("johnny@doe.com", ROLE);
 
@@ -40,7 +41,7 @@ public class LoginIntegrationTest extends AbstractBaseIntegrationTest {
     authRequest.setEmail(EMAIL);
     authRequest.setPassword("123456789");
 
-    when(userRepository.findByEmail(EMAIL)).thenReturn(null);
+    when(userRepository.findByEmail(eq(EMAIL))).thenReturn(null);
 
     HttpEntity<AuthenticationRequest> requestEntity = new HttpEntity<>(authRequest, headers);
 
@@ -59,7 +60,7 @@ public class LoginIntegrationTest extends AbstractBaseIntegrationTest {
     authRequest.setPassword("1234567");
     User user = stubUser(ROLE);
 
-    when(userRepository.findByEmail(EMAIL)).thenReturn(user);
+    when(userRepository.findByEmail(eq(EMAIL))).thenReturn(user);
     when(jwtUtils.generateToken(user)).thenReturn(token);
 
     HttpEntity<AuthenticationRequest> requestEntity = new HttpEntity<>(authRequest, headers);
@@ -70,6 +71,7 @@ public class LoginIntegrationTest extends AbstractBaseIntegrationTest {
     assertEquals(authRequest.getEmail(), response.getBody().getEmail());
     assertEquals(user.getEmail(), response.getBody().getEmail());
     assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals(token, response.getBody().getToken());
     assertNotNull(response.getBody().getToken());
   }
 
@@ -79,7 +81,7 @@ public class LoginIntegrationTest extends AbstractBaseIntegrationTest {
 
     AuthenticationRequest authRequest = new AuthenticationRequest();
 
-    when(userRepository.findByEmail(EMAIL)).thenReturn(null);
+    when(userRepository.findByEmail(eq(EMAIL))).thenReturn(null);
 
     HttpEntity<AuthenticationRequest> requestEntity = new HttpEntity<>(authRequest, headers);
 

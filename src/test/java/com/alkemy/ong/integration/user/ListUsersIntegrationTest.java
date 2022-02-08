@@ -41,7 +41,7 @@ public class ListUsersIntegrationTest extends AbstractBaseIntegrationTest {
   @Test
   public void shouldReturnListOfUsers() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
-    User user = stubUser(RoleType.ADMIN.name());
+    User user = stubUser(RoleType.ADMIN);
     when(userRepository.findBySoftDeleteFalse()).thenReturn(List.of(user));
 
     HttpEntity<Object> entity = new HttpEntity<>(headers);

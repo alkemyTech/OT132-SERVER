@@ -76,7 +76,7 @@ public class UserService implements UserDetailsService, IGetUserDetails, ILogin,
   }
 
   @Override
-  public UserResponse findBy(String username) {
+  public UserResponse findBy(String username) throws UsernameNotFoundException {
     return userMapper.map(getUser(username));
   }
 

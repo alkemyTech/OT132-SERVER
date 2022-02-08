@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+import com.alkemy.ong.config.segurity.RoleType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 
@@ -15,9 +16,9 @@ public class SecurityTestConfig {
   private static final String BEARER_TOKEN = "Bearer %s";
   private static final String AUTHORITIES = "authorities";
 
-  public static String createToken(String subject, String role) {
+  public static String createToken(String subject, RoleType role) {
     List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-        .commaSeparatedStringToAuthorityList(role);
+        .commaSeparatedStringToAuthorityList(role.getFullRoleName());
 
     String token = Jwts.builder()
         .claim(AUTHORITIES,
