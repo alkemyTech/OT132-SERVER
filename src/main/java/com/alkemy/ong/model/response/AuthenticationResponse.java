@@ -14,4 +14,7 @@ public class AuthenticationResponse {
     this.email = email;
     this.token = token;
   }
+  
+  public AuthenticationResponse(){
+  }
 }

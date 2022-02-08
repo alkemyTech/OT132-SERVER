@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 import com.alkemy.ong.config.segurity.RoleType;
+import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.integration.common.AbstractBaseIntegrationTest;
 import com.alkemy.ong.model.entity.User;
 import com.alkemy.ong.model.request.UserRegisterRequest;
@@ -27,7 +28,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class RegisterUserIntegrationTest extends AbstractBaseIntegrationTest {
 
   private static final String PATH = "/auth/register";
-  private static final String EMAIL = "johnny@doe.com";
 
   @MockBean
   protected IRoleRepository roleRepository;
@@ -35,14 +35,13 @@ public class RegisterUserIntegrationTest extends AbstractBaseIntegrationTest {
   @Test
   public void shouldRegisterUser() {
     when(roleRepository.findByName(eq(RoleType.USER.getFullRoleName())))
-        .thenReturn(stubRole(RoleType.USER.name()));
+        .thenReturn(stubRole(RoleType.USER));
     when(userRepository.findByEmail(eq(EMAIL))).thenReturn(null);
-    when(userRepository.save(any(User.class))).thenReturn(stubUser(RoleType.USER.name()));
+    when(userRepository.save(any(User.class))).thenReturn(stubUser(RoleType.USER));
 
     UserRegisterRequest userRegisterRequest = buildRequestPayload();
 
-    HttpEntity<UserRegisterRequest> requestEntity =
-        new HttpEntity<>(userRegisterRequest, headers);
+    HttpEntity<UserRegisterRequest> requestEntity = new HttpEntity<>(userRegisterRequest, headers);
 
     ResponseEntity<UserResponse> response = restTemplate.exchange(
         createURLWithPort(PATH),
@@ -55,6 +54,23 @@ public class RegisterUserIntegrationTest extends AbstractBaseIntegrationTest {
     UserResponse userResponse = response.getBody();
     assertNotNull(userResponse);
     assertEquals(userRegisterRequest.getEmail(), userResponse.getEmail());
+  }
+
+  @Test
+  public void shouldReturnBadRequestIfEmailAlreadyExist() {
+    UserRegisterRequest userRegisterRequest = buildRequestPayload();
+    when(userRepository.findByEmail(eq(EMAIL))).thenReturn(new User());
+
+    HttpEntity<UserRegisterRequest> requestEntity = new HttpEntity<>(userRegisterRequest, headers);
+
+    ResponseEntity<ErrorResponse> response = restTemplate.exchange(
+        createURLWithPort(PATH),
+        HttpMethod.POST,
+        requestEntity,
+        ErrorResponse.class);
+
+    assertNotNull(response);
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
   }
 
   private UserRegisterRequest buildRequestPayload() {
