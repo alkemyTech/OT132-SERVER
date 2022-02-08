@@ -264,6 +264,36 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Remove Testimonial",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImV0bHVpdDEyQGdtYWlsLmNvbSIsImlhdCI6MTY0NDM1MzA5NSwiZXhwIjoxNjQ0Mzg5MDk1fQ.vr1W5NLWsWJ-F1R9rlTJfOMXZX2eWGVVjtYUyDkQLLQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/testimonials/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "testimonials",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },

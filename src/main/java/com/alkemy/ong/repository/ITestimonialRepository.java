@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ITestimonialRepository extends JpaRepository<Testimonial, Long> {
 
+  Testimonial findByTestimonialIdAndSoftDeleteFalse(Long id);
 }
