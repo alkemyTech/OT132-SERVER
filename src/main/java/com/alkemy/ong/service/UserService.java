@@ -57,7 +57,7 @@ public class UserService implements UserDetailsService, IGetUserDetails, ILogin,
     if (user == null) {
       throw new InvalidCredentialsException("Invalid email or password.");
     }
-    
+
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),
             authenticationRequest.getPassword()));

@@ -43,7 +43,7 @@ public class AuthenticatedUserDetailsIntegrationTest extends AbstractBaseIntegra
   }
 
   @Test
-  public void shouldReturnIfUserNotFound() {
+  public void shouldReturnNotFoundIfUserIsNotFound() {
     when(userRepository.findByEmail(eq(EMAIL))).thenReturn(null);
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
