@@ -11,6 +11,7 @@ public class ListMembersResponse {
 
   @JsonProperty("members")
   private List<MemberResponse> memberResponses;
+
 }
 
 

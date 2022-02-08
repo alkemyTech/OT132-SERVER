@@ -11,5 +11,4 @@ public class ListContactResponse {
 
   @JsonProperty("contacts")
   private List<ContactResponse> contactResponses;
-  
 }

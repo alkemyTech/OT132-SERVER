@@ -21,6 +21,5 @@ public class MemberResponse {
 
   private String description;
 
-
 }
 

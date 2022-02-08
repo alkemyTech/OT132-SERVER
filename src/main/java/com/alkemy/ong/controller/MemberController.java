@@ -19,22 +19,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/members")
 public class MemberController {
 
-    @Autowired
-    private IGetMemberDetails getMemberDetails;
+  @Autowired
+  private IGetMemberDetails getMemberDetails;
 
-    @Autowired
-    private ICreateMember createMember;
+  @Autowired
+  private ICreateMember createMember;
 
-    @GetMapping
-    public ResponseEntity<ListMembersResponse> list() {
-        ListMembersResponse listMembersResponse = getMemberDetails.findAll();
-        return ResponseEntity.ok().body(listMembersResponse);
-    }
+  @GetMapping
+  public ResponseEntity<ListMembersResponse> list() {
+    ListMembersResponse listMembersResponse = getMemberDetails.findAll();
+    return ResponseEntity.ok().body(listMembersResponse);
+  }
 
-    @PostMapping
-    public ResponseEntity<MemberResponse> create(
-        @Valid @RequestBody CreateMemberRequest createMemberRequest) {
-        MemberResponse memberResponse = createMember.save(createMemberRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(memberResponse);
-    }
+  @PostMapping
+  public ResponseEntity<MemberResponse> create(
+      @Valid @RequestBody CreateMemberRequest createMemberRequest) {
+    MemberResponse memberResponse = createMember.save(createMemberRequest);
+    return ResponseEntity.status(HttpStatus.CREATED).body(memberResponse);
+  }
 }

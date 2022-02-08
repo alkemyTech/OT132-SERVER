@@ -7,3 +7,4 @@ public interface IGetMemberDetails {
     ListMembersResponse findAll();
 
 }
+

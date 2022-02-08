@@ -16,11 +16,7 @@ public class OrganizationMapper {
   private SlideMapper slideMapper;
 
   public OrganizationResponse map(Organization organization, List<Slide> slides) {
-    OrganizationResponse organizationResponse = new OrganizationResponse();
-    organizationResponse.setName(organization.getName());
-    organizationResponse.setImage(organization.getImage());
-    organizationResponse.setAddress(organization.getAddress());
-    organizationResponse.setPhone(organization.getPhone());
+    OrganizationResponse organizationResponse = map(organization);
     organizationResponse.setSlides(map(slides));
     return organizationResponse;
   }
@@ -32,4 +28,18 @@ public class OrganizationMapper {
         SlideAttributes.ORDER);
   }
 
+  public OrganizationResponse map(Organization organization) {
+    OrganizationResponse organizationResponse = new OrganizationResponse();
+    organizationResponse.setName(organization.getName());
+    organizationResponse.setImage(organization.getImage());
+    organizationResponse.setEmail(organization.getEmail());
+    organizationResponse.setWelcomeText(organization.getWelcomeText());
+    organizationResponse.setAddress(organization.getAddress());
+    organizationResponse.setPhone(organization.getPhone());
+    organizationResponse.setAboutUsText(organization.getAboutUsText());
+    organizationResponse.setFacebookUrl(organization.getFacebookUrl());
+    organizationResponse.setInstagramUrl(organization.getInstagramUrl());
+    organizationResponse.setLinkedinUrl(organization.getLinkedinUrl());
+    return organizationResponse;
+  }
 }

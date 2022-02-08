@@ -54,5 +54,4 @@ public class Organization {
 
     @Column(name = "INSTAGRAM_URL")
     private String instagramUrl;
-
 }
