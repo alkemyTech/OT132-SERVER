@@ -12,9 +12,6 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "ORGANIZATIONS")
 public class Organization {
-    @Id
-    @Column(name = "id", nullable = false)
-    private Long id;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

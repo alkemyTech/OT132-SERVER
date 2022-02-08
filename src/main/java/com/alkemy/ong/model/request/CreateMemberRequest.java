@@ -18,4 +18,5 @@ public class CreateMemberRequest {
   @NotBlank(message = "Image cannot be null or empty.")
   private String image;
   private String description;
+
 }

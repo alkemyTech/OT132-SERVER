@@ -20,7 +20,7 @@ public class OrganizacionSocialMapper {
         organizationResponse.setInstagramUrl(organization.getInstagramUrl());
         organizationResponse.setFacebookUrl(organization.getFacebookUrl());
         organizationResponse.setLinkedinUrl(organization.getLinkedinUrl());
-        organizationResponse.setSlides(slideMapper.mapList(slides));
+        organizationResponse.setSlides(slideMapper.map(slides));
         return organizationResponse;
     }
 

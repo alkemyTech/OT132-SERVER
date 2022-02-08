@@ -7,6 +7,7 @@ import com.alkemy.ong.model.response.ListMembersResponse;
 
 import com.alkemy.ong.model.response.MemberResponse;
 import com.alkemy.ong.repository.IMemberRepository;
+import com.alkemy.ong.service.abstraction.ICreateMember;
 import com.alkemy.ong.service.abstraction.IGetMemberDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class MemberService implements IGetMemberDetails {
+public class MemberService implements IGetMemberDetails, ICreateMember {
 
     @Autowired
     private IMemberRepository memberRepository;
@@ -28,9 +29,8 @@ public class MemberService implements IGetMemberDetails {
         return buildListResponse(members);
     }
 
-
     private ListMembersResponse  buildListResponse(List<Member> members) {
-        List<MemberResponse> memberResponses = memberMapper.mapToList(members);
+        List<MemberResponse> memberResponses = memberMapper.map(members);
         ListMembersResponse listMembersResponse = new ListMembersResponse();
         listMembersResponse.setMemberResponses(memberResponses);
         return listMembersResponse;

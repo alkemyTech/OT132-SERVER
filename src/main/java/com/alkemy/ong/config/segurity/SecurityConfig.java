@@ -1,6 +1,6 @@
 package com.alkemy.ong.config.segurity;
 
-import com.amazonaws.services.workdocs.model.RoleType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -22,6 +22,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+  private static final String[] SWAGGER_URLS = {
+      "/v2/api-docs",
+      "/swagger-resources/**",
+      "/swagger-ui.html",
+      "swagger-ui/**",
+      "/webjars/**",
+      "/api/docs"
+  };
 
   @Autowired
   private UserDetailsService userDetailsService;
@@ -56,18 +65,49 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .authorizeRequests()
-        .antMatchers(HttpMethod.GET, "/organization/p ublic")
+        .antMatchers(HttpMethod.POST, "/auth/login")
         .permitAll()
-            .antMatchers(HttpMethod.GET, "/users")
-            .hasRole(RoleType.ADMIN.name())
-            .antMatchers(HttpMethod.GET, "/members" )
-            .hasRole(RoleType.ADMIN.name())
-            .anyRequest()
+        .antMatchers(HttpMethod.POST, "/auth/register")
+        .permitAll()
+        .antMatchers(HttpMethod.GET, "/auth/me")
+        .hasAnyRole(RoleType.USER.name())
+        .antMatchers(HttpMethod.GET, "/organization/public")
+        .permitAll()
+        .antMatchers(HttpMethod.GET, "/categories")
+        .hasAnyRole(RoleType.ADMIN.name(), RoleType.USER.name())
+        .antMatchers(HttpMethod.POST, "/activities")
+        .hasAnyRole(RoleType.ADMIN.name(), RoleType.USER.name())
+        .antMatchers(HttpMethod.POST, "/contacts")
+        .hasAnyRole(RoleType.USER.name())
+        .antMatchers(HttpMethod.GET, "/contacts")
+        .hasAnyRole(RoleType.ADMIN.name())
+        .antMatchers(HttpMethod.GET, "/users")
+        .hasRole(RoleType.ADMIN.name())
+        .antMatchers(HttpMethod.DELETE, "/users/{id:[\\d+]}")
+        .hasAnyRole(RoleType.ADMIN.name(), RoleType.USER.name())
+        .antMatchers(HttpMethod.GET, "/slides")
+        .hasAnyRole(RoleType.ADMIN.name(), RoleType.USER.name())
+        .antMatchers(HttpMethod.POST, "/slides")
+        .hasAnyRole(RoleType.ADMIN.name())
+        .antMatchers(HttpMethod.POST, "/testimonials")
+        .hasAnyRole(RoleType.ADMIN.name(), RoleType.USER.name())
+        .antMatchers(HttpMethod.GET, "/members")
+        .hasRole(RoleType.ADMIN.name())
+        .antMatchers(HttpMethod.POST, "/members")
+        .hasRole(RoleType.USER.name())
+        .antMatchers(HttpMethod.POST, "/news")
+        .hasRole(RoleType.ADMIN.name())
+        .antMatchers(HttpMethod.GET, "/comments")
+        .hasAnyRole(RoleType.USER.name(), RoleType.ADMIN.name())
+        .antMatchers(HttpMethod.GET, "/categories/{\\d+}")
+        .hasRole(RoleType.ADMIN.name())
+        .antMatchers(HttpMethod.DELETE, "/slides/{id:[\\d+]}")
+        .hasRole(RoleType.ADMIN.name())
+        .anyRequest()
         .authenticated()
         .and()
         .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
         .exceptionHandling()
         .authenticationEntryPoint(new Http403ForbiddenEntryPoint());
   }
-
 }

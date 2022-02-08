@@ -1,4 +1,3 @@
-
 package com.alkemy.ong.model.response;
 
 import java.util.List;
