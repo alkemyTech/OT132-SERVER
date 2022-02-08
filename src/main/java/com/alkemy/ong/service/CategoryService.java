@@ -28,7 +28,7 @@ public class CategoryService implements IGetCategoryDetails {
   public ListCategoriesResponse findAll(Pageable pageable) {
     Page<Category> page = categoryRepository.findBySoftDeleteFalseOrderByName(pageable);
     List<CategoryResponse> categoryResponses = categoryMapper.map(page.getContent());
-    return buildListResponse(categoryResponses,page);
+    return buildListResponse(categoryResponses, page);
   }
 
   private ListCategoriesResponse buildListResponse(List<CategoryResponse> categoryResponses,
