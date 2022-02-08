@@ -36,8 +36,8 @@ public class OrganizationController {
   @PostMapping("/public")
   public ResponseEntity<OrganizationResponse> update(
       @RequestBody @Valid UpdateOrganizationRequest updateOrganizationRequest) {
-    updateOrganization.update(updateOrganizationRequest);
-    return ResponseEntity.ok().body(mapper.map(updateOrganizationRequest));
+    return ResponseEntity.ok()
+        .body(updateOrganization.update(updateOrganizationRequest));
   }
 
 }

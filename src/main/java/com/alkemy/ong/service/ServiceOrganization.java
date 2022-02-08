@@ -30,27 +30,21 @@ public class ServiceOrganization implements IGetOrganizationDetails, IUpdateOrga
 
   @Override
   public OrganizationResponse find() {
-    Organization organization = organizationRepository.findAll().get(0);
+    Organization organization = findOrganization();
     List<Slide> slides = slideRepository.findAll(Sort.by(SlideAttributes.ORDER.getFieldName()));
     return mapper.map(organization, slides);
   }
 
 
   @Override
-  public Organization update(UpdateOrganizationRequest updateOrganizationRequest)
-      throws NotFoundException {
-    Organization organization = organizationRepository.findAll().get(0);
-    organization.setName(updateOrganizationRequest.getName());
-    organization.setImage(updateOrganizationRequest.getImage());
-    organization.setAddress(updateOrganizationRequest.getAddress());
-    organization.setPhone(updateOrganizationRequest.getPhone());
-    organization.setEmail(updateOrganizationRequest.getEmail());
-    organization.setWelcomeText(updateOrganizationRequest.getWelcomeText());
-    organization.setAboutUsText(updateOrganizationRequest.getAboutUsText());
-    organization.setFacebookUrl(updateOrganizationRequest.getFacebookUrl());
-    organization.setLinkedinUrl(updateOrganizationRequest.getLinkedinUrl());
-    organization.setInstagramUrl(updateOrganizationRequest.getInstagramUrl());
-    return organizationRepository.save(organization);
+  public OrganizationResponse update(UpdateOrganizationRequest updateOrganizationRequest) {
+    Organization organization = findOrganization();
+    mapper.map(updateOrganizationRequest, organization);
+    return mapper.map(organizationRepository.save(organization));
+  }
+
+  public Organization findOrganization() {
+    return organizationRepository.findAll().get(0);
   }
 
 }
