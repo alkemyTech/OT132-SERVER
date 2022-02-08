@@ -3,6 +3,7 @@ package com.alkemy.ong.integration.user;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
+
 import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.integration.common.AbstractBaseIntegrationTest;
 import com.alkemy.ong.model.response.UserResponse;
@@ -20,39 +21,39 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class AuthenticatedUserDetailsIntegrationTest extends AbstractBaseIntegrationTest {
 
-  
   private static final RoleType ROLE = RoleType.USER;
   private static final String PATH = "/auth/me";
 
   @Test
   public void shouldReturnAuthenticatedUserDetails() {
-
     when(userRepository.findByEmail(eq(EMAIL))).thenReturn(stubUser(ROLE));
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
-    HttpEntity<Object> requestEntity = new HttpEntity<>(headers); 
+    HttpEntity<Object> requestEntity = new HttpEntity<>(headers);
 
-    ResponseEntity<UserResponse> userResponse = restTemplate.exchange(createURLWithPort(PATH), 
-
-        HttpMethod.GET, requestEntity, UserResponse.class);
+    ResponseEntity<UserResponse> userResponse = restTemplate.exchange(
+        createURLWithPort(PATH),
+        HttpMethod.GET,
+        requestEntity,
+        UserResponse.class);
 
     assertEquals("John", userResponse.getBody().getFirstName());
     assertEquals("Doe", userResponse.getBody().getLastName());
     assertEquals(HttpStatus.OK, userResponse.getStatusCode());
-
   }
 
   @Test
-  public void shouldReturnIfUsernotFound() {
-
+  public void shouldReturnIfUserNotFound() {
     when(userRepository.findByEmail(eq(EMAIL))).thenReturn(null);
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
-    HttpEntity<Object> requestEntity = new HttpEntity<>(headers); 
+    HttpEntity<Object> requestEntity = new HttpEntity<>(headers);
 
-    ResponseEntity<UserResponse> userResponse = restTemplate.exchange(createURLWithPort(PATH), 
-
-        HttpMethod.GET, requestEntity, UserResponse.class);
+    ResponseEntity<UserResponse> userResponse = restTemplate.exchange(
+        createURLWithPort(PATH),
+        HttpMethod.GET,
+        requestEntity,
+        UserResponse.class);
 
     assertEquals(HttpStatus.NOT_FOUND, userResponse.getStatusCode());
   }

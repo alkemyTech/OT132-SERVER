@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
+
 import com.alkemy.ong.common.JwtUtils;
 import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.exception.ErrorResponse;
@@ -27,69 +28,72 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class LoginIntegrationTest extends AbstractBaseIntegrationTest {
 
-  @MockBean
-  private JwtUtils jwtUtils;
-;
   private static final RoleType ROLE = RoleType.USER;
   private static final String PATH = "/auth/login";
-  private String token = SecurityTestConfig.createToken("johnny@doe.com", ROLE);
+  private static final String TOKEN = SecurityTestConfig.createToken("johnny@doe.com", ROLE);
+
+  @MockBean
+  private JwtUtils jwtUtils;
 
   @Test
   public void shouldThrowUnauthorizedWhenUserDoesNotExist() {
-
-    AuthenticationRequest authRequest = new AuthenticationRequest();
-    authRequest.setEmail(EMAIL);
-    authRequest.setPassword("123456789");
-
+    AuthenticationRequest authRequest = buildAuthenticationRequest("123456789");
     when(userRepository.findByEmail(eq(EMAIL))).thenReturn(null);
 
     HttpEntity<AuthenticationRequest> requestEntity = new HttpEntity<>(authRequest, headers);
 
-    ResponseEntity<ErrorResponse> response = restTemplate.exchange(createURLWithPort(PATH),
-        HttpMethod.POST, requestEntity, ErrorResponse.class);
+    ResponseEntity<ErrorResponse> response = restTemplate.exchange(
+        createURLWithPort(PATH),
+        HttpMethod.POST,
+        requestEntity,
+        ErrorResponse.class);
 
     assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
-
   }
 
   @Test
   public void shouldLogin() {
-
-    AuthenticationRequest authRequest = new AuthenticationRequest();
-    authRequest.setEmail(EMAIL);
-    authRequest.setPassword("1234567");
+    AuthenticationRequest authRequest = buildAuthenticationRequest("1234567");
     User user = stubUser(ROLE);
 
     when(userRepository.findByEmail(eq(EMAIL))).thenReturn(user);
-    when(jwtUtils.generateToken(user)).thenReturn(token);
+    when(jwtUtils.generateToken(user)).thenReturn(TOKEN);
 
     HttpEntity<AuthenticationRequest> requestEntity = new HttpEntity<>(authRequest, headers);
-    ResponseEntity<AuthenticationResponse> response = restTemplate.exchange(createURLWithPort(PATH),
-
-        HttpMethod.POST, requestEntity, AuthenticationResponse.class);
+    ResponseEntity<AuthenticationResponse> response = restTemplate.exchange(
+        createURLWithPort(PATH),
+        HttpMethod.POST,
+        requestEntity,
+        AuthenticationResponse.class);
 
     assertEquals(authRequest.getEmail(), response.getBody().getEmail());
     assertEquals(user.getEmail(), response.getBody().getEmail());
     assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertEquals(token, response.getBody().getToken());
     assertNotNull(response.getBody().getToken());
+    assertEquals(TOKEN, response.getBody().getToken());
   }
 
-  
   @Test
   public void shouldReturnBadRequestIfEmailIsNull() {
-
     AuthenticationRequest authRequest = new AuthenticationRequest();
-
     when(userRepository.findByEmail(eq(EMAIL))).thenReturn(null);
 
     HttpEntity<AuthenticationRequest> requestEntity = new HttpEntity<>(authRequest, headers);
 
-    ResponseEntity<ErrorResponse> response = restTemplate.exchange(createURLWithPort(PATH),
-        HttpMethod.POST, requestEntity, ErrorResponse.class);
+    ResponseEntity<ErrorResponse> response = restTemplate.exchange(
+        createURLWithPort(PATH),
+        HttpMethod.POST,
+        requestEntity,
+        ErrorResponse.class);
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+  }
 
+  private AuthenticationRequest buildAuthenticationRequest(String password) {
+    AuthenticationRequest authRequest = new AuthenticationRequest();
+    authRequest.setEmail(EMAIL);
+    authRequest.setPassword(password);
+    return authRequest;
   }
 
 }

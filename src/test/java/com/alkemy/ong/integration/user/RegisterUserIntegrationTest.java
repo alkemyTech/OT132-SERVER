@@ -43,8 +43,11 @@ public class RegisterUserIntegrationTest extends AbstractBaseIntegrationTest {
 
     HttpEntity<UserRegisterRequest> requestEntity = new HttpEntity<>(userRegisterRequest, headers);
 
-    ResponseEntity<UserResponse> response = restTemplate.exchange(createURLWithPort(PATH),
-        HttpMethod.POST, requestEntity, UserResponse.class);
+    ResponseEntity<UserResponse> response = restTemplate.exchange(
+        createURLWithPort(PATH),
+        HttpMethod.POST,
+        requestEntity,
+        UserResponse.class);
 
     assertEquals(HttpStatus.CREATED, response.getStatusCode());
 
@@ -55,17 +58,19 @@ public class RegisterUserIntegrationTest extends AbstractBaseIntegrationTest {
 
   @Test
   public void shouldReturnBadRequestIfEmailAlreadyExist() {
-
     UserRegisterRequest userRegisterRequest = buildRequestPayload();
-
     when(userRepository.findByEmail(eq(EMAIL))).thenReturn(new User());
 
     HttpEntity<UserRegisterRequest> requestEntity = new HttpEntity<>(userRegisterRequest, headers);
 
-    ResponseEntity<ErrorResponse> response = restTemplate.exchange(createURLWithPort(PATH),
-        HttpMethod.POST, requestEntity, ErrorResponse.class);
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    ResponseEntity<ErrorResponse> response = restTemplate.exchange(
+        createURLWithPort(PATH),
+        HttpMethod.POST,
+        requestEntity,
+        ErrorResponse.class);
+
     assertNotNull(response);
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
   }
 
   private UserRegisterRequest buildRequestPayload() {
