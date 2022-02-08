@@ -1,6 +1,5 @@
 package com.alkemy.ong.controller;
 
-import com.alkemy.ong.mapper.OrganizationMapper;
 import com.alkemy.ong.model.request.UpdateOrganizationRequest;
 import com.alkemy.ong.model.response.OrganizationResponse;
 import com.alkemy.ong.service.abstraction.IGetOrganizationDetails;
