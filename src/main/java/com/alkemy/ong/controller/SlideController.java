@@ -54,4 +54,10 @@ public class SlideController {
     deleteSlide.delete(id);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<SlideResponse> getBy(@PathVariable(value = "id") Long id) {
+    SlideResponse response = getSlideDetails.getBy(id);
+    return ResponseEntity.ok().body(response);
+  }
 }

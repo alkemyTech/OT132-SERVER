@@ -5,15 +5,18 @@ import com.alkemy.ong.mapper.TestimonialMapper;
 import com.alkemy.ong.mapper.attribute.TestimonialAttributes;
 import com.alkemy.ong.model.entity.Testimonial;
 import com.alkemy.ong.model.request.CreateTestimonialRequest;
+import com.alkemy.ong.model.request.UpdateTestimonialRequest;
 import com.alkemy.ong.model.response.TestimonialResponse;
 import com.alkemy.ong.repository.ITestimonialRepository;
 import com.alkemy.ong.service.abstraction.ICreateTestimonial;
 import com.alkemy.ong.service.abstraction.IDeleteTestimonial;
+import com.alkemy.ong.service.abstraction.IUpdateTestimonial;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TestimonialService implements ICreateTestimonial, IDeleteTestimonial {
+public class TestimonialService implements ICreateTestimonial, IDeleteTestimonial,
+    IUpdateTestimonial {
 
   @Autowired
   private ITestimonialRepository testimonialRepository;
@@ -33,14 +36,38 @@ public class TestimonialService implements ICreateTestimonial, IDeleteTestimonia
   }
 
   @Override
+  public TestimonialResponse update(Long id, UpdateTestimonialRequest updateTestimonialRequest) {
+    Testimonial testimonial = getTestimonial(id);
+    updateValues(testimonial, updateTestimonialRequest);
+
+    return testimonialMapper.map(testimonialRepository.save(testimonial),
+        TestimonialAttributes.ID,
+        TestimonialAttributes.NAME,
+        TestimonialAttributes.IMAGE,
+        TestimonialAttributes.CONTENT);
+  }
+
+  @Override
   public void delete(Long id) {
-    Testimonial testimonial = testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(id);
-
-    if (testimonial == null) {
-      throw new NotFoundException("Testimonial not found");
-    }
-
+    Testimonial testimonial = getTestimonial(id);
     testimonial.setSoftDelete(true);
     testimonialRepository.save(testimonial);
   }
+
+  private Testimonial getTestimonial(Long id) {
+    Testimonial testimonial = testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(id);
+    if (testimonial == null) {
+      throw new NotFoundException("Testimonial not found.");
+    }
+    return testimonial;
+  }
+
+  private Testimonial updateValues(Testimonial testimonial,
+      UpdateTestimonialRequest updateTestimonialRequest) {
+    testimonial.setName(updateTestimonialRequest.getName());
+    testimonial.setImage(updateTestimonialRequest.getImage());
+    testimonial.setContent(updateTestimonialRequest.getContent());
+    return testimonial;
+  }
+
 }
