@@ -1,6 +1,7 @@
 package com.alkemy.ong.controller;
 
 import com.alkemy.ong.model.request.CreateTestimonialRequest;
+import com.alkemy.ong.model.request.UpdateTestimonialRequest;
 import com.alkemy.ong.model.response.TestimonialResponse;
 import com.alkemy.ong.service.abstraction.ICreateTestimonial;
 import com.alkemy.ong.service.abstraction.IDeleteTestimonial;
@@ -39,9 +40,9 @@ public class TestimonialController {
 
   @PutMapping("{id}")
   public ResponseEntity<TestimonialResponse> update(@PathVariable Long id,
-      @RequestBody @Valid CreateTestimonialRequest createTestimonialRequest) {
+      @RequestBody @Valid UpdateTestimonialRequest updateTestimonialRequest) {
     TestimonialResponse testimonialResponse = updateTestimonial.update(id,
-        createTestimonialRequest);
+        updateTestimonialRequest);
     return ResponseEntity.status(HttpStatus.OK).body(testimonialResponse);
   }
 

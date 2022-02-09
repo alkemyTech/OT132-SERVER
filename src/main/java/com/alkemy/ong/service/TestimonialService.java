@@ -5,6 +5,7 @@ import com.alkemy.ong.mapper.TestimonialMapper;
 import com.alkemy.ong.mapper.attribute.TestimonialAttributes;
 import com.alkemy.ong.model.entity.Testimonial;
 import com.alkemy.ong.model.request.CreateTestimonialRequest;
+import com.alkemy.ong.model.request.UpdateTestimonialRequest;
 import com.alkemy.ong.model.response.TestimonialResponse;
 import com.alkemy.ong.repository.ITestimonialRepository;
 import com.alkemy.ong.service.abstraction.ICreateTestimonial;
@@ -35,17 +36,18 @@ public class TestimonialService implements ICreateTestimonial, IDeleteTestimonia
   }
 
   @Override
-  public TestimonialResponse update(Long id, CreateTestimonialRequest createTestimonialRequest) {
+  public TestimonialResponse update(Long id, UpdateTestimonialRequest updateTestimonialRequest) {
 
     Testimonial testimonial = testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(id);
 
     if (testimonial == null) {
       throw new NotFoundException("Testimonial not found");
     }
-    buildTestimonialUpdate(testimonial, createTestimonialRequest);
+    testimonial = testimonialMapper.map(testimonial, updateTestimonialRequest);
 
     return testimonialMapper.map(
-        testimonialRepository.save(testimonial));
+        testimonialRepository.save(testimonial), TestimonialAttributes.ID,
+        TestimonialAttributes.NAME, TestimonialAttributes.IMAGE, TestimonialAttributes.CONTENT);
   }
 
   @Override
@@ -58,12 +60,5 @@ public class TestimonialService implements ICreateTestimonial, IDeleteTestimonia
 
     testimonial.setSoftDelete(true);
     testimonialRepository.save(testimonial);
-  }
-
-  private void buildTestimonialUpdate(Testimonial testimonial,
-      CreateTestimonialRequest createTestimonialRequest) {
-    testimonial.setName(createTestimonialRequest.getName());
-    testimonial.setImage(createTestimonialRequest.getImage());
-    testimonial.setContent(createTestimonialRequest.getContent());
   }
 }
