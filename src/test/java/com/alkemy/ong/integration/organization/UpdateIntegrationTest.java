@@ -82,7 +82,7 @@ public class UpdateIntegrationTest extends AbstractBaseIntegrationTest {
   }
 
   private UpdateOrganizationRequest buildRequestPayload() {
-    return buildRequestPayload("Organization name", "Organization image", "Organization email");
+    return buildRequestPayload("Organization name", "Organization image", "user@gmail.com");
   }
 
   private UpdateOrganizationRequest buildRequestPayload(String name,
@@ -92,6 +92,12 @@ public class UpdateIntegrationTest extends AbstractBaseIntegrationTest {
     request.setImage(image);
     request.setEmail(email);
     request.setWelcomeText("Welcome");
+    request.setPhone(456);
+    request.setAddress("Street 123");
+    request.setAboutUsText("Text");
+    request.setFacebookUrl("Url-f");
+    request.setLinkedinUrl("Url-l");
+    request.setInstagramUrl("Url-i");
     return request;
   }
 }
