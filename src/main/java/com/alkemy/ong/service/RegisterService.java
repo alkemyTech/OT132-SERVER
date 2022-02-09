@@ -1,7 +1,10 @@
 package com.alkemy.ong.service;
 
 import com.alkemy.ong.common.JwtUtils;
+import com.alkemy.ong.common.mail.EmailUtils;
+import com.alkemy.ong.common.mail.template.WelcomeEmailTemplate;
 import com.alkemy.ong.config.segurity.RoleType;
+import com.alkemy.ong.exception.ExternalServiceException;
 import com.alkemy.ong.exception.UserAlreadyExistException;
 import com.alkemy.ong.mapper.UserMapper;
 import com.alkemy.ong.model.entity.User;
@@ -11,10 +14,12 @@ import com.alkemy.ong.repository.IRoleRepository;
 import com.alkemy.ong.repository.IUserRepository;
 import com.alkemy.ong.service.abstraction.IRegisterUser;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class RegisterService implements IRegisterUser {
 
@@ -28,6 +33,8 @@ public class RegisterService implements IRegisterUser {
   private BCryptPasswordEncoder passwordEncoder;
   @Autowired
   private JwtUtils jwtUtil;
+  @Autowired
+  private EmailUtils emailUtils;
 
   @Override
   public UserResponse register(UserRegisterRequest userRegisterRequest)
@@ -39,6 +46,13 @@ public class RegisterService implements IRegisterUser {
         passwordEncoder.encode(userRegisterRequest.getPassword()));
     user.setRoles(List.of(roleRepository.findByName(RoleType.USER.getFullRoleName())));
     UserResponse userResponse = userMapper.map(userRepository.save(user));
+    WelcomeEmailTemplate template = new WelcomeEmailTemplate(userRegisterRequest.getEmail(),
+        userRegisterRequest.getFirstName());
+    try {
+      emailUtils.send(template);
+    } catch (ExternalServiceException e) {
+      log.error(e.getMessage());
+    }
     userResponse.setToken(jwtUtil.generateToken(user));
     return userResponse;
   }
