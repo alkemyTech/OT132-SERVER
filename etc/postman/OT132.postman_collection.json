@@ -654,7 +654,46 @@
             }
           },
           "response": []
-        }
+        },
+        {
+					"name": "Get News",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoiYWdvc0BtYWlsLmNvbSIsImlhdCI6MTY0NDQ0MTg5NywiZXhwIjoxNjQ0NDc3ODk3fQ.tnwEUbwHuzu0q0BltD4wsCyfwzcXD_3JytokzqJj18g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/news?page=0&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"news"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
       ]
     }
   ]
