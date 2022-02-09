@@ -12,6 +12,7 @@ import com.alkemy.ong.service.abstraction.ICreateNews;
 import com.alkemy.ong.service.abstraction.IDeleteNews;
 import com.alkemy.ong.service.abstraction.IGetNewsDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -47,7 +48,7 @@ public class NewsService implements ICreateNews, IDeleteNews, IGetNewsDetails {
   }
 
   @Override
-  public ListNewsResponse findAll() {
+  public ListNewsResponse findAll(Pageable pageable) {
     // TODO Auto-generated method stub
     return null;
   }

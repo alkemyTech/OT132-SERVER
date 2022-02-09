@@ -11,5 +11,8 @@ public class ListNewsResponse {
 
   @JsonProperty("News")
   private List<NewsResponse> newsResponse;
-  
+  private int page;
+  private int totalPages;
+  private int size;
+      
 }
