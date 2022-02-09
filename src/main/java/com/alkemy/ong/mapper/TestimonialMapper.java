@@ -43,4 +43,13 @@ public class TestimonialMapper {
     }
     return testimonialResponse;
   }
+
+  public TestimonialResponse map(Testimonial testimonial) {
+    TestimonialResponse testimonialResponse = new TestimonialResponse();
+    testimonialResponse.setTestimonialsId(testimonial.getTestimonialId());
+    testimonialResponse.setName(testimonial.getName());
+    testimonialResponse.setImage(testimonial.getImage());
+    testimonialResponse.setContent(testimonial.getContent());
+    return testimonialResponse;
+  }
 }

@@ -9,11 +9,13 @@ import com.alkemy.ong.model.response.TestimonialResponse;
 import com.alkemy.ong.repository.ITestimonialRepository;
 import com.alkemy.ong.service.abstraction.ICreateTestimonial;
 import com.alkemy.ong.service.abstraction.IDeleteTestimonial;
+import com.alkemy.ong.service.abstraction.IUpdateTestimonial;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TestimonialService implements ICreateTestimonial, IDeleteTestimonial {
+public class TestimonialService implements ICreateTestimonial, IDeleteTestimonial,
+    IUpdateTestimonial {
 
   @Autowired
   private ITestimonialRepository testimonialRepository;
@@ -33,6 +35,20 @@ public class TestimonialService implements ICreateTestimonial, IDeleteTestimonia
   }
 
   @Override
+  public TestimonialResponse update(Long id, CreateTestimonialRequest createTestimonialRequest) {
+
+    Testimonial testimonial = testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(id);
+
+    if (testimonial == null) {
+      throw new NotFoundException("Testimonial not found");
+    }
+    buildTestimonialUpdate(testimonial, createTestimonialRequest);
+
+    return testimonialMapper.map(
+        testimonialRepository.save(testimonial));
+  }
+
+  @Override
   public void delete(Long id) {
     Testimonial testimonial = testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(id);
 
@@ -42,5 +58,12 @@ public class TestimonialService implements ICreateTestimonial, IDeleteTestimonia
 
     testimonial.setSoftDelete(true);
     testimonialRepository.save(testimonial);
+  }
+
+  private void buildTestimonialUpdate(Testimonial testimonial,
+      CreateTestimonialRequest createTestimonialRequest) {
+    testimonial.setName(createTestimonialRequest.getName());
+    testimonial.setImage(createTestimonialRequest.getImage());
+    testimonial.setContent(createTestimonialRequest.getContent());
   }
 }
