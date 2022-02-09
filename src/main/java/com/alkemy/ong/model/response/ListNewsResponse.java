@@ -1,7 +1,7 @@
 package com.alkemy.ong.model.response;
 
-import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
