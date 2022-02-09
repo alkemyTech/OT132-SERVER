@@ -16,6 +16,7 @@ import com.alkemy.ong.service.abstraction.IDeleteSlide;
 import com.alkemy.ong.service.abstraction.IGetSlideDetails;
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,16 @@ public class SlideService implements IGetSlideDetails, ICreateSlide, IDeleteSlid
   public ListSlideResponse list() {
     List<Slide> slide = slideRepository.findAll();
     return buildListSlideResponse(slide);
+  }
+
+  @Override
+  public SlideResponse getBy(Long id) {
+    Optional<Slide> result = slideRepository.findById(id);
+    if (result.isEmpty()) {
+      throw new NotFoundException("Slide could not be found.");
+    }
+    return slideMapper.map(result.get(), SlideAttributes.SLIDE_ID, SlideAttributes.IMAGE_URL,
+        SlideAttributes.TEXT, SlideAttributes.ORDER);
   }
 
   @Override

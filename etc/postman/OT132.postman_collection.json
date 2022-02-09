@@ -646,7 +646,46 @@
 						"description": "ROLE ADMIN AND USER"
 					},
 					"response": []
-				}
+				},
+				{
+          "name": "Update Testimonial",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoiYnNrdW5pZ3VuZGUxOEBnbWFpbC5jb20iLCJpYXQiOjE2NDQzNjUxNDYsImV4cCI6MTY0NDQwMTE0Nn0.X3KVaogED0eZJAebNhaRepf7CdOnBuWX2YCtaYb-shQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"KMS Ulrich Von Hutten\",\r\n    \"image\":\"twin406mm.jpg\",\r\n    \"content\": \"The Laurel of Prosody\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/testimonials/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "testimonials",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        }
 			]
 		},
 		{
