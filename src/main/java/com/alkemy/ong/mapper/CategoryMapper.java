@@ -51,5 +51,4 @@ public class CategoryMapper {
     category.setImage(createCategoryRequest.getImage());
     return category;
   }
-
 }
