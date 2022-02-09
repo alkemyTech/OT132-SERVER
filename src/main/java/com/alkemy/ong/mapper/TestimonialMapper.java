@@ -3,7 +3,6 @@ package com.alkemy.ong.mapper;
 import com.alkemy.ong.mapper.attribute.TestimonialAttributes;
 import com.alkemy.ong.model.entity.Testimonial;
 import com.alkemy.ong.model.request.CreateTestimonialRequest;
-import com.alkemy.ong.model.request.UpdateTestimonialRequest;
 import com.alkemy.ong.model.response.TestimonialResponse;
 import java.text.MessageFormat;
 import org.springframework.stereotype.Component;
@@ -16,14 +15,6 @@ public class TestimonialMapper {
     testimonial.setContent(createTestimonialRequest.getContent());
     testimonial.setImage(createTestimonialRequest.getImage());
     testimonial.setName(createTestimonialRequest.getName());
-    return testimonial;
-  }
-
-  public Testimonial map(Testimonial testimonial,
-      UpdateTestimonialRequest updateTestimonialRequest) {
-    testimonial.setName(updateTestimonialRequest.getName());
-    testimonial.setImage(updateTestimonialRequest.getImage());
-    testimonial.setContent(updateTestimonialRequest.getContent());
     return testimonial;
   }
 

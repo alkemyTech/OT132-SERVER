@@ -43,11 +43,14 @@ public class TestimonialService implements ICreateTestimonial, IDeleteTestimonia
     if (testimonial == null) {
       throw new NotFoundException("Testimonial not found");
     }
-    testimonial = testimonialMapper.map(testimonial, updateTestimonialRequest);
 
-    return testimonialMapper.map(
-        testimonialRepository.save(testimonial), TestimonialAttributes.ID,
-        TestimonialAttributes.NAME, TestimonialAttributes.IMAGE, TestimonialAttributes.CONTENT);
+    update(testimonial, updateTestimonialRequest);
+
+    return testimonialMapper.map(testimonialRepository.save(testimonial),
+        TestimonialAttributes.ID,
+        TestimonialAttributes.NAME,
+        TestimonialAttributes.IMAGE,
+        TestimonialAttributes.CONTENT);
   }
 
   @Override
@@ -61,4 +64,13 @@ public class TestimonialService implements ICreateTestimonial, IDeleteTestimonia
     testimonial.setSoftDelete(true);
     testimonialRepository.save(testimonial);
   }
+
+  private Testimonial update(Testimonial testimonial,
+      UpdateTestimonialRequest updateTestimonialRequest) {
+    testimonial.setName(updateTestimonialRequest.getName());
+    testimonial.setImage(updateTestimonialRequest.getImage());
+    testimonial.setContent(updateTestimonialRequest.getContent());
+    return testimonial;
+  }
+
 }
