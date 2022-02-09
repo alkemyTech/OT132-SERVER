@@ -5,11 +5,13 @@ import com.alkemy.ong.model.request.CreateNewsRequest;
 import com.alkemy.ong.model.response.NewsResponse;
 import com.alkemy.ong.service.abstraction.ICreateNews;
 import com.alkemy.ong.service.abstraction.IDeleteNews;
+import com.alkemy.ong.service.abstraction.IGetNewsDetails;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +29,9 @@ public class NewsController {
   @Autowired
   private IDeleteNews deleteNews;
 
+  @Autowired
+  private IGetNewsDetails newsDetails;
+
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Long id) throws NotFoundException {
 
@@ -42,4 +47,11 @@ public class NewsController {
 
     return ResponseEntity.status(HttpStatus.CREATED).body(createNews.create(createNewsRequest));
   }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<NewsResponse> getBy(@PathVariable(value = "id") Long id)
+      throws NotFoundException {
+    return ResponseEntity.ok().body(newsDetails.getBy(id));
+  }
+
 }

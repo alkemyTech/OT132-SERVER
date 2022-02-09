@@ -2,6 +2,7 @@ package com.alkemy.ong.service;
 
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.NewsMapper;
+import com.alkemy.ong.model.entity.Category;
 import com.alkemy.ong.model.entity.News;
 import com.alkemy.ong.model.request.CreateNewsRequest;
 import com.alkemy.ong.model.response.NewsResponse;
@@ -9,11 +10,14 @@ import com.alkemy.ong.repository.ICategoryRepository;
 import com.alkemy.ong.repository.INewsRepository;
 import com.alkemy.ong.service.abstraction.ICreateNews;
 import com.alkemy.ong.service.abstraction.IDeleteNews;
+import com.alkemy.ong.service.abstraction.IGetNewsDetails;
+import com.amazonaws.services.xray.model.Http;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NewsService implements ICreateNews, IDeleteNews {
+public class NewsService implements ICreateNews, IDeleteNews, IGetNewsDetails {
 
   @Autowired
   private INewsRepository newsRepository;
@@ -42,5 +46,14 @@ public class NewsService implements ICreateNews, IDeleteNews {
 
     news.setSoftDelete(true);
     newsRepository.save(news);
+  }
+
+  @Override
+  public NewsResponse getBy(Long id) {
+    Optional<News> result = newsRepository.findById(id);
+    if (result.isEmpty() || result.get().isSoftDelete()) {
+      throw new NotFoundException("News not found");
+    }
+    return newsMapper.map(result.get());
   }
 }
