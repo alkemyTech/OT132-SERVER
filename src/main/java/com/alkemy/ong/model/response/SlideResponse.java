@@ -9,6 +9,7 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SlideResponse {
 
+  private Long slideId;
   private String imageUrl;
   private String text;
   private Integer order;
