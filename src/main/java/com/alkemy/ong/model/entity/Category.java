@@ -40,8 +40,5 @@ public class Category {
 
   @Column(name = "SOFT_DELETE")
   private boolean softDelete;
-
-  @OneToMany(mappedBy = "category")
-  private List<News> news = new ArrayList<>();
-
+  
 }

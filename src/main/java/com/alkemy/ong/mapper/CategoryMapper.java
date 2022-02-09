@@ -52,13 +52,4 @@ public class CategoryMapper {
     return category;
   }
 
-  public CategoryResponse map(Category category) {
-    CategoryResponse categoryResponse = new CategoryResponse();
-    categoryResponse.setIdCategory(category.getCategoryId());
-    categoryResponse.setName(category.getName());
-    categoryResponse.setImage(category.getImage());
-    categoryResponse.setDescription(category.getDescription());
-    return categoryResponse;
-  }
-
 }

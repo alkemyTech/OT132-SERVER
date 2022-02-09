@@ -7,10 +7,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateCategoryRequest { //validaciones 
+public class CreateCategoryRequest {  
 
-  @NotBlank
-  @Pattern(regexp = "^[a-zA-Z ]+$", message = "The field name can only contain letters")
+  @NotBlank(message = "Name cannot be empty or null.")
+  @Pattern(regexp = "^[a-zA-Z ]+$", message = "The name has to contain only letters")
   private String name;
 
   private String description;

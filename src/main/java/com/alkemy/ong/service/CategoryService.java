@@ -58,6 +58,8 @@ public class CategoryService implements IGetCategoryDetails, ICreateCategory {
   public CategoryResponse create(CreateCategoryRequest createCategoryRequest) {
     Category category = categoryMapper.map(createCategoryRequest);
     category.setSoftDelete(false);
-    return categoryMapper.map(categoryRepository.save(category));
-  } 
+    categoryRepository.save(category);
+    return categoryMapper.map(category, CategoryAttributes.CATEGORY_ID, CategoryAttributes.NAME,
+        CategoryAttributes.IMAGE, CategoryAttributes.DESCRIPTION);
+  }
 }
