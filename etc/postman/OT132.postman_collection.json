@@ -384,6 +384,25 @@
             }
           },
           "response": []
+        },{
+          "name": "By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/slides/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "slides",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
