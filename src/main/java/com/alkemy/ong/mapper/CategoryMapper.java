@@ -2,6 +2,7 @@ package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.mapper.attribute.CategoryAttributes;
 import com.alkemy.ong.model.entity.Category;
+import com.alkemy.ong.model.request.CreateCategoryRequest;
 import com.alkemy.ong.model.response.CategoryResponse;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -42,6 +43,23 @@ public class CategoryMapper {
       categoryResponses.add(map(category, CategoryAttributes.NAME));
     }
     return categoryResponses;
+  }
+
+  public Category map(CreateCategoryRequest createCategoryRequest){
+    Category category = new Category();
+    category.setName(createCategoryRequest.getName());
+    category.setDescription(createCategoryRequest.getDescription());
+    category.setImage(createCategoryRequest.getImage());
+    return category;
+  }
+
+  public CategoryResponse map(Category category) {
+    CategoryResponse categoryResponse = new CategoryResponse();
+    categoryResponse.setIdCategory(category.getCategoryId());
+    categoryResponse.setName(category.getName());
+    categoryResponse.setImage(category.getImage());
+    categoryResponse.setDescription(category.getDescription());
+    return categoryResponse;
   }
 
 }
