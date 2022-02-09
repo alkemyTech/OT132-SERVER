@@ -23,15 +23,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-  private static final String[] SWAGGER_URLS = {
-      "/v2/api-docs",
-      "/swagger-resources/**",
-      "/swagger-ui.html",
-      "swagger-ui/**",
-      "/webjars/**",
-      "/api/docs"
-  };
-
   @Autowired
   private UserDetailsService userDetailsService;
 

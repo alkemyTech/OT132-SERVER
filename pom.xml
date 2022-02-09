@@ -90,15 +90,7 @@
       <artifactId>spring-boot-starter-web</artifactId>
       <groupId>org.springframework.boot</groupId>
     </dependency>
-    <dependency>
-      <groupId>io.springfox</groupId>
-      <artifactId>springfox-swagger2</artifactId>
-      <version>3.0.0</version>
-    </dependency>
-    <dependency>
-      <groupId>io.springfox</groupId>
-      <artifactId>springfox-swagger-ui</artifactId>
-      <version>3.0.0</version>
+
     </dependency>
     <dependency>
       <artifactId>spring-session-core</artifactId>
@@ -131,9 +123,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>io.springfox</groupId>
-      <artifactId>springfox-swagger2</artifactId>
-      <version>3.0.0</version>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-ui</artifactId>
+      <version>1.6.4</version>
     </dependency>
     <dependency>
       <artifactId>spring-security-test</artifactId>
@@ -159,7 +151,6 @@
       <artifactId>aws-java-sdk</artifactId>
       <version>1.11.133</version>
     </dependency>
-  </dependencies>
 
   <description>ONG project with Spring Boot</description>
   <groupId>com.alkemy</groupId>
