@@ -4,6 +4,7 @@ import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.CategoryMapper;
 import com.alkemy.ong.mapper.attribute.CategoryAttributes;
 import com.alkemy.ong.model.entity.Category;
+import com.alkemy.ong.model.request.CategoryRequest;
 import com.alkemy.ong.model.response.CategoryResponse;
 import com.alkemy.ong.model.response.ListCategoriesResponse;
 import com.alkemy.ong.repository.ICategoryRepository;
@@ -52,9 +53,12 @@ public class CategoryService implements IGetCategoryDetails, IUpdateCategory {
   }
 
   @Override
-  public CategoryResponse update(Long id) {
+  public CategoryResponse update(Long id, CategoryRequest categoryRequest) {
     Category category = findBy(id);
-    return null;
+    category.setName(categoryRequest.getName());
+    category.setDescription(categoryRequest.getDescription());
+    category.setImage(categoryRequest.getImage());
+    return categoryMapper.map(categoryRepository.save(category));
   }
 
   private Category findBy(Long id) {
