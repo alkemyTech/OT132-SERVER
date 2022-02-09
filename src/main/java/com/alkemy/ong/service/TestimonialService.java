@@ -37,14 +37,8 @@ public class TestimonialService implements ICreateTestimonial, IDeleteTestimonia
 
   @Override
   public TestimonialResponse update(Long id, UpdateTestimonialRequest updateTestimonialRequest) {
-
-    Testimonial testimonial = testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(id);
-
-    if (testimonial == null) {
-      throw new NotFoundException("Testimonial not found");
-    }
-
-    update(testimonial, updateTestimonialRequest);
+    Testimonial testimonial = getTestimonial(id);
+    updateValues(testimonial, updateTestimonialRequest);
 
     return testimonialMapper.map(testimonialRepository.save(testimonial),
         TestimonialAttributes.ID,
@@ -55,17 +49,20 @@ public class TestimonialService implements ICreateTestimonial, IDeleteTestimonia
 
   @Override
   public void delete(Long id) {
-    Testimonial testimonial = testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(id);
-
-    if (testimonial == null) {
-      throw new NotFoundException("Testimonial not found");
-    }
-
+    Testimonial testimonial = getTestimonial(id);
     testimonial.setSoftDelete(true);
     testimonialRepository.save(testimonial);
   }
 
-  private Testimonial update(Testimonial testimonial,
+  private Testimonial getTestimonial(Long id) {
+    Testimonial testimonial = testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(id);
+    if (testimonial == null) {
+      throw new NotFoundException("Testimonial not found.");
+    }
+    return testimonial;
+  }
+
+  private Testimonial updateValues(Testimonial testimonial,
       UpdateTestimonialRequest updateTestimonialRequest) {
     testimonial.setName(updateTestimonialRequest.getName());
     testimonial.setImage(updateTestimonialRequest.getImage());
