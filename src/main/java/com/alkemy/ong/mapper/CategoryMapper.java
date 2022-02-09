@@ -30,8 +30,7 @@ public class CategoryMapper {
           break;
         default:
           throw new UnsupportedOperationException(
-              MessageFormat.format("Category attribute: {0} is unsupported",
-                  categoryAttribute));
+              MessageFormat.format("Category attribute: {0} is unsupported", categoryAttribute));
       }
     }
     return categoryResponse;
@@ -45,7 +44,7 @@ public class CategoryMapper {
     return categoryResponses;
   }
 
-  public Category map(CreateCategoryRequest createCategoryRequest){
+  public Category map(CreateCategoryRequest createCategoryRequest) {
     Category category = new Category();
     category.setName(createCategoryRequest.getName());
     category.setDescription(createCategoryRequest.getDescription());
