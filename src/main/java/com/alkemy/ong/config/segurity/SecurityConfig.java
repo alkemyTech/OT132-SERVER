@@ -23,6 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+
   @Autowired
   private UserDetailsService userDetailsService;
 
