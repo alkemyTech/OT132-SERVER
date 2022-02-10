@@ -11,10 +11,7 @@ import com.alkemy.ong.model.entity.Organization;
 import com.alkemy.ong.model.request.UpdateOrganizationRequest;
 import com.alkemy.ong.model.response.OrganizationResponse;
 import com.alkemy.ong.repository.IOrganizationRepository;
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,16 +26,17 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationIntegrationTest {
 
-
-
   @MockBean
   private IOrganizationRepository organizationRepository;
+
+  @Before public void checkFindMethod(){
+    when(organizationRepository.findAll()).thenReturn(buildOrganizationStub());
+  }
 
   @Test
   public void shouldUpdateOrganizationWithAdminRole() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
 
-    when(organizationRepository.findAll()).thenReturn(buildOrganizationStub());
     when(organizationRepository.save(any(Organization.class))).thenReturn(createOrganizationStub());
 
     UpdateOrganizationRequest updateOrganizationRequest = buildRequestPayload();
@@ -63,8 +61,6 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
   public void shouldReturnForbiddenWithUserRole() {
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
-    when(organizationRepository.findAll()).thenReturn(buildOrganizationStub());
-
     UpdateOrganizationRequest updateOrganizationRequest = buildRequestPayload();
 
     HttpEntity<UpdateOrganizationRequest> requestEntity = new HttpEntity<>(
@@ -79,7 +75,6 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
 
   @Test
   public void shouldReturnForbiddenWithNoRole() {
-    when(organizationRepository.findAll()).thenReturn(buildOrganizationStub());
 
     UpdateOrganizationRequest updateOrganizationRequest = buildRequestPayload();
 
@@ -96,8 +91,6 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
   @Test
   public void shouldReturnBadRequestWhenNameIsEmpty() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
-
-    when(organizationRepository.findAll()).thenReturn(buildOrganizationStub());
 
     UpdateOrganizationRequest updateOrganizationRequest = buildRequestPayloadWithEmptyName();
 
@@ -116,8 +109,6 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
   public void shouldReturnBadRequestWhenEmailIsEmpty() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
 
-    when(organizationRepository.findAll()).thenReturn(buildOrganizationStub());
-
     UpdateOrganizationRequest updateOrganizationRequest = buildRequestPayloadWithEmptyEmail();
 
     HttpEntity<UpdateOrganizationRequest> requestEntity = new HttpEntity<>(
@@ -134,8 +125,6 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
   @Test
   public void shouldReturnBadRequestWhenImageIsEmpty() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
-
-    when(organizationRepository.findAll()).thenReturn(buildOrganizationStub());
 
     UpdateOrganizationRequest updateOrganizationRequest = buildRequestPayloadWithEmptyImage();
 
@@ -154,8 +143,6 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
   public void shouldReturnBadRequestWhenWelcomeTextIsEmpty() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
 
-    when(organizationRepository.findAll()).thenReturn(buildOrganizationStub());
-
     UpdateOrganizationRequest updateOrganizationRequest = buildRequestPayloadWithEmptyWelcomeText();
 
     HttpEntity<UpdateOrganizationRequest> requestEntity = new HttpEntity<>(
@@ -168,24 +155,6 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
     assertEquals(1, response.getBody().getMessages().size());
     assertEquals("Welcome text field can not be null or empty.",
         response.getBody().getMessages().get(0));
-  }
-
-  private List<Organization> buildOrganizationStub() {
-    List<Organization> list = new ArrayList<>();
-    list.add(createOrganizationStub());
-    return list;
-  }
-
-  private Organization createOrganizationStub() {
-    Organization organization = new Organization();
-    organization.setName(NAME);
-    organization.setImage(IMAGE);
-    organization.setAddress(ADDRESS);
-    organization.setPhone(PHONE);
-    organization.setEmail(EMAIL);
-    organization.setWelcomeText(WELCOME_TEXT);
-    organization.setTimeStamp(Timestamp.from(Instant.now()));
-    return organization;
   }
 
   private UpdateOrganizationRequest buildRequestPayloadWithEmptyName() {
