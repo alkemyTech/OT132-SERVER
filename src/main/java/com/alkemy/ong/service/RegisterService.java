@@ -4,21 +4,21 @@ import com.alkemy.ong.common.JwtUtils;
 import com.alkemy.ong.common.mail.EmailUtils;
 import com.alkemy.ong.common.mail.template.ContactUs;
 import com.alkemy.ong.common.mail.template.RegisterEmailTemplate;
-import com.alkemy.ong.common.mail.template.WelcomeEmailTemplate;
 import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.exception.ExternalServiceException;
 import com.alkemy.ong.exception.UserAlreadyExistException;
 import com.alkemy.ong.mapper.UserMapper;
+import com.alkemy.ong.model.entity.Organization;
 import com.alkemy.ong.model.entity.User;
 import com.alkemy.ong.model.request.UserRegisterRequest;
 import com.alkemy.ong.model.response.UserResponse;
+import com.alkemy.ong.repository.IOrganizationRepository;
 import com.alkemy.ong.repository.IRoleRepository;
 import com.alkemy.ong.repository.IUserRepository;
 import com.alkemy.ong.service.abstraction.IRegisterUser;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,13 +38,8 @@ public class RegisterService implements IRegisterUser {
   private JwtUtils jwtUtil;
   @Autowired
   private EmailUtils emailUtils;
-
-  @Value("${organization.name}")
-  private String contactUsName;
-  @Value("${organization.address}")
-  private String contactUsAddress;
-  @Value("${organization.phone}")
-  private int contactUsPhone;
+  @Autowired
+  private IOrganizationRepository organizationRepository;
 
   @Override
   public UserResponse register(UserRegisterRequest userRegisterRequest)
@@ -56,12 +51,8 @@ public class RegisterService implements IRegisterUser {
         passwordEncoder.encode(userRegisterRequest.getPassword()));
     user.setRoles(List.of(roleRepository.findByName(RoleType.USER.getFullRoleName())));
     UserResponse userResponse = userMapper.map(userRepository.save(user));
-
-    ContactUs contactUs = new ContactUs(contactUsName, contactUsAddress, contactUsPhone);
-    RegisterEmailTemplate template = new RegisterEmailTemplate(contactUs,
-        userRegisterRequest.getEmail());
     try {
-      emailUtils.send(template);
+      emailUtils.send(buildTemplate(userRegisterRequest));
     } catch (ExternalServiceException e) {
       log.error(e.getMessage());
     }
@@ -69,4 +60,10 @@ public class RegisterService implements IRegisterUser {
     return userResponse;
   }
 
+  private RegisterEmailTemplate buildTemplate(UserRegisterRequest userRegisterRequest) {
+    Organization organization = organizationRepository.findAll().get(0);
+    ContactUs contactUs = new ContactUs(organization.getName(), organization.getAddress(),
+        organization.getPhone());
+    return new RegisterEmailTemplate(contactUs, userRegisterRequest.getEmail());
+  }
 }
