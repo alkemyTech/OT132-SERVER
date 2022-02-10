@@ -7,12 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ListNewsResponse {
+public class ListNewsResponse extends PaginationResponse {
 
-  @JsonProperty("News")
+  @JsonProperty("news")
   private List<NewsResponse> newsResponse;
-  private int page;
-  private int totalPages;
-  private int size;
-      
+  
 }
