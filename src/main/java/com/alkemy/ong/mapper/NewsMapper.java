@@ -26,9 +26,9 @@ public class NewsMapper {
     return news;
   }
 
-  public List<NewsResponse> map(List<News> newsList) {
-    List<NewsResponse> newsResponses = new ArrayList<>(newsList.size());
-    for (News news : newsList) {
+  public List<NewsResponse> map(List<News> newsCollection) {
+    List<NewsResponse> newsResponses = new ArrayList<>(newsCollection.size());
+    for (News news : newsCollection) {
       newsResponses.add(map(news));
     }
     return newsResponses;

@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ListCategoriesResponse extends PaginationResponse{
+public class ListCategoriesResponse extends PaginationResponse {
 
   @JsonProperty("categories")
   private List<CategoryResponse> categoryResponses;
