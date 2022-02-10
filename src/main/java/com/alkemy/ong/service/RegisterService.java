@@ -39,11 +39,11 @@ public class RegisterService implements IRegisterUser {
   @Autowired
   private EmailUtils emailUtils;
 
-  @Value("${organization.name.contact}")
+  @Value("${organization.name}")
   private String contactUsName;
-  @Value("${organization.address.contact}")
+  @Value("${organization.address}")
   private String contactUsAddress;
-  @Value("${organization.phone.contact}")
+  @Value("${organization.phone}")
   private int contactUsPhone;
 
   @Override
