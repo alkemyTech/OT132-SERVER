@@ -84,6 +84,22 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseIntegrationTe
     assertEquals(0,response.getBody().getMessages().size());
   }
 
+  @Test
+  public void shouldReturnForbiddenWithNoRole(){
+    when(organizationRepository.findAll()).thenReturn(buildOrganizationStub());
+
+    UpdateOrganizationRequest updateOrganizationRequest = buildRequestPayload();
+
+    HttpEntity<UpdateOrganizationRequest> requestEntity = new HttpEntity<>(
+        updateOrganizationRequest, headers);
+
+    ResponseEntity<ErrorResponse> response = restTemplate.exchange(createURLWithPort(PATH),
+        HttpMethod.POST, requestEntity, ErrorResponse.class);
+
+    assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+    assertEquals(0,response.getBody().getMessages().size());
+  }
+
   private List<Organization> buildOrganizationStub() {
     List<Organization> list = new ArrayList<>();
     list.add(createOrganizationStub());
