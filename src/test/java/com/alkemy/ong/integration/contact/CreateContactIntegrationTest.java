@@ -2,22 +2,15 @@ package com.alkemy.ong.integration.contact;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.when;
 
-import com.alkemy.ong.common.mail.EmailUtils;
 import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.exception.ErrorResponse;
-import com.alkemy.ong.integration.common.AbstractBaseIntegrationTest;
-import com.alkemy.ong.integration.util.UtilMethods;
-import com.alkemy.ong.model.entity.Contact;
 import com.alkemy.ong.model.request.CreateContactRequest;
 import com.alkemy.ong.model.response.ContactResponse;
-import com.alkemy.ong.repository.IContactRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -26,14 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class CreateContactIntegrationTest extends AbstractBaseIntegrationTest {
-
-  private static final String PATH = "/contacts";
-  private static final String NAME = "Bismark";
-  private static final String EMAIL = "biskmark@gmail.com";
-  private static final String INVALID_EMAIL = "@gmail.com";
-  private static final int PHONE = 406203;
-  private static final String MESSAGE = "Text random";
+public class CreateContactIntegrationTest extends AbstractBaseContactIntegrationTest {
 
   @Test
   public void shouldCreateContactWithRolUser() {
@@ -89,7 +75,8 @@ public class CreateContactIntegrationTest extends AbstractBaseIntegrationTest {
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
     CreateContactRequest createContactRequest = buildRequestWithEmptyName();
-    buildBadRequest("Name cannot be empty or null.", createContactRequest);
+    createBadRequestAsserts(createRequestAndResponse(createContactRequest),
+        "Name cannot be empty or null.");
   }
 
   @Test
@@ -97,8 +84,8 @@ public class CreateContactIntegrationTest extends AbstractBaseIntegrationTest {
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
     CreateContactRequest createContactRequest = buildRequestWithEmptyPhone();
-    buildBadRequest("Phone cannot be null.",
-        createContactRequest);
+    createBadRequestAsserts(createRequestAndResponse(createContactRequest),
+        "Phone cannot be null.");
   }
 
   @Test
@@ -106,8 +93,8 @@ public class CreateContactIntegrationTest extends AbstractBaseIntegrationTest {
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
     CreateContactRequest createContactRequest = buildRequestWithEmptyEmail();
-    buildBadRequest("Email cannot be empty or null.",
-        createContactRequest);
+    createBadRequestAsserts(createRequestAndResponse(createContactRequest),
+        "Email cannot be empty or null.");
   }
 
   @Test
@@ -115,8 +102,8 @@ public class CreateContactIntegrationTest extends AbstractBaseIntegrationTest {
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
     CreateContactRequest createContactRequest = buildRequestWithEmptyMessage();
-    buildBadRequest("Message cannot be empty or null.",
-        createContactRequest);
+    createBadRequestAsserts(createRequestAndResponse(createContactRequest),
+        "Message cannot be empty or null.");
   }
 
   @Test
@@ -124,8 +111,8 @@ public class CreateContactIntegrationTest extends AbstractBaseIntegrationTest {
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
     CreateContactRequest createContactRequest = buildRequestWithMaxSizeName();
-    buildBadRequest("Name can have between 2 and 70 characters.",
-        createContactRequest);
+    createBadRequestAsserts(createRequestAndResponse(createContactRequest),
+        "Name can have between 2 and 70 characters.");
   }
 
   @Test
@@ -134,14 +121,7 @@ public class CreateContactIntegrationTest extends AbstractBaseIntegrationTest {
 
     CreateContactRequest createContactRequest = buildRequestWithMaxSizeEmail();
 
-    HttpEntity<CreateContactRequest> requestEntity =
-        new HttpEntity<>(createContactRequest, headers);
-
-    ResponseEntity<ErrorResponse> response = restTemplate
-        .exchange(createURLWithPort(PATH),
-            HttpMethod.POST,
-            requestEntity,
-            ErrorResponse.class);
+    ResponseEntity<ErrorResponse> response = createRequestAndResponse(createContactRequest);
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 
@@ -150,29 +130,14 @@ public class CreateContactIntegrationTest extends AbstractBaseIntegrationTest {
 
     assertEquals(400, errorResponse.getStatus());
     assertEquals(2, errorResponse.getMessages().size());
-    assertEquals("Email is not valid.", errorResponse.getMessages().get(0));
-    assertEquals("Email need to have between 5 and 150 characters.",
-        errorResponse.getMessages().get(1));
-  }
-
-  @Test
-  public void shouldReturnBadRequestWhenEmailIsInvalid() {
-    setAuthorizationHeaderBasedOn(RoleType.USER);
-
-    CreateContactRequest createContactRequest = buildRequestWithInvalidEmail();
-    buildBadRequest("Email is not valid.", createContactRequest);
-  }
-
-  private CreateContactRequest buildRequestWithInvalidEmail() {
-    return buildRequestPayLoad(NAME, PHONE, INVALID_EMAIL, MESSAGE);
   }
 
   private CreateContactRequest buildRequestWithMaxSizeEmail() {
-    return buildRequestPayLoad(NAME, PHONE, UtilMethods.generateRandomString(152), MESSAGE);
+    return buildRequestPayLoad(NAME, PHONE, generateRandomString(152), MESSAGE);
   }
 
   private CreateContactRequest buildRequestWithMaxSizeName() {
-    return buildRequestPayLoad(UtilMethods.generateRandomString(71), PHONE, EMAIL, MESSAGE);
+    return buildRequestPayLoad(generateRandomString(71), PHONE, EMAIL, MESSAGE);
   }
 
   private CreateContactRequest buildRequestWithEmptyPhone() {
@@ -206,17 +171,20 @@ public class CreateContactIntegrationTest extends AbstractBaseIntegrationTest {
     return createContactRequest;
   }
 
-  private void buildBadRequest(String message,
+  private ResponseEntity<ErrorResponse> createRequestAndResponse(
       CreateContactRequest createContactRequest) {
 
     HttpEntity<CreateContactRequest> requestEntity =
         new HttpEntity<>(createContactRequest, headers);
 
-    ResponseEntity<ErrorResponse> response = restTemplate
+    return restTemplate
         .exchange(createURLWithPort(PATH),
             HttpMethod.POST,
             requestEntity,
             ErrorResponse.class);
+  }
+
+  private void createBadRequestAsserts(ResponseEntity<ErrorResponse> response, String message) {
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 
