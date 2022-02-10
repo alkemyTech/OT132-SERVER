@@ -2,6 +2,7 @@ package com.alkemy.ong.controller;
 
 import com.alkemy.ong.common.PaginatedResultsRetrieved;
 import com.alkemy.ong.model.request.CreateCategoryRequest;
+import com.alkemy.ong.model.request.UpdateCategoryRequest;
 import com.alkemy.ong.model.response.CategoryResponse;
 import com.alkemy.ong.model.response.ListCategoriesResponse;
 import com.alkemy.ong.service.abstraction.ICreateCategory;
@@ -70,7 +71,7 @@ public class CategoryController {
 
   @PutMapping("/{id}")
   public ResponseEntity<CategoryResponse> update(@PathVariable("id") long id,
-      @Valid @RequestBody CreateCategoryRequest categoryRequest) {
+      @Valid @RequestBody UpdateCategoryRequest categoryRequest) {
     return ResponseEntity.ok().body(updateCategory.update(id, categoryRequest));
   }
 }

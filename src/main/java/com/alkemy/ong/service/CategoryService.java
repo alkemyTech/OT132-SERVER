@@ -5,6 +5,7 @@ import com.alkemy.ong.mapper.CategoryMapper;
 import com.alkemy.ong.mapper.attribute.CategoryAttributes;
 import com.alkemy.ong.model.entity.Category;
 import com.alkemy.ong.model.request.CreateCategoryRequest;
+import com.alkemy.ong.model.request.UpdateCategoryRequest;
 import com.alkemy.ong.model.response.CategoryResponse;
 import com.alkemy.ong.model.response.ListCategoriesResponse;
 import com.alkemy.ong.repository.ICategoryRepository;
@@ -54,7 +55,7 @@ public class CategoryService implements IGetCategoryDetails, ICreateCategory, IU
   }
 
   @Override
-  public CategoryResponse update(Long id, CreateCategoryRequest categoryRequest) {
+  public CategoryResponse update(Long id, UpdateCategoryRequest categoryRequest) {
     Category category = findBy(id);
     category.setName(categoryRequest.getName());
     category.setDescription(categoryRequest.getDescription());
@@ -69,8 +70,7 @@ public class CategoryService implements IGetCategoryDetails, ICreateCategory, IU
     if (result.isEmpty() || result.get().isSoftDelete()) {
       throw new NotFoundException("Category could not be found.");
     }
-    Category category = result.get();
-    return category;
+    return result.get();
   }
 
   @Override
