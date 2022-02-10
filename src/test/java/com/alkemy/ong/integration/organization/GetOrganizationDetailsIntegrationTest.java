@@ -5,11 +5,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 import com.alkemy.ong.model.response.OrganizationResponse;
-import com.alkemy.ong.repository.IOrganizationRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -20,9 +18,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class GetOrganizationDetailsIntegrationTest extends AbstractBaseOrganizationIntegrationTest {
-
-  @MockBean
-  private IOrganizationRepository organizationRepository;
 
   @Test
   public void shouldReturnOkWhenAccessedWithoutRole() {

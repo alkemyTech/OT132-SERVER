@@ -18,8 +18,6 @@ public abstract class AbstractBaseIntegrationTest {
   protected static final long USER_ID = 1L;
   protected static final String EMAIL = "johnny@doe.com";
 
-  protected static final long ORGANIZATION_ID = 1L;
-
   protected TestRestTemplate restTemplate = new TestRestTemplate();
   protected HttpHeaders headers = new HttpHeaders();
 

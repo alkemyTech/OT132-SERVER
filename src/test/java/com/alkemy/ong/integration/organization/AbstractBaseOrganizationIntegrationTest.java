@@ -2,12 +2,17 @@ package com.alkemy.ong.integration.organization;
 
 import com.alkemy.ong.integration.common.AbstractBaseIntegrationTest;
 import com.alkemy.ong.model.entity.Organization;
+import com.alkemy.ong.repository.IOrganizationRepository;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 public class AbstractBaseOrganizationIntegrationTest extends AbstractBaseIntegrationTest {
+
+  @MockBean
+  protected IOrganizationRepository organizationRepository;
 
   protected static final String PATH = "/organization/public";
   protected static final String NAME = "Somos Mas";

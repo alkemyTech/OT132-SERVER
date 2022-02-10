@@ -10,12 +10,10 @@ import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.model.entity.Organization;
 import com.alkemy.ong.model.request.UpdateOrganizationRequest;
 import com.alkemy.ong.model.response.OrganizationResponse;
-import com.alkemy.ong.repository.IOrganizationRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -26,10 +24,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationIntegrationTest {
 
-  @MockBean
-  private IOrganizationRepository organizationRepository;
 
-  @Before public void checkFindMethod(){
+
+  @Before
+  public void checkFindMethod() {
     when(organizationRepository.findAll()).thenReturn(buildOrganizationStub());
   }
 
@@ -70,7 +68,7 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
         HttpMethod.POST, requestEntity, ErrorResponse.class);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
-    assertEquals(0, response.getBody().getMessages().size());
+    assertEquals(0, getMessageSizeError(response));
   }
 
   @Test
@@ -85,7 +83,7 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
         HttpMethod.POST, requestEntity, ErrorResponse.class);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
-    assertEquals(0, response.getBody().getMessages().size());
+    assertEquals(0, getMessageSizeError(response));
   }
 
   @Test
@@ -101,8 +99,8 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
         HttpMethod.POST, requestEntity, ErrorResponse.class);
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(1, response.getBody().getMessages().size());
-    assertEquals("Name field can not be null or empty.", response.getBody().getMessages().get(0));
+    assertEquals(1, getMessageSizeError(response));
+    assertEquals("Name field can not be null or empty.", getFirstMessageError(response));
   }
 
   @Test
@@ -118,8 +116,8 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
         HttpMethod.POST, requestEntity, ErrorResponse.class);
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(1, response.getBody().getMessages().size());
-    assertEquals("Email field can not be null or empty.", response.getBody().getMessages().get(0));
+    assertEquals(1, getMessageSizeError(response));
+    assertEquals("Email field can not be null or empty.", getFirstMessageError(response));
   }
 
   @Test
@@ -135,8 +133,8 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
         HttpMethod.POST, requestEntity, ErrorResponse.class);
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(1, response.getBody().getMessages().size());
-    assertEquals("Image field can not be null or empty.", response.getBody().getMessages().get(0));
+    assertEquals(1, getMessageSizeError(response));
+    assertEquals("Image field can not be null or empty.", getFirstMessageError(response));
   }
 
   @Test
@@ -152,9 +150,9 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
         HttpMethod.POST, requestEntity, ErrorResponse.class);
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(1, response.getBody().getMessages().size());
+    assertEquals(1, getMessageSizeError(response));
     assertEquals("Welcome text field can not be null or empty.",
-        response.getBody().getMessages().get(0));
+        getFirstMessageError(response));
   }
 
   private UpdateOrganizationRequest buildRequestPayloadWithEmptyName() {
@@ -187,5 +185,13 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
     request.setPhone(PHONE);
     request.setAddress(ADDRESS);
     return request;
+  }
+
+  private String getFirstMessageError(ResponseEntity<ErrorResponse> response) {
+    return response.getBody().getMessages().get(0);
+  }
+
+  private int getMessageSizeError(ResponseEntity<ErrorResponse> response) {
+    return response.getBody().getMessages().size();
   }
 }
