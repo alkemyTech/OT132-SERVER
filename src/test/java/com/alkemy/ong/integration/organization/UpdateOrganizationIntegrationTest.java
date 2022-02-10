@@ -2,9 +2,11 @@ package com.alkemy.ong.integration.organization;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import com.alkemy.ong.config.segurity.RoleType;
+import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.integration.common.AbstractBaseIntegrationTest;
 import com.alkemy.ong.model.entity.Organization;
 import com.alkemy.ong.model.request.UpdateOrganizationRequest;
@@ -26,13 +28,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class UpdateIntegrationTest extends AbstractBaseIntegrationTest {
+public class UpdateOrganizationIntegrationTest extends AbstractBaseIntegrationTest {
 
   private static final String PATH = "/organization/public";
   private static final String NAME = "Somos Mas";
   private static final String IMAGE = "http://foo.png";
   private static final String ADDRESS = "Street 123";
   private static final Integer PHONE = 456;
+  private static final String EMAIL = "foo@gmail.com";
+  private static final String WELCOME_TEXT = "Welcome";
 
   @MockBean
   private IOrganizationRepository organizationRepository;
@@ -42,6 +46,7 @@ public class UpdateIntegrationTest extends AbstractBaseIntegrationTest {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
 
     when(organizationRepository.findAll()).thenReturn(buildOrganizationStub());
+    when(organizationRepository.save(any(Organization.class))).thenReturn(createOrganizationStub());
 
     UpdateOrganizationRequest updateOrganizationRequest = buildRequestPayload();
 
@@ -49,23 +54,37 @@ public class UpdateIntegrationTest extends AbstractBaseIntegrationTest {
         updateOrganizationRequest, headers);
 
     ResponseEntity<OrganizationResponse> response = restTemplate.exchange(
-        createURLWithPort(PATH),
-        HttpMethod.POST,
-        requestEntity,
-        OrganizationResponse.class);
+        createURLWithPort(PATH),HttpMethod.POST, requestEntity, OrganizationResponse.class);
 
-    assertEquals(HttpStatus.OK,response.getStatusCode());
+    assertEquals(HttpStatus.OK, response.getStatusCode());
 
     OrganizationResponse organizationResponse = response.getBody();
     assertNotNull(organizationResponse);
     assertEquals(updateOrganizationRequest.getName(),organizationResponse.getName());
-    assertEquals(updateOrganizationRequest.getImage(),organizationResponse.getImage());
     assertEquals(updateOrganizationRequest.getEmail(),organizationResponse.getEmail());
+    assertEquals(updateOrganizationRequest.getImage(),organizationResponse.getImage());
     assertEquals(updateOrganizationRequest.getWelcomeText(),organizationResponse.getWelcomeText());
-
   }
 
-  private List<Organization> buildOrganizationStub(){
+  @Test
+  public void shouldReturnForbiddenWithUserRole() {
+    setAuthorizationHeaderBasedOn(RoleType.USER);
+
+    when(organizationRepository.findAll()).thenReturn(buildOrganizationStub());
+
+    UpdateOrganizationRequest updateOrganizationRequest = buildRequestPayload();
+
+    HttpEntity<UpdateOrganizationRequest> requestEntity = new HttpEntity<>(
+        updateOrganizationRequest, headers);
+
+    ResponseEntity<ErrorResponse> response = restTemplate.exchange(createURLWithPort(PATH),
+        HttpMethod.POST, requestEntity, ErrorResponse.class);
+
+    assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+    assertEquals(0,response.getBody().getMessages().size());
+  }
+
+  private List<Organization> buildOrganizationStub() {
     List<Organization> list = new ArrayList<>();
     list.add(createOrganizationStub());
     return list;
@@ -77,27 +96,45 @@ public class UpdateIntegrationTest extends AbstractBaseIntegrationTest {
     organization.setImage(IMAGE);
     organization.setAddress(ADDRESS);
     organization.setPhone(PHONE);
+    organization.setEmail(EMAIL);
+    organization.setWelcomeText(WELCOME_TEXT);
     organization.setTimeStamp(Timestamp.from(Instant.now()));
     return organization;
   }
 
-  private UpdateOrganizationRequest buildRequestPayload() {
-    return buildRequestPayload("Organization name", "Organization image", "user@gmail.com");
+  private UpdateOrganizationRequest buildRequestPayloadWithEmptyName() {
+    return buildRequestPayload(null, IMAGE, EMAIL, WELCOME_TEXT);
   }
 
-  private UpdateOrganizationRequest buildRequestPayload(String name,
-      String image, String email) {
+  private UpdateOrganizationRequest buildRequestPayloadWithEmptyImage() {
+    return buildRequestPayload(NAME, null, EMAIL, WELCOME_TEXT);
+  }
+
+  private UpdateOrganizationRequest buildRequestPayloadWithEmptyEmail() {
+    return buildRequestPayload(NAME, IMAGE, null, WELCOME_TEXT);
+  }
+
+  private UpdateOrganizationRequest buildRequestPayloadWithEmptyWelcomeText() {
+    return buildRequestPayload(NAME, IMAGE, EMAIL, null);
+  }
+
+  private UpdateOrganizationRequest buildRequestPayload() {
+    return buildRequestPayload(NAME, IMAGE, EMAIL, WELCOME_TEXT);
+  }
+
+  private UpdateOrganizationRequest buildRequestPayload(String name, String image, String email,
+      String welcomeText) {
     UpdateOrganizationRequest request = new UpdateOrganizationRequest();
     request.setName(name);
     request.setImage(image);
     request.setEmail(email);
-    request.setWelcomeText("Welcome");
-    request.setPhone(456);
-    request.setAddress("Street 123");
-    request.setAboutUsText("Text");
-    request.setFacebookUrl("Url-f");
-    request.setLinkedinUrl("Url-l");
-    request.setInstagramUrl("Url-i");
+    request.setWelcomeText(welcomeText);
+    request.setPhone(PHONE);
+    request.setAddress(ADDRESS);
+    request.setAboutUsText("ONG");
+    request.setFacebookUrl("http://linkedin.com");
+    request.setLinkedinUrl("http://facebook.com");
+    request.setInstagramUrl("http://instagram.com");
     return request;
   }
 }
