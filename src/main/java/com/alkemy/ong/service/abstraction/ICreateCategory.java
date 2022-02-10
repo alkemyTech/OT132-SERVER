@@ -3,7 +3,8 @@ package com.alkemy.ong.service.abstraction;
 import com.alkemy.ong.model.request.CreateCategoryRequest;
 import com.alkemy.ong.model.response.CategoryResponse;
 
-public interface IUpdateCategory {
+public interface ICreateCategory {
 
-  CategoryResponse update(Long id, CreateCategoryRequest categoryRequest);
+  CategoryResponse create(CreateCategoryRequest createCategoryRequest);
+    
 }

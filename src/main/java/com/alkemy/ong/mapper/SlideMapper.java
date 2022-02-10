@@ -15,6 +15,9 @@ public class SlideMapper {
     SlideResponse slideResponse = new SlideResponse();
     for (SlideAttributes slideAttribute : slideAttributes) {
       switch (slideAttribute) {
+        case SLIDE_ID:
+          slideResponse.setSlideId(slide.getSlideId());
+          break;
         case TEXT:
           slideResponse.setText(slide.getText());
           break;

@@ -4,10 +4,11 @@ import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.CategoryMapper;
 import com.alkemy.ong.mapper.attribute.CategoryAttributes;
 import com.alkemy.ong.model.entity.Category;
-import com.alkemy.ong.model.request.CategoryRequest;
+import com.alkemy.ong.model.request.CreateCategoryRequest;
 import com.alkemy.ong.model.response.CategoryResponse;
 import com.alkemy.ong.model.response.ListCategoriesResponse;
 import com.alkemy.ong.repository.ICategoryRepository;
+import com.alkemy.ong.service.abstraction.ICreateCategory;
 import com.alkemy.ong.service.abstraction.IGetCategoryDetails;
 import com.alkemy.ong.service.abstraction.IUpdateCategory;
 import java.util.List;
@@ -18,7 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CategoryService implements IGetCategoryDetails, IUpdateCategory {
+public class CategoryService implements IGetCategoryDetails, ICreateCategory, IUpdateCategory {
 
 
   @Autowired
@@ -53,7 +54,7 @@ public class CategoryService implements IGetCategoryDetails, IUpdateCategory {
   }
 
   @Override
-  public CategoryResponse update(Long id, CategoryRequest categoryRequest) {
+  public CategoryResponse update(Long id, CreateCategoryRequest categoryRequest) {
     Category category = findBy(id);
     category.setName(categoryRequest.getName());
     category.setDescription(categoryRequest.getDescription());
@@ -72,4 +73,12 @@ public class CategoryService implements IGetCategoryDetails, IUpdateCategory {
     return category;
   }
 
+  @Override
+  public CategoryResponse create(CreateCategoryRequest createCategoryRequest) {
+    Category category = categoryMapper.map(createCategoryRequest);
+    category.setSoftDelete(false);
+    categoryRepository.save(category);
+    return categoryMapper.map(category, CategoryAttributes.CATEGORY_ID, CategoryAttributes.NAME,
+        CategoryAttributes.IMAGE, CategoryAttributes.DESCRIPTION);
+  }
 }
