@@ -100,6 +100,82 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseIntegrationTe
     assertEquals(0,response.getBody().getMessages().size());
   }
 
+  @Test
+  public void shouldReturnBadRequestWhenNameIsEmpty() {
+    setAuthorizationHeaderBasedOn(RoleType.ADMIN);
+
+    when(organizationRepository.findAll()).thenReturn(buildOrganizationStub());
+
+    UpdateOrganizationRequest updateOrganizationRequest = buildRequestPayloadWithEmptyName();
+
+    HttpEntity<UpdateOrganizationRequest> requestEntity = new HttpEntity<>(
+        updateOrganizationRequest, headers);
+
+    ResponseEntity<ErrorResponse> response = restTemplate.exchange(createURLWithPort(PATH),
+        HttpMethod.POST, requestEntity, ErrorResponse.class);
+
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    assertEquals(1,response.getBody().getMessages().size());
+    assertEquals("Name field can not be null or empty.",response.getBody().getMessages().get(0));
+  }
+
+  @Test
+  public void shouldReturnBadRequestWhenEmailIsEmpty() {
+    setAuthorizationHeaderBasedOn(RoleType.ADMIN);
+
+    when(organizationRepository.findAll()).thenReturn(buildOrganizationStub());
+
+    UpdateOrganizationRequest updateOrganizationRequest = buildRequestPayloadWithEmptyEmail();
+
+    HttpEntity<UpdateOrganizationRequest> requestEntity = new HttpEntity<>(
+        updateOrganizationRequest, headers);
+
+    ResponseEntity<ErrorResponse> response = restTemplate.exchange(createURLWithPort(PATH),
+        HttpMethod.POST, requestEntity, ErrorResponse.class);
+
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    assertEquals(1,response.getBody().getMessages().size());
+    assertEquals("Email field can not be null or empty.",response.getBody().getMessages().get(0));
+  }
+
+  @Test
+  public void shouldReturnBadRequestWhenImageIsEmpty() {
+    setAuthorizationHeaderBasedOn(RoleType.ADMIN);
+
+    when(organizationRepository.findAll()).thenReturn(buildOrganizationStub());
+
+    UpdateOrganizationRequest updateOrganizationRequest = buildRequestPayloadWithEmptyImage();
+
+    HttpEntity<UpdateOrganizationRequest> requestEntity = new HttpEntity<>(
+        updateOrganizationRequest, headers);
+
+    ResponseEntity<ErrorResponse> response = restTemplate.exchange(createURLWithPort(PATH),
+        HttpMethod.POST, requestEntity, ErrorResponse.class);
+
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    assertEquals(1,response.getBody().getMessages().size());
+    assertEquals("Image field can not be null or empty.",response.getBody().getMessages().get(0));
+  }
+
+  @Test
+  public void shouldReturnBadRequestWhenWelcomeTextIsEmpty() {
+    setAuthorizationHeaderBasedOn(RoleType.ADMIN);
+
+    when(organizationRepository.findAll()).thenReturn(buildOrganizationStub());
+
+    UpdateOrganizationRequest updateOrganizationRequest = buildRequestPayloadWithEmptyWelcomeText();
+
+    HttpEntity<UpdateOrganizationRequest> requestEntity = new HttpEntity<>(
+        updateOrganizationRequest, headers);
+
+    ResponseEntity<ErrorResponse> response = restTemplate.exchange(createURLWithPort(PATH),
+        HttpMethod.POST, requestEntity, ErrorResponse.class);
+
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    assertEquals(1,response.getBody().getMessages().size());
+    assertEquals("Welcome text field can not be null or empty.",response.getBody().getMessages().get(0));
+  }
+
   private List<Organization> buildOrganizationStub() {
     List<Organization> list = new ArrayList<>();
     list.add(createOrganizationStub());
