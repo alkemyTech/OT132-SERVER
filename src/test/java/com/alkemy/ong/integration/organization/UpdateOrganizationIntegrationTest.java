@@ -54,16 +54,16 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseIntegrationTe
         updateOrganizationRequest, headers);
 
     ResponseEntity<OrganizationResponse> response = restTemplate.exchange(
-        createURLWithPort(PATH),HttpMethod.POST, requestEntity, OrganizationResponse.class);
+        createURLWithPort(PATH), HttpMethod.POST, requestEntity, OrganizationResponse.class);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
 
     OrganizationResponse organizationResponse = response.getBody();
     assertNotNull(organizationResponse);
-    assertEquals(updateOrganizationRequest.getName(),organizationResponse.getName());
-    assertEquals(updateOrganizationRequest.getEmail(),organizationResponse.getEmail());
-    assertEquals(updateOrganizationRequest.getImage(),organizationResponse.getImage());
-    assertEquals(updateOrganizationRequest.getWelcomeText(),organizationResponse.getWelcomeText());
+    assertEquals(updateOrganizationRequest.getName(), organizationResponse.getName());
+    assertEquals(updateOrganizationRequest.getEmail(), organizationResponse.getEmail());
+    assertEquals(updateOrganizationRequest.getImage(), organizationResponse.getImage());
+    assertEquals(updateOrganizationRequest.getWelcomeText(), organizationResponse.getWelcomeText());
   }
 
   @Test
@@ -81,11 +81,11 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseIntegrationTe
         HttpMethod.POST, requestEntity, ErrorResponse.class);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
-    assertEquals(0,response.getBody().getMessages().size());
+    assertEquals(0, response.getBody().getMessages().size());
   }
 
   @Test
-  public void shouldReturnForbiddenWithNoRole(){
+  public void shouldReturnForbiddenWithNoRole() {
     when(organizationRepository.findAll()).thenReturn(buildOrganizationStub());
 
     UpdateOrganizationRequest updateOrganizationRequest = buildRequestPayload();
@@ -97,7 +97,7 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseIntegrationTe
         HttpMethod.POST, requestEntity, ErrorResponse.class);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
-    assertEquals(0,response.getBody().getMessages().size());
+    assertEquals(0, response.getBody().getMessages().size());
   }
 
   @Test
@@ -115,8 +115,8 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseIntegrationTe
         HttpMethod.POST, requestEntity, ErrorResponse.class);
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(1,response.getBody().getMessages().size());
-    assertEquals("Name field can not be null or empty.",response.getBody().getMessages().get(0));
+    assertEquals(1, response.getBody().getMessages().size());
+    assertEquals("Name field can not be null or empty.", response.getBody().getMessages().get(0));
   }
 
   @Test
@@ -134,8 +134,8 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseIntegrationTe
         HttpMethod.POST, requestEntity, ErrorResponse.class);
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(1,response.getBody().getMessages().size());
-    assertEquals("Email field can not be null or empty.",response.getBody().getMessages().get(0));
+    assertEquals(1, response.getBody().getMessages().size());
+    assertEquals("Email field can not be null or empty.", response.getBody().getMessages().get(0));
   }
 
   @Test
@@ -153,8 +153,8 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseIntegrationTe
         HttpMethod.POST, requestEntity, ErrorResponse.class);
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(1,response.getBody().getMessages().size());
-    assertEquals("Image field can not be null or empty.",response.getBody().getMessages().get(0));
+    assertEquals(1, response.getBody().getMessages().size());
+    assertEquals("Image field can not be null or empty.", response.getBody().getMessages().get(0));
   }
 
   @Test
@@ -172,8 +172,9 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseIntegrationTe
         HttpMethod.POST, requestEntity, ErrorResponse.class);
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(1,response.getBody().getMessages().size());
-    assertEquals("Welcome text field can not be null or empty.",response.getBody().getMessages().get(0));
+    assertEquals(1, response.getBody().getMessages().size());
+    assertEquals("Welcome text field can not be null or empty.",
+        response.getBody().getMessages().get(0));
   }
 
   private List<Organization> buildOrganizationStub() {
