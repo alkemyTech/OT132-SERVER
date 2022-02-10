@@ -7,7 +7,6 @@ import static org.mockito.Mockito.when;
 
 import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.exception.ErrorResponse;
-import com.alkemy.ong.integration.common.AbstractBaseIntegrationTest;
 import com.alkemy.ong.model.entity.Organization;
 import com.alkemy.ong.model.request.UpdateOrganizationRequest;
 import com.alkemy.ong.model.response.OrganizationResponse;
@@ -28,15 +27,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class UpdateOrganizationIntegrationTest extends AbstractBaseIntegrationTest {
+public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationIntegrationTest {
 
-  private static final String PATH = "/organization/public";
-  private static final String NAME = "Somos Mas";
-  private static final String IMAGE = "http://foo.png";
-  private static final String ADDRESS = "Street 123";
-  private static final Integer PHONE = 456;
-  private static final String EMAIL = "foo@gmail.com";
-  private static final String WELCOME_TEXT = "Welcome";
+
 
   @MockBean
   private IOrganizationRepository organizationRepository;
