@@ -223,10 +223,6 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseIntegrationTe
     request.setWelcomeText(welcomeText);
     request.setPhone(PHONE);
     request.setAddress(ADDRESS);
-    request.setAboutUsText("ONG");
-    request.setFacebookUrl("http://linkedin.com");
-    request.setLinkedinUrl("http://facebook.com");
-    request.setInstagramUrl("http://instagram.com");
     return request;
   }
 }
