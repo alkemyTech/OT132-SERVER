@@ -2,10 +2,12 @@ package com.alkemy.ong.controller;
 
 import com.alkemy.ong.common.PaginatedResultsRetrieved;
 import com.alkemy.ong.model.request.CreateCategoryRequest;
+import com.alkemy.ong.model.request.UpdateCategoryRequest;
 import com.alkemy.ong.model.response.CategoryResponse;
 import com.alkemy.ong.model.response.ListCategoriesResponse;
 import com.alkemy.ong.service.abstraction.ICreateCategory;
 import com.alkemy.ong.service.abstraction.IGetCategoryDetails;
+import com.alkemy.ong.service.abstraction.IUpdateCategory;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +37,9 @@ public class CategoryController {
 
   @Autowired
   private PaginatedResultsRetrieved resultsRetrieved;
+
+  @Autowired
+  private IUpdateCategory updateCategory;
 
   @GetMapping
   public ResponseEntity<ListCategoriesResponse> list(Pageable pageable,
@@ -61,5 +67,11 @@ public class CategoryController {
       @Valid @RequestBody CreateCategoryRequest createCategoryRequest) {
     CategoryResponse categoryResponse = createCategory.create(createCategoryRequest);
     return ResponseEntity.status(HttpStatus.CREATED).body(categoryResponse);
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<CategoryResponse> update(@PathVariable("id") long id,
+      @Valid @RequestBody UpdateCategoryRequest updateCategoryRequest) {
+    return ResponseEntity.ok().body(updateCategory.update(id, updateCategoryRequest));
   }
 }
