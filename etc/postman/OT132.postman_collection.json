@@ -30,7 +30,7 @@
 					"response": []
 				},
 				{
-					"name": "Organization Details",
+					"name": "Update Organization Details",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -434,6 +434,45 @@
 						"description": "ROLE ADMIN"
 					},
 					"response": []
+				},
+				{
+					"name": "Get News",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoiYWdvc0BtYWlsLmNvbSIsImlhdCI6MTY0NDQ0MTg5NywiZXhwIjoxNjQ0NDc3ODk3fQ.tnwEUbwHuzu0q0BltD4wsCyfwzcXD_3JytokzqJj18g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/news?page=0&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"news"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -552,6 +591,26 @@
 							]
 						},
 						"description": "ROLE USER AND ADMIN"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Slide by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/slides/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"slides",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -686,100 +745,55 @@
           },
           "response": []
         }
-			]
-		},
-		{
-			"name": "Activity",
-			"item": [
-				{
-					"name": "Post Activity",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\" : \"activity\",\r\n    \"content\" : \"activity content\",\r\n    \"image\" : \"image\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/activities",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"activities"
-							]
-						},
-						"description": "ROLE ADMIN AND USER"
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "contacts",
-			"item": [
-				{
-					"name": "Get Contacts",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/contacts",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"contacts"
-							]
-						},
-						"description": "ROLE ADMIN"
-					},
-					"response": []
-				},
-				{
-					"name": "Post Contacts",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\" : \"Jane\",\r\n    \"phone\" : 110303456,\r\n    \"email\" : \"jane@mail.com\",\r\n    \"message\" : \"Este endpoint funciona\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/contacts",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"contacts"
-							]
-						},
-						"description": "ROLE USER"
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Member",
-			"item": [
-				{
+      ]
+    },
+    {
+      "name": "Activities",
+      "item": [
+        {
+          "name": "New Activity",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNjQzNzQ0ODcwLCJleHAiOjE2NDM3ODA4NzB9.moLZdvNpb5xS2h2Mff7S0wTbzDPJInFB7VKSjnllHRs",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Activity 4\",\r\n    \"content\": \"Content 4\",\r\n    \"image\": \"Image 4\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/activities",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "activities"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Members",
+      "item": [
+        {
 					"name": "Get members",
 					"request": {
 						"method": "GET",
@@ -828,7 +842,63 @@
 					},
 					"response": []
 				}
+      ]
+    },
+		{
+      "name": "Contacts",
+      "item": [
+        {
+					"name": "Post Contacts",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Jane\",\r\n    \"phone\" : 110303456,\r\n    \"email\" : \"jane@mail.com\",\r\n    \"message\" : \"Este endpoint funciona\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/contacts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"contacts"
+							]
+						},
+						"description": "ROLE USER"
+					},
+					"response": []
+				}, 
+				{
+					"name": "Get Contacts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/contacts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"contacts"
+							]
+						},
+						"description": "ROLE ADMIN"
+					},
+					"response": []
+				}
 			]
 		}
-	]
+    
+  ]
+			
 }
