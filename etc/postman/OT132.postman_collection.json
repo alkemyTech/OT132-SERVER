@@ -293,6 +293,45 @@
 						"description": "ROLE ADMIN"
 					},
 					"response": []
+				},
+				{
+					"name": "Update Categories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMkBnbWFpbC5jb20iLCJpYXQiOjE2NDQ0NjUwMjcsImV4cCI6MTY0NDUwMTAyN30.KxQ-7EHlSe1fZaGG4CQuYLGVpPA_NUai4MQhC39h_4U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"nueva categoria\",\r\n    \"description\":\"foo...\",\r\n    \"image\":\"url...\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/categories/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
