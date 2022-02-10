@@ -58,7 +58,9 @@ public class CategoryService implements IGetCategoryDetails, IUpdateCategory {
     category.setName(categoryRequest.getName());
     category.setDescription(categoryRequest.getDescription());
     category.setImage(categoryRequest.getImage());
-    return categoryMapper.map(categoryRepository.save(category));
+    return categoryMapper.map(categoryRepository.save(category), CategoryAttributes.CATEGORY_ID,
+        CategoryAttributes.IMAGE, CategoryAttributes.NAME,
+        CategoryAttributes.DESCRIPTION);
   }
 
   private Category findBy(Long id) {
