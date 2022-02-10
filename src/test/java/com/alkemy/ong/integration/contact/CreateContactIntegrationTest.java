@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 
 import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.exception.ErrorResponse;
+import com.alkemy.ong.integration.common.TestUtils;
 import com.alkemy.ong.model.request.CreateContactRequest;
 import com.alkemy.ong.model.response.ContactResponse;
 import org.junit.Test;
@@ -75,7 +76,7 @@ public class CreateContactIntegrationTest extends AbstractBaseContactIntegration
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
     CreateContactRequest createContactRequest = buildRequestWithEmptyName();
-    createBadRequestAsserts(createRequestAndResponse(createContactRequest),
+    badRequestAsserts(createRequestAndResponse(createContactRequest),
         "Name cannot be empty or null.");
   }
 
@@ -84,7 +85,7 @@ public class CreateContactIntegrationTest extends AbstractBaseContactIntegration
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
     CreateContactRequest createContactRequest = buildRequestWithEmptyPhone();
-    createBadRequestAsserts(createRequestAndResponse(createContactRequest),
+    badRequestAsserts(createRequestAndResponse(createContactRequest),
         "Phone cannot be null.");
   }
 
@@ -93,7 +94,7 @@ public class CreateContactIntegrationTest extends AbstractBaseContactIntegration
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
     CreateContactRequest createContactRequest = buildRequestWithEmptyEmail();
-    createBadRequestAsserts(createRequestAndResponse(createContactRequest),
+    badRequestAsserts(createRequestAndResponse(createContactRequest),
         "Email cannot be empty or null.");
   }
 
@@ -102,7 +103,7 @@ public class CreateContactIntegrationTest extends AbstractBaseContactIntegration
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
     CreateContactRequest createContactRequest = buildRequestWithEmptyMessage();
-    createBadRequestAsserts(createRequestAndResponse(createContactRequest),
+    badRequestAsserts(createRequestAndResponse(createContactRequest),
         "Message cannot be empty or null.");
   }
 
@@ -111,7 +112,7 @@ public class CreateContactIntegrationTest extends AbstractBaseContactIntegration
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
     CreateContactRequest createContactRequest = buildRequestWithMaxSizeName();
-    createBadRequestAsserts(createRequestAndResponse(createContactRequest),
+    badRequestAsserts(createRequestAndResponse(createContactRequest),
         "Name can have between 2 and 70 characters.");
   }
 
@@ -133,11 +134,11 @@ public class CreateContactIntegrationTest extends AbstractBaseContactIntegration
   }
 
   private CreateContactRequest buildRequestWithMaxSizeEmail() {
-    return buildRequestPayLoad(NAME, PHONE, generateRandomString(152), MESSAGE);
+    return buildRequestPayLoad(NAME, PHONE, TestUtils.generateRandomString(152), MESSAGE);
   }
 
   private CreateContactRequest buildRequestWithMaxSizeName() {
-    return buildRequestPayLoad(generateRandomString(71), PHONE, EMAIL, MESSAGE);
+    return buildRequestPayLoad(TestUtils.generateRandomString(71), PHONE, EMAIL, MESSAGE);
   }
 
   private CreateContactRequest buildRequestWithEmptyPhone() {
@@ -184,7 +185,7 @@ public class CreateContactIntegrationTest extends AbstractBaseContactIntegration
             ErrorResponse.class);
   }
 
-  private void createBadRequestAsserts(ResponseEntity<ErrorResponse> response, String message) {
+  private void badRequestAsserts(ResponseEntity<ErrorResponse> response, String message) {
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 
