@@ -1,5 +1,7 @@
 package com.alkemy.ong.integration.organization;
 
+import static org.mockito.Mockito.when;
+
 import com.alkemy.ong.integration.common.AbstractBaseIntegrationTest;
 import com.alkemy.ong.model.entity.Organization;
 import com.alkemy.ong.repository.IOrganizationRepository;
@@ -7,12 +9,18 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.Before;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-public class AbstractBaseOrganizationIntegrationTest extends AbstractBaseIntegrationTest {
+public abstract class AbstractBaseOrganizationIntegrationTest extends AbstractBaseIntegrationTest {
 
   @MockBean
   protected IOrganizationRepository organizationRepository;
+
+  @Before
+  public void checkFindMethod() {
+    when(organizationRepository.findAll()).thenReturn(buildOrganizationStub());
+  }
 
   protected static final String PATH = "/organization/public";
   protected static final String NAME = "Somos Mas";

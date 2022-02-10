@@ -2,7 +2,6 @@ package com.alkemy.ong.integration.organization;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.when;
 
 import com.alkemy.ong.model.response.OrganizationResponse;
 import org.junit.Test;
@@ -19,9 +18,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class GetOrganizationDetailsIntegrationTest extends AbstractBaseOrganizationIntegrationTest {
 
+
+
   @Test
   public void shouldReturnOkWhenAccessedWithoutRole() {
-    when(organizationRepository.findAll()).thenReturn(buildOrganizationStub());
 
     ResponseEntity<OrganizationResponse> response = restTemplate.exchange(
         createURLWithPort(PATH),

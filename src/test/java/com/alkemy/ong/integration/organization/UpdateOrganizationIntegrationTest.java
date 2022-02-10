@@ -10,7 +10,6 @@ import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.model.entity.Organization;
 import com.alkemy.ong.model.request.UpdateOrganizationRequest;
 import com.alkemy.ong.model.response.OrganizationResponse;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,13 +22,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationIntegrationTest {
-
-
-
-  @Before
-  public void checkFindMethod() {
-    when(organizationRepository.findAll()).thenReturn(buildOrganizationStub());
-  }
 
   @Test
   public void shouldUpdateOrganizationWithAdminRole() {
