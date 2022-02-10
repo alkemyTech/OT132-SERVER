@@ -6,12 +6,10 @@ import static org.mockito.Mockito.when;
 
 import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.exception.ErrorResponse;
-import com.alkemy.ong.integration.common.AbstractBaseIntegrationTest;
 import com.alkemy.ong.model.entity.Contact;
 import com.alkemy.ong.model.response.ListContactResponse;
 import com.alkemy.ong.repository.IContactRepository;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,13 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class GetContactDetailsIntegrationTest extends AbstractBaseIntegrationTest {
-
-  private static final String PATH = "/contacts";
-  private static final String NAME = "USS New Jersey";
-  private static final String EMAIL = "njersey@gmail.com";
-  private static final String MESSAGE = "I don't know";
-  private static final int PHONE = 262334445;
+public class GetContactDetailsIntegrationTest extends AbstractBaseContactIntegrationTest {
 
   @MockBean
   private IContactRepository contactRepository;
@@ -40,7 +32,7 @@ public class GetContactDetailsIntegrationTest extends AbstractBaseIntegrationTes
   @Test
   public void shouldReturnOkWithRoleAdmin() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
-    when(contactRepository.findAll()).thenReturn(Collections.emptyList());
+    when(contactRepository.findAll()).thenReturn(buildContactStub());
 
     ResponseEntity<ListContactResponse> response = restTemplate
         .exchange(createURLWithPort(PATH),
@@ -77,6 +69,7 @@ public class GetContactDetailsIntegrationTest extends AbstractBaseIntegrationTes
 
   private Contact createContact() {
     Contact contact = new Contact();
+    contact.setContactId(1L);
     contact.setName(NAME);
     contact.setEmail(EMAIL);
     contact.setPhone(PHONE);
