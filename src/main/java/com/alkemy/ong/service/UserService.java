@@ -6,6 +6,7 @@ import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.UserMapper;
 import com.alkemy.ong.model.entity.User;
 import com.alkemy.ong.model.request.AuthenticationRequest;
+import com.alkemy.ong.model.request.UpdateUserDetailsRequest;
 import com.alkemy.ong.model.response.AuthenticationResponse;
 import com.alkemy.ong.model.response.ListUsersResponse;
 import com.alkemy.ong.model.response.UserResponse;
@@ -13,6 +14,7 @@ import com.alkemy.ong.repository.IUserRepository;
 import com.alkemy.ong.service.abstraction.IDeleteUser;
 import com.alkemy.ong.service.abstraction.IGetUserDetails;
 import com.alkemy.ong.service.abstraction.ILogin;
+import com.alkemy.ong.service.abstraction.IUpdateUserDetails;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,7 +25,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService implements UserDetailsService, IGetUserDetails, ILogin, IDeleteUser {
+public class UserService implements UserDetailsService, IGetUserDetails, ILogin, IDeleteUser,
+    IUpdateUserDetails {
 
   private static final String USER_NOT_FOUND_MESSAGE = "User not found.";
 
@@ -95,4 +98,32 @@ public class UserService implements UserDetailsService, IGetUserDetails, ILogin,
     return listUsersResponse;
   }
 
+  @Override
+  public UserResponse update(UpdateUserDetailsRequest updateUserDetailsRequest, Long userId) {
+    User user = userRepository.findByUserIdAndSoftDeleteFalse(userId);
+
+    if (user == null) {
+      throw new NotFoundException(USER_NOT_FOUND_MESSAGE);
+    }
+
+    if (updateUserDetailsRequest.getFirstName() != null) {
+      user.setFirstName(updateUserDetailsRequest.getFirstName());
+    }
+    if (updateUserDetailsRequest.getLastName() != null) {
+      user.setLastName(updateUserDetailsRequest.getLastName());
+    }
+    if (updateUserDetailsRequest.getEmail() != null) {
+      user.setEmail(updateUserDetailsRequest.getEmail());
+    }
+    if (updateUserDetailsRequest.getPassword() != null) {
+      user.setPassword(updateUserDetailsRequest.getPassword());
+    }
+    if (updateUserDetailsRequest.getPhoto() != null) {
+      user.setLastName(updateUserDetailsRequest.getPhoto());
+    }
+
+    userRepository.save(user);
+
+    return userMapper.map(user);
+  }
 }

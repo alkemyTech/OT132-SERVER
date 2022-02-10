@@ -1,6 +1,7 @@
 package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.model.entity.User;
+import com.alkemy.ong.model.request.UpdateUserDetailsRequest;
 import com.alkemy.ong.model.request.UserRegisterRequest;
 import com.alkemy.ong.model.response.UserResponse;
 import java.util.ArrayList;
