@@ -18,11 +18,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class GetOrganizationDetailsIntegrationTest extends AbstractBaseOrganizationIntegrationTest {
 
-
-
   @Test
   public void shouldReturnOkWhenAccessedWithoutRole() {
-
     ResponseEntity<OrganizationResponse> response = restTemplate.exchange(
         createURLWithPort(PATH),
         HttpMethod.GET,
@@ -38,7 +35,6 @@ public class GetOrganizationDetailsIntegrationTest extends AbstractBaseOrganizat
     assertEquals(IMAGE, responseBody.getImage());
     assertEquals(ADDRESS, responseBody.getAddress());
     assertEquals(PHONE, responseBody.getPhone());
-
   }
 
 }

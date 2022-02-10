@@ -14,14 +14,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 public abstract class AbstractBaseOrganizationIntegrationTest extends AbstractBaseIntegrationTest {
 
-  @MockBean
-  protected IOrganizationRepository organizationRepository;
-
-  @Before
-  public void checkFindMethod() {
-    when(organizationRepository.findAll()).thenReturn(buildOrganizationStub());
-  }
-
   protected static final String PATH = "/organization/public";
   protected static final String NAME = "Somos Mas";
   protected static final String IMAGE = "http://foo.png";
@@ -29,6 +21,14 @@ public abstract class AbstractBaseOrganizationIntegrationTest extends AbstractBa
   protected static final Integer PHONE = 456;
   protected static final String EMAIL = "foo@gmail.com";
   protected static final String WELCOME_TEXT = "Welcome";
+
+  @MockBean
+  protected IOrganizationRepository organizationRepository;
+
+  @Before
+  public void checkFindMethod() {
+    when(organizationRepository.findAll()).thenReturn(buildOrganizationStub());
+  }
 
   protected List<Organization> buildOrganizationStub() {
     List<Organization> organizations = new ArrayList<>();
