@@ -15,5 +15,5 @@ public class ListCategoriesResponse extends PaginationResponse {
 
   @JsonProperty("categories")
   private List<CategoryResponse> categoryResponses;
-  
+
 }

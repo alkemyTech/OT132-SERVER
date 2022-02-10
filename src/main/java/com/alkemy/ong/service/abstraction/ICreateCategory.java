@@ -6,5 +6,5 @@ import com.alkemy.ong.model.response.CategoryResponse;
 public interface ICreateCategory {
 
   CategoryResponse create(CreateCategoryRequest createCategoryRequest);
-    
+
 }

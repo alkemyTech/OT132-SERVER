@@ -55,11 +55,11 @@ public class CategoryService implements IGetCategoryDetails, ICreateCategory, IU
   }
 
   @Override
-  public CategoryResponse update(Long id, UpdateCategoryRequest categoryRequest) {
+  public CategoryResponse update(Long id, UpdateCategoryRequest updateCategoryRequest) {
     Category category = findBy(id);
-    category.setName(categoryRequest.getName());
-    category.setDescription(categoryRequest.getDescription());
-    category.setImage(categoryRequest.getImage());
+    category.setName(updateCategoryRequest.getName());
+    category.setDescription(updateCategoryRequest.getDescription());
+    category.setImage(updateCategoryRequest.getImage());
     return categoryMapper.map(categoryRepository.save(category), CategoryAttributes.CATEGORY_ID,
         CategoryAttributes.IMAGE, CategoryAttributes.NAME,
         CategoryAttributes.DESCRIPTION);

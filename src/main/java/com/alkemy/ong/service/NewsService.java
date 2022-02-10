@@ -56,7 +56,7 @@ public class NewsService implements ICreateNews, IDeleteNews, IGetNewsDetails {
     return buildListResponse(newsResponses, page);
   }
 
-  private ListNewsResponse buildListResponse(List<NewsResponse> newsResponses, Page<News> page) { 
+  private ListNewsResponse buildListResponse(List<NewsResponse> newsResponses, Page<News> page) {
     ListNewsResponse listNewsResponse = new ListNewsResponse();
     listNewsResponse.setNewsResponse(newsResponses);
     listNewsResponse.setPage(page.getNumber());

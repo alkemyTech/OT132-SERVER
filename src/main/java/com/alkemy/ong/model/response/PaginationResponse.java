@@ -10,5 +10,5 @@ public class PaginationResponse {
   private int page;
   private int totalPages;
   private int size;
-    
+
 }

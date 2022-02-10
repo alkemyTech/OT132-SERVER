@@ -11,5 +11,5 @@ public class ListNewsResponse extends PaginationResponse {
 
   @JsonProperty("news")
   private List<NewsResponse> newsResponse;
-  
+
 }

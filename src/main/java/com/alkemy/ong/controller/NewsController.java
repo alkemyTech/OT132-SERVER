@@ -46,14 +46,14 @@ public class NewsController {
   public ResponseEntity<ListNewsResponse> list(Pageable pageable, UriComponentsBuilder uriBuilder,
       HttpServletResponse response) {
     ListNewsResponse listNewsResponse = getNewsDetails.findAll(pageable);
-    
-    resultsRetrieved.addLinkHeaderOnPagedResourceRetrieval(uriBuilder, 
-        response, NEWS_PATH, 
-        listNewsResponse.getPage(), 
-        listNewsResponse.getTotalPages(), 
+
+    resultsRetrieved.addLinkHeaderOnPagedResourceRetrieval(uriBuilder,
+        response, NEWS_PATH,
+        listNewsResponse.getPage(),
+        listNewsResponse.getTotalPages(),
         listNewsResponse.getSize());
-    
-    return ResponseEntity.ok(listNewsResponse);  
+
+    return ResponseEntity.ok(listNewsResponse);
   }
 
   @DeleteMapping("/{id}")
