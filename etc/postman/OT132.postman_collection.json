@@ -398,6 +398,45 @@
             "description": "ROLE USER AND ADMIN"
           },
           "response": []
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNjQ0NTk3NTAzLCJleHAiOjE2NDQ2MzM1MDN9.zwLKEy7qw6K7fAmx2z0y0QqTBqxx1gpr1M6ZKr7E5sw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \r\n    \"lastName\": \"Perez\",\r\n    \"photo\": \"https://www.nikon.es/microsites/digitutors/es_ES/img/sample/function/dslr/thumbnail/picturecontrol_dsc_0768_standard.jpg\"\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users/4",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "4"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
