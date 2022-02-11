@@ -822,6 +822,45 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Get Testimonial",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImV0bHVpdDEyQGdtYWlsLmNvbSIsImlhdCI6MTY0NDYwMjMxOSwiZXhwIjoxNjQ0NjM4MzE5fQ.2qWHqvmozBCH-U6WidxbeNH7RNQc7T5MWhI_LpcI3ps",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/testimonials?page=1&size=10",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "testimonials"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
