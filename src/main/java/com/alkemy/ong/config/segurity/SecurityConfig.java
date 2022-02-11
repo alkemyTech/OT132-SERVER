@@ -22,23 +22,23 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+  private static final String[] SWAGGER_ENDPOINTS = {
+      "/api/docs",
+      "/v2/api-docs",
+      "/swagger-ui/**",
+      "/swagger-resources",
+      "/swagger-resources/**",
+      "/configuration/ui",
+      "/configuration/security",
+      "/swagger-ui.html",
+      "/webjars/**"
+  };
+
   @Autowired
   private UserDetailsService userDetailsService;
 
   @Autowired
   private JwtRequestFilter jwtRequestFilter;
-
-  private static final String[] swaggerEndpoints = {
-    "/api/docs",
-    "/v2/api-docs",
-    "/swagger-ui/**",
-    "/swagger-resources",
-    "/swagger-resources/**",
-    "/configuration/ui",
-    "/configuration/security",
-    "/swagger-ui.html",
-    "/webjars/**"
-  };
 
   @Bean
   public BCryptPasswordEncoder passwordEncoder() {
@@ -73,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .permitAll()
         .antMatchers(HttpMethod.GET, "/auth/me")
         .hasAnyRole(RoleType.USER.name())
-        .antMatchers(swaggerEndpoints)
+        .antMatchers(SWAGGER_ENDPOINTS)
         .permitAll()
         .antMatchers(HttpMethod.GET, "/organization/public")
         .permitAll()
