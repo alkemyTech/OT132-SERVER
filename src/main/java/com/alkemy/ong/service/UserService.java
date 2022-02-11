@@ -119,7 +119,7 @@ public class UserService implements UserDetailsService, IGetUserDetails, ILogin,
       user.setPassword(updateUserDetailsRequest.getPassword());
     }
     if (updateUserDetailsRequest.getPhoto() != null) {
-      user.setLastName(updateUserDetailsRequest.getPhoto());
+      user.setPhoto(updateUserDetailsRequest.getPhoto());
     }
 
     userRepository.save(user);

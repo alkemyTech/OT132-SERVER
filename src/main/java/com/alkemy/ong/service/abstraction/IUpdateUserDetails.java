@@ -5,5 +5,5 @@ import com.alkemy.ong.model.response.UserResponse;
 
 public interface IUpdateUserDetails {
 
-  UserResponse update(UpdateUserDetailsRequest updateUserDetailsRequest, Long userID);
+  UserResponse update(UpdateUserDetailsRequest updateUserDetailsRequest, Long userId);
 }
