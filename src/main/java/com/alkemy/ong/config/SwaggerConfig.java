@@ -18,7 +18,7 @@ public class SwaggerConfig {
   public Docket costumDoket() {
     return new Docket(DocumentationType.SWAGGER_2)
     .select()
-    .apis(RequestHandlerSelectors.any())
+    .apis(RequestHandlerSelectors.basePackage("com.alkemy.ong.controller"))
     .paths(PathSelectors.any())
     .build()
     .apiInfo(apiInfo());
