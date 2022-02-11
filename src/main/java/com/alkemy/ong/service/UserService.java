@@ -122,8 +122,6 @@ public class UserService implements UserDetailsService, IGetUserDetails, ILogin,
       user.setPhoto(updateUserDetailsRequest.getPhoto());
     }
 
-    userRepository.save(user);
-
-    return userMapper.map(user);
+    return userMapper.map(userRepository.save(user));
   }
 }
