@@ -9,6 +9,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -29,9 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private JwtRequestFilter jwtRequestFilter;
 
   private static final String[] swaggerEndpoints = {
-    "/api/docs",
-    "/swagger-ui/",
-    "/v2/api-docs"
+ 
   };
 
   @Bean
@@ -52,6 +51,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   @Override
+  public void configure(WebSecurity webSecurity)throws Exception {
+    webSecurity.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**",
+        "/configuration/security", "/swagger-ui.html", "/webjars/**", "/swagger-ui/**",
+        "/swagger-resources/configuration/ui", "/swagger-ui.html", "/swagger-ui/","/swagger-resources/configuration/security");
+  }
+
+  @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.csrf()
         .disable()
@@ -67,8 +73,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .permitAll()
         .antMatchers(HttpMethod.GET, "/auth/me")
         .hasAnyRole(RoleType.USER.name())
-        .antMatchers(swaggerEndpoints)
-        .permitAll()
+        //.antMatchers(swaggerEndpoints)
+        //.permitAll()
         .antMatchers(HttpMethod.GET, "/organization/public")
         .permitAll()
         .antMatchers(HttpMethod.POST, "/organization/public")
