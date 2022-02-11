@@ -57,7 +57,7 @@ public class TestimonialController {
         listTestimonialResponse.getPage(),
         listTestimonialResponse.getTotalPages(),
         listTestimonialResponse.getSize());
-    
+
     return ResponseEntity.ok().body(listTestimonialResponse);
   }
 
