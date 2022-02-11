@@ -30,7 +30,7 @@ public class NewsController {
   private IDeleteNews deleteNews;
 
   @Autowired
-  private IGetNewsDetails newsDetails;
+  private IGetNewsDetails getNewsDetails;
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Long id) throws NotFoundException {
@@ -51,7 +51,7 @@ public class NewsController {
   @GetMapping("/{id}")
   public ResponseEntity<NewsResponse> getBy(@PathVariable(value = "id") Long id)
       throws NotFoundException {
-    return ResponseEntity.ok().body(newsDetails.getBy(id));
+    return ResponseEntity.ok().body(getNewsDetails.getBy(id));
   }
 
 }

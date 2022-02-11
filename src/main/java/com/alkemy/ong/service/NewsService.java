@@ -2,6 +2,7 @@ package com.alkemy.ong.service;
 
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.NewsMapper;
+import com.alkemy.ong.mapper.attribute.NewsAttributes;
 import com.alkemy.ong.model.entity.Category;
 import com.alkemy.ong.model.entity.News;
 import com.alkemy.ong.model.request.CreateNewsRequest;
@@ -33,7 +34,8 @@ public class NewsService implements ICreateNews, IDeleteNews, IGetNewsDetails {
     News news = newsMapper.map(createNewsRequest);
     news.setSoftDelete(false);
     news.setCategory(categoryRepository.findByNameIgnoreCase("news"));
-    return newsMapper.map(newsRepository.save(news));
+    return newsMapper.map(newsRepository.save(news), NewsAttributes.IMAGE, NewsAttributes.NAME,
+        NewsAttributes.TEXT);
   }
 
   @Override
@@ -54,6 +56,7 @@ public class NewsService implements ICreateNews, IDeleteNews, IGetNewsDetails {
     if (result.isEmpty() || result.get().isSoftDelete()) {
       throw new NotFoundException("News not found");
     }
-    return newsMapper.map(result.get());
+    return newsMapper.map(result.get(), NewsAttributes.IMAGE, NewsAttributes.NAME,
+        NewsAttributes.TEXT, NewsAttributes.CATEGORY_ID);
   }
 }
