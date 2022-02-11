@@ -28,6 +28,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private JwtRequestFilter jwtRequestFilter;
 
+  private static final String[] swaggerEndpoints = {
+    "/api/docs",
+    "/swagger-ui/",
+    "/v2/api-docs"
+  };
+
   @Bean
   public BCryptPasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
@@ -61,6 +67,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .permitAll()
         .antMatchers(HttpMethod.GET, "/auth/me")
         .hasAnyRole(RoleType.USER.name())
+        .antMatchers(swaggerEndpoints)
+        .permitAll()
         .antMatchers(HttpMethod.GET, "/organization/public")
         .permitAll()
         .antMatchers(HttpMethod.POST, "/organization/public")
