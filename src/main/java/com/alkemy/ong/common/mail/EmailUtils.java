@@ -8,6 +8,7 @@ import com.sendgrid.SendGrid;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
+import com.sendgrid.helpers.mail.objects.Personalization;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -23,12 +24,11 @@ public class EmailUtils {
 
   public void send(IMail mail) throws ExternalServiceException {
     try {
-      Mail sendgridMail = new Mail();
       Content content = new Content();
-
       content.setType(mail.getContent().getContentType());
       content.setValue(mail.getContent().getBody());
 
+      Mail sendgridMail = new Mail();
       sendgridMail.setSubject(mail.getSubject());
       sendgridMail.setFrom(new Email(from));
       sendgridMail.setReplyTo(new Email(mail.getTo()));
@@ -36,7 +36,7 @@ public class EmailUtils {
 
       Request request = new Request();
       request.setMethod(Method.POST);
-      request.setEndpoint("sendgridMail/send");
+      request.setEndpoint("mail/send");
       request.setBody(sendgridMail.build());
 
       SendGrid sendGrid = new SendGrid(apiKey);

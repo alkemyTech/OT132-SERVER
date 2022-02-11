@@ -51,8 +51,14 @@ public class RegisterService implements IRegisterUser {
         passwordEncoder.encode(userRegisterRequest.getPassword()));
     user.setRoles(List.of(roleRepository.findByName(RoleType.USER.getFullRoleName())));
     UserResponse userResponse = userMapper.map(userRepository.save(user));
+    Organization organization = organizationRepository.findAll().get(0);
+
+    ContactUs contactUs = new ContactUs(organization.getName(), organization.getAddress(),
+        organization.getPhone());
+    RegisterEmailTemplate template = new RegisterEmailTemplate(contactUs,
+        userRegisterRequest.getEmail());
     try {
-      emailUtils.send(buildTemplate(userRegisterRequest));
+      emailUtils.send(template);
     } catch (ExternalServiceException e) {
       log.error(e.getMessage());
     }
@@ -60,10 +66,4 @@ public class RegisterService implements IRegisterUser {
     return userResponse;
   }
 
-  private RegisterEmailTemplate buildTemplate(UserRegisterRequest userRegisterRequest) {
-    Organization organization = organizationRepository.findAll().get(0);
-    ContactUs contactUs = new ContactUs(organization.getName(), organization.getAddress(),
-        organization.getPhone());
-    return new RegisterEmailTemplate(contactUs, userRegisterRequest.getEmail());
-  }
 }
