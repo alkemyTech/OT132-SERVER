@@ -1,5 +1,6 @@
 package com.alkemy.ong.controller;
 
+import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.exception.InvalidCredentialsException;
 import com.alkemy.ong.exception.UserAlreadyExistException;
 import com.alkemy.ong.model.request.AuthenticationRequest;
@@ -9,6 +10,9 @@ import com.alkemy.ong.model.response.UserResponse;
 import com.alkemy.ong.service.abstraction.IGetUserDetails;
 import com.alkemy.ong.service.abstraction.ILogin;
 import com.alkemy.ong.service.abstraction.IRegisterUser;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.security.Principal;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +38,15 @@ public class AuthenticationController {
   private IGetUserDetails getUserDetails;
 
   @PostMapping("/login")
+  @ApiOperation(value = "Log a new user to the API", produces = "application/json")
+  @ApiResponses(value = {
+      @ApiResponse(code = 200,
+          message = "User logged in",
+          response = AuthenticationResponse.class),
+      @ApiResponse(code = 403,
+          message = "Invalid",
+          response = ErrorResponse.class)
+  })
   public ResponseEntity<AuthenticationResponse> login(
       @RequestBody @Valid AuthenticationRequest authenticationRequest)
       throws InvalidCredentialsException {
@@ -44,6 +57,7 @@ public class AuthenticationController {
   public ResponseEntity<UserResponse> register(
       @RequestBody @Valid UserRegisterRequest userRegisterRequest)
       throws UserAlreadyExistException {
+
     UserResponse response = registerUser.register(userRegisterRequest);
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
