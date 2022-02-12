@@ -85,7 +85,7 @@ public class AuthenticationController {
   @ApiOperation(value = "Get my user details", produces = "application/json")
   @ApiResponses(value = {
       @ApiResponse(code = 200,
-          message = "OK",
+          message = "User Details",
           response = UserResponse.class),
       @ApiResponse(code = 500,
           message = "Bad credentials.",
