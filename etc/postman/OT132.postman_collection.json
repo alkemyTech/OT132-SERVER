@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "b6a16ccc-a4bf-45fa-a997-9f9305c25982",
+    "_postman_id": "e9d48048-071f-40f9-a411-0c9f8f6284c2",
     "name": "OT132",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
@@ -24,52 +24,29 @@
                 "organization",
                 "public"
               ]
-            }
+            },
+            "description": "PUBLIC ENDPOINT"
           },
           "response": []
-        }
-      ]
-    },
-    {
-      "name": "Users",
-      "item": [
+        },
         {
-          "name": "All Users",
+          "name": "Update Organization Details",
           "request": {
             "auth": {
               "type": "bearer",
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDM4MzE3OTQsImV4cCI6MTY0Mzg2Nzc5NH0.kPzoj18WOyBLNveX3-n-eTGjq2UvEpXRrm9-UQY8yE0",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDQzMzI5NDgsImV4cCI6MTY0NDM2ODk0OH0.aQMzy_-wVe93XtEs_qAMAX6DQ6Yu-GB_toSYyXwpYvk",
                   "type": "string"
                 }
               ]
             },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/users",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "users"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Authentication Login",
-          "request": {
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\":\"admin1@gmail.com\",\r\n    \"password\":\"123456\"\r\n}",
+              "raw": "{\r\n    \"name\" : \"Somos Más\",\r\n    \"image\" : \"http://foo.png\",\r\n    \"email\" : \"foo@gmail.com\",\r\n    \"welcomeText\" : \"WELCOME!\",\r\n    \"address\" : \"calle falsa 123\",\r\n    \"phone\": \"3456\",\r\n    \"aboutUsText\":\"ONG\",\r\n    \"facebookUrl\" : \"http://linkedin.com\",\r\n    \"linkedinUrl\" : \"http://facebook.com\",\r\n    \"instagramUrl\" : \"http://instagram.com\"\r\n}  ",
               "options": {
                 "raw": {
                   "language": "json"
@@ -77,28 +54,34 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/auth/login",
+              "raw": "http://localhost:8080/organization/public",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "auth",
-                "login"
+                "organization",
+                "public"
               ]
-            }
+            },
+            "description": "ROLE USER"
           },
           "response": []
-        },
+        }
+      ]
+    },
+    {
+      "name": "Registro y login",
+      "item": [
         {
-          "name": "Authentication Register",
+          "name": "Post Register",
           "request": {
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"firstName\":\"User5\",\r\n    \"lastName\":\"User5\",\r\n    \"email\":\"user5@gmail.com\",\r\n    \"password\":\"0983123701\"\r\n}",
+              "raw": " {\r\n    \"firstName\" : \"Jane\",\r\n    \"lastName\" : \"Doe\",\r\n    \"email\" : \"jane@mail.com\",\r\n    \"password\" : \"Password1!\"\r\n }",
               "options": {
                 "raw": {
                   "language": "json"
@@ -116,92 +99,19 @@
                 "auth",
                 "register"
               ]
-            }
+            },
+            "description": "PUBLIC ENDPOINT"
           },
           "response": []
         },
         {
-          "name": "Remove User",
+          "name": "Post Login",
           "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDM5MTgyMDIsImV4cCI6MTY0Mzk1NDIwMn0.1EXnQYpHkPS-s-jflItbxb4L2829FAzH9lA9BxdfdqU",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/users/15",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "users",
-                "15"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Contacts",
-      "item": [
-        {
-          "name": "All Contacts",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDM3NDQ3NzAsImV4cCI6MTY0Mzc4MDc3MH0.yEhagDVGB8C8PesWTa2B4W2QHch3gTDsPgbb1GzWOYU",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/contacts",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "contacts"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "New Contact",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNjQzNzQ0ODcwLCJleHAiOjE2NDM3ODA4NzB9.moLZdvNpb5xS2h2Mff7S0wTbzDPJInFB7VKSjnllHRs",
-                  "type": "string"
-                }
-              ]
-            },
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\" : \"Contact#5\",\r\n    \"phone\" : 3435,\r\n    \"email\" : \"email1@mail.com\",\r\n    \"message\" : \"I'm a message #4\"\r\n}",
+              "raw": "{\r\n    \"email\" : \"admin1@gmail.com\",\r\n    \"password\" : \"123456\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -209,14 +119,215 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/contacts",
+              "raw": "http://localhost:8080/auth/login",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "contacts"
+                "auth",
+                "login"
+              ]
+            },
+            "description": "PUBLIC ENDPOINT"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Get Logged User Details",
+      "item": [
+        {
+          "name": "Get User Details",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoiYWdvc0BtYWlsLmNvbSIsImlhdCI6MTY0NDM0MjA1OSwiZXhwIjoxNjQ0Mzc4MDU5fQ.rDR8TTzajpKSQkHMknffFZFV8kEOTPz1qyA8uX1PW7M",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoiamFuZUBtYWlsLmNvbSIsImlhdCI6MTY0MzgxNDUwNCwiZXhwIjoxNjQzODUwNTA0fQ.1cskcKixdtv_-YlFznFi4GfHTOeIi7db83NGsvihZrM",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/auth/me",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "auth",
+                "me"
+              ]
+            },
+            "description": "ROLE USER"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Post Categories",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\" : \"category\",\r\n    \"description\" : \"description\",\r\n    \"image\" : \"image\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/categories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "categories"
+              ]
+            },
+            "description": "ROLE ADMIN"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Categories",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDQzMjk4MDEsImV4cCI6MTY0NDM2NTgwMX0.EuPzWhkQr87lraiTCtgm5Itgme2rNO768DcSgqFuAgU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/categories?page=0&size=10",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "categories"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "ROLE ADMIN AND USER"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Categories ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDQzMjk4MDEsImV4cCI6MTY0NDM2NTgwMX0.EuPzWhkQr87lraiTCtgm5Itgme2rNO768DcSgqFuAgU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/categories/5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "categories",
+                "5"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0",
+                  "disabled": true
+                },
+                {
+                  "key": "size",
+                  "value": "10",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "ROLE ADMIN"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Categories",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMkBnbWFpbC5jb20iLCJpYXQiOjE2NDQ0NjUwMjcsImV4cCI6MTY0NDUwMTAyN30.KxQ-7EHlSe1fZaGG4CQuYLGVpPA_NUai4MQhC39h_4U",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\":\"nueva categoria\",\r\n    \"description\":\"foo...\",\r\n    \"image\":\"url...\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/categories/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "categories",
+                "1"
               ]
             }
           },
@@ -225,17 +336,122 @@
       ]
     },
     {
-      "name": "Testimonials",
+      "name": "User",
       "item": [
         {
-          "name": "New Testimonial",
+          "name": "GET Users",
           "request": {
             "auth": {
               "type": "bearer",
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNjQzNzQ0ODcwLCJleHAiOjE2NDM3ODA4NzB9.moLZdvNpb5xS2h2Mff7S0wTbzDPJInFB7VKSjnllHRs",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDQzMjk4MDEsImV4cCI6MTY0NDM2NTgwMX0.EuPzWhkQr87lraiTCtgm5Itgme2rNO768DcSgqFuAgU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users"
+              ]
+            },
+            "description": "ROLE ADMIN"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDQxODg4MzcsImV4cCI6MTY0NDIyNDgzN30.uixzB0-K4dKdMUThfLlHWD0rdJQgK1L70LsUz3lEsOE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/4",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "4"
+              ]
+            },
+            "description": "ROLE USER AND ADMIN"
+          },
+          "response": []
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNjQ0NTk3NTAzLCJleHAiOjE2NDQ2MzM1MDN9.zwLKEy7qw6K7fAmx2z0y0QqTBqxx1gpr1M6ZKr7E5sw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \r\n    \"lastName\": \"Perez\",\r\n    \"photo\": \"https://www.nikon.es/microsites/digitutors/es_ES/img/sample/function/dslr/thumbnail/picturecontrol_dsc_0768_standard.jpg\"\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users/4",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "4"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "News",
+      "item": [
+        {
+          "name": "Post News",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDQzMjk4MDEsImV4cCI6MTY0NDM2NTgwMX0.EuPzWhkQr87lraiTCtgm5Itgme2rNO768DcSgqFuAgU",
                   "type": "string"
                 }
               ]
@@ -244,7 +460,288 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\": \"Testimonial\",\r\n    \"image\":\"Image\",\r\n    \"content\": \"Content\"\r\n}",
+              "raw": "{\r\n    \"name\" : \"news title 01\",\r\n    \"text\" : \"this is a text\",\r\n    \"image\" : \"image http link\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/news",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "news"
+              ]
+            },
+            "description": "ROLE ADMIN"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete News",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDQzMjk4MDEsImV4cCI6MTY0NDM2NTgwMX0.EuPzWhkQr87lraiTCtgm5Itgme2rNO768DcSgqFuAgU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/news/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "news",
+                "2"
+              ]
+            },
+            "description": "ROLE ADMIN"
+          },
+          "response": []
+        },
+        {
+          "name": "Get News",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoiYWdvc0BtYWlsLmNvbSIsImlhdCI6MTY0NDQ0MTg5NywiZXhwIjoxNjQ0NDc3ODk3fQ.tnwEUbwHuzu0q0BltD4wsCyfwzcXD_3JytokzqJj18g",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/news?page=0&size=10",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "news"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Comments",
+      "item": [
+        {
+          "name": "Get Comments",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDQzMjk4MDEsImV4cCI6MTY0NDM2NTgwMX0.EuPzWhkQr87lraiTCtgm5Itgme2rNO768DcSgqFuAgU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/comments",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "comments"
+              ]
+            },
+            "description": "ROLE USER AND ADMIN"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Slide",
+      "item": [
+        {
+          "name": "Post Slides",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDQzMjk4MDEsImV4cCI6MTY0NDM2NTgwMX0.EuPzWhkQr87lraiTCtgm5Itgme2rNO768DcSgqFuAgU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-file-name",
+                "value": "sun.jpeg",
+                "type": "text"
+              },
+              {
+                "key": "x-content-type",
+                "value": "image/jpeg",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "\r\n   {\r\n    \"fileEncodeBase64\": \"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\"\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/slides",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "slides"
+              ]
+            },
+            "description": "ROLE ADMIN"
+          },
+          "response": []
+        },
+        {
+          "name": "GET Slides",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDQzMjk4MDEsImV4cCI6MTY0NDM2NTgwMX0.EuPzWhkQr87lraiTCtgm5Itgme2rNO768DcSgqFuAgU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/slides",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "slides"
+              ]
+            },
+            "description": "ROLE USER AND ADMIN"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Slide by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/slides/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "slides",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete slides",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDQzMjk4MDEsImV4cCI6MTY0NDM2NTgwMX0.EuPzWhkQr87lraiTCtgm5Itgme2rNO768DcSgqFuAgU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/slides/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "slides",
+                "2"
+              ]
+            },
+            "description": "ROLE ADMIN"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Testimonial",
+      "item": [
+        {
+          "name": "Post Testimonial",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer ",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"testimonial1\",\r\n    \"image\": \"http://google.com.ar\",\r\n    \"content\": \"google page\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -261,37 +758,29 @@
               "path": [
                 "testimonials"
               ]
-            }
+            },
+            "description": "ROLE ADMIN AND USER"
           },
           "response": []
         },
         {
-          "name": "Remove Testimonial",
+          "name": "Delete Testimonial",
           "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImV0bHVpdDEyQGdtYWlsLmNvbSIsImlhdCI6MTY0NDM1MzA5NSwiZXhwIjoxNjQ0Mzg5MDk1fQ.vr1W5NLWsWJ-F1R9rlTJfOMXZX2eWGVVjtYUyDkQLLQ",
-                  "type": "string"
-                }
-              ]
-            },
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/testimonials/1",
+              "raw": "http://localhost:8080/testimonial/1",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "testimonials",
+                "testimonial",
                 "1"
               ]
-            }
+            },
+            "description": "ROLE ADMIN AND USER"
           },
           "response": []
         },
@@ -333,111 +822,41 @@
             }
           },
           "response": []
-        }
-      ]
-    },
-    {
-      "name": "Slides",
-      "item": [
-        {
-          "name": "All Slides",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDM4MDgwMjEsImV4cCI6MTY0Mzg0NDAyMX0.Hn8qnFdn4RNagoN6RW1iw2SABhTHkbBVwW7Zcwo8Czc",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": ""
-            },
-            "url": {
-              "raw": "http://localhost:8080/slides",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "slides"
-              ]
-            }
-          },
-          "response": []
         },
         {
-          "name": "New Slide",
+          "name": "Get Testimonial",
           "request": {
             "auth": {
               "type": "bearer",
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDM4ODQyMTQsImV4cCI6MTY0MzkyMDIxNH0.Vl71skrpt0UJoRgHbi_i749vYw8JPzOrAgBn3t7NtdU",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImV0bHVpdDEyQGdtYWlsLmNvbSIsImlhdCI6MTY0NDYwMjMxOSwiZXhwIjoxNjQ0NjM4MzE5fQ.2qWHqvmozBCH-U6WidxbeNH7RNQc7T5MWhI_LpcI3ps",
                   "type": "string"
                 }
               ]
             },
-            "method": "POST",
-            "header": [
-              {
-                "key": "x-file-name",
-                "value": "sun1.txt",
-                "type": "text"
-              },
-              {
-                "key": "x-content-type",
-                "value": "\"image/jpeg\"",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"fileEncodeBase64\": \"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\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:8080/slides",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "slides"
-              ]
-            }
-          },
-          "response": []
-        },{
-          "name": "By ID",
-          "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/slides/1",
+              "raw": "http://localhost:8080/testimonials?page=1&size=10",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "slides",
-                "1"
+                "testimonials"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
               ]
             }
           },
@@ -489,55 +908,11 @@
       ]
     },
     {
-      "name": "Categories",
-      "item": [
-        {
-          "name": "All Categories",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNjQzNzQ0ODcwLCJleHAiOjE2NDM3ODA4NzB9.moLZdvNpb5xS2h2Mff7S0wTbzDPJInFB7VKSjnllHRs",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/categories",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "categories"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
       "name": "Members",
       "item": [
         {
-          "name": "All Members",
+          "name": "Get members",
           "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDM3NDQ3NzAsImV4cCI6MTY0Mzc4MDc3MH0.yEhagDVGB8C8PesWTa2B4W2QHch3gTDsPgbb1GzWOYU",
-                  "type": "string"
-                }
-              ]
-            },
             "method": "GET",
             "header": [],
             "url": {
@@ -550,28 +925,19 @@
               "path": [
                 "members"
               ]
-            }
+            },
+            "description": "ROLE ADMIN"
           },
           "response": []
         },
         {
-          "name": "New Member",
+          "name": "Post Member",
           "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNjQzNzQ0ODcwLCJleHAiOjE2NDM3ODA4NzB9.moLZdvNpb5xS2h2Mff7S0wTbzDPJInFB7VKSjnllHRs",
-                  "type": "string"
-                }
-              ]
-            },
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\":\"Member\",\r\n    \"facebookUrl\":\"Facebook Url 5\",\r\n    \"instagramUrl\":\"Instagram Url 5\",\r\n    \"linkedinUrl\":\"Linkedin Url 5\",\r\n    \"image\":\"Image 7\",\r\n    \"description\":\"Description\"\r\n}",
+              "raw": "{\r\n    \"name\" : \"name\",\r\n    \"facebookUrl\" : \"facebookUrl\",\r\n    \"instagramUrl\"  : \"instagramUrl\",\r\n    \"linkedinUrl\" : \"linkedinUrl\",\r\n    \"image\" : \"image\",\r\n    \"description\" : \"description\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -588,23 +954,24 @@
               "path": [
                 "members"
               ]
-            }
+            },
+            "description": "ROLE USER"
           },
           "response": []
         }
       ]
     },
     {
-      "name": "News",
+      "name": "Contacts",
       "item": [
         {
-          "name": "News",
+          "name": "Post Contacts",
           "request": {
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\":\"Generic Title\",\r\n    \"text\": \"Generic text.\",\r\n    \"image\":\"http://foourl.com/img\"\r\n\r\n}",
+              "raw": "{\r\n    \"name\" : \"Jane\",\r\n    \"phone\" : 110303456,\r\n    \"email\" : \"jane@mail.com\",\r\n    \"message\" : \"Este endpoint funciona\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -612,46 +979,37 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/news",
+              "raw": "http://localhost:8080/contacts",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "news"
+                "contacts"
               ]
-            }
+            },
+            "description": "ROLE USER"
           },
           "response": []
         },
         {
-          "name": "Remove News",
+          "name": "Get Contacts",
           "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDM5OTU2MzQsImV4cCI6MTY0NDAzMTYzNH0.hJQYIBEW1dplX5HgHc0bCne798AA9OWE4O_vo6i7taQ",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "DELETE",
+            "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/news/4",
+              "raw": "http://localhost:8080/contacts",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "news",
-                "4"
+                "contacts"
               ]
-            }
+            },
+            "description": "ROLE ADMIN"
           },
           "response": []
         }

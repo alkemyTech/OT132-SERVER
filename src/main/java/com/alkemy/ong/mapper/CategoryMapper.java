@@ -2,6 +2,7 @@ package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.mapper.attribute.CategoryAttributes;
 import com.alkemy.ong.model.entity.Category;
+import com.alkemy.ong.model.request.CreateCategoryRequest;
 import com.alkemy.ong.model.response.CategoryResponse;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -29,8 +30,7 @@ public class CategoryMapper {
           break;
         default:
           throw new UnsupportedOperationException(
-              MessageFormat.format("Category attribute: {0} is unsupported",
-                  categoryAttribute));
+              MessageFormat.format("Category attribute: {0} is unsupported", categoryAttribute));
       }
     }
     return categoryResponse;
@@ -44,4 +44,11 @@ public class CategoryMapper {
     return categoryResponses;
   }
 
+  public Category map(CreateCategoryRequest createCategoryRequest) {
+    Category category = new Category();
+    category.setName(createCategoryRequest.getName());
+    category.setDescription(createCategoryRequest.getDescription());
+    category.setImage(createCategoryRequest.getImage());
+    return category;
+  }
 }

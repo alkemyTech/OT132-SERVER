@@ -1,13 +1,17 @@
 package com.alkemy.ong.controller;
 
+import com.alkemy.ong.common.PaginatedResultsRetrieved;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.model.request.CreateNewsRequest;
+import com.alkemy.ong.model.response.ListNewsResponse;
 import com.alkemy.ong.model.response.NewsResponse;
 import com.alkemy.ong.service.abstraction.ICreateNews;
 import com.alkemy.ong.service.abstraction.IDeleteNews;
 import com.alkemy.ong.service.abstraction.IGetNewsDetails;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,10 +22,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("news")
 public class NewsController {
+
+  private static final String NEWS_PATH = "/news";
 
   @Autowired
   private ICreateNews createNews;
@@ -31,6 +38,23 @@ public class NewsController {
 
   @Autowired
   private IGetNewsDetails getNewsDetails;
+
+  @Autowired
+  private PaginatedResultsRetrieved resultsRetrieved;
+
+  @GetMapping
+  public ResponseEntity<ListNewsResponse> list(Pageable pageable, UriComponentsBuilder uriBuilder,
+      HttpServletResponse response) {
+    ListNewsResponse listNewsResponse = getNewsDetails.findAll(pageable);
+
+    resultsRetrieved.addLinkHeaderOnPagedResourceRetrieval(uriBuilder,
+        response, NEWS_PATH,
+        listNewsResponse.getPage(),
+        listNewsResponse.getTotalPages(),
+        listNewsResponse.getSize());
+
+    return ResponseEntity.ok(listNewsResponse);
+  }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Long id) throws NotFoundException {
