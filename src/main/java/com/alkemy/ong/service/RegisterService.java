@@ -51,8 +51,8 @@ public class RegisterService implements IRegisterUser {
         passwordEncoder.encode(userRegisterRequest.getPassword()));
     user.setRoles(List.of(roleRepository.findByName(RoleType.USER.getFullRoleName())));
     UserResponse userResponse = userMapper.map(userRepository.save(user));
-    Organization organization = organizationRepository.findAll().get(0);
 
+    Organization organization = organizationRepository.findAll().get(0);
     ContactUs contactUs = new ContactUs(organization.getName(), organization.getAddress(),
         organization.getPhone());
     RegisterEmailTemplate template = new RegisterEmailTemplate(contactUs,

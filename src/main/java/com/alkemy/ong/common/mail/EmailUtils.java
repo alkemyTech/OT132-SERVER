@@ -28,16 +28,10 @@ public class EmailUtils {
       content.setType(mail.getContent().getContentType());
       content.setValue(mail.getContent().getBody());
 
-      Personalization personalization = new Personalization();
-      personalization.setFrom(new Email(from));
-      personalization.setSubject(mail.getSubject());
-      personalization.addTo(new Email(mail.getTo()));
-
       Mail sendgridMail = new Mail();
       sendgridMail.setSubject(mail.getSubject());
       sendgridMail.setFrom(new Email(from));
       sendgridMail.setReplyTo(new Email(mail.getTo()));
-      sendgridMail.addPersonalization(personalization);
       sendgridMail.addContent(content);
 
       Request request = new Request();
