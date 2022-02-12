@@ -12,8 +12,8 @@ import com.alkemy.ong.repository.INewsRepository;
 import com.alkemy.ong.service.abstraction.ICreateNews;
 import com.alkemy.ong.service.abstraction.IDeleteNews;
 import com.alkemy.ong.service.abstraction.IGetNewsDetails;
-import java.util.Optional;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -60,7 +60,9 @@ public class NewsService implements ICreateNews, IDeleteNews, IGetNewsDetails {
     }
     return newsMapper.map(result.get(), NewsAttributes.IMAGE, NewsAttributes.NAME,
         NewsAttributes.TEXT, NewsAttributes.CATEGORY_ID);
+  }
 
+  @Override
   public ListNewsResponse findAll(Pageable pageable) {
     Page<News> page = newsRepository.findBySoftDeleteFalseOrderByTimestampDesc(pageable);
     List<NewsResponse> newsResponses = newsMapper.map(page.getContent());
