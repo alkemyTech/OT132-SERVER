@@ -398,6 +398,45 @@
             "description": "ROLE USER AND ADMIN"
           },
           "response": []
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNjQ0NTk3NTAzLCJleHAiOjE2NDQ2MzM1MDN9.zwLKEy7qw6K7fAmx2z0y0QqTBqxx1gpr1M6ZKr7E5sw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \r\n    \"lastName\": \"Perez\",\r\n    \"photo\": \"https://www.nikon.es/microsites/digitutors/es_ES/img/sample/function/dslr/thumbnail/picturecontrol_dsc_0768_standard.jpg\"\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users/4",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "4"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -779,6 +818,45 @@
               "path": [
                 "testimonials",
                 "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Testimonial",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImV0bHVpdDEyQGdtYWlsLmNvbSIsImlhdCI6MTY0NDYwMjMxOSwiZXhwIjoxNjQ0NjM4MzE5fQ.2qWHqvmozBCH-U6WidxbeNH7RNQc7T5MWhI_LpcI3ps",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/testimonials?page=1&size=10",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "testimonials"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
               ]
             }
           },
