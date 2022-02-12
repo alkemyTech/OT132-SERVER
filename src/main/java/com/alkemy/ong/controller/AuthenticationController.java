@@ -10,6 +10,7 @@ import com.alkemy.ong.model.response.UserResponse;
 import com.alkemy.ong.service.abstraction.IGetUserDetails;
 import com.alkemy.ong.service.abstraction.ILogin;
 import com.alkemy.ong.service.abstraction.IRegisterUser;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -22,10 +23,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("auth")
+@Api(tags = "Authentication Endpoints",value = "AuthenticationEndpoints")
 public class AuthenticationController {
 
   @Autowired
@@ -44,7 +47,10 @@ public class AuthenticationController {
           message = "User logged in",
           response = AuthenticationResponse.class),
       @ApiResponse(code = 403,
-          message = "Invalid",
+          message = "Forbidden.",
+          response = ErrorResponse.class),
+      @ApiResponse(code = 400,
+          message = "Bad Request.",
           response = ErrorResponse.class)
   })
   public ResponseEntity<AuthenticationResponse> login(
@@ -54,6 +60,19 @@ public class AuthenticationController {
   }
 
   @PostMapping("/register")
+  @ResponseStatus(HttpStatus.CREATED)
+  @ApiOperation(value = "Register an user and get the bearer token", produces = "application/json")
+  @ApiResponses(value = {
+      @ApiResponse(code = 201,
+          message = "User register successfully",
+          response = AuthenticationResponse.class),
+      @ApiResponse(code = 403,
+          message = "Forbidden.",
+          response = ErrorResponse.class),
+      @ApiResponse(code = 400,
+          message = "Bad request.",
+          response = ErrorResponse.class)
+  })
   public ResponseEntity<UserResponse> register(
       @RequestBody @Valid UserRegisterRequest userRegisterRequest)
       throws UserAlreadyExistException {
@@ -63,6 +82,18 @@ public class AuthenticationController {
   }
 
   @GetMapping("/me")
+  @ApiOperation(value = "Get my user details", produces = "application/json")
+  @ApiResponses(value = {
+      @ApiResponse(code = 200,
+          message = "OK",
+          response = UserResponse.class),
+      @ApiResponse(code = 500,
+          message = "Bad credentials.",
+          response = ErrorResponse.class),
+      @ApiResponse(code = 400,
+          message = "Bad request.",
+          response = ErrorResponse.class)
+  })
   public ResponseEntity<UserResponse> getUserDetails(Principal principal) {
     return ResponseEntity.ok(getUserDetails.findBy(principal.getName()));
   }
