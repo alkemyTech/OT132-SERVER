@@ -3,6 +3,8 @@ package com.alkemy.ong.mapper;
 import com.alkemy.ong.model.entity.News;
 import com.alkemy.ong.model.request.CreateNewsRequest;
 import com.alkemy.ong.model.response.NewsResponse;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -24,4 +26,11 @@ public class NewsMapper {
     return news;
   }
 
+  public List<NewsResponse> map(List<News> newsCollection) {
+    List<NewsResponse> newsResponses = new ArrayList<>(newsCollection.size());
+    for (News news : newsCollection) {
+      newsResponses.add(map(news));
+    }
+    return newsResponses;
+  }
 }
