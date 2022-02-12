@@ -4,10 +4,14 @@ import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.CategoryMapper;
 import com.alkemy.ong.mapper.attribute.CategoryAttributes;
 import com.alkemy.ong.model.entity.Category;
+import com.alkemy.ong.model.request.CreateCategoryRequest;
+import com.alkemy.ong.model.request.UpdateCategoryRequest;
 import com.alkemy.ong.model.response.CategoryResponse;
 import com.alkemy.ong.model.response.ListCategoriesResponse;
 import com.alkemy.ong.repository.ICategoryRepository;
+import com.alkemy.ong.service.abstraction.ICreateCategory;
 import com.alkemy.ong.service.abstraction.IGetCategoryDetails;
+import com.alkemy.ong.service.abstraction.IUpdateCategory;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +20,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CategoryService implements IGetCategoryDetails {
+public class CategoryService implements IGetCategoryDetails, ICreateCategory, IUpdateCategory {
+
 
   @Autowired
   private CategoryMapper categoryMapper;
@@ -43,12 +48,37 @@ public class CategoryService implements IGetCategoryDetails {
 
   @Override
   public CategoryResponse getBy(Long id) {
+    Category category = findBy(id);
+    return categoryMapper.map(category,
+        CategoryAttributes.CATEGORY_ID, CategoryAttributes.IMAGE, CategoryAttributes.NAME,
+        CategoryAttributes.DESCRIPTION);
+  }
+
+  @Override
+  public CategoryResponse update(Long id, UpdateCategoryRequest updateCategoryRequest) {
+    Category category = findBy(id);
+    category.setName(updateCategoryRequest.getName());
+    category.setDescription(updateCategoryRequest.getDescription());
+    category.setImage(updateCategoryRequest.getImage());
+    return categoryMapper.map(categoryRepository.save(category), CategoryAttributes.CATEGORY_ID,
+        CategoryAttributes.IMAGE, CategoryAttributes.NAME,
+        CategoryAttributes.DESCRIPTION);
+  }
+
+  private Category findBy(Long id) {
     Optional<Category> result = categoryRepository.findById(id);
     if (result.isEmpty() || result.get().isSoftDelete()) {
       throw new NotFoundException("Category could not be found.");
     }
-    return categoryMapper.map(result.get(),
-        CategoryAttributes.CATEGORY_ID, CategoryAttributes.IMAGE, CategoryAttributes.NAME,
-        CategoryAttributes.DESCRIPTION);
+    return result.get();
+  }
+
+  @Override
+  public CategoryResponse create(CreateCategoryRequest createCategoryRequest) {
+    Category category = categoryMapper.map(createCategoryRequest);
+    category.setSoftDelete(false);
+    categoryRepository.save(category);
+    return categoryMapper.map(category, CategoryAttributes.CATEGORY_ID, CategoryAttributes.NAME,
+        CategoryAttributes.IMAGE, CategoryAttributes.DESCRIPTION);
   }
 }
