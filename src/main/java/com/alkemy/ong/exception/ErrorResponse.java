@@ -19,7 +19,8 @@ public class ErrorResponse {
   @ApiModelProperty(example = "[\n  message\n]",
       position = 1)
   private List<String> messages;
-  @ApiModelProperty(example = "timestamp",
+  @ApiModelProperty(dataType = "string",
+      example = "2020-02-01T21:26:22Z",
       position = 2)
   private Timestamp timestamp;
 

@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("auth")
-@Api(tags = "Authentication Endpoints",value = "AuthenticationEndpoints")
+@Api(tags = "Authentication Endpoints", value = "AuthenticationEndpoints")
 public class AuthenticationController {
 
   @Autowired
@@ -43,36 +43,35 @@ public class AuthenticationController {
   @PostMapping("/login")
   @ApiOperation(value = "Log a new user to the API", produces = "application/json")
   @ApiResponses(value = {
-      @ApiResponse(code = 200,
-          message = "User logged in",
-          response = AuthenticationResponse.class),
-      @ApiResponse(code = 403,
-          message = "Forbidden.",
-          response = ErrorResponse.class),
-      @ApiResponse(code = 400,
-          message = "Bad Request.",
-          response = ErrorResponse.class)
-  })
+      @ApiResponse(code = 200, message = "User logged in", response = AuthenticationResponse.class),
+      @ApiResponse(code = 403, message = "Forbidden.",response = ErrorResponse.class),
+      @ApiResponse(code = 400, message = "Bad Request.", response = ErrorResponse.class)})
   public ResponseEntity<AuthenticationResponse> login(
       @RequestBody @Valid AuthenticationRequest authenticationRequest)
       throws InvalidCredentialsException {
     return ResponseEntity.ok(login.login(authenticationRequest));
   }
 
+  //  examples = @Example(value = {
+  //  @ExampleProperty(mediaType = "*/*",
+  //  value = "{\n \"message\": [\n"
+  //  + "  \"Invalid email or password.\"\n
+  //  ] \n \"code\": 403"
+  //  + "\n\"timestamp\": 11/02/2022")}),
+  //  response = ErrorResponse.class),
+
   @PostMapping("/register")
   @ResponseStatus(HttpStatus.CREATED)
-  @ApiOperation(value = "Register an user and get the bearer token", produces = "application/json")
+  @ApiOperation(value = "Register an user and get the bearer token", produces = "application/json",
+                consumes = "application/json")
   @ApiResponses(value = {
-      @ApiResponse(code = 201,
-          message = "User register successfully",
+      @ApiResponse(code = 201, message = "User register successfully",
           response = AuthenticationResponse.class),
-      @ApiResponse(code = 403,
-          message = "Forbidden.",
+      @ApiResponse(code = 403, message = "Forbidden - Invalid mail o password",
           response = ErrorResponse.class),
-      @ApiResponse(code = 400,
-          message = "Bad request.",
-          response = ErrorResponse.class)
-  })
+      @ApiResponse(code = 400, message = "Bad request - Mail cannot be null or empty."
+                                       + "or password cannot be null or empty. ",
+          response = ErrorResponse.class)})
   public ResponseEntity<UserResponse> register(
       @RequestBody @Valid UserRegisterRequest userRegisterRequest)
       throws UserAlreadyExistException {
@@ -84,16 +83,9 @@ public class AuthenticationController {
   @GetMapping("/me")
   @ApiOperation(value = "Get my user details", produces = "application/json")
   @ApiResponses(value = {
-      @ApiResponse(code = 200,
-          message = "User Details",
-          response = UserResponse.class),
-      @ApiResponse(code = 500,
-          message = "Bad credentials.",
-          response = ErrorResponse.class),
-      @ApiResponse(code = 400,
-          message = "Bad request.",
-          response = ErrorResponse.class)
-  })
+      @ApiResponse(code = 200, message = "User Details", response = UserResponse.class),
+      @ApiResponse(code = 500, message = "Bad credentials.", response = ErrorResponse.class),
+      @ApiResponse(code = 400, message = "Bad request.", response = ErrorResponse.class)})
   public ResponseEntity<UserResponse> getUserDetails(Principal principal) {
     return ResponseEntity.ok(getUserDetails.findBy(principal.getName()));
   }

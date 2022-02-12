@@ -10,10 +10,12 @@ import lombok.Setter;
 @ApiModel
 public class AuthenticationResponse {
 
-  @ApiModelProperty(example = "jane@mail.com",
+  @ApiModelProperty(value = "email",
+      example = "jane@mail.com",
       position = 0)
   private String email;
-  @ApiModelProperty(example = "token",
+  @ApiModelProperty(value = "token",
+      example = "token",
       position = 1)
   private String token;
 
