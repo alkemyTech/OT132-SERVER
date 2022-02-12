@@ -1,6 +1,5 @@
 package com.alkemy.ong.config;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +25,6 @@ public class SwaggerConfig {
         .apis(RequestHandlerSelectors.basePackage("com.alkemy.ong.controller"))
         .paths(PathSelectors.any())
         .build()
-        .directModelSubstitute(Timestamp.class,String.class)
         .useDefaultResponseMessages(false)
         .apiInfo(apiInfo());
   }
