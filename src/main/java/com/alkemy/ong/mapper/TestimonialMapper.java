@@ -5,6 +5,8 @@ import com.alkemy.ong.model.entity.Testimonial;
 import com.alkemy.ong.model.request.CreateTestimonialRequest;
 import com.alkemy.ong.model.response.TestimonialResponse;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -42,5 +44,14 @@ public class TestimonialMapper {
       }
     }
     return testimonialResponse;
+  }
+
+  public List<TestimonialResponse> map(List<Testimonial> testimonials) {
+    List<TestimonialResponse> testimonialResponses = new ArrayList<>(testimonials.size());
+    for (Testimonial testimonial : testimonials) {
+      testimonialResponses.add(map(testimonial, TestimonialAttributes.ID,
+          TestimonialAttributes.NAME, TestimonialAttributes.IMAGE, TestimonialAttributes.CONTENT));
+    }
+    return testimonialResponses;
   }
 }
