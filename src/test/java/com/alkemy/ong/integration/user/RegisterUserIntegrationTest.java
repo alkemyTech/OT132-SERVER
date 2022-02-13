@@ -5,13 +5,16 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
-
+import java.util.ArrayList;
+import java.util.List;
 import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.integration.common.AbstractBaseIntegrationTest;
+import com.alkemy.ong.model.entity.Organization;
 import com.alkemy.ong.model.entity.User;
 import com.alkemy.ong.model.request.UserRegisterRequest;
 import com.alkemy.ong.model.response.UserResponse;
+import com.alkemy.ong.repository.IOrganizationRepository;
 import com.alkemy.ong.repository.IRoleRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,12 +35,28 @@ public class RegisterUserIntegrationTest extends AbstractBaseIntegrationTest {
   @MockBean
   protected IRoleRepository roleRepository;
 
+  @MockBean
+  protected IOrganizationRepository organizationRepository;
+
   @Test
   public void shouldRegisterUser() {
+
+    List<Organization> organizations = new ArrayList<>();
+    Organization organization = new Organization();
+    organization.setAboutUsText("aboutUsText");
+    organization.setName("name");
+    organization.setImage("image");
+    organization.setEmail("email@email.com");
+    organization.setWelcomeText("welcomeText");
+    organization.setAddress("address");
+    organization.setPhone(1555111);
+    organizations.add(organization);
+    
     when(roleRepository.findByName(eq(RoleType.USER.getFullRoleName())))
         .thenReturn(stubRole(RoleType.USER));
     when(userRepository.findByEmail(eq(EMAIL))).thenReturn(null);
     when(userRepository.save(any(User.class))).thenReturn(stubUser(RoleType.USER));
+    when(organizationRepository.findAll()).thenReturn(organizations);
 
     UserRegisterRequest userRegisterRequest = buildRequestPayload();
 
