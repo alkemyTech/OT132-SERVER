@@ -28,8 +28,8 @@ public class NewsMapper {
         case IMAGE:
           newsResponse.setImage(news.getImage());
           break;
-        case CATEGORY_ID:
-          newsResponse.setIdCategory(news.getCategory());
+        case CATEGORY_NAME:
+          newsResponse.setCategoryName(news.getCategory().getName());
           break;
         default:
           throw new UnsupportedOperationException(

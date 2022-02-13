@@ -6,7 +6,7 @@ public enum NewsAttributes {
   NAME("name"),
   TEXT("text"),
   IMAGE("image"),
-  CATEGORY_ID("category_id");
+  CATEGORY_NAME("categoryName");
 
   private final String fieldName;
 

@@ -18,6 +18,6 @@ public class NewsResponse {
 
   private String image;
 
-  private Category idCategory;
+  private String categoryName;
 
 }

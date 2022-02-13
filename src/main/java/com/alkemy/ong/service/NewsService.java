@@ -59,7 +59,7 @@ public class NewsService implements ICreateNews, IDeleteNews, IGetNewsDetails {
       throw new NotFoundException("News not found");
     }
     return newsMapper.map(result.get(), NewsAttributes.IMAGE, NewsAttributes.NAME,
-        NewsAttributes.TEXT, NewsAttributes.CATEGORY_ID);
+        NewsAttributes.TEXT, NewsAttributes.CATEGORY_NAME);
   }
 
   @Override
