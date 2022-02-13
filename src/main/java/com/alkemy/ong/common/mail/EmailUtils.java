@@ -25,10 +25,8 @@ public class EmailUtils {
     Content content = new Content();
     content.setType(mail.getContent().getContentType());
     content.setValue(mail.getContent().getBody());
-    Email fromEmail = new Email(from);
-    Email to = new Email(mail.getTo());
-    Mail sendgridMail = new Mail(fromEmail, mail.getSubject(), to, content);
-
+    Mail sendgridMail = new Mail(new Email(from), mail.getSubject(), new Email(mail.getTo()),
+        content);
     try {
       Request request = new Request();
       request.setMethod(Method.POST);
@@ -42,7 +40,6 @@ public class EmailUtils {
     } catch (IOException | RuntimeException e) {
       throw new ExternalServiceException(e.getMessage());
     }
-
   }
 
 }

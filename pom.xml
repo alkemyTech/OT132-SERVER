@@ -139,7 +139,6 @@
       <artifactId>sendgrid-java</artifactId>
       <version>4.8.3</version>
     </dependency>
-
     <dependency>
       <groupId>com.amazonaws</groupId>
       <artifactId>aws-java-sdk</artifactId>
