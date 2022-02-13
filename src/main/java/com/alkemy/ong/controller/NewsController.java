@@ -3,11 +3,13 @@ package com.alkemy.ong.controller;
 import com.alkemy.ong.common.PaginatedResultsRetrieved;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.model.request.CreateNewsRequest;
+import com.alkemy.ong.model.request.UpdateNewsRequest;
 import com.alkemy.ong.model.response.ListNewsResponse;
 import com.alkemy.ong.model.response.NewsResponse;
 import com.alkemy.ong.service.abstraction.ICreateNews;
 import com.alkemy.ong.service.abstraction.IDeleteNews;
 import com.alkemy.ong.service.abstraction.IGetNewsDetails;
+import com.alkemy.ong.service.abstraction.IUpdateNews;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +44,9 @@ public class NewsController {
   @Autowired
   private PaginatedResultsRetrieved resultsRetrieved;
 
+  @Autowired
+  private IUpdateNews updateNews;
+
   @GetMapping
   public ResponseEntity<ListNewsResponse> list(Pageable pageable, UriComponentsBuilder uriBuilder,
       HttpServletResponse response) {
@@ -70,5 +75,12 @@ public class NewsController {
       @RequestBody @Valid CreateNewsRequest createNewsRequest) {
 
     return ResponseEntity.status(HttpStatus.CREATED).body(createNews.create(createNewsRequest));
+  }
+
+  @PostMapping("/{id}")
+  public ResponseEntity<NewsResponse> update(@PathVariable(value = "id") Long id,
+      @RequestBody UpdateNewsRequest updateNewsRequest) throws ClassNotFoundException {
+    NewsResponse newsResponse = updateNews.update(id, updateNewsRequest);
+    return ResponseEntity.status(HttpStatus.OK).body(newsResponse);
   }
 }

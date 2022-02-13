@@ -25,4 +25,5 @@ public class ActivityController {
     ActivityResponse activityResponse = createActivity.create(createActivityRequest);
     return ResponseEntity.status(HttpStatus.CREATED).body(activityResponse);
   }
+
 }

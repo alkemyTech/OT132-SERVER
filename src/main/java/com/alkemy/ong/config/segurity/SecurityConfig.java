@@ -127,6 +127,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .hasRole(RoleType.ADMIN.name())
         .antMatchers(HttpMethod.GET, "/slides/{\\d+}")
         .hasAnyRole(RoleType.USER.name(), RoleType.ADMIN.name())
+        .antMatchers(HttpMethod.POST, "/news/{id:[\\d+]}")
+        .hasRole(RoleType.ADMIN.name())
         .anyRequest()
         .authenticated()
         .and()
