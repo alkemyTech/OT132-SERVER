@@ -47,23 +47,33 @@ public class RegisterService implements IRegisterUser {
     if (userRepository.findByEmail(userRegisterRequest.getEmail()) != null) {
       throw new UserAlreadyExistException();
     }
+
     User user = userMapper.map(userRegisterRequest,
         passwordEncoder.encode(userRegisterRequest.getPassword()));
     user.setRoles(List.of(roleRepository.findByName(RoleType.USER.getFullRoleName())));
     UserResponse userResponse = userMapper.map(userRepository.save(user));
+    userResponse.setToken(jwtUtil.generateToken(user));
 
-    Organization organization = organizationRepository.findAll().get(0);
-    ContactUs contactUs = new ContactUs(organization.getName(), organization.getAddress(),
-        organization.getPhone());
-    RegisterEmailTemplate template = new RegisterEmailTemplate(contactUs,
-        userRegisterRequest.getEmail());
+    sendRegisterEmail(userRegisterRequest.getEmail());
+
+    return userResponse;
+  }
+
+  private void sendRegisterEmail(String emailTo) {
     try {
-      emailUtils.send(template);
+      emailUtils.send(getRegisterEmailTemplate(emailTo));
     } catch (ExternalServiceException e) {
       log.error(e.getMessage());
     }
-    userResponse.setToken(jwtUtil.generateToken(user));
-    return userResponse;
+  }
+
+  private RegisterEmailTemplate getRegisterEmailTemplate(String emailTo) {
+    Organization organization = organizationRepository.findAll().get(0);
+
+    ContactUs contactUs = new ContactUs(organization.getName(),
+        organization.getAddress(),
+        organization.getPhone());
+    return new RegisterEmailTemplate(contactUs, emailTo);
   }
 
 }
