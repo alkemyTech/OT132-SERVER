@@ -36,7 +36,9 @@ public class NewsService implements ICreateNews, IDeleteNews, IGetNewsDetails {
     News news = newsMapper.map(createNewsRequest);
     news.setSoftDelete(false);
     news.setCategory(categoryRepository.findByNameIgnoreCase("news"));
-    return newsMapper.map(newsRepository.save(news), NewsAttributes.IMAGE, NewsAttributes.NAME,
+    return newsMapper.map(newsRepository.save(news),
+        NewsAttributes.IMAGE,
+        NewsAttributes.NAME,
         NewsAttributes.TEXT);
   }
 
@@ -58,8 +60,11 @@ public class NewsService implements ICreateNews, IDeleteNews, IGetNewsDetails {
     if (result.isEmpty() || result.get().isSoftDelete()) {
       throw new NotFoundException("News not found");
     }
-    return newsMapper.map(result.get(), NewsAttributes.IMAGE, NewsAttributes.NAME,
-        NewsAttributes.TEXT, NewsAttributes.CATEGORY_NAME);
+    return newsMapper.map(result.get(),
+        NewsAttributes.IMAGE,
+        NewsAttributes.NAME,
+        NewsAttributes.TEXT,
+        NewsAttributes.CATEGORY_NAME);
   }
 
   @Override
