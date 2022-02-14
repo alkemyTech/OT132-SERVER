@@ -2,13 +2,15 @@ package com.alkemy.ong.integration.user;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.integration.common.AbstractBaseIntegrationTest;
-import java.util.List;
+import com.alkemy.ong.model.response.UserResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class DeleteIntegrationClass extends AbstractBaseIntegrationTest {
+public class DeleteIntegrationTest extends AbstractBaseIntegrationTest {
 
   private final Long ID_TO_DELETE = stubUser(RoleType.USER).getUserId();
   private final String PATH = "/users/" + ID_TO_DELETE;
@@ -41,7 +43,26 @@ public class DeleteIntegrationClass extends AbstractBaseIntegrationTest {
         ErrorResponse.class);
 
     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    assertEquals("User not found",response.getBody().getMessages().get(0));
+    assertEquals("User not found", response.getBody().getMessages().get(0));
   }
+
+  @Test
+  public void shouldSoftDeleteUserSuccessfully() {
+    when(userRepository.findByUserIdAndSoftDeleteFalse(eq(ID_TO_DELETE))).thenReturn(
+        stubUser(RoleType.USER));
+
+    setAuthorizationHeaderBasedOn(RoleType.USER);
+
+    HttpEntity<UserResponse> requestEntity = new HttpEntity<>(headers);
+
+    ResponseEntity<UserResponse> response = restTemplate.exchange(
+        createURLWithPort(PATH),
+        HttpMethod.DELETE,
+        requestEntity,
+        UserResponse.class);
+
+    assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+  }
+
 
 }
