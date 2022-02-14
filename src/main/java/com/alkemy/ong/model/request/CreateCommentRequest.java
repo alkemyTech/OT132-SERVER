@@ -19,5 +19,4 @@ public class CreateCommentRequest {
   @NotBlank(message = "The body cannot be null or empty.")
   private String body;
 
-  private Timestamp timestamp;
 }

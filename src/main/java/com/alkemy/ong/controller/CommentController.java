@@ -37,6 +37,6 @@ public class CommentController {
 
     createComment.create(createCommentRequest);
 
-    return ResponseEntity.status(HttpStatus.OK).build();
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 }
