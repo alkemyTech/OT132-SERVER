@@ -42,12 +42,7 @@ public class NewsService implements ICreateNews, IDeleteNews, IGetNewsDetails, I
 
   @Override
   public void delete(Long id) {
-    News news = newsRepository.findByNewsIdAndSoftDeleteFalse(id);
-
-    if (news == null) {
-      throw new NotFoundException("News not found");
-    }
-
+    News news = getNews(id);
     news.setSoftDelete(true);
     newsRepository.save(news);
   }

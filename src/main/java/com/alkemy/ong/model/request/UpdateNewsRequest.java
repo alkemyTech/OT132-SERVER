@@ -14,6 +14,7 @@ public class UpdateNewsRequest {
   @NotBlank(message = "The content cannot be empty or null.")
   private String text;
 
+  @NotBlank(message = "Image cannot be null or empty.")
   private String image;
 
 }
