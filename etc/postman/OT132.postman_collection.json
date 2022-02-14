@@ -586,6 +586,44 @@
             "description": "ROLE USER AND ADMIN"
           },
           "response": []
+        },
+        {
+          "name": "Post Comment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNjQ0ODAwMjcxLCJleHAiOjE2NDQ4MzYyNzF9.-HMrb1YUxJ1lJhiAovKONNzcGCd2goqjPdXeJsDiw9s",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"userId\":\"4\",\r\n    \"newsId\":\"2\",\r\n    \"body\":\"First comment.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/comments",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "comments"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
