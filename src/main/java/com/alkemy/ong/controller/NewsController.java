@@ -3,11 +3,13 @@ package com.alkemy.ong.controller;
 import com.alkemy.ong.common.PaginatedResultsRetrieved;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.model.request.CreateNewsRequest;
+import com.alkemy.ong.model.request.UpdateNewsRequest;
 import com.alkemy.ong.model.response.ListNewsResponse;
 import com.alkemy.ong.model.response.NewsResponse;
 import com.alkemy.ong.service.abstraction.ICreateNews;
 import com.alkemy.ong.service.abstraction.IDeleteNews;
 import com.alkemy.ong.service.abstraction.IGetNewsDetails;
+import com.alkemy.ong.service.abstraction.IUpdateNews;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -41,6 +44,9 @@ public class NewsController {
 
   @Autowired
   private PaginatedResultsRetrieved resultsRetrieved;
+
+  @Autowired
+  private IUpdateNews updateNews;
 
   @GetMapping
   public ResponseEntity<ListNewsResponse> list(Pageable pageable, UriComponentsBuilder uriBuilder,
@@ -70,6 +76,13 @@ public class NewsController {
       @RequestBody @Valid CreateNewsRequest createNewsRequest) {
 
     return ResponseEntity.status(HttpStatus.CREATED).body(createNews.create(createNewsRequest));
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<NewsResponse> update(@PathVariable(value = "id") Long id,
+      @RequestBody UpdateNewsRequest updateNewsRequest) throws NotFoundException {
+    NewsResponse newsResponse = updateNews.update(id, updateNewsRequest);
+    return ResponseEntity.status(HttpStatus.OK).body(newsResponse);
   }
 
   @GetMapping("/{id}")
