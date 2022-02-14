@@ -32,11 +32,9 @@ public class CommentController {
   }
 
   @PostMapping
-  public ResponseEntity<Void> create(
-      @RequestBody @Valid CreateCommentRequest createCommentRequest) throws NotFoundException {
-
+  public ResponseEntity<Void> create(@RequestBody @Valid CreateCommentRequest createCommentRequest)
+      throws NotFoundException {
     createComment.create(createCommentRequest);
-
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 }

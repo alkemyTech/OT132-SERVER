@@ -41,7 +41,7 @@ mvn spring-boot:run
 
 ### SWAGGER DOCUMENTATION
 
-If you want to display the API documentation go to below page after run the project: 
+If you want to display the API documentation go to below page after run the project:
 
 ```
 http://localhost:8080/swagger-ui/index.html

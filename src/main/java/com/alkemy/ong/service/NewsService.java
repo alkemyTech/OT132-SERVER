@@ -4,7 +4,6 @@ import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.NewsMapper;
 import com.alkemy.ong.mapper.attribute.NewsAttributes;
 import com.alkemy.ong.model.entity.News;
-import com.alkemy.ong.model.entity.Testimonial;
 import com.alkemy.ong.model.request.CreateNewsRequest;
 import com.alkemy.ong.model.request.UpdateNewsRequest;
 import com.alkemy.ong.model.response.ListNewsResponse;

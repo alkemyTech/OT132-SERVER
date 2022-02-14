@@ -14,7 +14,6 @@ import com.alkemy.ong.repository.IUserRepository;
 import com.alkemy.ong.service.abstraction.ICreateComment;
 import com.alkemy.ong.service.abstraction.IGetComment;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,13 +37,12 @@ public class CommentService implements IGetComment, ICreateComment {
 
   @Override
   public void create(CreateCommentRequest createCommentRequest) {
-    User user = userRepository.findByUserIdAndSoftDeleteFalse(
-        createCommentRequest.getUserId());
-    News news = newsRepository.findByNewsIdAndSoftDeleteFalse(createCommentRequest.getNewsId());
-
+    User user = userRepository.findByUserIdAndSoftDeleteFalse(createCommentRequest.getUserId());
     if (user == null) {
       throw new NotFoundException("User not found.");
     }
+
+    News news = newsRepository.findByNewsIdAndSoftDeleteFalse(createCommentRequest.getNewsId());
     if (news == null) {
       throw new NotFoundException("Post not found.");
     }
