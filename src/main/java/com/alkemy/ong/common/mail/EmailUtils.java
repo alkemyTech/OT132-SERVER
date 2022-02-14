@@ -22,34 +22,26 @@ public class EmailUtils {
   private String from;
 
   public void send(IMail mail) throws ExternalServiceException {
+    Email to = new Email(mail.getTo());
+    Content content = new Content(mail.getContent().getContentType(),
+        mail.getContent().getBody());
+
+    Mail sendGridMail = new Mail(new Email(from), mail.getSubject(), to, content);
+    SendGrid sendGrid = new SendGrid(apiKey);
+    Request request = new Request();
+
     try {
-      Mail sendgridMail = new Mail();
-      Content content = new Content();
-
-      content.setType(mail.getContent().getContentType());
-      content.setValue(mail.getContent().getBody());
-
-      sendgridMail.setSubject(mail.getSubject());
-      sendgridMail.setFrom(new Email(from));
-      sendgridMail.setReplyTo(new Email(mail.getTo()));
-      sendgridMail.addContent(content);
-
-      Request request = new Request();
       request.setMethod(Method.POST);
-      request.setEndpoint("sendgridMail/send");
-      request.setBody(sendgridMail.build());
+      request.setEndpoint("mail/send");
+      request.setBody(sendGridMail.build());
 
-      SendGrid sendGrid = new SendGrid(apiKey);
       Response response = sendGrid.api(request);
-
       if (response.getStatusCode() != 202) {
         throw new ExternalServiceException("Fails to send email: " + response.getBody());
       }
-
     } catch (IOException | RuntimeException e) {
       throw new ExternalServiceException(e.getMessage());
     }
-
   }
 
 }
