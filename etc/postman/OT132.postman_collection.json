@@ -1052,6 +1052,30 @@
           "response": []
         }
       ]
-    }
-  ]
-}
+    },
+    {
+      "name": "Edit News",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDQzMjk4MDEsImV4cCI6MTY0NDM2NTgwMX0.EuPzWhkQr87lraiTCtgm5Itgme2rNO768DcSgqFuAgU",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\" : \"news title 01\",\r\n    \"text\" : \"this is a text\",\r\n    \"image\" : \"image http link\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+        ]
+      }
