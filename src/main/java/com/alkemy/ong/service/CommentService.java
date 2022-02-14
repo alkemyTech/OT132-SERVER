@@ -37,26 +37,18 @@ public class CommentService implements IGetComment, ICreateComment {
   }
 
   @Override
-  public void create(CreateCommentRequest createCommentRequest, Long userId, Long newsId) {
-    Optional<User> optionalUser = userRepository.findById(userId);
-    Optional<News> optionalNews = newsRepository.findById(newsId);
+  public void create(CreateCommentRequest createCommentRequest) {
+    Optional<User> optionalUser = userRepository.findById(createCommentRequest.getUserId());
+    Optional<News> optionalNews = newsRepository.findById(createCommentRequest.getNewsId());
 
     if (optionalUser.isEmpty()) {
       throw new NotFoundException("User not found.");
-
     }
     if (optionalNews.isEmpty()) {
       throw new NotFoundException("Post not found.");
     }
-
-    Comment comment = new Comment();
-    comment.setBody(createCommentRequest.getBody());
-    comment.setNews(optionalNews.get());
-    comment.setUser(optionalUser.get());
-    //debería agregar un soft delete a Comment?
-
-    commentRepository.save(comment);
-
+    commentRepository.save(
+        commentMapper.map(createCommentRequest, optionalUser.get(), optionalNews.get()));
   }
 
 }

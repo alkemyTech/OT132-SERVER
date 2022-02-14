@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -34,10 +33,9 @@ public class CommentController {
 
   @PostMapping
   public ResponseEntity<Void> create(
-      @RequestBody @Valid CreateCommentRequest createCommentRequest, @RequestParam Long userId,
-      @RequestParam Long newsId) throws NotFoundException {
+      @RequestBody @Valid CreateCommentRequest createCommentRequest) throws NotFoundException {
 
-    createComment.create(createCommentRequest, userId, newsId);
+    createComment.create(createCommentRequest);
 
     return ResponseEntity.status(HttpStatus.OK).build();
   }

@@ -1,6 +1,9 @@
 package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.model.entity.Comment;
+import com.alkemy.ong.model.entity.News;
+import com.alkemy.ong.model.entity.User;
+import com.alkemy.ong.model.request.CreateCommentRequest;
 import com.alkemy.ong.model.response.CommentResponse;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,5 +22,11 @@ public class CommentMapper {
     }
     return commentResponses;
   }
-
+  public Comment map (CreateCommentRequest createCommentRequest, User user, News news){
+    Comment comment = new Comment();
+    comment.setBody(createCommentRequest.getBody());
+    comment.setNews(news);
+    comment.setUser(user);
+    return comment;
+  }
 }
