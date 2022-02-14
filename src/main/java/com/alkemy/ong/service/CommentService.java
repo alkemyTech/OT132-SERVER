@@ -38,17 +38,17 @@ public class CommentService implements IGetComment, ICreateComment {
 
   @Override
   public void create(CreateCommentRequest createCommentRequest) {
-    Optional<User> optionalUser = userRepository.findById(createCommentRequest.getUserId());
-    Optional<News> optionalNews = newsRepository.findById(createCommentRequest.getNewsId());
+    User user = userRepository.findByUserIdAndSoftDeleteFalse(
+        createCommentRequest.getUserId());
+    News news = newsRepository.findByNewsIdAndSoftDeleteFalse(createCommentRequest.getNewsId());
 
-    if (optionalUser.isEmpty()) {
+    if (user == null) {
       throw new NotFoundException("User not found.");
     }
-    if (optionalNews.isEmpty()) {
+    if (news == null) {
       throw new NotFoundException("Post not found.");
     }
-    commentRepository.save(
-        commentMapper.map(createCommentRequest, optionalUser.get(), optionalNews.get()));
+    commentRepository.save(commentMapper.map(createCommentRequest, user, news));
   }
 
 }
