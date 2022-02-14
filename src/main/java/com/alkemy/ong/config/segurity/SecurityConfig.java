@@ -22,6 +22,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+  private static final String[] SWAGGER_ENDPOINTS = {
+      "/api/docs",
+      "/v2/api-docs",
+      "/swagger-ui/**",
+      "/swagger-resources",
+      "/swagger-resources/**",
+      "/configuration/ui",
+      "/configuration/security",
+      "/swagger-ui.html",
+      "/webjars/**"
+  };
+
   @Autowired
   private UserDetailsService userDetailsService;
 
@@ -105,6 +117,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .hasAnyRole(RoleType.USER.name(), RoleType.ADMIN.name())
         .antMatchers(HttpMethod.GET, "/categories/{\\d+}")
         .hasRole(RoleType.ADMIN.name())
+        .antMatchers(HttpMethod.DELETE,"/categories/{id:[\\d+]}")
+        .hasAnyRole(RoleType.ADMIN.name())
         .antMatchers(HttpMethod.DELETE, "/slides/{id:[\\d+]}")
         .hasRole(RoleType.ADMIN.name())
         .antMatchers(HttpMethod.GET, "/slides/{\\d+}")
