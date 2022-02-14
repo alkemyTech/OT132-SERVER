@@ -1,8 +1,10 @@
 package com.alkemy.ong.controller;
 
-import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.exception.InvalidCredentialsException;
 import com.alkemy.ong.exception.UserAlreadyExistException;
+import com.alkemy.ong.exception.defaulterrors.Error400;
+import com.alkemy.ong.exception.defaulterrors.Error403;
+import com.alkemy.ong.exception.defaulterrors.Error404;
 import com.alkemy.ong.model.request.AuthenticationRequest;
 import com.alkemy.ong.model.request.UserRegisterRequest;
 import com.alkemy.ong.model.response.AuthenticationResponse;
@@ -40,27 +42,22 @@ public class AuthenticationController {
   @Autowired
   private IGetUserDetails getUserDetails;
 
-  @PostMapping("/login")
-  @ApiOperation(value = "Log a new user to the API", produces = "application/json")
+  @PostMapping(value = "/login",produces = {"application/json"},
+      consumes = {"application/json"})
+  @ApiOperation(value = "Log a new user to the API", produces = "application/json",
+                consumes = "application/json")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "User logged in", response = AuthenticationResponse.class),
-      @ApiResponse(code = 403, message = "Forbidden.",response = ErrorResponse.class),
-      @ApiResponse(code = 400, message = "Bad Request.", response = ErrorResponse.class)})
+      @ApiResponse(code = 403, message = "Forbidden.",response = Error403.class),
+      @ApiResponse(code = 400, message = "Bad Request.", response = Error400.class)})
   public ResponseEntity<AuthenticationResponse> login(
       @RequestBody @Valid AuthenticationRequest authenticationRequest)
       throws InvalidCredentialsException {
     return ResponseEntity.ok(login.login(authenticationRequest));
   }
 
-  //  examples = @Example(value = {
-  //  @ExampleProperty(mediaType = "*/*",
-  //  value = "{\n \"message\": [\n"
-  //  + "  \"Invalid email or password.\"\n
-  //  ] \n \"code\": 403"
-  //  + "\n\"timestamp\": 11/02/2022")}),
-  //  response = ErrorResponse.class),
-
-  @PostMapping("/register")
+  @PostMapping(value = "/register",produces = {"application/json"},
+      consumes = {"application/json"})
   @ResponseStatus(HttpStatus.CREATED)
   @ApiOperation(value = "Register an user and get the bearer token", produces = "application/json",
                 consumes = "application/json")
@@ -68,10 +65,10 @@ public class AuthenticationController {
       @ApiResponse(code = 201, message = "User register successfully",
           response = AuthenticationResponse.class),
       @ApiResponse(code = 403, message = "Forbidden - Invalid mail o password",
-          response = ErrorResponse.class),
+          response = Error403.class),
       @ApiResponse(code = 400, message = "Bad request - Mail cannot be null or empty."
                                        + "or password cannot be null or empty. ",
-          response = ErrorResponse.class)})
+          response = Error400.class)})
   public ResponseEntity<UserResponse> register(
       @RequestBody @Valid UserRegisterRequest userRegisterRequest)
       throws UserAlreadyExistException {
@@ -80,12 +77,12 @@ public class AuthenticationController {
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
-  @GetMapping("/me")
+  @GetMapping(value = "/me",produces = {"application/json"})
   @ApiOperation(value = "Get my user details", produces = "application/json")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "User Details", response = UserResponse.class),
-      @ApiResponse(code = 500, message = "Bad credentials.", response = ErrorResponse.class),
-      @ApiResponse(code = 400, message = "Bad request.", response = ErrorResponse.class)})
+      @ApiResponse(code = 403, message = "Bad credentials.", response = Error403.class),
+      @ApiResponse(code = 404, message = "Bad request.", response = Error404.class)})
   public ResponseEntity<UserResponse> getUserDetails(Principal principal) {
     return ResponseEntity.ok(getUserDetails.findBy(principal.getName()));
   }
