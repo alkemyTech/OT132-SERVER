@@ -22,7 +22,8 @@ public class CommentMapper {
     }
     return commentResponses;
   }
-  public Comment map (CreateCommentRequest createCommentRequest, User user, News news){
+
+  public Comment map(CreateCommentRequest createCommentRequest, User user, News news) {
     Comment comment = new Comment();
     comment.setBody(createCommentRequest.getBody());
     comment.setNews(news);
