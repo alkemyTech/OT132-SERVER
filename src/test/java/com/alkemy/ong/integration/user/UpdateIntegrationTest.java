@@ -53,12 +53,13 @@ public class UpdateIntegrationTest extends AbstractBaseIntegrationTest {
   }
 
   @Test
-  public void shouldUpdateUserWithAllFields(){
+  public void shouldUpdateUserWithAllFields() {
     when(userRepository.findByUserIdAndSoftDeleteFalse(eq(ID_TO_UPDATE))).thenReturn(
-        stubUser(RoleType.ADMIN));
-    when(userRepository.save(any(User.class))).thenReturn(stubUser(RoleType.ADMIN));
+        stubUser(RoleType.USER));
+    when(userRepository.save(any(User.class))).thenReturn(
+        userUpdated(buildRequestPayLoad(), RoleType.USER));
 
-    setAuthorizationHeaderBasedOn(RoleType.ADMIN);
+    setAuthorizationHeaderBasedOn(RoleType.USER);
 
     UpdateUserDetailsRequest updateUserDetailsRequest = buildRequestPayLoad();
 
@@ -70,19 +71,21 @@ public class UpdateIntegrationTest extends AbstractBaseIntegrationTest {
         HttpMethod.PATCH,
         requestEntity,
         UserResponse.class);
-    assertEquals(HttpStatus.OK, response.getStatusCode());
+    UserResponse userResponse = response.getBody();
 
-    //assertEquals(FIELD_UPDATE, response.getBody().getFirstName());
-    assertEquals(FIELD_UPDATE, response.getBody().getLastName());
-    assertEquals(FIELD_UPDATE, response.getBody().getEmail());
-    assertEquals(FIELD_UPDATE, response.getBody().getPhoto());
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals(updateUserDetailsRequest.getFirstName(), userResponse.getFirstName());
+    assertEquals(updateUserDetailsRequest.getLastName(), userResponse.getLastName());
+    assertEquals(updateUserDetailsRequest.getEmail(), userResponse.getEmail());
+    assertEquals(updateUserDetailsRequest.getPhoto(), userResponse.getPhoto());
   }
 
   @Test
   public void shouldUpdateUserWhenFirstNameIsNull() {
     when(userRepository.findByUserIdAndSoftDeleteFalse(eq(ID_TO_UPDATE))).thenReturn(
         stubUser(RoleType.USER));
-    when(userRepository.save(any(User.class))).thenReturn(stubUser(RoleType.USER));
+    when(userRepository.save(any(User.class))).thenReturn(
+        userUpdated(buildRequestPayLoadWithFirstNameNull(), RoleType.USER));
 
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
@@ -98,13 +101,17 @@ public class UpdateIntegrationTest extends AbstractBaseIntegrationTest {
         UserResponse.class);
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertNotEquals(FIELD_UPDATE, response.getBody().getFirstName());
+    assertEquals(updateUserDetailsRequest.getLastName(), response.getBody().getLastName());
+    assertEquals(updateUserDetailsRequest.getEmail(), response.getBody().getEmail());
+    assertEquals(updateUserDetailsRequest.getPhoto(), response.getBody().getPhoto());
   }
 
   @Test
   public void shouldUpdateUserWhenLastNameIsNull() {
     when(userRepository.findByUserIdAndSoftDeleteFalse(eq(ID_TO_UPDATE))).thenReturn(
         stubUser(RoleType.USER));
-    when(userRepository.save(any(User.class))).thenReturn(stubUser(RoleType.USER));
+    when(userRepository.save(any(User.class))).thenReturn(
+        userUpdated(buildRequestPayLoadWithLastNameNull(), RoleType.USER));
 
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
@@ -120,13 +127,17 @@ public class UpdateIntegrationTest extends AbstractBaseIntegrationTest {
         UserResponse.class);
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertNotEquals(FIELD_UPDATE, response.getBody().getLastName());
+    assertEquals(updateUserDetailsRequest.getFirstName(), response.getBody().getFirstName());
+    assertEquals(updateUserDetailsRequest.getEmail(), response.getBody().getEmail());
+    assertEquals(updateUserDetailsRequest.getPhoto(), response.getBody().getPhoto());
   }
 
   @Test
   public void shouldUpdateUserWhenEmailIsNull() {
     when(userRepository.findByUserIdAndSoftDeleteFalse(eq(ID_TO_UPDATE))).thenReturn(
         stubUser(RoleType.USER));
-    when(userRepository.save(any(User.class))).thenReturn(stubUser(RoleType.USER));
+    when(userRepository.save(any(User.class))).thenReturn(
+        userUpdated(buildRequestPayLoadWithEmailNull(), RoleType.USER));
 
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
@@ -142,13 +153,17 @@ public class UpdateIntegrationTest extends AbstractBaseIntegrationTest {
         UserResponse.class);
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertNotEquals(FIELD_UPDATE, response.getBody().getEmail());
+    assertEquals(updateUserDetailsRequest.getFirstName(), response.getBody().getLastName());
+    assertEquals(updateUserDetailsRequest.getLastName(), response.getBody().getLastName());
+    assertEquals(updateUserDetailsRequest.getPhoto(), response.getBody().getPhoto());
   }
 
   @Test
   public void shouldUpdateUserWhenPasswordIsNull() {
     when(userRepository.findByUserIdAndSoftDeleteFalse(eq(ID_TO_UPDATE))).thenReturn(
         stubUser(RoleType.USER));
-    when(userRepository.save(any(User.class))).thenReturn(stubUser(RoleType.USER));
+    when(userRepository.save(any(User.class))).thenReturn(
+        userUpdated(buildRequestPayLoadWithPasswordNull(), RoleType.USER));
 
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
@@ -163,13 +178,18 @@ public class UpdateIntegrationTest extends AbstractBaseIntegrationTest {
         requestEntity,
         UserResponse.class);
     assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals(updateUserDetailsRequest.getFirstName(), response.getBody().getLastName());
+    assertEquals(updateUserDetailsRequest.getLastName(), response.getBody().getLastName());
+    assertEquals(updateUserDetailsRequest.getEmail(), response.getBody().getEmail());
+    assertEquals(updateUserDetailsRequest.getPhoto(), response.getBody().getPhoto());
   }
 
   @Test
   public void shouldUpdateUserWhenPhotoIsNull() {
     when(userRepository.findByUserIdAndSoftDeleteFalse(eq(ID_TO_UPDATE))).thenReturn(
         stubUser(RoleType.USER));
-    when(userRepository.save(any(User.class))).thenReturn(stubUser(RoleType.USER));
+    when(userRepository.save(any(User.class))).thenReturn(
+        userUpdated(buildRequestPayLoadWithPhotoNull(), RoleType.USER));
 
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
@@ -185,6 +205,31 @@ public class UpdateIntegrationTest extends AbstractBaseIntegrationTest {
         UserResponse.class);
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertNotEquals(FIELD_UPDATE, response.getBody().getPhoto());
+    assertEquals(updateUserDetailsRequest.getFirstName(), response.getBody().getLastName());
+    assertEquals(updateUserDetailsRequest.getLastName(), response.getBody().getLastName());
+    assertEquals(updateUserDetailsRequest.getEmail(), response.getBody().getEmail());
+
+  }
+
+  private User userUpdated(UpdateUserDetailsRequest request, RoleType role) {
+    User userUpdated = stubUser(role);
+
+    if (request.getFirstName() != null) {
+      userUpdated.setFirstName(request.getFirstName());
+    }
+    if (request.getLastName() != null) {
+      userUpdated.setLastName(request.getLastName());
+    }
+    if (request.getEmail() != null) {
+      userUpdated.setEmail(request.getEmail());
+    }
+    if (request.getPassword() != null) {
+      userUpdated.setPassword(request.getPassword());
+    }
+    if (request.getPhoto() != null) {
+      userUpdated.setPhoto(request.getPhoto());
+    }
+    return userUpdated;
   }
 
   private UpdateUserDetailsRequest buildRequestPayLoad() {
