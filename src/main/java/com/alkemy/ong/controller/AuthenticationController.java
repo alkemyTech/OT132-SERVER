@@ -66,7 +66,7 @@ public class AuthenticationController {
                 consumes = "application/json")
   @ApiResponses(value = {
       @ApiResponse(code = 201, message = "OK - User register successfully",
-          response = AuthenticationResponse.class),
+          response = UserResponse.class),
       @ApiResponse(code = 403, message = "PERMISSION_DENIED - Invalid mail o password",
           response = ErrorResponse.class),
       @ApiResponse(code = 400, message = "INVALID_ARGUMENT - Arguments cannot be null. ",

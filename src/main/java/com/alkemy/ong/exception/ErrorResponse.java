@@ -13,7 +13,7 @@ import lombok.Setter;
 @ApiModel
 public class ErrorResponse {
 
-  @ApiModelProperty(example = "code",
+  @ApiModelProperty(example = "40# or 500",
       position = 0)
   private int status;
   @ApiModelProperty(example = "[\n  message\n]",

@@ -21,14 +21,14 @@ public class UserResponse {
   @ApiModelProperty(example = "jane@mail.com",
       position = 2)
   private String email;
-  @ApiModelProperty(example = "picture.png",
+  @ApiModelProperty(example = "https://cohorte-enero-835eb560.s3.amazonaws.com/picture.png",
       position = 3)
   private String photo;
   @JsonInclude(Include.NON_EMPTY)
   @ApiModelProperty(example = "role.USER",
       position = 4)
   private String role;
-  @ApiModelProperty(example = "token",
+  @ApiModelProperty(example = "Bearer access_token",
       position = 5)
   private String token;
 
