@@ -1,5 +1,6 @@
 package com.alkemy.ong.config;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,7 @@ public class SwaggerConfig {
         .paths(PathSelectors.any())
         .build()
         .useDefaultResponseMessages(false)
+        .ignoredParameterTypes(Principal.class)
         .apiInfo(apiInfo());
   }
 

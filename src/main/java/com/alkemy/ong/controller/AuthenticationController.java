@@ -1,10 +1,8 @@
 package com.alkemy.ong.controller;
 
+import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.exception.InvalidCredentialsException;
 import com.alkemy.ong.exception.UserAlreadyExistException;
-import com.alkemy.ong.exception.defaulterrors.Error400;
-import com.alkemy.ong.exception.defaulterrors.Error403;
-import com.alkemy.ong.exception.defaulterrors.Error404;
 import com.alkemy.ong.model.request.AuthenticationRequest;
 import com.alkemy.ong.model.request.UserRegisterRequest;
 import com.alkemy.ong.model.response.AuthenticationResponse;
@@ -13,6 +11,7 @@ import com.alkemy.ong.service.abstraction.IGetUserDetails;
 import com.alkemy.ong.service.abstraction.ILogin;
 import com.alkemy.ong.service.abstraction.IRegisterUser;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -47,9 +46,12 @@ public class AuthenticationController {
   @ApiOperation(value = "Log a new user to the API", produces = "application/json",
                 consumes = "application/json")
   @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "User logged in", response = AuthenticationResponse.class),
-      @ApiResponse(code = 403, message = "Forbidden.",response = Error403.class),
-      @ApiResponse(code = 400, message = "Bad Request.", response = Error400.class)})
+      @ApiResponse(code = 200, message = "OK - User authenticated",
+          response = AuthenticationResponse.class),
+      @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
+          response = ErrorResponse.class),
+      @ApiResponse(code = 400, message = "INVALID_ARGUMENT - Arguments cannot be null.",
+          response = ErrorResponse.class)})
   public ResponseEntity<AuthenticationResponse> login(
       @RequestBody @Valid AuthenticationRequest authenticationRequest)
       throws InvalidCredentialsException {
@@ -59,16 +61,16 @@ public class AuthenticationController {
   @PostMapping(value = "/register",produces = {"application/json"},
       consumes = {"application/json"})
   @ResponseStatus(HttpStatus.CREATED)
-  @ApiOperation(value = "Register an user and get the bearer token", produces = "application/json",
+  @ApiOperation(value = "Register an user and get the bearer token",
+                produces = "application/json",
                 consumes = "application/json")
   @ApiResponses(value = {
-      @ApiResponse(code = 201, message = "User register successfully",
+      @ApiResponse(code = 201, message = "OK - User register successfully",
           response = AuthenticationResponse.class),
-      @ApiResponse(code = 403, message = "Forbidden - Invalid mail o password",
-          response = Error403.class),
-      @ApiResponse(code = 400, message = "Bad request - Mail cannot be null or empty."
-                                       + "or password cannot be null or empty. ",
-          response = Error400.class)})
+      @ApiResponse(code = 403, message = "PERMISSION_DENIED - Invalid mail o password",
+          response = ErrorResponse.class),
+      @ApiResponse(code = 400, message = "INVALID_ARGUMENT - Arguments cannot be null. ",
+          response = ErrorResponse.class)})
   public ResponseEntity<UserResponse> register(
       @RequestBody @Valid UserRegisterRequest userRegisterRequest)
       throws UserAlreadyExistException {
@@ -78,11 +80,21 @@ public class AuthenticationController {
   }
 
   @GetMapping(value = "/me",produces = {"application/json"})
+  @ApiImplicitParam(name = "Authorization",
+      value = "Access Token",
+      required = true,
+      allowEmptyValue = false,
+      paramType = "header",
+      dataTypeClass = String.class,
+      example = "Bearer access_token")
   @ApiOperation(value = "Get my user details", produces = "application/json")
   @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "User Details", response = UserResponse.class),
-      @ApiResponse(code = 403, message = "Bad credentials.", response = Error403.class),
-      @ApiResponse(code = 404, message = "Bad request.", response = Error404.class)})
+      @ApiResponse(code = 200, message = "OK - User Details",
+          response = UserResponse.class),
+      @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
+          response = ErrorResponse.class),
+      @ApiResponse(code = 404, message = "NOT_FOUND - User not found",
+          response = ErrorResponse.class)})
   public ResponseEntity<UserResponse> getUserDetails(Principal principal) {
     return ResponseEntity.ok(getUserDetails.findBy(principal.getName()));
   }
