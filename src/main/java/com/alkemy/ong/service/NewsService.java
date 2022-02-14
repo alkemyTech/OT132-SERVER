@@ -2,6 +2,7 @@ package com.alkemy.ong.service;
 
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.NewsMapper;
+import com.alkemy.ong.mapper.attribute.NewsAttributes;
 import com.alkemy.ong.model.entity.News;
 import com.alkemy.ong.model.request.CreateNewsRequest;
 import com.alkemy.ong.model.response.ListNewsResponse;
@@ -12,6 +13,7 @@ import com.alkemy.ong.service.abstraction.ICreateNews;
 import com.alkemy.ong.service.abstraction.IDeleteNews;
 import com.alkemy.ong.service.abstraction.IGetNewsDetails;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,7 +36,10 @@ public class NewsService implements ICreateNews, IDeleteNews, IGetNewsDetails {
     News news = newsMapper.map(createNewsRequest);
     news.setSoftDelete(false);
     news.setCategory(categoryRepository.findByNameIgnoreCase("news"));
-    return newsMapper.map(newsRepository.save(news));
+    return newsMapper.map(newsRepository.save(news),
+        NewsAttributes.IMAGE,
+        NewsAttributes.NAME,
+        NewsAttributes.TEXT);
   }
 
   @Override
@@ -47,6 +52,19 @@ public class NewsService implements ICreateNews, IDeleteNews, IGetNewsDetails {
 
     news.setSoftDelete(true);
     newsRepository.save(news);
+  }
+
+  @Override
+  public NewsResponse getBy(Long id) {
+    Optional<News> result = newsRepository.findById(id);
+    if (result.isEmpty() || result.get().isSoftDelete()) {
+      throw new NotFoundException("News not found");
+    }
+    return newsMapper.map(result.get(),
+        NewsAttributes.IMAGE,
+        NewsAttributes.NAME,
+        NewsAttributes.TEXT,
+        NewsAttributes.CATEGORY_NAME);
   }
 
   @Override

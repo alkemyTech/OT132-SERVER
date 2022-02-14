@@ -71,4 +71,11 @@ public class NewsController {
 
     return ResponseEntity.status(HttpStatus.CREATED).body(createNews.create(createNewsRequest));
   }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<NewsResponse> getBy(@PathVariable(value = "id") Long id)
+      throws NotFoundException {
+    return ResponseEntity.ok().body(getNewsDetails.getBy(id));
+  }
+
 }
