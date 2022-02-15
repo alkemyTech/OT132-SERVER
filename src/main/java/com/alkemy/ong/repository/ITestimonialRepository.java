@@ -11,5 +11,7 @@ public interface ITestimonialRepository extends JpaRepository<Testimonial, Long>
 
   Testimonial findByTestimonialIdAndSoftDeleteFalse(Long id);
 
+  Page<Testimonial> findBySoftDeleteFalseOrderByTimestampDesc(Pageable pageable);
+
   Page<Testimonial> findAll(Pageable pageable);
 }
