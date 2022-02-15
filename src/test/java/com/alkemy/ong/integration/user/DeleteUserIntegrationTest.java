@@ -23,14 +23,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class DeleteIntegrationTest extends AbstractBaseIntegrationTest {
+public class DeleteUserIntegrationTest extends AbstractBaseIntegrationTest {
 
-  private final Long ID_TO_DELETE = stubUser(RoleType.USER).getUserId();
-  private final String PATH = "/users/" + ID_TO_DELETE;
+
+  private static final String PATH = "/users/" + USER_ID;
 
   @Test
-  public void shouldReturnNotFoundWhenIdNoExist() {
-    when(userRepository.findByUserIdAndSoftDeleteFalse(eq(ID_TO_DELETE))).thenReturn(null);
+  public void shouldReturnNotFoundWhenUserDoesNotExist() {
+    when(userRepository.findByUserIdAndSoftDeleteFalse(eq(USER_ID))).thenReturn(null);
 
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
@@ -43,12 +43,13 @@ public class DeleteIntegrationTest extends AbstractBaseIntegrationTest {
         ErrorResponse.class);
 
     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    assertNotNull(response.getBody());
     assertEquals("User not found", response.getBody().getMessages().get(0));
   }
 
   @Test
-  public void shouldSoftDeleteUserSuccessfully() {
-    when(userRepository.findByUserIdAndSoftDeleteFalse(eq(ID_TO_DELETE))).thenReturn(
+  public void shouldSoftDeleteUserSuccessFullyWithUserRole() {
+    when(userRepository.findByUserIdAndSoftDeleteFalse(eq(USER_ID))).thenReturn(
         stubUser(RoleType.USER));
 
     setAuthorizationHeaderBasedOn(RoleType.USER);
@@ -64,5 +65,36 @@ public class DeleteIntegrationTest extends AbstractBaseIntegrationTest {
     assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
   }
 
+  @Test
+  public void shouldSoftDeleteUserSuccessFullyWithAdminRole() {
+    when(userRepository.findByUserIdAndSoftDeleteFalse(eq(USER_ID))).thenReturn(
+        stubUser(RoleType.ADMIN));
+
+    setAuthorizationHeaderBasedOn(RoleType.ADMIN);
+
+    HttpEntity<UserResponse> requestEntity = new HttpEntity<>(headers);
+
+    ResponseEntity<UserResponse> response = restTemplate.exchange(
+        createURLWithPort(PATH),
+        HttpMethod.DELETE,
+        requestEntity,
+        UserResponse.class);
+
+    assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+  }
+
+  @Test
+  public void shouldReturnForbiddenWithNoRole() {
+
+    HttpEntity<UserResponse> requestEntity = new HttpEntity<>(headers);
+
+    ResponseEntity<UserResponse> response = restTemplate.exchange(
+        createURLWithPort(PATH),
+        HttpMethod.DELETE,
+        requestEntity,
+        UserResponse.class);
+
+    assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+  }
 
 }
