@@ -23,17 +23,12 @@ public class MemberService implements IGetMemberDetails, ICreateMember {
   @Autowired
   private MemberMapper memberMapper;
 
-//  @Override
-//  public ListMembersResponse findAll() {
-//    List<Member> members = memberRepository.findBySoftDeleteFalse();
-//    return buildListResponse(members);
-//  }
-
   @Override
-  public ListMembersResponse findAll(Pageable pageable){
+  public ListMembersResponse findAll(Pageable pageable) {
     Page<Member> page =
         memberRepository.findBySoftDeleteFalseOrderByTimestampDesc(pageable);
-    return buildListResponse(page.getContent());
+    List<MemberResponse> memberResponses = memberMapper.map(page.getContent());
+    return buildListResponse(memberResponses,page);
   }
 
   @Override
@@ -43,10 +38,13 @@ public class MemberService implements IGetMemberDetails, ICreateMember {
     return memberMapper.map(memberRepository.save(member));
   }
 
-  private ListMembersResponse buildListResponse(List<Member> members) {
-    List<MemberResponse> memberResponses = memberMapper.map(members);
+  private ListMembersResponse buildListResponse(List<MemberResponse> members,
+      Page<Member> page) {
     ListMembersResponse listMembersResponse = new ListMembersResponse();
-    listMembersResponse.setMemberResponses(memberResponses);
+    listMembersResponse.setMemberResponses(members);
+    listMembersResponse.setPage(page.getNumber());
+    listMembersResponse.setSize(page.getSize());
+    listMembersResponse.setTotalPages(page.getTotalPages());
     return listMembersResponse;
   }
 }
