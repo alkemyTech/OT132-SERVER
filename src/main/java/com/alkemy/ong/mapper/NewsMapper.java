@@ -51,7 +51,11 @@ public class NewsMapper {
   public List<NewsResponse> map(List<News> newsCollection) {
     List<NewsResponse> newsResponses = new ArrayList<>(newsCollection.size());
     for (News news : newsCollection) {
-      newsResponses.add(map(news));
+      newsResponses.add(map(news, NewsAttributes.NEWS_ID,
+          NewsAttributes.CATEGORY_NAME,
+          NewsAttributes.IMAGE,
+          NewsAttributes.TEXT,
+          NewsAttributes.CATEGORY_NAME));
     }
     return newsResponses;
   }

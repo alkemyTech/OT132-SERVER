@@ -82,7 +82,12 @@ public class NewsService implements ICreateNews, IDeleteNews, IGetNewsDetails, I
 
   @Override
   public NewsResponse update(Long id, UpdateNewsRequest updateNewsRequest) {
-    return newsMapper.map(newsRepository.save(updateValues(getNews(id), updateNewsRequest)));
+    return newsMapper.map(newsRepository.save(updateValues(getNews(id), updateNewsRequest)),
+        NewsAttributes.NEWS_ID,
+        NewsAttributes.CATEGORY_NAME,
+        NewsAttributes.IMAGE,
+        NewsAttributes.TEXT,
+        NewsAttributes.CATEGORY_NAME);
   }
 
   private News updateValues(News news, UpdateNewsRequest updateNewsRequest) {
