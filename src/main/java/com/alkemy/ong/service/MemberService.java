@@ -10,6 +10,8 @@ import com.alkemy.ong.service.abstraction.ICreateMember;
 import com.alkemy.ong.service.abstraction.IGetMemberDetails;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,10 +23,17 @@ public class MemberService implements IGetMemberDetails, ICreateMember {
   @Autowired
   private MemberMapper memberMapper;
 
+//  @Override
+//  public ListMembersResponse findAll() {
+//    List<Member> members = memberRepository.findBySoftDeleteFalse();
+//    return buildListResponse(members);
+//  }
+
   @Override
-  public ListMembersResponse findAll() {
-    List<Member> members = memberRepository.findBySoftDeleteFalse();
-    return buildListResponse(members);
+  public ListMembersResponse findAll(Pageable pageable){
+    Page<Member> page =
+        memberRepository.findBySoftDeleteFalseOrderByTimestampDesc(pageable);
+    return buildListResponse(page.getContent());
   }
 
   @Override
