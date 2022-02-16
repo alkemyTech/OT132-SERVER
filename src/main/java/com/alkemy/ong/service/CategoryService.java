@@ -93,10 +93,7 @@ public class CategoryService implements IGetCategoryDetails, ICreateCategory, IU
   }
   @Override
   public void delete(Long id) {
-    Category category = categoryRepository.findByCategoryIdAndSoftDeleteFalse(id);
-        if (categoryRepository == null) {
-          throw new NotFoundException("User not found");
-        }
+    Category category = findBy(id);
         category.setSoftDelete(true);
         categoryRepository.save(category);
     }
