@@ -30,4 +30,11 @@ public class CommentMapper {
     comment.setUser(user);
     return comment;
   }
+
+  public CommentResponse map(Comment comment) {
+    CommentResponse commentResponse = new CommentResponse();
+    commentResponse.setBody(comment.getBody());
+    commentResponse.setTimestamp(comment.getTimestamp());
+    return commentResponse;
+  }
 }
