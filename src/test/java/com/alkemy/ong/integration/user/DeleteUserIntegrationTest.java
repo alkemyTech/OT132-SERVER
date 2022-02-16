@@ -88,11 +88,11 @@ public class DeleteUserIntegrationTest extends AbstractBaseIntegrationTest {
 
     HttpEntity<UserResponse> requestEntity = new HttpEntity<>(headers);
 
-    ResponseEntity<UserResponse> response = restTemplate.exchange(
+    ResponseEntity<ErrorResponse> response = restTemplate.exchange(
         createURLWithPort(PATH),
         HttpMethod.DELETE,
         requestEntity,
-        UserResponse.class);
+        ErrorResponse.class);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
   }
