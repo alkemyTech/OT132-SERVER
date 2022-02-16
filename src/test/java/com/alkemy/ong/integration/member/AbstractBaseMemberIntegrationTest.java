@@ -1,10 +1,13 @@
 package com.alkemy.ong.integration.member;
 
 import com.alkemy.ong.integration.common.AbstractBaseIntegrationTest;
+import com.alkemy.ong.model.request.CreateMemberRequest;
+import com.alkemy.ong.repository.IMemberRepository;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 public class AbstractBaseMemberIntegrationTest extends AbstractBaseIntegrationTest {
 
-  protected final static String MEMBER_PATH = "/members";
+  protected final static String PATH = "/members";
   protected final static String NAME = "Joe";
   protected final static String FACEBOOK_URL = "facebookUrl";
   protected final static String INSTAGRAM_URL = "instagramUrl";
@@ -14,5 +17,47 @@ public class AbstractBaseMemberIntegrationTest extends AbstractBaseIntegrationTe
   protected final static String DESCRIPTION = "This is a description";
   protected final static boolean SOFT_DELETE = false;
 
+  @MockBean
+  IMemberRepository memberRepository;
+
+  protected CreateMemberRequest buildRequestWithEmptyName(){
+    return buildRequestPayload(null, IMAGE, DESCRIPTION, FACEBOOK_URL, INSTAGRAM_URL, LINKEDIN_URL);
+  }
+
+  protected CreateMemberRequest buildRequestWithEmptyImage(){
+    return buildRequestPayload(NAME, null, DESCRIPTION, FACEBOOK_URL, INSTAGRAM_URL, LINKEDIN_URL);
+  }
+
+  protected CreateMemberRequest buildRequestWithEmptyDescription(){
+    return buildRequestPayload(NAME, IMAGE, null, FACEBOOK_URL, INSTAGRAM_URL, LINKEDIN_URL);
+  }
+
+  protected CreateMemberRequest buildRequestWithEmptyFacebookUrl(){
+    return buildRequestPayload(NAME, IMAGE, DESCRIPTION, null, INSTAGRAM_URL, LINKEDIN_URL);
+  }
+
+  protected CreateMemberRequest buildRequestWithEmptyInstagramUrl(){
+    return buildRequestPayload(NAME, IMAGE, DESCRIPTION, FACEBOOK_URL, null, LINKEDIN_URL);
+  }
+
+  protected CreateMemberRequest buildRequestWithEmptyLinkedinUrl(){
+    return buildRequestPayload(NAME, IMAGE, DESCRIPTION, FACEBOOK_URL, INSTAGRAM_URL, null);
+  }
+
+  protected CreateMemberRequest buildRequestPayload() {
+    return buildRequestPayload(NAME, IMAGE, DESCRIPTION, FACEBOOK_URL, INSTAGRAM_URL, LINKEDIN_URL);
+  }
+
+  private CreateMemberRequest buildRequestPayload(String name, String image, String description,
+      String facebookUrl, String instagramUrl, String linkedinUrl) {
+    CreateMemberRequest memberRequest = new CreateMemberRequest();
+    memberRequest.setName(name);
+    memberRequest.setImage(image);
+    memberRequest.setDescription(description);
+    memberRequest.setFacebookUrl(facebookUrl);
+    memberRequest.setInstagramUrl(instagramUrl);
+    memberRequest.setLinkedinUrl(linkedinUrl);
+    return memberRequest;
+  }
 
 }
