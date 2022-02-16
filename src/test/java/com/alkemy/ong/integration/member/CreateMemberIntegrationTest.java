@@ -102,6 +102,29 @@ public class CreateMemberIntegrationTest extends AbstractBaseMemberIntegrationTe
     assertEquals("Image cannot be null or empty.",getFirstMessageError(response));
   }
 
+  protected CreateMemberRequest buildRequestWithEmptyName(){
+    return buildRequestPayload(null, IMAGE);
+  }
+
+  protected CreateMemberRequest buildRequestWithEmptyImage(){
+    return buildRequestPayload(NAME, null);
+  }
+
+  protected CreateMemberRequest buildRequestPayload() {
+    return buildRequestPayload(NAME, IMAGE);
+  }
+
+  private CreateMemberRequest buildRequestPayload(String name, String image) {
+    CreateMemberRequest memberRequest = new CreateMemberRequest();
+    memberRequest.setName(name);
+    memberRequest.setImage(image);
+    memberRequest.setDescription(DESCRIPTION);
+    memberRequest.setFacebookUrl(FACEBOOK_URL);
+    memberRequest.setInstagramUrl(INSTAGRAM_URL);
+    memberRequest.setLinkedinUrl(LINKEDIN_URL);
+    return memberRequest;
+  }
+
   private ResponseEntity<ErrorResponse> getErrorResponseEntity(
       CreateMemberRequest createRequest) {
 

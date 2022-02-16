@@ -6,7 +6,6 @@ import static org.mockito.Mockito.when;
 import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.integration.common.AbstractBaseIntegrationTest;
 import com.alkemy.ong.model.entity.Member;
-import com.alkemy.ong.model.request.CreateMemberRequest;
 import com.alkemy.ong.repository.IMemberRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 public abstract class AbstractBaseMemberIntegrationTest extends AbstractBaseIntegrationTest {
 
   protected final static String PATH = "/members";
+  protected final static long MEMBER_ID = 1L;
   protected final static String NAME = "Joe";
   protected final static String FACEBOOK_URL = "facebookUrl";
   protected final static String INSTAGRAM_URL = "instagramUrl";
@@ -53,29 +53,6 @@ public abstract class AbstractBaseMemberIntegrationTest extends AbstractBaseInte
     member.setDescription(DESCRIPTION);
     member.setSoftDelete(SOFT_DELETE);
     return member;
-  }
-
-  protected CreateMemberRequest buildRequestWithEmptyName(){
-    return buildRequestPayload(null, IMAGE);
-  }
-
-  protected CreateMemberRequest buildRequestWithEmptyImage(){
-    return buildRequestPayload(NAME, null);
-  }
-
-  protected CreateMemberRequest buildRequestPayload() {
-    return buildRequestPayload(NAME, IMAGE);
-  }
-
-  private CreateMemberRequest buildRequestPayload(String name, String image) {
-    CreateMemberRequest memberRequest = new CreateMemberRequest();
-    memberRequest.setName(name);
-    memberRequest.setImage(image);
-    memberRequest.setDescription(DESCRIPTION);
-    memberRequest.setFacebookUrl(FACEBOOK_URL);
-    memberRequest.setInstagramUrl(INSTAGRAM_URL);
-    memberRequest.setLinkedinUrl(LINKEDIN_URL);
-    return memberRequest;
   }
 
   protected String getFirstMessageError(ResponseEntity<ErrorResponse> response) {
