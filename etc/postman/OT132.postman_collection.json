@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "e9d48048-071f-40f9-a411-0c9f8f6284c2",
+    "_postman_id": "a0ba4380-1f75-4980-9b02-66f8497018d1",
     "name": "OT132",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
@@ -111,7 +111,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\" : \"admin1@gmail.com\",\r\n    \"password\" : \"123456\"\r\n}",
+              "raw": "{\r\n    \"email\" : \"etluit12@gmail.com\",\r\n    \"password\" : \"t0400e3ps\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -551,6 +551,36 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Edit News",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDQzMjk4MDEsImV4cCI6MTY0NDM2NTgwMX0.EuPzWhkQr87lraiTCtgm5Itgme2rNO768DcSgqFuAgU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\" : \"news title 01\",\r\n    \"text\" : \"this is a text\",\r\n    \"image\" : \"image http link\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -951,10 +981,20 @@
         {
           "name": "Get members",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImV0bHVpdDEyQGdtYWlsLmNvbSIsImlhdCI6MTY0NDk2NjIxNiwiZXhwIjoxNjQ1MDAyMjE2fQ.KyMkqXQK2osC-Yqj3-9fciWp_XxULgPNBZ0-U_-fWvw",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/members",
+              "raw": "http://localhost:8080/members?page=1&size=10",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -962,6 +1002,16 @@
               "port": "8080",
               "path": [
                 "members"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
               ]
             },
             "description": "ROLE ADMIN"
@@ -994,6 +1044,45 @@
               ]
             },
             "description": "ROLE USER"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Member",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoiYnNrdW5pZ3VuZGUxOEBnbWFpbC5jb20iLCJpYXQiOjE2NDQ5Njg3MDgsImV4cCI6MTY0NTAwNDcwOH0.kVArZorD4QwBkcfFC4m8RR2G3zBzjbqBNW-PpVSllvw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\" : \"name\",\r\n    \"facebookUrl\" : \"facebookUrl\",\r\n    \"instagramUrl\"  : \"instagramUrl\",\r\n    \"linkedinUrl\" : \"linkedinUrl\",\r\n    \"image\" : \"image\",\r\n    \"description\" : \"description\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/members/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "members",
+                "1"
+              ]
+            }
           },
           "response": []
         }
@@ -1052,30 +1141,6 @@
           "response": []
         }
       ]
-    },
-    {
-      "name": "Edit News",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDQzMjk4MDEsImV4cCI6MTY0NDM2NTgwMX0.EuPzWhkQr87lraiTCtgm5Itgme2rNO768DcSgqFuAgU",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"name\" : \"news title 01\",\r\n    \"text\" : \"this is a text\",\r\n    \"image\" : \"image http link\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        }
-        ]
-      }
+    }
+  ]
+}
