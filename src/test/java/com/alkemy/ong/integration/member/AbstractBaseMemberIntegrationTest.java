@@ -1,9 +1,11 @@
 package com.alkemy.ong.integration.member;
 
+import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.integration.common.AbstractBaseIntegrationTest;
 import com.alkemy.ong.model.request.CreateMemberRequest;
 import com.alkemy.ong.repository.IMemberRepository;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.ResponseEntity;
 
 public class AbstractBaseMemberIntegrationTest extends AbstractBaseIntegrationTest {
 
@@ -58,6 +60,14 @@ public class AbstractBaseMemberIntegrationTest extends AbstractBaseIntegrationTe
     memberRequest.setInstagramUrl(instagramUrl);
     memberRequest.setLinkedinUrl(linkedinUrl);
     return memberRequest;
+  }
+
+  protected String getFirstMessageError(ResponseEntity<ErrorResponse> response) {
+    return response.getBody().getMessages().get(0);
+  }
+
+  protected int getStatusValue(ResponseEntity<ErrorResponse> response) {
+    return response.getBody().getStatus();
   }
 
 }
