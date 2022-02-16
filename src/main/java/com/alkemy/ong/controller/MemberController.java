@@ -23,7 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping("/members")
 public class MemberController {
 
-  private static final String MEMBER_PATH = "/testimonials";
+  private static final String MEMBER_PATH = "/members";
 
   @Autowired
   private IGetMemberDetails getMemberDetails;
