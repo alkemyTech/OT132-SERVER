@@ -6,6 +6,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import com.alkemy.ong.config.segurity.RoleType;
+import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.model.entity.Member;
 import com.alkemy.ong.model.request.CreateMemberRequest;
 import com.alkemy.ong.model.response.MemberResponse;
@@ -39,20 +40,70 @@ public class CreateMemberIntegrationTest extends AbstractBaseMemberIntegrationTe
             request,
             MemberResponse.class);
 
-    assertEquals(HttpStatus.CREATED,response.getStatusCode());
+    assertEquals(HttpStatus.CREATED, response.getStatusCode());
 
     MemberResponse createResponse = response.getBody();
     assertNotNull(createResponse);
 
-    assertEquals(createRequest.getName(),createResponse.getName());
-    assertEquals(createRequest.getImage(),createResponse.getImage());
-    assertEquals(createRequest.getDescription(),createResponse.getDescription());
-    assertEquals(createRequest.getFacebookUrl(),createResponse.getFacebookUrl());
-    assertEquals(createRequest.getInstagramUrl(),createResponse.getInstagramUrl());
-    assertEquals(createRequest.getLinkedinUrl(),createResponse.getLinkedinUrl());
+    assertEquals(createRequest.getName(), createResponse.getName());
+    assertEquals(createRequest.getImage(), createResponse.getImage());
+    assertEquals(createRequest.getDescription(), createResponse.getDescription());
+    assertEquals(createRequest.getFacebookUrl(), createResponse.getFacebookUrl());
+    assertEquals(createRequest.getInstagramUrl(), createResponse.getInstagramUrl());
+    assertEquals(createRequest.getLinkedinUrl(), createResponse.getLinkedinUrl());
   }
 
-  private Member memberStub(){
+  @Test
+  public void shouldReturnForbiddenWhenAccessWithAdminRole() {
+    setAuthorizationHeaderBasedOn(RoleType.ADMIN);
+
+    CreateMemberRequest createRequest = buildRequestPayload();
+
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createRequest);
+
+    assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+    assertEquals(403, getStatusValue(response));
+  }
+
+  @Test
+  public void shouldReturnForbiddenWhenAccessWithoutRole() {
+    CreateMemberRequest createRequest = buildRequestPayload();
+
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createRequest);
+
+    assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+    assertEquals(403, getStatusValue(response));
+  }
+
+  @Test
+  public void shouldReturnBadRequestWhenNameIsEmpty() {
+    setAuthorizationHeaderBasedOn(RoleType.USER);
+
+    CreateMemberRequest createRequest = buildRequestWithEmptyName();
+
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createRequest);
+
+    assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+    ErrorResponse error = response.getBody();
+    assertEquals(400,getStatusValue(response));
+    assertEquals("Name cannot be null or empty.",getFirstMessageError(response));
+  }
+
+  @Test
+  public void shouldReturnBadRequestWhenImageIsEmpty() {
+    setAuthorizationHeaderBasedOn(RoleType.USER);
+
+    CreateMemberRequest createRequest = buildRequestWithEmptyImage();
+
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createRequest);
+
+    assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+    assertEquals(400,getStatusValue(response));
+    assertEquals("Image cannot be null or empty.",getFirstMessageError(response));
+  }
+
+
+  private Member memberStub() {
     Member member = new Member();
     member.setName(NAME);
     member.setImage(IMAGE);
@@ -62,5 +113,16 @@ public class CreateMemberIntegrationTest extends AbstractBaseMemberIntegrationTe
     member.setLinkedinUrl(LINKEDIN_URL);
     member.setSoftDelete(SOFT_DELETE);
     return member;
+  }
+
+  private ResponseEntity<ErrorResponse> getErrorResponseEntity(
+      CreateMemberRequest createRequest) {
+    HttpEntity<CreateMemberRequest> request =
+        new HttpEntity<>(createRequest, headers);
+
+    return restTemplate.exchange(createURLWithPort(PATH),
+            HttpMethod.POST,
+            request,
+            ErrorResponse.class);
   }
 }
