@@ -10,7 +10,7 @@ import lombok.Setter;
 public class UpdateMemberRequest {
 
   @NotBlank(message = "Name cannot be null or empty.")
-  @Pattern(regexp = "^[A-Za-z]*$", message = "The name has to contain only letters")
+  @Pattern(regexp = "^[\\s+A-Za-z]*$", message = "The name has to contain only letters")
   private String name;
   private String facebookUrl;
   private String instagramUrl;
