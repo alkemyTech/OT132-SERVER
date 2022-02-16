@@ -7,5 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IActivityRepository extends JpaRepository<Activity, Long> {
 
+  Activity findByActivityIdAndSoftDeleteFalse(long id);
+  
 }
 
