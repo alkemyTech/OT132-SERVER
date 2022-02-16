@@ -16,5 +16,5 @@ public class UpdateActivityRequest {
 
   @NotBlank(message = "Image cannot be empty or null.")
   private String image;
-  
+
 }

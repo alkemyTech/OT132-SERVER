@@ -15,10 +15,7 @@ public class CommentMapper {
   public List<CommentResponse> map(List<Comment> comments) {
     List<CommentResponse> commentResponses = new ArrayList<>(comments.size());
     for (Comment comment : comments) {
-      CommentResponse commentResponse = new CommentResponse();
-      commentResponse.setBody(comment.getBody());
-      commentResponse.setTimestamp(comment.getTimestamp());
-      commentResponses.add(commentResponse);
+      commentResponses.add(map(comment));
     }
     return commentResponses;
   }
@@ -29,5 +26,12 @@ public class CommentMapper {
     comment.setNews(news);
     comment.setUser(user);
     return comment;
+  }
+
+  public CommentResponse map(Comment comment) {
+    CommentResponse commentResponse = new CommentResponse();
+    commentResponse.setBody(comment.getBody());
+    commentResponse.setTimestamp(comment.getTimestamp());
+    return commentResponse;
   }
 }
