@@ -4,7 +4,6 @@ import com.alkemy.ong.common.PaginatedResultsRetrieved;
 import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.model.request.CreateTestimonialRequest;
 import com.alkemy.ong.model.request.UpdateTestimonialRequest;
-import com.alkemy.ong.model.response.AuthenticationResponse;
 import com.alkemy.ong.model.response.ListTestimonialResponse;
 import com.alkemy.ong.model.response.TestimonialResponse;
 import com.alkemy.ong.service.abstraction.ICreateTestimonial;
@@ -20,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -84,7 +82,7 @@ public class TestimonialController {
       @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
           response = ErrorResponse.class),
       @ApiResponse(code = 400, message = "INVALID_ARGUMENT - Bad request",
-          response = MethodArgumentNotValidException.class)})
+          response = ErrorResponse.class)})
   public ResponseEntity<TestimonialResponse> create(
       @RequestBody @Valid CreateTestimonialRequest createTestimonialRequest) {
     TestimonialResponse testimonialResponse = createTestimonial.create(createTestimonialRequest);
@@ -101,9 +99,9 @@ public class TestimonialController {
       @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
           response = ErrorResponse.class),
       @ApiResponse(code = 400, message = "INVALID_ARGUMENT - Bad request",
-          response = MethodArgumentNotValidException.class),
+          response = ErrorResponse.class),
       @ApiResponse(code = 404, message = "NOT_FOUND - Testimonial not found",
-          response = MethodArgumentNotValidException.class)})
+          response = ErrorResponse.class)})
   public ResponseEntity<TestimonialResponse> update(@PathVariable Long id,
       @RequestBody @Valid UpdateTestimonialRequest updateTestimonialRequest) {
     TestimonialResponse testimonialResponse = updateTestimonial.update(id,
@@ -121,7 +119,7 @@ public class TestimonialController {
       @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
           response = ErrorResponse.class),
       @ApiResponse(code = 404, message = "NOT_FOUND - Testimonial not found",
-          response = MethodArgumentNotValidException.class)})
+          response = ErrorResponse.class)})
   public ResponseEntity<Void> delete(@PathVariable Long id) {
     deleteTestimonial.delete(id);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
