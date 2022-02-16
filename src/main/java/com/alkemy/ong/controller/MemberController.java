@@ -61,7 +61,7 @@ public class MemberController {
     return ResponseEntity.status(HttpStatus.CREATED).body(memberResponse);
   }
 
-  @PutMapping("{id}")
+  @PutMapping("/{id}")
   public ResponseEntity<Void> update(@PathVariable Long id, @Valid @RequestBody
       UpdateMemberRequest updateMemberRequest) {
     updateMember.update(id, updateMemberRequest);
