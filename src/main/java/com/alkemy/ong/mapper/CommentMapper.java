@@ -15,10 +15,7 @@ public class CommentMapper {
   public List<CommentResponse> map(List<Comment> comments) {
     List<CommentResponse> commentResponses = new ArrayList<>(comments.size());
     for (Comment comment : comments) {
-      CommentResponse commentResponse = new CommentResponse();
-      commentResponse.setBody(comment.getBody());
-      commentResponse.setTimestamp(comment.getTimestamp());
-      commentResponses.add(commentResponse);
+      commentResponses.add(map(comment));
     }
     return commentResponses;
   }

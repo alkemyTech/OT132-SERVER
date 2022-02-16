@@ -45,15 +45,8 @@ public class CommentService implements IGetComment, ICreateComment,
 
   @Override
   public void create(CreateCommentRequest createCommentRequest) {
-    User user = userRepository.findByUserIdAndSoftDeleteFalse(createCommentRequest.getUserId());
-    if (user == null) {
-      throw new NotFoundException("User not found.");
-    }
-
-    News news = newsRepository.findByNewsIdAndSoftDeleteFalse(createCommentRequest.getNewsId());
-    if (news == null) {
-      throw new NotFoundException("Post not found.");
-    }
+    User user = getUser(createCommentRequest.getUserId());
+    News news = getNews(createCommentRequest.getNewsId());
     commentRepository.save(commentMapper.map(createCommentRequest, user, news));
   }
 
@@ -61,8 +54,8 @@ public class CommentService implements IGetComment, ICreateComment,
   public CommentResponse update(Long id, UpdateCommentRequest updateCommentRequest,
       Authentication authentication) throws InsufficientPermissionsException {
     Comment comment = findBy(id);
-    News news = newsRepository.findByNewsIdAndSoftDeleteFalse(updateCommentRequest.getNewsId());
-    User user = userRepository.findByUserIdAndSoftDeleteFalse(updateCommentRequest.getUserId());
+    News news = getNews(updateCommentRequest.getNewsId());
+    User user = getUser(updateCommentRequest.getUserId());
     checkUser(comment, authentication);
     updateValues(comment, updateCommentRequest, news, user);
     commentRepository.save(comment);
@@ -79,7 +72,8 @@ public class CommentService implements IGetComment, ICreateComment,
 
   private void checkUser(Comment comment, Authentication authentication)
       throws InsufficientPermissionsException {
-    if (!authentication.getName().equals(comment.getUser().getEmail())) {
+    if (authentication.getName() != null && !authentication.getName()
+        .equals(comment.getUser().getEmail())) {
       throw new InsufficientPermissionsException("Unauthorized to do changes");
     }
   }
@@ -90,5 +84,21 @@ public class CommentService implements IGetComment, ICreateComment,
     comment.setNews(news);
     comment.setUser(user);
     comment.setTimestamp(Timestamp.from(Instant.now()));
+  }
+
+  private User getUser(Long id) {
+    User user = userRepository.findByUserIdAndSoftDeleteFalse(id);
+    if (user == null) {
+      throw new NotFoundException("User not found.");
+    }
+    return user;
+  }
+
+  private News getNews(Long id) {
+    News news = newsRepository.findByNewsIdAndSoftDeleteFalse(id);
+    if (news == null) {
+      throw new NotFoundException("Post not found.");
+    }
+    return news;
   }
 }
