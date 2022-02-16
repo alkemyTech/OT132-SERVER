@@ -1,10 +1,19 @@
 package com.alkemy.ong.integration.member;
 
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
+
 import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.integration.common.AbstractBaseIntegrationTest;
+import com.alkemy.ong.model.entity.Member;
 import com.alkemy.ong.model.request.CreateMemberRequest;
 import com.alkemy.ong.repository.IMemberRepository;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Before;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.ResponseEntity;
 
 public class AbstractBaseMemberIntegrationTest extends AbstractBaseIntegrationTest {
@@ -22,32 +31,36 @@ public class AbstractBaseMemberIntegrationTest extends AbstractBaseIntegrationTe
   @MockBean
   IMemberRepository memberRepository;
 
+  @Before
+  public void checkFindMethod(){
+    when(memberRepository.findBySoftDeleteFalseOrderByTimestampDesc(any()))
+        .thenReturn(buildMemberStubPage());
+  }
+
+  protected Page<Member> buildMemberStubPage(){
+    List<Member> members = new ArrayList<>();
+    members.add(creteMember());
+    return new PageImpl<>(members);
+  }
+
+  private Member creteMember() {
+    Member member = new Member();
+    member.setName(NAME);
+    member.setFacebookUrl(FACEBOOK_URL);
+    member.setInstagramUrl(INSTAGRAM_URL);
+    member.setLinkedinUrl(LINKEDIN_URL);
+    member.setImage(IMAGE);
+    member.setDescription(DESCRIPTION);
+    member.setSoftDelete(SOFT_DELETE);
+    return member;
+  }
+
   protected CreateMemberRequest buildRequestWithEmptyName(){
     return buildRequestPayload(null, IMAGE, DESCRIPTION, FACEBOOK_URL, INSTAGRAM_URL, LINKEDIN_URL);
   }
 
   protected CreateMemberRequest buildRequestWithEmptyImage(){
     return buildRequestPayload(NAME, null, DESCRIPTION, FACEBOOK_URL, INSTAGRAM_URL, LINKEDIN_URL);
-  }
-
-  protected CreateMemberRequest buildRequestWithEmptyDescription(){
-    return buildRequestPayload(NAME, IMAGE, null, FACEBOOK_URL, INSTAGRAM_URL, LINKEDIN_URL);
-  }
-
-  protected CreateMemberRequest buildRequestWithEmptyFacebookUrl(){
-    return buildRequestPayload(NAME, IMAGE, DESCRIPTION, null, INSTAGRAM_URL, LINKEDIN_URL);
-  }
-
-  protected CreateMemberRequest buildRequestWithEmptyInstagramUrl(){
-    return buildRequestPayload(NAME, IMAGE, DESCRIPTION, FACEBOOK_URL, null, LINKEDIN_URL);
-  }
-
-  protected CreateMemberRequest buildRequestWithEmptyLinkedinUrl(){
-    return buildRequestPayload(NAME, IMAGE, DESCRIPTION, FACEBOOK_URL, INSTAGRAM_URL, null);
-  }
-
-  protected CreateMemberRequest buildRequestPayload() {
-    return buildRequestPayload(NAME, IMAGE, DESCRIPTION, FACEBOOK_URL, INSTAGRAM_URL, LINKEDIN_URL);
   }
 
   private CreateMemberRequest buildRequestPayload(String name, String image, String description,
