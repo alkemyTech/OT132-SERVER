@@ -28,7 +28,7 @@ public class MemberService implements IGetMemberDetails, ICreateMember {
     Page<Member> page =
         memberRepository.findBySoftDeleteFalseOrderByTimestampDesc(pageable);
     List<MemberResponse> memberResponses = memberMapper.map(page.getContent());
-    return buildListResponse(memberResponses,page);
+    return buildListResponse(memberResponses, page);
   }
 
   @Override

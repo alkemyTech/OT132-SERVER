@@ -23,7 +23,7 @@ public class ActivityController {
   @Autowired
   private ICreateActivity createActivity;
 
-  @Autowired 
+  @Autowired
   private IUpdateActivity updateActivity;
 
   @PostMapping
