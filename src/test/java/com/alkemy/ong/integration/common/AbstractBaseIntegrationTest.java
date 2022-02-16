@@ -16,7 +16,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 public abstract class AbstractBaseIntegrationTest {
 
   protected static final long USER_ID = 1L;
+  protected static final String FIRST_NAME = "John";
+  protected static final String LAST_NAME = "Doe";
   protected static final String EMAIL = "johnny@doe.com";
+  protected static final String PHOTO = "https://foo.jpg";
 
   protected TestRestTemplate restTemplate = new TestRestTemplate();
   protected HttpHeaders headers = new HttpHeaders();
@@ -35,7 +38,7 @@ public abstract class AbstractBaseIntegrationTest {
   }
 
   protected void setAuthorizationHeaderBasedOn(RoleType role) {
-    String jwt = SecurityTestConfig.createToken("johnny@doe.com", role);
+    String jwt = SecurityTestConfig.createToken(EMAIL, role);
     headers.set("Authorization", jwt);
   }
 
@@ -47,11 +50,11 @@ public abstract class AbstractBaseIntegrationTest {
 
   protected User stubUser(RoleType role) {
     return new User(USER_ID,
-        "John",
-        "Doe",
-        "johnny@doe.com",
+        FIRST_NAME,
+        LAST_NAME,
+        EMAIL,
         "123456789",
-        "https://foo.jpg",
+        PHOTO,
         Lists.list(stubRole(role)),
         Timestamp.from(Instant.now()),
         false);

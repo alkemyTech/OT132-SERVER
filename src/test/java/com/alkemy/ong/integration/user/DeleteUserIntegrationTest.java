@@ -25,7 +25,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class DeleteUserIntegrationTest extends AbstractBaseIntegrationTest {
 
-
   private static final String PATH = "/users/" + USER_ID;
 
   @Test
@@ -85,7 +84,6 @@ public class DeleteUserIntegrationTest extends AbstractBaseIntegrationTest {
 
   @Test
   public void shouldReturnForbiddenWithNoRole() {
-
     HttpEntity<UserResponse> requestEntity = new HttpEntity<>(headers);
 
     ResponseEntity<ErrorResponse> response = restTemplate.exchange(

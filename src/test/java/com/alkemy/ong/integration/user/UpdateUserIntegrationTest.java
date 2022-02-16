@@ -3,7 +3,6 @@ package com.alkemy.ong.integration.user;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
@@ -14,6 +13,7 @@ import com.alkemy.ong.integration.common.AbstractBaseIntegrationTest;
 import com.alkemy.ong.model.entity.User;
 import com.alkemy.ong.model.request.UpdateUserDetailsRequest;
 import com.alkemy.ong.model.response.UserResponse;
+import java.text.MessageFormat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,18 +28,27 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class UpdateUserIntegrationTest extends AbstractBaseIntegrationTest {
 
-  private final String PATH = "/users/" + USER_ID;
+  private static final String FIRST_NAME_UPDATED = "Bruce";
+  private static final String LAST_NAME_UPDATED = "Wayne";
+  private static final String EMAIL_UPDATED = "bruce@wayne.com";
+  private static final String PHOTO_UPDATED = "http://www.s3.com/my-photo.jpg";
+  private static final String PATH = "/users/" + USER_ID;
+
+  private enum UserTestCasesAttributes {
+    NULL_FIRST_NAME,
+    NULL_LAST_NAME,
+    NULL_EMAIL,
+    NULL_PASSWORD,
+    NULL_PHOTO
+  }
 
   @Test
   public void shouldReturnNotFoundWhenUserDoesNotExist() {
     when(userRepository.findByUserIdAndSoftDeleteFalse(eq(USER_ID))).thenReturn(null);
 
     setAuthorizationHeaderBasedOn(RoleType.USER);
-
-    UpdateUserDetailsRequest updateUserDetailsRequest = buildRequestPayLoad(RoleType.USER);
-
-    HttpEntity<UpdateUserDetailsRequest> requestEntity = new HttpEntity<>(updateUserDetailsRequest,
-        headers);
+    UpdateUserDetailsRequest request = buildRequestPayLoad(RoleType.USER);
+    HttpEntity<UpdateUserDetailsRequest> requestEntity = new HttpEntity<>(request, headers);
 
     ResponseEntity<ErrorResponse> response = restTemplate.exchange(
         createURLWithPort(PATH),
@@ -53,219 +62,146 @@ public class UpdateUserIntegrationTest extends AbstractBaseIntegrationTest {
   }
 
   @Test
-  public void shouldUpdateUserWithAllFieldsWithUserRole() {
-    when(userRepository.findByUserIdAndSoftDeleteFalse(eq(USER_ID))).thenReturn(
-        stubUser(RoleType.USER));
-    when(userRepository.save(any(User.class))).thenReturn(
-        buildStubUserUpdated(RoleType.USER));
-
-    setAuthorizationHeaderBasedOn(RoleType.USER);
-
-    UpdateUserDetailsRequest updateUserDetailsRequest = buildRequestPayLoad(RoleType.USER);
-
-    HttpEntity<UpdateUserDetailsRequest> requestEntity = new HttpEntity<>(updateUserDetailsRequest,
-        headers);
-
-    ResponseEntity<UserResponse> response = restTemplate.exchange(
-        createURLWithPort(PATH),
-        HttpMethod.PATCH,
-        requestEntity,
-        UserResponse.class);
-    UserResponse userResponse = response.getBody();
-
-    assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertNotNull(response.getBody());
-    assertTrue(assertResponseBody(updateUserDetailsRequest, userResponse));
-  }
-
-  @Test
-  public void shouldUpdateUserWithAllFieldsWithAdminRole() {
-    when(userRepository.findByUserIdAndSoftDeleteFalse(eq(USER_ID))).thenReturn(
-        stubUser(RoleType.ADMIN));
-    when(userRepository.save(any(User.class))).thenReturn(
-        buildStubUserUpdated(RoleType.ADMIN));
-
-    setAuthorizationHeaderBasedOn(RoleType.ADMIN);
-
-    UpdateUserDetailsRequest updateUserDetailsRequest = buildRequestPayLoad(RoleType.ADMIN);
-
-    HttpEntity<UpdateUserDetailsRequest> requestEntity = new HttpEntity<>(updateUserDetailsRequest,
-        headers);
-
-    ResponseEntity<UserResponse> response = restTemplate.exchange(
-        createURLWithPort(PATH),
-        HttpMethod.PATCH,
-        requestEntity,
-        UserResponse.class);
-    UserResponse userResponse = response.getBody();
-    assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertNotNull(response.getBody());
-    assertTrue(assertResponseBody(updateUserDetailsRequest, userResponse));
-  }
-
-  @Test
   public void shouldReturnForbiddenWithNoRole() {
-    UpdateUserDetailsRequest updateUserDetailsRequest = buildRequestPayLoad(RoleType.USER);
-
-    HttpEntity<UpdateUserDetailsRequest> requestEntity = new HttpEntity<>(updateUserDetailsRequest,
-        headers);
-
-    ResponseEntity<UserResponse> response = restTemplate.exchange(
-        createURLWithPort(PATH),
-        HttpMethod.PATCH,
-        requestEntity,
-        UserResponse.class);
+    UpdateUserDetailsRequest request = buildRequestPayLoad(RoleType.USER);
+    ResponseEntity<UserResponse> response = executeSuccessRequest(request);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
   }
 
   @Test
-  public void shouldUpdateUserWhenFirstNameIsNull() {
-    when(userRepository.findByUserIdAndSoftDeleteFalse(eq(USER_ID))).thenReturn(
-        stubUser(RoleType.USER));
-    when(userRepository.save(any(User.class))).thenReturn(
-        buildStubUserUpdated(RoleType.USER, UserTestCasesAttributes.NULL_FIRST_NAME));
+  public void shouldUpdateUserWithAllFieldsWithUserRole() {
+    mockUserRepository(RoleType.USER, buildStubUserUpdated(stubUser(RoleType.USER)));
 
     setAuthorizationHeaderBasedOn(RoleType.USER);
+    UpdateUserDetailsRequest request = buildRequestPayLoad(RoleType.USER);
+    ResponseEntity<UserResponse> response = executeSuccessRequest(request);
 
-    UpdateUserDetailsRequest updateUserDetailsRequest = buildRequestPayLoad(RoleType.USER,UserTestCasesAttributes.NULL_FIRST_NAME);
-
-    HttpEntity<UpdateUserDetailsRequest> requestEntity = new HttpEntity<>(updateUserDetailsRequest,
-        headers);
-
-    ResponseEntity<UserResponse> response = restTemplate.exchange(
-        createURLWithPort(PATH),
-        HttpMethod.PATCH,
-        requestEntity,
-        UserResponse.class);
     UserResponse userResponse = response.getBody();
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertNotNull(response.getBody());
-    assertTrue(assertResponseBody(updateUserDetailsRequest, userResponse));
+    assertResponseBody(userResponse);
+  }
+
+  @Test
+  public void shouldUpdateUserWithAllFieldsWithAdminRole() {
+    mockUserRepository(RoleType.ADMIN, buildStubUserUpdated(stubUser(RoleType.ADMIN)));
+
+    setAuthorizationHeaderBasedOn(RoleType.ADMIN);
+    UpdateUserDetailsRequest request = buildRequestPayLoad(RoleType.ADMIN);
+    ResponseEntity<UserResponse> response = executeSuccessRequest(request);
+
+    UserResponse userResponse = response.getBody();
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertNotNull(response.getBody());
+    assertResponseBody(userResponse);
+  }
+
+  @Test
+  public void shouldUpdateUserWhenFirstNameIsNull() {
+    mockUserRepository(RoleType.USER,
+        buildStubUserUpdated(stubUser(RoleType.USER), UserTestCasesAttributes.NULL_FIRST_NAME));
+
+    setAuthorizationHeaderBasedOn(RoleType.USER);
+    UpdateUserDetailsRequest request =
+        buildRequestPayLoad(RoleType.USER, UserTestCasesAttributes.NULL_FIRST_NAME);
+    ResponseEntity<UserResponse> response = executeSuccessRequest(request);
+
+    UserResponse userResponse = response.getBody();
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertNotNull(response.getBody());
+    assertResponseBody(userResponse, UserTestCasesAttributes.NULL_FIRST_NAME);
   }
 
   @Test
   public void shouldUpdateUserWhenLastNameIsNull() {
-    when(userRepository.findByUserIdAndSoftDeleteFalse(eq(USER_ID))).thenReturn(
-        stubUser(RoleType.USER));
-    when(userRepository.save(any(User.class))).thenReturn(
-        buildStubUserUpdated(RoleType.USER, UserTestCasesAttributes.NULL_LAST_NAME));
+    mockUserRepository(RoleType.USER,
+        buildStubUserUpdated(stubUser(RoleType.USER), UserTestCasesAttributes.NULL_LAST_NAME));
 
     setAuthorizationHeaderBasedOn(RoleType.USER);
+    UpdateUserDetailsRequest request =
+        buildRequestPayLoad(RoleType.USER, UserTestCasesAttributes.NULL_LAST_NAME);
+    ResponseEntity<UserResponse> response = executeSuccessRequest(request);
 
-    UpdateUserDetailsRequest updateUserDetailsRequest = buildRequestPayLoad(RoleType.USER, UserTestCasesAttributes.NULL_LAST_NAME);
-
-    HttpEntity<UpdateUserDetailsRequest> requestEntity = new HttpEntity<>(updateUserDetailsRequest,
-        headers);
-
-    ResponseEntity<UserResponse> response = restTemplate.exchange(
-        createURLWithPort(PATH),
-        HttpMethod.PATCH,
-        requestEntity,
-        UserResponse.class);
     UserResponse userResponse = response.getBody();
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertNotNull(response.getBody());
-    assertTrue(assertResponseBody(updateUserDetailsRequest, userResponse));
+    assertResponseBody(userResponse, UserTestCasesAttributes.NULL_LAST_NAME);
   }
 
   @Test
   public void shouldUpdateUserWhenEmailIsNull() {
-    when(userRepository.findByUserIdAndSoftDeleteFalse(eq(USER_ID))).thenReturn(
-        stubUser(RoleType.USER));
-    when(userRepository.save(any(User.class))).thenReturn(
-        buildStubUserUpdated(RoleType.USER, UserTestCasesAttributes.NULL_EMAIL));
+    mockUserRepository(RoleType.USER,
+        buildStubUserUpdated(stubUser(RoleType.USER), UserTestCasesAttributes.NULL_EMAIL));
 
     setAuthorizationHeaderBasedOn(RoleType.USER);
+    UpdateUserDetailsRequest request =
+        buildRequestPayLoad(RoleType.USER, UserTestCasesAttributes.NULL_EMAIL);
+    ResponseEntity<UserResponse> response = executeSuccessRequest(request);
 
-    UpdateUserDetailsRequest updateUserDetailsRequest = buildRequestPayLoad(RoleType.USER, UserTestCasesAttributes.NULL_EMAIL);
-
-    HttpEntity<UpdateUserDetailsRequest> requestEntity = new HttpEntity<>(updateUserDetailsRequest,
-        headers);
-
-    ResponseEntity<UserResponse> response = restTemplate.exchange(
-        createURLWithPort(PATH),
-        HttpMethod.PATCH,
-        requestEntity,
-        UserResponse.class);
     UserResponse userResponse = response.getBody();
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertNotNull(response.getBody());
-    assertNotEquals(EMAIL, response.getBody().getEmail());
-    assertTrue(assertResponseBody(updateUserDetailsRequest, userResponse));
+    assertResponseBody(userResponse, UserTestCasesAttributes.NULL_EMAIL);
   }
 
   @Test
   public void shouldUpdateUserWhenPasswordIsNull() {
-    when(userRepository.findByUserIdAndSoftDeleteFalse(eq(USER_ID))).thenReturn(
-        stubUser(RoleType.USER));
-    when(userRepository.save(any(User.class))).thenReturn(
-        buildStubUserUpdated(RoleType.USER, UserTestCasesAttributes.NULL_PASSWORD));
+    mockUserRepository(RoleType.USER,
+        buildStubUserUpdated(stubUser(RoleType.USER), UserTestCasesAttributes.NULL_PASSWORD));
 
     setAuthorizationHeaderBasedOn(RoleType.USER);
+    UpdateUserDetailsRequest request =
+        buildRequestPayLoad(RoleType.USER, UserTestCasesAttributes.NULL_PASSWORD);
+    ResponseEntity<UserResponse> response = executeSuccessRequest(request);
 
-    UpdateUserDetailsRequest updateUserDetailsRequest = buildRequestPayLoad(RoleType.USER, UserTestCasesAttributes.NULL_PASSWORD);
-
-    HttpEntity<UpdateUserDetailsRequest> requestEntity = new HttpEntity<>(updateUserDetailsRequest,
-        headers);
-
-    ResponseEntity<UserResponse> response = restTemplate.exchange(
-        createURLWithPort(PATH),
-        HttpMethod.PATCH,
-        requestEntity,
-        UserResponse.class);
     UserResponse userResponse = response.getBody();
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertNotNull(response.getBody());
-    assertTrue(assertResponseBody(updateUserDetailsRequest, userResponse));
+    assertResponseBody(userResponse, UserTestCasesAttributes.NULL_PASSWORD);
   }
 
   @Test
   public void shouldUpdateUserWhenPhotoIsNull() {
-    when(userRepository.findByUserIdAndSoftDeleteFalse(eq(USER_ID))).thenReturn(
-        stubUser(RoleType.USER));
-    when(userRepository.save(any(User.class))).thenReturn(
-        buildStubUserUpdated(RoleType.USER, UserTestCasesAttributes.NULL_PHOTO));
+    mockUserRepository(RoleType.USER,
+        buildStubUserUpdated(stubUser(RoleType.USER), UserTestCasesAttributes.NULL_PHOTO));
 
     setAuthorizationHeaderBasedOn(RoleType.USER);
+    UpdateUserDetailsRequest request =
+        buildRequestPayLoad(RoleType.USER, UserTestCasesAttributes.NULL_PHOTO);
+    ResponseEntity<UserResponse> response = executeSuccessRequest(request);
 
-    UpdateUserDetailsRequest updateUserDetailsRequest = buildRequestPayLoad(RoleType.USER, UserTestCasesAttributes.NULL_PHOTO);
-
-    HttpEntity<UpdateUserDetailsRequest> requestEntity = new HttpEntity<>(updateUserDetailsRequest,
-        headers);
-
-    ResponseEntity<UserResponse> response = restTemplate.exchange(
-        createURLWithPort(PATH),
-        HttpMethod.PATCH,
-        requestEntity,
-        UserResponse.class);
     UserResponse userResponse = response.getBody();
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertNotNull(response.getBody());
-    assertTrue(assertResponseBody(updateUserDetailsRequest, userResponse));  }
+    assertResponseBody(userResponse, UserTestCasesAttributes.NULL_PHOTO);
+  }
 
-  private User buildStubUserUpdated(RoleType role,
+  private void mockUserRepository(RoleType roleType, User userUpdated) {
+    when(userRepository.findByUserIdAndSoftDeleteFalse(eq(USER_ID)))
+        .thenReturn(stubUser(roleType));
+    when(userRepository.save(any(User.class)))
+        .thenReturn(userUpdated);
+  }
+
+  private User buildStubUserUpdated(User userUpdated,
       UserTestCasesAttributes... userTestCasesAttributes) {
 
-    User userUpdated = stubUser(role);
+    for (UserTestCasesAttributes testCaseAttribute : userTestCasesAttributes) {
+      if (testCaseAttribute != UserTestCasesAttributes.NULL_FIRST_NAME) {
+        userUpdated.setFirstName(FIRST_NAME_UPDATED);
+      }
 
-    for (UserTestCasesAttributes userAttribute : userTestCasesAttributes) {
-      switch (userAttribute) {
-        case NULL_FIRST_NAME:
-          userUpdated.setFirstName(null);
-          break;
-        case NULL_LAST_NAME:
-          userUpdated.setLastName(null);
-          break;
-        case NULL_EMAIL:
-          userUpdated.setEmail(null);
-          break;
-        case NULL_PASSWORD:
-          userUpdated.setPassword(null);
-          break;
-        case NULL_PHOTO:
-          userUpdated.setPhoto(null);
-          break;
+      if (testCaseAttribute != UserTestCasesAttributes.NULL_LAST_NAME) {
+        userUpdated.setLastName(LAST_NAME_UPDATED);
+      }
+
+      if (testCaseAttribute != UserTestCasesAttributes.NULL_EMAIL) {
+        userUpdated.setEmail(EMAIL_UPDATED);
+      }
+
+      if (testCaseAttribute != UserTestCasesAttributes.NULL_PHOTO) {
+        userUpdated.setPhoto(PHOTO_UPDATED);
       }
     }
     return userUpdated;
@@ -274,17 +210,17 @@ public class UpdateUserIntegrationTest extends AbstractBaseIntegrationTest {
   private UpdateUserDetailsRequest buildRequestPayLoad(RoleType role,
       UserTestCasesAttributes... userTestCasesAttributes) {
 
-    UpdateUserDetailsRequest request = new UpdateUserDetailsRequest();
     User userUpdated = stubUser(role);
 
+    UpdateUserDetailsRequest request = new UpdateUserDetailsRequest();
     request.setFirstName(userUpdated.getFirstName());
     request.setLastName(userUpdated.getLastName());
     request.setEmail(userUpdated.getEmail());
     request.setPassword(userUpdated.getPassword());
     request.setPhoto(userUpdated.getPhoto());
 
-    for (UserTestCasesAttributes userAttribute : userTestCasesAttributes) {
-      switch (userAttribute) {
+    for (UserTestCasesAttributes testCaseAttribute : userTestCasesAttributes) {
+      switch (testCaseAttribute) {
         case NULL_FIRST_NAME:
           request.setFirstName(null);
           break;
@@ -300,33 +236,52 @@ public class UpdateUserIntegrationTest extends AbstractBaseIntegrationTest {
         case NULL_PHOTO:
           request.setPhoto(null);
           break;
+        default:
+          throw new UnsupportedOperationException(
+              MessageFormat.format("Test case: {0} is unsupported", testCaseAttribute));
       }
     }
     return request;
   }
 
-  private Boolean assertResponseBody(UpdateUserDetailsRequest request, UserResponse response) {
-    if (request.getFirstName() != null) {
-      if (!request.getFirstName().equals(response.getFirstName())) {
-        return false;
+  private void assertResponseBody(UserResponse response,
+      UserTestCasesAttributes... userTestCasesAttributes) {
+
+    for (UserTestCasesAttributes testCaseAttribute : userTestCasesAttributes) {
+
+      if (testCaseAttribute == UserTestCasesAttributes.NULL_FIRST_NAME) {
+        assertEquals(FIRST_NAME, response.getFirstName());
+      } else {
+        assertEquals(FIRST_NAME_UPDATED, response.getFirstName());
+      }
+
+      if (testCaseAttribute == UserTestCasesAttributes.NULL_LAST_NAME) {
+        assertEquals(LAST_NAME, response.getLastName());
+      } else {
+        assertEquals(LAST_NAME_UPDATED, response.getLastName());
+      }
+
+      if (testCaseAttribute == UserTestCasesAttributes.NULL_EMAIL) {
+        assertEquals(EMAIL, response.getEmail());
+      } else {
+        assertEquals(EMAIL_UPDATED, response.getEmail());
+      }
+
+      if (testCaseAttribute == UserTestCasesAttributes.NULL_PHOTO) {
+        assertEquals(PHOTO, response.getPhoto());
+      } else {
+        assertEquals(PHOTO_UPDATED, response.getPhoto());
       }
     }
-    if (request.getLastName() != null) {
-      if (!request.getLastName().equals(response.getLastName())) {
-        return false;
-      }
-    }
-    if (request.getEmail() != null) {
-      if (!request.getEmail().equals(response.getEmail())) {
-        return false;
-      }
-    }
-    if (request.getPhoto() != null) {
-      if (!request.getPhoto().equals(response.getPhoto())) {
-        return false;
-      }
-    }
-    return true;
+  }
+
+  private ResponseEntity<UserResponse> executeSuccessRequest(UpdateUserDetailsRequest request) {
+    HttpEntity<UpdateUserDetailsRequest> requestEntity = new HttpEntity<>(request, headers);
+    return restTemplate.exchange(
+        createURLWithPort(PATH),
+        HttpMethod.PATCH,
+        requestEntity,
+        UserResponse.class);
   }
 
 }
