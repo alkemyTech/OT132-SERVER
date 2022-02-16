@@ -63,6 +63,10 @@ public class AbstractBaseMemberIntegrationTest extends AbstractBaseIntegrationTe
     return buildRequestPayload(NAME, null, DESCRIPTION, FACEBOOK_URL, INSTAGRAM_URL, LINKEDIN_URL);
   }
 
+  protected CreateMemberRequest buildRequestPayload() {
+    return buildRequestPayload(NAME, IMAGE, DESCRIPTION, FACEBOOK_URL, INSTAGRAM_URL, LINKEDIN_URL);
+  }
+
   private CreateMemberRequest buildRequestPayload(String name, String image, String description,
       String facebookUrl, String instagramUrl, String linkedinUrl) {
     CreateMemberRequest memberRequest = new CreateMemberRequest();
