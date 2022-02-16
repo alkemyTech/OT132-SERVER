@@ -117,6 +117,7 @@ public class CreateMemberIntegrationTest extends AbstractBaseMemberIntegrationTe
 
   private ResponseEntity<ErrorResponse> getErrorResponseEntity(
       CreateMemberRequest createRequest) {
+
     HttpEntity<CreateMemberRequest> request =
         new HttpEntity<>(createRequest, headers);
 

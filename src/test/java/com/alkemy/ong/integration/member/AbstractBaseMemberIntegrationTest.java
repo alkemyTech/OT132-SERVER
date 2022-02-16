@@ -16,7 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.http.ResponseEntity;
 
-public class AbstractBaseMemberIntegrationTest extends AbstractBaseIntegrationTest {
+public abstract class AbstractBaseMemberIntegrationTest extends AbstractBaseIntegrationTest {
 
   protected final static String PATH = "/members";
   protected final static String NAME = "Joe";
@@ -39,11 +39,11 @@ public class AbstractBaseMemberIntegrationTest extends AbstractBaseIntegrationTe
 
   protected Page<Member> buildMemberStubPage(){
     List<Member> members = new ArrayList<>();
-    members.add(creteMember());
+    members.add(createMember());
     return new PageImpl<>(members);
   }
 
-  private Member creteMember() {
+  private Member createMember() {
     Member member = new Member();
     member.setName(NAME);
     member.setFacebookUrl(FACEBOOK_URL);
