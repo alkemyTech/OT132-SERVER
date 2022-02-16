@@ -34,9 +34,6 @@ public class ActivityService implements ICreateActivity, IUpdateActivity {
   @Override
   public ActivityResponse update(long id, UpdateActivityRequest updateActivityRequest) {
     Activity activity = findBy(id);
-    if (activity == null) {
-      throw new NotFoundException("Activity not found");
-    }
     activity.setName(updateActivityRequest.getName());
     activity.setContent(updateActivityRequest.getContent());
     activity.setImage(updateActivityRequest.getImage());
@@ -44,6 +41,10 @@ public class ActivityService implements ICreateActivity, IUpdateActivity {
   }
 
   private Activity findBy(long id) {
-    return activityRepository.findByActivityIdAndSoftDeleteFalse(id);
+    Activity activity = activityRepository.findByActivityIdAndSoftDeleteFalse(id);
+    if (activity == null) {
+      throw new NotFoundException("Activity not found");
+    }
+    return activity;
   }
 }
