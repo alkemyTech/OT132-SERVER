@@ -102,19 +102,6 @@ public class CreateMemberIntegrationTest extends AbstractBaseMemberIntegrationTe
     assertEquals("Image cannot be null or empty.",getFirstMessageError(response));
   }
 
-
-  private Member memberStub() {
-    Member member = new Member();
-    member.setName(NAME);
-    member.setImage(IMAGE);
-    member.setDescription(DESCRIPTION);
-    member.setFacebookUrl(FACEBOOK_URL);
-    member.setInstagramUrl(INSTAGRAM_URL);
-    member.setLinkedinUrl(LINKEDIN_URL);
-    member.setSoftDelete(SOFT_DELETE);
-    return member;
-  }
-
   private ResponseEntity<ErrorResponse> getErrorResponseEntity(
       CreateMemberRequest createRequest) {
 

@@ -39,11 +39,11 @@ public abstract class AbstractBaseMemberIntegrationTest extends AbstractBaseInte
 
   protected Page<Member> buildMemberStubPage(){
     List<Member> members = new ArrayList<>();
-    members.add(createMember());
+    members.add(memberStub());
     return new PageImpl<>(members);
   }
 
-  private Member createMember() {
+  protected Member memberStub() {
     Member member = new Member();
     member.setName(NAME);
     member.setFacebookUrl(FACEBOOK_URL);
@@ -56,26 +56,25 @@ public abstract class AbstractBaseMemberIntegrationTest extends AbstractBaseInte
   }
 
   protected CreateMemberRequest buildRequestWithEmptyName(){
-    return buildRequestPayload(null, IMAGE, DESCRIPTION, FACEBOOK_URL, INSTAGRAM_URL, LINKEDIN_URL);
+    return buildRequestPayload(null, IMAGE);
   }
 
   protected CreateMemberRequest buildRequestWithEmptyImage(){
-    return buildRequestPayload(NAME, null, DESCRIPTION, FACEBOOK_URL, INSTAGRAM_URL, LINKEDIN_URL);
+    return buildRequestPayload(NAME, null);
   }
 
   protected CreateMemberRequest buildRequestPayload() {
-    return buildRequestPayload(NAME, IMAGE, DESCRIPTION, FACEBOOK_URL, INSTAGRAM_URL, LINKEDIN_URL);
+    return buildRequestPayload(NAME, IMAGE);
   }
 
-  private CreateMemberRequest buildRequestPayload(String name, String image, String description,
-      String facebookUrl, String instagramUrl, String linkedinUrl) {
+  private CreateMemberRequest buildRequestPayload(String name, String image) {
     CreateMemberRequest memberRequest = new CreateMemberRequest();
     memberRequest.setName(name);
     memberRequest.setImage(image);
-    memberRequest.setDescription(description);
-    memberRequest.setFacebookUrl(facebookUrl);
-    memberRequest.setInstagramUrl(instagramUrl);
-    memberRequest.setLinkedinUrl(linkedinUrl);
+    memberRequest.setDescription(DESCRIPTION);
+    memberRequest.setFacebookUrl(FACEBOOK_URL);
+    memberRequest.setInstagramUrl(INSTAGRAM_URL);
+    memberRequest.setLinkedinUrl(LINKEDIN_URL);
     return memberRequest;
   }
 
