@@ -46,7 +46,7 @@ public class MemberService implements IGetMemberDetails, ICreateMember, IUpdateM
   }
 
   private Member findBy(Long id) {
-    Optional<Member> result = memberRepository.findById(id);
+    Optional<Member> result = memberRepository.findByMemberIdAndSoftDeleteFalse(id);
     if (result.isEmpty()) {
       throw new NotFoundException("Member not found");
     }
