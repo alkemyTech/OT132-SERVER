@@ -70,6 +70,22 @@ public class CreateTestimonialIntegrationTest extends AbstractBaseIntegrationTes
   }
 
   @Test
+  public void shouldReturnForbiddenWhenAccessWithoutRole(){
+    CreateTestimonialRequest createTestimonialRequest = buildRequestPayload();
+
+    HttpEntity<CreateTestimonialRequest> requestEntity =
+        new HttpEntity<>(createTestimonialRequest, headers);
+
+    ResponseEntity<ErrorResponse> response = restTemplate.exchange(
+        createURLWithPort(PATH),
+        HttpMethod.POST,
+        requestEntity,
+        ErrorResponse.class);
+    assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+    assertEquals(0, response.getBody().getMessages().size());
+  }
+
+  @Test
   public void shouldReturnBadRequestWhenNameIsEmpty() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
 
@@ -89,6 +105,28 @@ public class CreateTestimonialIntegrationTest extends AbstractBaseIntegrationTes
     assertEquals(400, response.getBody().getStatus());
     assertEquals(1, response.getBody().getMessages().size());
     assertEquals("Name cannot be empty or null.", response.getBody().getMessages().get(0));
+  }
+
+  @Test
+  public void shouldReturnBadRequestWhenContentIsEmpty() {
+    setAuthorizationHeaderBasedOn(RoleType.ADMIN);
+
+    CreateTestimonialRequest createTestimonialRequest = buildRequestPayloadWithEmptyName();
+
+    HttpEntity<CreateTestimonialRequest> requestEntity =
+        new HttpEntity<>(createTestimonialRequest, headers);
+
+    ResponseEntity<ErrorResponse> response = restTemplate.exchange(
+        createURLWithPort(PATH),
+        HttpMethod.POST,
+        requestEntity,
+        ErrorResponse.class);
+
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+
+    assertEquals(400, response.getBody().getStatus());
+    assertEquals(1, response.getBody().getMessages().size());
+    assertEquals("Content cannot be empty or null.", response.getBody().getMessages().get(0));
   }
 
   private CreateTestimonialRequest buildRequestPayloadWithEmptyName() {

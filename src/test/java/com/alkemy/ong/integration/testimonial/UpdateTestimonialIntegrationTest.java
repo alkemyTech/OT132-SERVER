@@ -27,12 +27,13 @@ public class UpdateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
   public void shouldUpdateTestimonialWithAdminRole() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
     when(testimonialRepository.save(any(Testimonial.class))).thenReturn(createTestimonialStub());
-
+    when(testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(TESTIMONIAL_ID))
+        .thenReturn(createTestimonialStub());
     UpdateTestimonialRequest request = buildRequestPayload();
     HttpEntity<UpdateTestimonialRequest> requestEntity = new HttpEntity<>(request, headers);
 
     ResponseEntity<TestimonialResponse> response = restTemplate.exchange(
-        createURLWithPort(PATH),
+        createURLWithPort(PATH_ID),
         HttpMethod.PUT,
         requestEntity,
         TestimonialResponse.class);
@@ -48,12 +49,14 @@ public class UpdateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
   public void shouldUpdateTestimonialWithUserRole() {
     setAuthorizationHeaderBasedOn(RoleType.USER);
     when(testimonialRepository.save(any(Testimonial.class))).thenReturn(createTestimonialStub());
+    when(testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(TESTIMONIAL_ID))
+        .thenReturn(createTestimonialStub());
 
     UpdateTestimonialRequest request = buildRequestPayload();
     HttpEntity<UpdateTestimonialRequest> requestEntity = new HttpEntity<>(request, headers);
 
     ResponseEntity<TestimonialResponse> response = restTemplate.exchange(
-        createURLWithPort(PATH),
+        createURLWithPort(PATH_ID),
         HttpMethod.PUT,
         requestEntity,
         TestimonialResponse.class);
@@ -71,11 +74,11 @@ public class UpdateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
     HttpEntity<UpdateTestimonialRequest> requestEntity = new HttpEntity<>(
         updateTestimonialRequest, headers);
 
-    ResponseEntity<ErrorResponse> response = restTemplate.exchange(createURLWithPort(PATH),
+    ResponseEntity<ErrorResponse> response = restTemplate.exchange(createURLWithPort(PATH_ID),
         HttpMethod.PUT, requestEntity, ErrorResponse.class);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
-    assertEquals(0, getMessageSizeError(response));
+    assertEquals(0, getAmountMessages(response));
   }
 
   @Test
@@ -88,7 +91,7 @@ public class UpdateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
         new HttpEntity<>(updateTestimonialRequest, headers);
 
     ResponseEntity<ErrorResponse> response = restTemplate.exchange(
-        createURLWithPort(PATH),
+        createURLWithPort(PATH_ID),
         HttpMethod.PUT,
         requestEntity,
         ErrorResponse.class);
@@ -110,7 +113,7 @@ public class UpdateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
         new HttpEntity<>(updateTestimonialRequest, headers);
 
     ResponseEntity<ErrorResponse> response = restTemplate.exchange(
-        createURLWithPort(PATH),
+        createURLWithPort(PATH_ID),
         HttpMethod.PUT,
         requestEntity,
         ErrorResponse.class);
@@ -121,7 +124,7 @@ public class UpdateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
     assertEquals(1, response.getBody().getMessages().size());
     assertEquals("Content cannot be empty or null.", response.getBody().getMessages().get(0));
   }
-
+  
   private UpdateTestimonialRequest buildRequestPayloadWithEmptyName() {
     return buildRequestPayload(null, CONTENT);
   }
@@ -141,7 +144,4 @@ public class UpdateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
     return request;
   }
 
-  private int getMessageSizeError(ResponseEntity<ErrorResponse> response) {
-    return response.getBody().getMessages().size();
-  }
 }
