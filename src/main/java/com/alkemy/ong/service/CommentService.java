@@ -14,6 +14,7 @@ import com.alkemy.ong.repository.ICommentRepository;
 import com.alkemy.ong.repository.INewsRepository;
 import com.alkemy.ong.repository.IUserRepository;
 import com.alkemy.ong.service.abstraction.ICreateComment;
+import com.alkemy.ong.service.abstraction.IDeleteComment;
 import com.alkemy.ong.service.abstraction.IGetComment;
 import com.alkemy.ong.service.abstraction.IUpdateComment;
 import java.sql.Timestamp;
@@ -25,8 +26,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CommentService implements IGetComment, ICreateComment,
-    IUpdateComment {
+public class CommentService implements IGetComment, ICreateComment, IUpdateComment, IDeleteComment {
 
   @Autowired
   private ICommentRepository commentRepository;
@@ -100,5 +100,13 @@ public class CommentService implements IGetComment, ICreateComment,
       throw new NotFoundException("Post not found.");
     }
     return news;
+  }
+
+  @Override
+  public void delete(Long id, Authentication authentication)
+      throws InsufficientPermissionsException {
+    Comment comment = findBy(id);
+    this.checkUser(comment, authentication);
+    commentRepository.delete(comment);
   }
 }
