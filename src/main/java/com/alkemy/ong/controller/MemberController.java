@@ -57,7 +57,7 @@ public class MemberController {
   @Autowired
   private IDeleteMember deleteMember;
 
-  @GetMapping(produces = {"application/json"}, consumes = {"application/json"})
+  @GetMapping(produces = {"application/json"})
   @ApiOperation(value = "Return the list of members by severous pages")
   @ApiResponses(value = {
       @ApiResponse(code = 200,
@@ -131,6 +131,7 @@ public class MemberController {
   @PutMapping(value = "/{id}",produces = {"application/json"},
       consumes = {"application/json"})
   @ResponseStatus(HttpStatus.NO_CONTENT)
+  @ApiOperation(value = "Update a member passed by id.")
   @ApiResponses(value = {
       @ApiResponse(code = 204, message = "NO_CONTENT - The member was successfully created"),
       @ApiResponse(code = 403,message = "PERMISSION_DENIED - Forbidden.",
@@ -158,9 +159,9 @@ public class MemberController {
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 
-  @DeleteMapping(value = "/{id}",produces = {"application/json"},
-      consumes = {"application/json"})
+  @DeleteMapping(value = "/{id}",produces = {"application/json"})
   @ResponseStatus(HttpStatus.NO_CONTENT)
+  @ApiOperation(value = "Delete a member passed by id.")
   @ApiResponses(value = {
       @ApiResponse(code = 204, message = "NO_CONTENT - The member was successfully deleted"),
       @ApiResponse(code = 403,message = "PERMISSION_DENIED - Forbidden.",
