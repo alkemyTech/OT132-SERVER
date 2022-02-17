@@ -62,14 +62,14 @@ public class MemberController {
   @ApiResponses(value = {
       @ApiResponse(code = 200,
           message = "OK - The list of members. The size of the page is the one"
-          + "passed in the parameters",
+              + "passed in the parameters",
           response = ListMembersResponse.class,
           responseHeaders = {
-            @ResponseHeader(name = "Link",
-                description = "Link of the previous page and another for the next page",
-                response = String.class)
+              @ResponseHeader(name = "Link",
+                  description = "Link of the previous page and another for the next page",
+                  response = String.class)
           }),
-      @ApiResponse(code = 403,message = "PERMISSION_DENIED - Forbidden.",
+      @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
           response = ErrorResponse.class)
   })
 
@@ -112,7 +112,9 @@ public class MemberController {
   @ApiResponses(value = {
       @ApiResponse(code = 201, message = "OK - The member was successfully created",
           response = MemberResponse.class),
-      @ApiResponse(code = 403,message = "PERMISSION_DENIED - Forbidden.",
+      @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
+          response = ErrorResponse.class),
+      @ApiResponse(code = 404, message = "NOT_FOUND - Member not found.",
           response = ErrorResponse.class)
   })
   @ApiImplicitParam(name = "Authorization",
@@ -128,13 +130,15 @@ public class MemberController {
     return ResponseEntity.status(HttpStatus.CREATED).body(memberResponse);
   }
 
-  @PutMapping(value = "/{id}",produces = {"application/json"},
+  @PutMapping(value = "/{id}", produces = {"application/json"},
       consumes = {"application/json"})
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @ApiOperation(value = "Update a member passed by id.")
   @ApiResponses(value = {
       @ApiResponse(code = 204, message = "NO_CONTENT - The member was successfully created"),
-      @ApiResponse(code = 403,message = "PERMISSION_DENIED - Forbidden.",
+      @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
+          response = ErrorResponse.class),
+      @ApiResponse(code = 404, message = "NOT_FOUND - Member not found.",
           response = ErrorResponse.class)
   })
   @ApiImplicitParams(value = {
@@ -159,12 +163,14 @@ public class MemberController {
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 
-  @DeleteMapping(value = "/{id}",produces = {"application/json"})
+  @DeleteMapping(value = "/{id}", produces = {"application/json"})
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @ApiOperation(value = "Delete a member passed by id.")
   @ApiResponses(value = {
       @ApiResponse(code = 204, message = "NO_CONTENT - The member was successfully deleted"),
-      @ApiResponse(code = 403,message = "PERMISSION_DENIED - Forbidden.",
+      @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
+          response = ErrorResponse.class),
+      @ApiResponse(code = 404, message = "NOT_FOUND - Member not found.",
           response = ErrorResponse.class)
   })
   @ApiImplicitParams(value = {
