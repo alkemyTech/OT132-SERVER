@@ -41,10 +41,10 @@ public class AuthenticationController {
   @Autowired
   private IGetUserDetails getUserDetails;
 
-  @PostMapping(value = "/login",produces = {"application/json"},
+  @PostMapping(value = "/login", produces = {"application/json"},
       consumes = {"application/json"})
   @ApiOperation(value = "Log a new user to the API", produces = "application/json",
-                consumes = "application/json")
+      consumes = "application/json")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "OK - User authenticated",
           response = AuthenticationResponse.class),
@@ -58,12 +58,12 @@ public class AuthenticationController {
     return ResponseEntity.ok(login.login(authenticationRequest));
   }
 
-  @PostMapping(value = "/register",produces = {"application/json"},
+  @PostMapping(value = "/register", produces = {"application/json"},
       consumes = {"application/json"})
   @ResponseStatus(HttpStatus.CREATED)
   @ApiOperation(value = "Register an user and get the bearer token",
-                produces = "application/json",
-                consumes = "application/json")
+      produces = "application/json",
+      consumes = "application/json")
   @ApiResponses(value = {
       @ApiResponse(code = 201, message = "OK - User register successfully",
           response = UserResponse.class),
@@ -79,7 +79,7 @@ public class AuthenticationController {
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
-  @GetMapping(value = "/me",produces = {"application/json"})
+  @GetMapping(value = "/me", produces = {"application/json"})
   @ApiImplicitParam(name = "Authorization",
       value = "Access Token",
       required = true,

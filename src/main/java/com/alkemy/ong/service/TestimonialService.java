@@ -31,7 +31,8 @@ public class TestimonialService implements ICreateTestimonial, IDeleteTestimonia
 
   @Override
   public ListTestimonialResponse findAll(Pageable pageable) {
-    Page<Testimonial> page = testimonialRepository.findAll(pageable);
+    Page<Testimonial> page = testimonialRepository.findBySoftDeleteFalseOrderByTimestampDesc(
+        pageable);
     List<TestimonialResponse> testimonialResponses = testimonialMapper.map(page.getContent());
     return buildListResponse(testimonialResponses, page);
   }
