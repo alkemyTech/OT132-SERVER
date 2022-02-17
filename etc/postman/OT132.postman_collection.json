@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "a0ba4380-1f75-4980-9b02-66f8497018d1",
+    "_postman_id": "21fa7ed5-ab5c-4e5d-9883-a56f89d52707",
     "name": "OT132",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
@@ -1061,6 +1061,45 @@
               ]
             },
             "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\" : \"name\",\r\n    \"facebookUrl\" : \"facebookUrl\",\r\n    \"instagramUrl\"  : \"instagramUrl\",\r\n    \"linkedinUrl\" : \"linkedinUrl\",\r\n    \"image\" : \"image\",\r\n    \"description\" : \"description\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/members/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "members",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Member",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoiYnNrdW5pZ3VuZGUxOEBnbWFpbC5jb20iLCJpYXQiOjE2NDQ5Njg3MDgsImV4cCI6MTY0NTAwNDcwOH0.kVArZorD4QwBkcfFC4m8RR2G3zBzjbqBNW-PpVSllvw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
             "header": [],
             "body": {
               "mode": "raw",
