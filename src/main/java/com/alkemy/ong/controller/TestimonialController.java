@@ -10,6 +10,8 @@ import com.alkemy.ong.service.abstraction.ICreateTestimonial;
 import com.alkemy.ong.service.abstraction.IDeleteTestimonial;
 import com.alkemy.ong.service.abstraction.IGetTestimonialDetails;
 import com.alkemy.ong.service.abstraction.IUpdateTestimonial;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -31,6 +33,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/testimonials")
+@Api(tags = "Testimonial Endpoints", value = "TestimonialEndpoints")
 public class TestimonialController {
 
   private static final String TESTIMONIAL_PATH = "/testimonials";
@@ -59,6 +62,13 @@ public class TestimonialController {
           response = ListTestimonialResponse.class),
       @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
           response = ErrorResponse.class)})
+  @ApiImplicitParam(name = "Authorization",
+      value = "Access Token",
+      required = true,
+      allowEmptyValue = false,
+      paramType = "header",
+      dataTypeClass = String.class,
+      example = "Bearer access_token")
   public ResponseEntity<ListTestimonialResponse> list(Pageable pageable,
       UriComponentsBuilder uriBuilder, HttpServletResponse response) {
     ListTestimonialResponse listTestimonialResponse = getTestimonialDetails.findAll(pageable);
@@ -83,6 +93,13 @@ public class TestimonialController {
           response = ErrorResponse.class),
       @ApiResponse(code = 400, message = "INVALID_ARGUMENT - Bad request",
           response = ErrorResponse.class)})
+  @ApiImplicitParam(name = "Authorization",
+      value = "Access Token",
+      required = true,
+      allowEmptyValue = false,
+      paramType = "header",
+      dataTypeClass = String.class,
+      example = "Bearer access_token")
   public ResponseEntity<TestimonialResponse> create(
       @RequestBody @Valid CreateTestimonialRequest createTestimonialRequest) {
     TestimonialResponse testimonialResponse = createTestimonial.create(createTestimonialRequest);
@@ -102,6 +119,13 @@ public class TestimonialController {
           response = ErrorResponse.class),
       @ApiResponse(code = 404, message = "NOT_FOUND - Testimonial not found",
           response = ErrorResponse.class)})
+  @ApiImplicitParam(name = "Authorization",
+      value = "Access Token",
+      required = true,
+      allowEmptyValue = false,
+      paramType = "header",
+      dataTypeClass = String.class,
+      example = "Bearer access_token")
   public ResponseEntity<TestimonialResponse> update(@PathVariable Long id,
       @RequestBody @Valid UpdateTestimonialRequest updateTestimonialRequest) {
     TestimonialResponse testimonialResponse = updateTestimonial.update(id,
@@ -120,6 +144,13 @@ public class TestimonialController {
           response = ErrorResponse.class),
       @ApiResponse(code = 404, message = "NOT_FOUND - Testimonial not found",
           response = ErrorResponse.class)})
+  @ApiImplicitParam(name = "Authorization",
+      value = "Access Token",
+      required = true,
+      allowEmptyValue = false,
+      paramType = "header",
+      dataTypeClass = String.class,
+      example = "Bearer access_token")
   public ResponseEntity<Void> delete(@PathVariable Long id) {
     deleteTestimonial.delete(id);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
