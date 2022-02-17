@@ -66,4 +66,8 @@ public abstract class AbstractBaseMemberIntegrationTest extends AbstractBaseInte
     return response.getBody().getStatus();
   }
 
+  protected int getAmountMessages(ResponseEntity<ErrorResponse> response) {
+    return response.getBody().getMessages().size();
+  }
+
 }
