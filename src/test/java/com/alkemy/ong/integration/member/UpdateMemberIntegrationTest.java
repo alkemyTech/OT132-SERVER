@@ -31,7 +31,7 @@ public class UpdateMemberIntegrationTest extends AbstractBaseMemberIntegrationTe
 
     when(memberRepository.save(any(Member.class))).thenReturn(memberStub());
     when(memberRepository.findByMemberIdAndSoftDeleteFalse(MEMBER_ID))
-        .thenReturn(getOptionalMemberStub(memberStub()));
+        .thenReturn(optionalMemberStub());
 
     UpdateMemberRequest updateRequest = buildRequestPayload();
 
@@ -106,10 +106,6 @@ public class UpdateMemberIntegrationTest extends AbstractBaseMemberIntegrationTe
     assertEquals(1,getAmountMessages(response));
     assertEquals("Image cannot be null or empty.",getFirstMessageError(response));
     assertEquals(400,getStatusValue(response));
-  }
-
-  private Optional<Member> getOptionalMemberStub(Member member){
-    return Optional.of(member);
   }
 
   private UpdateMemberRequest buildRequestWithEmptyName(){

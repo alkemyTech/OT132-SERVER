@@ -9,6 +9,7 @@ import com.alkemy.ong.model.entity.Member;
 import com.alkemy.ong.repository.IMemberRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.junit.Before;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
@@ -42,6 +43,10 @@ public abstract class AbstractBaseMemberIntegrationTest extends AbstractBaseInte
     List<Member> members = new ArrayList<>();
     members.add(memberStub());
     return new PageImpl<>(members);
+  }
+
+  protected Optional<Member> optionalMemberStub(){
+    return Optional.of(memberStub());
   }
 
   protected Member memberStub() {
