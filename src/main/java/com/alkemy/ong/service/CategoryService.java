@@ -4,7 +4,6 @@ import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.CategoryMapper;
 import com.alkemy.ong.mapper.attribute.CategoryAttributes;
 import com.alkemy.ong.model.entity.Category;
-import com.alkemy.ong.model.entity.User;
 import com.alkemy.ong.model.request.CreateCategoryRequest;
 import com.alkemy.ong.model.request.UpdateCategoryRequest;
 import com.alkemy.ong.model.response.CategoryResponse;
@@ -14,21 +13,15 @@ import com.alkemy.ong.service.abstraction.ICreateCategory;
 import com.alkemy.ong.service.abstraction.IDeleteCategory;
 import com.alkemy.ong.service.abstraction.IGetCategoryDetails;
 import com.alkemy.ong.service.abstraction.IUpdateCategory;
-import com.amazonaws.services.workdocs.model.EntityNotExistsException;
 import java.util.List;
 import java.util.Optional;
-import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CategoryService implements IGetCategoryDetails, ICreateCategory, IUpdateCategory, IDeleteCategory {
-
-  private static final String ERROR_MESSAGE = "Error category not found.";
-
-
+public class CategoryService implements IGetCategoryDetails, ICreateCategory, IUpdateCategory,IDeleteCategory {
 
   @Autowired
   private CategoryMapper categoryMapper;
@@ -36,8 +29,6 @@ public class CategoryService implements IGetCategoryDetails, ICreateCategory, IU
   @Autowired
   private ICategoryRepository categoryRepository;
 
-  @Autowired
-  private IDeleteCategory deleteCategory;
 
   @Override
   public ListCategoriesResponse findAll(Pageable pageable) {
