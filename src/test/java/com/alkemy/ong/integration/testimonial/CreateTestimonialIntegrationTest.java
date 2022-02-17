@@ -107,28 +107,6 @@ public class CreateTestimonialIntegrationTest extends AbstractBaseIntegrationTes
     assertEquals("Name cannot be empty or null.", response.getBody().getMessages().get(0));
   }
 
-  @Test
-  public void shouldReturnBadRequestWhenContentIsEmpty() {
-    setAuthorizationHeaderBasedOn(RoleType.ADMIN);
-
-    CreateTestimonialRequest createTestimonialRequest = buildRequestPayloadWithEmptyName();
-
-    HttpEntity<CreateTestimonialRequest> requestEntity =
-        new HttpEntity<>(createTestimonialRequest, headers);
-
-    ResponseEntity<ErrorResponse> response = restTemplate.exchange(
-        createURLWithPort(PATH),
-        HttpMethod.POST,
-        requestEntity,
-        ErrorResponse.class);
-
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-
-    assertEquals(400, response.getBody().getStatus());
-    assertEquals(1, response.getBody().getMessages().size());
-    assertEquals("Content cannot be empty or null.", response.getBody().getMessages().get(0));
-  }
-
   private CreateTestimonialRequest buildRequestPayloadWithEmptyName() {
     return buildRequestPayload(null);
   }
