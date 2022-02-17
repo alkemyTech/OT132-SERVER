@@ -6,10 +6,10 @@ import static org.mockito.Mockito.when;
 import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.integration.common.AbstractBaseIntegrationTest;
 import com.alkemy.ong.model.entity.Member;
-import com.alkemy.ong.model.request.CreateMemberRequest;
 import com.alkemy.ong.repository.IMemberRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.junit.Before;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
@@ -18,7 +18,9 @@ import org.springframework.http.ResponseEntity;
 
 public abstract class AbstractBaseMemberIntegrationTest extends AbstractBaseIntegrationTest {
 
+  protected final static long MEMBER_ID = 1L;
   protected final static String PATH = "/members";
+  protected final static String PATH_ID = PATH+"/"+MEMBER_ID;
   protected final static String NAME = "Joe";
   protected final static String FACEBOOK_URL = "facebookUrl";
   protected final static String INSTAGRAM_URL = "instagramUrl";
@@ -43,6 +45,10 @@ public abstract class AbstractBaseMemberIntegrationTest extends AbstractBaseInte
     return new PageImpl<>(members);
   }
 
+  protected Optional<Member> optionalMemberStub(){
+    return Optional.of(memberStub());
+  }
+
   protected Member memberStub() {
     Member member = new Member();
     member.setName(NAME);
@@ -55,29 +61,6 @@ public abstract class AbstractBaseMemberIntegrationTest extends AbstractBaseInte
     return member;
   }
 
-  protected CreateMemberRequest buildRequestWithEmptyName() {
-    return buildRequestPayload(null, IMAGE);
-  }
-
-  protected CreateMemberRequest buildRequestWithEmptyImage() {
-    return buildRequestPayload(NAME, null);
-  }
-
-  protected CreateMemberRequest buildRequestPayload() {
-    return buildRequestPayload(NAME, IMAGE);
-  }
-
-  private CreateMemberRequest buildRequestPayload(String name, String image) {
-    CreateMemberRequest memberRequest = new CreateMemberRequest();
-    memberRequest.setName(name);
-    memberRequest.setImage(image);
-    memberRequest.setDescription(DESCRIPTION);
-    memberRequest.setFacebookUrl(FACEBOOK_URL);
-    memberRequest.setInstagramUrl(INSTAGRAM_URL);
-    memberRequest.setLinkedinUrl(LINKEDIN_URL);
-    return memberRequest;
-  }
-
   protected String getFirstMessageError(ResponseEntity<ErrorResponse> response) {
     return response.getBody().getMessages().get(0);
   }
@@ -86,4 +69,7 @@ public abstract class AbstractBaseMemberIntegrationTest extends AbstractBaseInte
     return response.getBody().getStatus();
   }
 
+  protected int getAmountMessages(ResponseEntity<ErrorResponse> response) {
+    return response.getBody().getMessages().size();
+  }
 }

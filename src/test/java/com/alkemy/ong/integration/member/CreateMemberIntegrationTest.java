@@ -97,9 +97,32 @@ public class CreateMemberIntegrationTest extends AbstractBaseMemberIntegrationTe
 
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createRequest);
 
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(400, getStatusValue(response));
-    assertEquals("Image cannot be null or empty.", getFirstMessageError(response));
+    assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+    assertEquals(400,getStatusValue(response));
+    assertEquals("Image cannot be null or empty.",getFirstMessageError(response));
+  }
+
+  private CreateMemberRequest buildRequestWithEmptyName(){
+    return buildRequestPayload(null, IMAGE);
+  }
+
+  private CreateMemberRequest buildRequestWithEmptyImage(){
+    return buildRequestPayload(NAME, null);
+  }
+
+  private CreateMemberRequest buildRequestPayload() {
+    return buildRequestPayload(NAME, IMAGE);
+  }
+
+  private CreateMemberRequest buildRequestPayload(String name, String image) {
+    CreateMemberRequest memberRequest = new CreateMemberRequest();
+    memberRequest.setName(name);
+    memberRequest.setImage(image);
+    memberRequest.setDescription(DESCRIPTION);
+    memberRequest.setFacebookUrl(FACEBOOK_URL);
+    memberRequest.setInstagramUrl(INSTAGRAM_URL);
+    memberRequest.setLinkedinUrl(LINKEDIN_URL);
+    return memberRequest;
   }
 
   private ResponseEntity<ErrorResponse> getErrorResponseEntity(
