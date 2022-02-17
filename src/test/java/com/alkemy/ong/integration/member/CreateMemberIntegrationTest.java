@@ -83,10 +83,10 @@ public class CreateMemberIntegrationTest extends AbstractBaseMemberIntegrationTe
 
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createRequest);
 
-    assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     ErrorResponse error = response.getBody();
-    assertEquals(400,getStatusValue(response));
-    assertEquals("Name cannot be null or empty.",getFirstMessageError(response));
+    assertEquals(400, getStatusValue(response));
+    assertEquals("Name cannot be null or empty.", getFirstMessageError(response));
   }
 
   @Test
@@ -97,9 +97,9 @@ public class CreateMemberIntegrationTest extends AbstractBaseMemberIntegrationTe
 
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createRequest);
 
-    assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
-    assertEquals(400,getStatusValue(response));
-    assertEquals("Image cannot be null or empty.",getFirstMessageError(response));
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    assertEquals(400, getStatusValue(response));
+    assertEquals("Image cannot be null or empty.", getFirstMessageError(response));
   }
 
   private ResponseEntity<ErrorResponse> getErrorResponseEntity(
@@ -109,8 +109,8 @@ public class CreateMemberIntegrationTest extends AbstractBaseMemberIntegrationTe
         new HttpEntity<>(createRequest, headers);
 
     return restTemplate.exchange(createURLWithPort(PATH),
-            HttpMethod.POST,
-            request,
-            ErrorResponse.class);
+        HttpMethod.POST,
+        request,
+        ErrorResponse.class);
   }
 }

@@ -32,12 +32,12 @@ public abstract class AbstractBaseMemberIntegrationTest extends AbstractBaseInte
   IMemberRepository memberRepository;
 
   @Before
-  public void checkFindMethod(){
+  public void checkFindMethod() {
     when(memberRepository.findBySoftDeleteFalseOrderByTimestampDesc(any()))
         .thenReturn(buildMemberStubPage());
   }
 
-  protected Page<Member> buildMemberStubPage(){
+  protected Page<Member> buildMemberStubPage() {
     List<Member> members = new ArrayList<>();
     members.add(memberStub());
     return new PageImpl<>(members);
@@ -55,11 +55,11 @@ public abstract class AbstractBaseMemberIntegrationTest extends AbstractBaseInte
     return member;
   }
 
-  protected CreateMemberRequest buildRequestWithEmptyName(){
+  protected CreateMemberRequest buildRequestWithEmptyName() {
     return buildRequestPayload(null, IMAGE);
   }
 
-  protected CreateMemberRequest buildRequestWithEmptyImage(){
+  protected CreateMemberRequest buildRequestWithEmptyImage() {
     return buildRequestPayload(NAME, null);
   }
 
