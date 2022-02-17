@@ -17,8 +17,9 @@ import org.springframework.http.ResponseEntity;
 
 public abstract class AbstractBaseMemberIntegrationTest extends AbstractBaseIntegrationTest {
 
-  protected final static String PATH = "/members";
   protected final static long MEMBER_ID = 1L;
+  protected final static String PATH = "/members";
+  protected final static String PATH_ID = PATH+"/"+MEMBER_ID;
   protected final static String NAME = "Joe";
   protected final static String FACEBOOK_URL = "facebookUrl";
   protected final static String INSTAGRAM_URL = "instagramUrl";
@@ -39,7 +40,9 @@ public abstract class AbstractBaseMemberIntegrationTest extends AbstractBaseInte
 
   protected Page<Member> buildMemberStubPage(){
     List<Member> members = new ArrayList<>();
-    members.add(memberStub());
+    for (int i = 0;i<40;i++) {
+      members.add(memberStub());
+    }
     return new PageImpl<>(members);
   }
 

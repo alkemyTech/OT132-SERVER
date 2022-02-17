@@ -102,15 +102,15 @@ public class CreateMemberIntegrationTest extends AbstractBaseMemberIntegrationTe
     assertEquals("Image cannot be null or empty.",getFirstMessageError(response));
   }
 
-  protected CreateMemberRequest buildRequestWithEmptyName(){
+  private CreateMemberRequest buildRequestWithEmptyName(){
     return buildRequestPayload(null, IMAGE);
   }
 
-  protected CreateMemberRequest buildRequestWithEmptyImage(){
+  private CreateMemberRequest buildRequestWithEmptyImage(){
     return buildRequestPayload(NAME, null);
   }
 
-  protected CreateMemberRequest buildRequestPayload() {
+  private CreateMemberRequest buildRequestPayload() {
     return buildRequestPayload(NAME, IMAGE);
   }
 
