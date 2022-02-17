@@ -1,5 +1,6 @@
 package com.alkemy.ong.service;
 
+import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.exception.InsufficientPermissionsException;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.CommentMapper;
@@ -70,10 +71,19 @@ public class CommentService implements IGetComment, ICreateComment, IUpdateComme
     return result.get();
   }
 
+  private boolean isAdmin(Authentication authentication) {
+    return authentication.getAuthorities().stream()
+        .anyMatch(r -> RoleType.ADMIN.getFullRoleName().equals(r.getAuthority()));
+  }
+
+  private boolean isNotCreator(Comment comment, Authentication authentication) {
+    return authentication.getName() != null
+        && !authentication.getName().equals(comment.getUser().getEmail());
+  }
+
   private void checkUser(Comment comment, Authentication authentication)
       throws InsufficientPermissionsException {
-    if (authentication.getName() != null && !authentication.getName()
-        .equals(comment.getUser().getEmail())) {
+    if (!isAdmin(authentication) && isNotCreator(comment, authentication)) {
       throw new InsufficientPermissionsException("Unauthorized to do changes");
     }
   }
