@@ -1,6 +1,6 @@
 package com.alkemy.ong.service.abstraction;
 
-public interface IDeleteTestimonial {
+public interface IDeleteMember {
 
   void delete(Long id);
 
