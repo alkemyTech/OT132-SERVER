@@ -33,16 +33,14 @@ public abstract class AbstractBaseMemberIntegrationTest extends AbstractBaseInte
   IMemberRepository memberRepository;
 
   @Before
-  public void checkFindMethod(){
+  public void checkFindMethod() {
     when(memberRepository.findBySoftDeleteFalseOrderByTimestampDesc(any()))
         .thenReturn(buildMemberStubPage());
   }
 
-  protected Page<Member> buildMemberStubPage(){
+  protected Page<Member> buildMemberStubPage() {
     List<Member> members = new ArrayList<>();
-    for (int i = 0;i<40;i++) {
-      members.add(memberStub());
-    }
+    members.add(memberStub());
     return new PageImpl<>(members);
   }
 
@@ -69,5 +67,4 @@ public abstract class AbstractBaseMemberIntegrationTest extends AbstractBaseInte
   protected int getAmountMessages(ResponseEntity<ErrorResponse> response) {
     return response.getBody().getMessages().size();
   }
-
 }

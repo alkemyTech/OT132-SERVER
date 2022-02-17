@@ -9,6 +9,7 @@ import com.alkemy.ong.model.response.ListMembersResponse;
 import com.alkemy.ong.model.response.MemberResponse;
 import com.alkemy.ong.repository.IMemberRepository;
 import com.alkemy.ong.service.abstraction.ICreateMember;
+import com.alkemy.ong.service.abstraction.IDeleteMember;
 import com.alkemy.ong.service.abstraction.IGetMemberDetails;
 import com.alkemy.ong.service.abstraction.IUpdateMember;
 import java.util.List;
@@ -19,7 +20,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MemberService implements IGetMemberDetails, ICreateMember, IUpdateMember {
+public class MemberService implements IGetMemberDetails, ICreateMember, IUpdateMember,
+    IDeleteMember {
 
   @Autowired
   private IMemberRepository memberRepository;
@@ -74,5 +76,12 @@ public class MemberService implements IGetMemberDetails, ICreateMember, IUpdateM
     listMembersResponse.setSize(page.getSize());
     listMembersResponse.setTotalPages(page.getTotalPages());
     return listMembersResponse;
+  }
+
+  @Override
+  public void delete(Long id) {
+    Member member = findBy(id);
+    member.setSoftDelete(true);
+    memberRepository.save(member);
   }
 }

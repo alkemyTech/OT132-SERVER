@@ -24,12 +24,21 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class ListMembersIntegrationTest extends AbstractBaseMemberIntegrationTest {
 
+<<<<<<< HEAD
   private final static int PAGE= 0;
   private final static int SIZE = 10;
   private final static String PAGINATION_PATH = PATH+"?page="+PAGE+"&size="+SIZE;
 
   @Test
   public void shouldReturnOkWhenAccessedWithAdminRole(){
+=======
+  private final static int PAGE = 0;
+  private final static int SIZE = 10;
+  private final static String PAGINATION_PATH = PATH + "?page=" + PAGE + "&size=" + SIZE;
+
+  @Test
+  public void shouldReturnOkWhenAccessedWithAdminRole() {
+>>>>>>> main
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
 
     ResponseEntity<ListMembersResponse> response = restTemplate
@@ -38,17 +47,30 @@ public class ListMembersIntegrationTest extends AbstractBaseMemberIntegrationTes
             new HttpEntity<>(headers),
             ListMembersResponse.class);
 
+<<<<<<< HEAD
     assertEquals(HttpStatus.OK,response.getStatusCode());
     List<MemberResponse> membersResponse = response.getBody().getMemberResponses();
     assertNotNull(membersResponse);
     assertEquals(1,membersResponse.size());
     assertEquals(PAGE,response.getBody().getPage());
     assertEquals(1,response.getBody().getTotalPages());
+=======
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    List<MemberResponse> membersResponse = response.getBody().getMemberResponses();
+    assertNotNull(membersResponse);
+    assertEquals(1, membersResponse.size());
+    assertEquals(PAGE, response.getBody().getPage());
+    assertEquals(1, response.getBody().getTotalPages());
+>>>>>>> main
     assertTrue(response.getHeaders().getFirst(HttpHeaders.LINK).isEmpty());
   }
 
   @Test
+<<<<<<< HEAD
   public void shouldReturnForbiddenWhenAccessedWithUserRole(){
+=======
+  public void shouldReturnForbiddenWhenAccessedWithUserRole() {
+>>>>>>> main
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
     ResponseEntity<ErrorResponse> response = restTemplate
@@ -57,6 +79,10 @@ public class ListMembersIntegrationTest extends AbstractBaseMemberIntegrationTes
             new HttpEntity<>(headers),
             ErrorResponse.class);
 
+<<<<<<< HEAD
     assertEquals(HttpStatus.FORBIDDEN,response.getStatusCode());
+=======
+    assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+>>>>>>> main
   }
 }
