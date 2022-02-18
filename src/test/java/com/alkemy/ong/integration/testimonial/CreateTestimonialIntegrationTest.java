@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNotNull;
 
 import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.exception.ErrorResponse;
-import com.alkemy.ong.integration.common.AbstractBaseIntegrationTest;
 import com.alkemy.ong.model.request.CreateTestimonialRequest;
 import com.alkemy.ong.model.response.TestimonialResponse;
 import org.junit.Test;
@@ -19,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CreateTestimonialIntegrationTest extends AbstractBaseIntegrationTest {
+public class CreateTestimonialIntegrationTest extends AbstractBaseTestimonialIntegrationTest {
 
   private static final String PATH = "/testimonials";
 
@@ -70,7 +69,7 @@ public class CreateTestimonialIntegrationTest extends AbstractBaseIntegrationTes
   }
 
   @Test
-  public void shouldReturnForbiddenWhenAccessWithoutRole(){
+  public void shouldReturnForbiddenWhenAccessWithoutRole() {
     CreateTestimonialRequest createTestimonialRequest = buildRequestPayload();
 
     HttpEntity<CreateTestimonialRequest> requestEntity =
@@ -82,7 +81,7 @@ public class CreateTestimonialIntegrationTest extends AbstractBaseIntegrationTes
         requestEntity,
         ErrorResponse.class);
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
-    assertEquals(0, response.getBody().getMessages().size());
+    assertEquals(0, getAmountMessages(response));
   }
 
   @Test

@@ -37,12 +37,7 @@ public class UpdateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
         HttpMethod.PUT,
         requestEntity,
         TestimonialResponse.class);
-
-    assertEquals(HttpStatus.OK, response.getStatusCode());
-    TestimonialResponse testimonialResponse = response.getBody();
-    assertNotNull(testimonialResponse);
-    assertEquals(request.getName(), testimonialResponse.getName());
-    assertEquals(request.getContent(), testimonialResponse.getContent());
+    assertSuccessResponse(response, request);
   }
 
   @Test
@@ -60,11 +55,7 @@ public class UpdateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
         HttpMethod.PUT,
         requestEntity,
         TestimonialResponse.class);
-    assertEquals(HttpStatus.OK, response.getStatusCode());
-    TestimonialResponse testimonialResponse = response.getBody();
-    assertNotNull(testimonialResponse);
-    assertEquals(request.getName(), testimonialResponse.getName());
-    assertEquals(request.getContent(), testimonialResponse.getContent());
+    assertSuccessResponse(response, request);
   }
 
   @Test
@@ -95,12 +86,7 @@ public class UpdateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
         HttpMethod.PUT,
         requestEntity,
         ErrorResponse.class);
-
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-
-    assertEquals(400, response.getBody().getStatus());
-    assertEquals(1, response.getBody().getMessages().size());
-    assertEquals("Name cannot be empty or null.", response.getBody().getMessages().get(0));
+    assertEmptyOrNullFieldInRequest(response, "Name cannot be empty or null.");
   }
 
   @Test
@@ -118,13 +104,10 @@ public class UpdateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
         requestEntity,
         ErrorResponse.class);
 
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-
-    assertEquals(400, response.getBody().getStatus());
-    assertEquals(1, response.getBody().getMessages().size());
-    assertEquals("Content cannot be empty or null.", response.getBody().getMessages().get(0));
+    assertNotNull(response);
+    assertEmptyOrNullFieldInRequest(response, "Content cannot be empty or null.");
   }
-  
+
   private UpdateTestimonialRequest buildRequestPayloadWithEmptyName() {
     return buildRequestPayload(null, CONTENT);
   }
@@ -144,4 +127,22 @@ public class UpdateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
     return request;
   }
 
+  private void assertSuccessResponse(ResponseEntity<TestimonialResponse> response,
+      UpdateTestimonialRequest request) {
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    TestimonialResponse testimonialResponse = response.getBody();
+    assertNotNull(testimonialResponse);
+    assertEquals(request.getName(), testimonialResponse.getName());
+    assertEquals(request.getContent(), testimonialResponse.getContent());
+  }
+
+  private void assertEmptyOrNullFieldInRequest(ResponseEntity<ErrorResponse> response,
+      String expectedErrorMessage) {
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+
+    assertNotNull(response.getBody());
+    assertEquals(400, getStatusValue(response));
+    assertEquals(1, getAmountMessages(response));
+    assertEquals(expectedErrorMessage, getFirstMessageError(response));
+  }
 }

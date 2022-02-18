@@ -2,8 +2,6 @@ package com.alkemy.ong.integration.testimonial;
 
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
-
-import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.integration.common.AbstractBaseIntegrationTest;
 import com.alkemy.ong.model.entity.Testimonial;
 import com.alkemy.ong.repository.ITestimonialRepository;
@@ -11,7 +9,6 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import org.junit.Before;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.ResponseEntity;
 
 public abstract class AbstractBaseTestimonialIntegrationTest extends AbstractBaseIntegrationTest {
 
@@ -38,13 +35,5 @@ public abstract class AbstractBaseTestimonialIntegrationTest extends AbstractBas
     testimonial.setSoftDelete(false);
     testimonial.setTimestamp(Timestamp.from(Instant.now()));
     return testimonial;
-  }
-
-  protected String getFirstMessageError(ResponseEntity<ErrorResponse> response) {
-    return response.getBody().getMessages().get(0);
-  }
-
-  protected int getAmountMessages(ResponseEntity<ErrorResponse> response) {
-    return response.getBody().getMessages().size();
   }
 }
