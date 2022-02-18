@@ -2,8 +2,8 @@ package com.alkemy.ong.integration.testimonial;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.exception.ErrorResponse;
@@ -101,11 +101,7 @@ public class CreateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
         requestEntity,
         ErrorResponse.class);
 
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-
-    assertEquals(400, response.getBody().getStatus());
-    assertEquals(1, getAmountMessages(response));
-    assertEquals("Name cannot be empty or null.", getFirstMessageError(response));
+    assertOneEmptyOrNullFieldInRequest(response, "Name cannot be empty or null.");
   }
 
   private CreateTestimonialRequest buildRequestPayloadWithEmptyName() {
