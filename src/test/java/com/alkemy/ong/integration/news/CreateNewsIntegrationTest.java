@@ -36,15 +36,19 @@ public class CreateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
     when(newsRepository.save(any(News.class))).thenReturn(stubNews());
 
     CreateNewsRequest createNewsRequest = buildRequestPayLoad();
-    HttpEntity<CreateNewsRequest> requestEntity = new HttpEntity<>(createNewsRequest, headers);
-//Esto no asigna otros valores que sí van en la response. Ver mañana
+
+    NewsResponse newsResponse = buildResponsePayLoad();
+
+    HttpEntity<NewsResponse> responseEntity = new HttpEntity<>(newsResponse, headers);
+
     ResponseEntity<NewsResponse> response = restTemplate.exchange(createURLWithPort(PATH),
-        HttpMethod.POST, requestEntity, NewsResponse.class);
+        HttpMethod.POST, responseEntity, NewsResponse.class);
 
     assertEquals(HttpStatus.CREATED, response.getStatusCode());
 
-    NewsResponse newsResponse = response.getBody();
     assertNotNull(newsResponse);
+    assertNotNull(createNewsRequest);
+    assertNotNull(response.getBody());
 
     assertEquals(createNewsRequest.getName(), newsResponse.getName());
     assertEquals(createNewsRequest.getImage(), newsResponse.getImage());
@@ -141,6 +145,15 @@ public class CreateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
   private CreateNewsRequest buildRequestPayLoad(
       String name, String text, String image) {
     return new CreateNewsRequest(name, text, image);
+  }
+
+  private NewsResponse buildResponsePayLoad() {
+    return buildResponsePayLoad(NEWS_ID, NAME, TEXT, IMAGE, NEWS_CATEGORY);
+  }
+
+  private NewsResponse buildResponsePayLoad(Long id, String name, String text, String image,
+      String categoryName) {
+    return new NewsResponse(id, name, text, image, categoryName);
   }
 
   private ResponseEntity<ErrorResponse> getErrorResponseEntity(
