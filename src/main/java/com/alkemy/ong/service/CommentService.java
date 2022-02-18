@@ -38,6 +38,7 @@ public class CommentService implements IGetComment, ICreateComment, IUpdateComme
   @Autowired
   private IUserRepository userRepository;
 
+  @Override
   public ListCommentResponse findAll() {
     List<Comment> comments = commentRepository.findAllByOrderByTimestampAsc();
     List<CommentResponse> commentResponse = commentMapper.map(comments);
@@ -61,6 +62,14 @@ public class CommentService implements IGetComment, ICreateComment, IUpdateComme
     updateValues(comment, updateCommentRequest, news, user);
     commentRepository.save(comment);
     return commentMapper.map(comment);
+  }
+
+  @Override
+  public void delete(Long id, Authentication authentication)
+      throws InsufficientPermissionsException {
+    Comment comment = findBy(id);
+    checkUser(comment, authentication);
+    commentRepository.delete(comment);
   }
 
   private Comment findBy(Long id) {
@@ -112,11 +121,4 @@ public class CommentService implements IGetComment, ICreateComment, IUpdateComme
     return news;
   }
 
-  @Override
-  public void delete(Long id, Authentication authentication)
-      throws InsufficientPermissionsException {
-    Comment comment = findBy(id);
-    this.checkUser(comment, authentication);
-    commentRepository.delete(comment);
-  }
 }

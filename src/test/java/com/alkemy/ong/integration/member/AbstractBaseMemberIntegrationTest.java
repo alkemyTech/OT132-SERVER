@@ -3,7 +3,6 @@ package com.alkemy.ong.integration.member;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
-import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.integration.common.AbstractBaseIntegrationTest;
 import com.alkemy.ong.model.entity.Member;
 import com.alkemy.ong.repository.IMemberRepository;
@@ -14,7 +13,6 @@ import org.junit.Before;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.http.ResponseEntity;
 
 public abstract class AbstractBaseMemberIntegrationTest extends AbstractBaseIntegrationTest {
 
@@ -61,15 +59,4 @@ public abstract class AbstractBaseMemberIntegrationTest extends AbstractBaseInte
     return member;
   }
 
-  protected String getFirstMessageError(ResponseEntity<ErrorResponse> response) {
-    return response.getBody().getMessages().get(0);
-  }
-
-  protected int getStatusValue(ResponseEntity<ErrorResponse> response) {
-    return response.getBody().getStatus();
-  }
-
-  protected int getAmountMessages(ResponseEntity<ErrorResponse> response) {
-    return response.getBody().getMessages().size();
-  }
 }
