@@ -684,6 +684,45 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Update Comment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoiYnNrdW5pZ3VuZGUxOEBnbWFpbC5jb20iLCJpYXQiOjE2NDUxMjc5ODgsImV4cCI6MTY0NTE2Mzk4OH0.kGGhiPma3oGFLNOihcWs6kpswzp5kaeIzwpAXenM7K8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"userId\":\"1\",\r\n    \"newsId\":\"1\",\r\n    \"body\":\"First comment.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/comments/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "comments",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
