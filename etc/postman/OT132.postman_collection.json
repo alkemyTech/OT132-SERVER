@@ -654,6 +654,36 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Delete Comment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDUxMjg5MDAsImV4cCI6MTY0NTE2NDkwMH0.2-oRywlitGinv6mdjf2oAX5WxvVy-i3IjO2iAYQUgDw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/comments/7",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "comments",
+                "7"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -968,6 +998,35 @@
               "port": "8080",
               "path": [
                 "activities"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT Activity",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\" : \"activity\",\r\n    \"content\" : \"activity content\",\r\n    \"image\" : \"image\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/activities/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "activities",
+                "1"
               ]
             }
           },
