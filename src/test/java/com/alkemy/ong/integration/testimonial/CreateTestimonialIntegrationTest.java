@@ -2,9 +2,12 @@ package com.alkemy.ong.integration.testimonial;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
 
 import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.exception.ErrorResponse;
+import com.alkemy.ong.model.entity.Testimonial;
 import com.alkemy.ong.model.request.CreateTestimonialRequest;
 import com.alkemy.ong.model.response.TestimonialResponse;
 import org.junit.Test;
@@ -20,11 +23,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CreateTestimonialIntegrationTest extends AbstractBaseTestimonialIntegrationTest {
 
-  private static final String PATH = "/testimonials";
-
   @Test
   public void shouldCreateTestimonialWithRoleAdmin() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
+    when(testimonialRepository.save(any(Testimonial.class))).thenReturn(createTestimonialStub());
 
     CreateTestimonialRequest createTestimonialRequest = buildRequestPayload();
 
@@ -48,7 +50,7 @@ public class CreateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
   @Test
   public void shouldCreateTestimonialWithRoleUser() {
     setAuthorizationHeaderBasedOn(RoleType.USER);
-
+    when(testimonialRepository.save(any(Testimonial.class))).thenReturn(createTestimonialStub());
     CreateTestimonialRequest createTestimonialRequest = buildRequestPayload();
 
     HttpEntity<CreateTestimonialRequest> requestEntity =
@@ -102,8 +104,8 @@ public class CreateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 
     assertEquals(400, response.getBody().getStatus());
-    assertEquals(1, response.getBody().getMessages().size());
-    assertEquals("Name cannot be empty or null.", response.getBody().getMessages().get(0));
+    assertEquals(1, getAmountMessages(response));
+    assertEquals("Name cannot be empty or null.", getFirstMessageError(response));
   }
 
   private CreateTestimonialRequest buildRequestPayloadWithEmptyName() {
@@ -111,12 +113,12 @@ public class CreateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
   }
 
   private CreateTestimonialRequest buildRequestPayload() {
-    return buildRequestPayload("testimonial-name");
+    return buildRequestPayload(NAME);
   }
 
   private CreateTestimonialRequest buildRequestPayload(String name) {
     CreateTestimonialRequest createTestimonialRequest = new CreateTestimonialRequest();
-    createTestimonialRequest.setContent("testimonial-content");
+    createTestimonialRequest.setContent(CONTENT);
     createTestimonialRequest.setName(name);
     return createTestimonialRequest;
   }
