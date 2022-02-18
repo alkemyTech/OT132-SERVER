@@ -26,7 +26,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class UpdateMemberIntegrationTest extends AbstractBaseMemberIntegrationTest {
 
   @Test
-  public void shouldReturnOkWhenUserAccessWithUserRole(){
+  public void shouldReturnOkWhenUserAccessWithUserRole() {
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
     when(memberRepository.save(any(Member.class))).thenReturn(memberStub());
@@ -36,7 +36,7 @@ public class UpdateMemberIntegrationTest extends AbstractBaseMemberIntegrationTe
     UpdateMemberRequest updateRequest = buildRequestPayload();
 
     HttpEntity<UpdateMemberRequest> request =
-        new HttpEntity<>(updateRequest,headers);
+        new HttpEntity<>(updateRequest, headers);
 
     ResponseEntity<MemberResponse> response = restTemplate
         .exchange(createURLWithPort(PATH_ID),
@@ -44,23 +44,23 @@ public class UpdateMemberIntegrationTest extends AbstractBaseMemberIntegrationTe
             request,
             MemberResponse.class);
 
-    assertEquals(HttpStatus.NO_CONTENT,response.getStatusCode());
+    assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
   }
 
   @Test
-  public void shouldReturnForbiddenWhenAccessWithAdminRole(){
+  public void shouldReturnForbiddenWhenAccessWithAdminRole() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
 
     UpdateMemberRequest updateRequest = buildRequestPayload();
 
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(updateRequest);
 
-    assertEquals(HttpStatus.FORBIDDEN,response.getStatusCode());
+    assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     assertNotNull(response.getBody());
   }
 
   @Test
-  public void shouldReturnNotFoundWhenMemberDoesNotExist(){
+  public void shouldReturnNotFoundWhenMemberDoesNotExist() {
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
     when(memberRepository.findByMemberIdAndSoftDeleteFalse(MEMBER_ID))
@@ -70,49 +70,49 @@ public class UpdateMemberIntegrationTest extends AbstractBaseMemberIntegrationTe
 
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(updateRequest);
 
-    assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 
     assertNotNull(response.getBody());
-    assertEquals(1,getAmountMessages(response));
-    assertEquals("Member not found",getFirstMessageError(response));
-    assertEquals(404,getStatusValue(response));
+    assertEquals(1, getAmountMessages(response));
+    assertEquals("Member not found", getFirstMessageError(response));
+    assertEquals(404, getStatusValue(response));
   }
 
   @Test
-  public void shouldReturnBadRequestWithEmptyName(){
+  public void shouldReturnBadRequestWithEmptyName() {
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
     UpdateMemberRequest updateRequest = buildRequestWithEmptyName();
 
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(updateRequest);
 
-    assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     assertNotNull(response.getBody());
-    assertEquals(1,getAmountMessages(response));
-    assertEquals("Name cannot be null or empty.",getFirstMessageError(response));
-    assertEquals(400,getStatusValue(response));
+    assertEquals(1, getAmountMessages(response));
+    assertEquals("Name cannot be null or empty.", getFirstMessageError(response));
+    assertEquals(400, getStatusValue(response));
   }
 
   @Test
-  public void shouldReturnBadRequestWithEmptyImage(){
+  public void shouldReturnBadRequestWithEmptyImage() {
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
     UpdateMemberRequest updateRequest = buildRequestWithEmptyImage();
 
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(updateRequest);
 
-    assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     assertNotNull(response.getBody());
-    assertEquals(1,getAmountMessages(response));
-    assertEquals("Image cannot be null or empty.",getFirstMessageError(response));
-    assertEquals(400,getStatusValue(response));
+    assertEquals(1, getAmountMessages(response));
+    assertEquals("Image cannot be null or empty.", getFirstMessageError(response));
+    assertEquals(400, getStatusValue(response));
   }
 
-  private UpdateMemberRequest buildRequestWithEmptyName(){
+  private UpdateMemberRequest buildRequestWithEmptyName() {
     return buildRequestPayload(null, IMAGE);
   }
 
-  private UpdateMemberRequest buildRequestWithEmptyImage(){
+  private UpdateMemberRequest buildRequestWithEmptyImage() {
     return buildRequestPayload(NAME, null);
   }
 

@@ -1,5 +1,6 @@
 package com.alkemy.ong.service;
 
+import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.exception.InsufficientPermissionsException;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.CommentMapper;
@@ -14,6 +15,7 @@ import com.alkemy.ong.repository.ICommentRepository;
 import com.alkemy.ong.repository.INewsRepository;
 import com.alkemy.ong.repository.IUserRepository;
 import com.alkemy.ong.service.abstraction.ICreateComment;
+import com.alkemy.ong.service.abstraction.IDeleteComment;
 import com.alkemy.ong.service.abstraction.IGetComment;
 import com.alkemy.ong.service.abstraction.IUpdateComment;
 import java.sql.Timestamp;
@@ -25,8 +27,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CommentService implements IGetComment, ICreateComment,
-    IUpdateComment {
+public class CommentService implements IGetComment, ICreateComment, IUpdateComment, IDeleteComment {
 
   @Autowired
   private ICommentRepository commentRepository;
@@ -37,6 +38,7 @@ public class CommentService implements IGetComment, ICreateComment,
   @Autowired
   private IUserRepository userRepository;
 
+  @Override
   public ListCommentResponse findAll() {
     List<Comment> comments = commentRepository.findAllByOrderByTimestampAsc();
     List<CommentResponse> commentResponse = commentMapper.map(comments);
@@ -62,6 +64,14 @@ public class CommentService implements IGetComment, ICreateComment,
     return commentMapper.map(comment);
   }
 
+  @Override
+  public void delete(Long id, Authentication authentication)
+      throws InsufficientPermissionsException {
+    Comment comment = findBy(id);
+    checkUser(comment, authentication);
+    commentRepository.delete(comment);
+  }
+
   private Comment findBy(Long id) {
     Optional<Comment> result = commentRepository.findById(id);
     if (result.isEmpty()) {
@@ -70,10 +80,19 @@ public class CommentService implements IGetComment, ICreateComment,
     return result.get();
   }
 
+  private boolean isAdmin(Authentication authentication) {
+    return authentication.getAuthorities().stream()
+        .anyMatch(r -> RoleType.ADMIN.getFullRoleName().equals(r.getAuthority()));
+  }
+
+  private boolean isNotCreator(Comment comment, Authentication authentication) {
+    return authentication.getName() != null
+        && !authentication.getName().equals(comment.getUser().getEmail());
+  }
+
   private void checkUser(Comment comment, Authentication authentication)
       throws InsufficientPermissionsException {
-    if (authentication.getName() != null && !authentication.getName()
-        .equals(comment.getUser().getEmail())) {
+    if (!isAdmin(authentication) && isNotCreator(comment, authentication)) {
       throw new InsufficientPermissionsException("Unauthorized to do changes");
     }
   }
@@ -101,4 +120,5 @@ public class CommentService implements IGetComment, ICreateComment,
     }
     return news;
   }
+
 }

@@ -7,6 +7,7 @@ import com.alkemy.ong.model.request.UpdateCommentRequest;
 import com.alkemy.ong.model.response.CommentResponse;
 import com.alkemy.ong.model.response.ListCommentResponse;
 import com.alkemy.ong.service.abstraction.ICreateComment;
+import com.alkemy.ong.service.abstraction.IDeleteComment;
 import com.alkemy.ong.service.abstraction.IGetComment;
 import com.alkemy.ong.service.abstraction.IUpdateComment;
 import javax.validation.Valid;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +37,9 @@ public class CommentController {
   @Autowired
   private IUpdateComment updateComment;
 
+  @Autowired
+  private IDeleteComment deleteComment;
+
   @GetMapping
   public ResponseEntity<ListCommentResponse> list() {
     ListCommentResponse listResponse = getComment.findAll();
@@ -55,5 +60,12 @@ public class CommentController {
     CommentResponse commentResponse = updateComment.update(id, updateCommentRequest,
         authentication);
     return ResponseEntity.ok().body(commentResponse);
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> delete(@PathVariable Long id, Authentication authentication)
+      throws InsufficientPermissionsException {
+    deleteComment.delete(id, authentication);
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 }

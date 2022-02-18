@@ -48,12 +48,12 @@ public class DeleteMemberIntegrationTest extends AbstractBaseMemberIntegrationTe
 
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity();
 
-    assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 
     assertNotNull(response.getBody());
-    assertEquals(1,getAmountMessages(response));
-    assertEquals("Member not found",getFirstMessageError(response));
-    assertEquals(404,getStatusValue(response));
+    assertEquals(1, getAmountMessages(response));
+    assertEquals("Member not found", getFirstMessageError(response));
+    assertEquals(404, getStatusValue(response));
   }
 
   @Test
@@ -62,7 +62,7 @@ public class DeleteMemberIntegrationTest extends AbstractBaseMemberIntegrationTe
 
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity();
 
-    assertEquals(HttpStatus.FORBIDDEN,response.getStatusCode());
+    assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
   }
 
   private ResponseEntity<ErrorResponse> getErrorResponseEntity() {
