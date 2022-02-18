@@ -2,8 +2,11 @@ package com.alkemy.ong.config;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.util.UriComponentsBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -27,7 +30,9 @@ public class SwaggerConfig {
         .paths(PathSelectors.any())
         .build()
         .useDefaultResponseMessages(false)
-        .ignoredParameterTypes(Principal.class)
+        .ignoredParameterTypes(Principal.class, Pageable.class,
+            UriComponentsBuilder.class,
+            HttpServletResponse.class)
         .apiInfo(apiInfo());
   }
 
