@@ -53,10 +53,8 @@ public class TestimonialController {
   @Autowired
   private PaginatedResultsRetrieved resultsRetrieved;
 
-  @GetMapping(produces = {"application/json"},
-      consumes = {"application/json"})
-  @ApiOperation(value = "Get pageable of testimonial", produces = "application/json",
-      consumes = "application/json")
+  @GetMapping(produces = {"application/json"})
+  @ApiOperation(value = "Get pageable of testimonial", produces = "application/json")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "OK - List of testimonial",
           response = ListTestimonialResponse.class),
@@ -84,8 +82,7 @@ public class TestimonialController {
 
   @PostMapping(produces = {"application/json"},
       consumes = {"application/json"})
-  @ApiOperation(value = "Create a testimonial", produces = "application/json",
-      consumes = "application/json")
+  @ApiOperation(value = "Create a testimonial", produces = "application/json")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "OK - Testimonial created",
           response = TestimonialResponse.class),
@@ -106,8 +103,7 @@ public class TestimonialController {
     return ResponseEntity.status(HttpStatus.CREATED).body(testimonialResponse);
   }
 
-  @PutMapping(value = "{id}", produces = {"application/json"},
-      consumes = {"application/json"})
+  @PutMapping(value = "{id}", produces = {"application/json"})
   @ApiOperation(value = "Update a testimonial", produces = "application/json",
       consumes = "application/json")
   @ApiResponses(value = {
@@ -133,8 +129,7 @@ public class TestimonialController {
     return ResponseEntity.status(HttpStatus.OK).body(testimonialResponse);
   }
 
-  @DeleteMapping(value = "{id}", produces = {"application/json"},
-      consumes = {"application/json"})
+  @DeleteMapping(value = "{id}", produces = {"application/json"})
   @ApiOperation(value = "Delete a testimonial", produces = "application/json",
       consumes = "application/json")
   @ApiResponses(value = {
