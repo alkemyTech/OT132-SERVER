@@ -82,7 +82,8 @@ public class TestimonialController {
 
   @PostMapping(produces = {"application/json"},
       consumes = {"application/json"})
-  @ApiOperation(value = "Create a testimonial", produces = "application/json")
+  @ApiOperation(value = "Create a testimonial", produces = "application/json",
+      consumes = "application/json")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "OK - Testimonial created",
           response = TestimonialResponse.class),
@@ -103,7 +104,8 @@ public class TestimonialController {
     return ResponseEntity.status(HttpStatus.CREATED).body(testimonialResponse);
   }
 
-  @PutMapping(value = "{id}", produces = {"application/json"})
+  @PutMapping(value = "{id}", produces = {"application/json"},
+      consumes = {"application/json"})
   @ApiOperation(value = "Update a testimonial", produces = "application/json",
       consumes = "application/json")
   @ApiResponses(value = {
