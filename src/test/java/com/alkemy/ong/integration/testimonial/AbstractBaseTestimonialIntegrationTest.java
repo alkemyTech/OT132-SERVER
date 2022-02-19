@@ -10,7 +10,6 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.junit.Before;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
@@ -31,10 +30,6 @@ public abstract class AbstractBaseTestimonialIntegrationTest extends AbstractBas
   public void checkFindMethod() {
     when(testimonialRepository.findBySoftDeleteFalseOrderByTimestampDesc(any()))
         .thenReturn(buildTestimonialStubPage());
-  }
-
-  protected Optional<Testimonial> optionalTestimonialStub() {
-    return Optional.of(createTestimonialStub());
   }
 
   protected Page<Testimonial> buildTestimonialStubPage() {

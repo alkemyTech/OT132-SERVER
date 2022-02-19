@@ -3,9 +3,9 @@ package com.alkemy.ong.integration.testimonial;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+
 import com.alkemy.ong.config.segurity.RoleType;
+import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.model.response.ListTestimonialResponse;
 import com.alkemy.ong.model.response.TestimonialResponse;
 import java.util.List;
@@ -21,7 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ListTestimonialDetailsIntegrationTest extends AbstractBaseTestimonialIntegrationTest{
+public class ListTestimonialIntegrationTest extends AbstractBaseTestimonialIntegrationTest {
 
   private final static int PAGE = 0;
   private final static int SIZE = 10;
@@ -30,8 +30,6 @@ public class ListTestimonialDetailsIntegrationTest extends AbstractBaseTestimoni
   @Test
   public void shouldReturnOkWhenAccessedWithAdminRole() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
-    when(testimonialRepository.findBySoftDeleteFalseOrderByTimestampDesc(any()))
-        .thenReturn(buildTestimonialStubPage());
     ResponseEntity<ListTestimonialResponse> response = restTemplate
         .exchange(createURLWithPort(PAGINATION_PATH),
             HttpMethod.GET,
@@ -40,13 +38,41 @@ public class ListTestimonialDetailsIntegrationTest extends AbstractBaseTestimoni
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
     List<TestimonialResponse> testimonialResponses = response.getBody().getTestimonialResponses();
+    assertSuccessResponse(response, testimonialResponses);
+  }
+
+  @Test
+  public void shouldReturnOkWhenAccessedWithUserRole() {
+    setAuthorizationHeaderBasedOn(RoleType.USER);
+    ResponseEntity<ListTestimonialResponse> response = restTemplate
+        .exchange(createURLWithPort(PAGINATION_PATH),
+            HttpMethod.GET,
+            new HttpEntity<>(headers),
+            ListTestimonialResponse.class);
+
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    List<TestimonialResponse> testimonialResponses = response.getBody().getTestimonialResponses();
+    assertSuccessResponse(response, testimonialResponses);
+  }
+
+  @Test
+  public void shouldReturnForbiddenWhenAccessedWithoutRole() {
+    ResponseEntity<ErrorResponse> response = restTemplate
+        .exchange(createURLWithPort(PAGINATION_PATH),
+            HttpMethod.GET,
+            new HttpEntity<>(headers),
+            ErrorResponse.class);
+
+    assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+  }
+
+  private void assertSuccessResponse(ResponseEntity<ListTestimonialResponse> response,
+      List<TestimonialResponse> testimonialResponses) {
     assertNotNull(testimonialResponses);
     assertEquals(1, testimonialResponses.size());
     assertEquals(PAGE, response.getBody().getPage());
     assertEquals(1, response.getBody().getTotalPages());
     assertTrue(response.getHeaders().getFirst(HttpHeaders.LINK).isEmpty());
   }
-
-
 
 }

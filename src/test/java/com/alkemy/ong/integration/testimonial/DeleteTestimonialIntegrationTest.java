@@ -2,12 +2,10 @@ package com.alkemy.ong.integration.testimonial;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.when;
-import static org.mockito.ArgumentMatchers.any;
+
 import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.exception.ErrorResponse;
-import com.alkemy.ong.model.entity.Testimonial;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +21,23 @@ public class DeleteTestimonialIntegrationTest extends AbstractBaseTestimonialInt
 
   @Test
   public void shouldSoftDeleteUserWhenAccessWithAdminRole() {
+    when(testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(TESTIMONIAL_ID)).thenReturn(
+        createTestimonialStub());
+    setAuthorizationHeaderBasedOn(RoleType.ADMIN);
+    HttpEntity<Object> request = new HttpEntity<>(headers);
+
+    ResponseEntity<Void> response = restTemplate
+        .exchange(createURLWithPort(PATH_ID),
+            HttpMethod.DELETE,
+            request,
+            Void.class);
+    assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+  }
+
+  @Test
+  public void shouldSoftDeleteUserWhenAccessWithUserRole() {
+    when(testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(TESTIMONIAL_ID)).thenReturn(
+        createTestimonialStub());
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
     HttpEntity<Object> request = new HttpEntity<>(headers);
 
@@ -42,6 +57,20 @@ public class DeleteTestimonialIntegrationTest extends AbstractBaseTestimonialInt
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
   }
 
+  @Test
+  public void shouldReturnNotFoundWhenTestimonialDoesNotExist() {
+    setAuthorizationHeaderBasedOn(RoleType.ADMIN);
+    when(testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(TESTIMONIAL_ID)).thenReturn(
+        null);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity();
+
+    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+
+    assertNotNull(response.getBody());
+    assertEquals(1, getAmountMessages(response));
+    assertEquals("Testimonial not found.", getFirstMessageError(response));
+    assertEquals(404, getStatusValue(response));
+  }
 
   private ResponseEntity<ErrorResponse> getErrorResponseEntity() {
     return restTemplate.exchange(createURLWithPort(PATH_ID),
