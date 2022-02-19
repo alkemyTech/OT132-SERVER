@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "21fa7ed5-ab5c-4e5d-9883-a56f89d52707",
+    "_postman_id": "6be820f1-86f6-466c-a646-a0557fee0519",
     "name": "OT132",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
@@ -581,6 +581,75 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Update News",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImV0bHVpdDEyQGdtYWlsLmNvbSIsImlhdCI6MTY0NDkzODU0NywiZXhwIjoxNjQ0OTc0NTQ3fQ.jP_Ax4oiQzxsgjkil6vjd2KEfMBZu31dBO3-GBfMiA0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\" : \"name modificacion\",\n    \"text\" : \"text modificado\",\n    \"image\" : \"image1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/news/6",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "news",
+                "6"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get By ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImV0bHVpdDEyQGdtYWlsLmNvbSIsImlhdCI6MTY0NDkzODU0NywiZXhwIjoxNjQ0OTc0NTQ3fQ.jP_Ax4oiQzxsgjkil6vjd2KEfMBZu31dBO3-GBfMiA0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/news/13",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "news",
+                "13"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -680,6 +749,45 @@
               "path": [
                 "comments",
                 "7"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Comment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoiYnNrdW5pZ3VuZGUxOEBnbWFpbC5jb20iLCJpYXQiOjE2NDUxMjc5ODgsImV4cCI6MTY0NTE2Mzk4OH0.kGGhiPma3oGFLNOihcWs6kpswzp5kaeIzwpAXenM7K8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"userId\":\"1\",\r\n    \"newsId\":\"1\",\r\n    \"body\":\"First comment.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/comments/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "comments",
+                "1"
               ]
             }
           },
