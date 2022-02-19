@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 
 public abstract class AbstractBaseTestimonialIntegrationTest extends AbstractBaseIntegrationTest {
@@ -29,7 +30,7 @@ public abstract class AbstractBaseTestimonialIntegrationTest extends AbstractBas
 
   @Before
   public void checkFindMethod() {
-    when(testimonialRepository.findBySoftDeleteFalseOrderByTimestampDesc(any()))
+    when(testimonialRepository.findBySoftDeleteFalseOrderByTimestampDesc(any(Pageable.class)))
         .thenReturn(buildTestimonialStubPage());
   }
 
