@@ -2,10 +2,12 @@ package com.alkemy.ong.integration.testimonial;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.exception.ErrorResponse;
-import com.alkemy.ong.integration.common.AbstractBaseIntegrationTest;
+import com.alkemy.ong.model.entity.Testimonial;
 import com.alkemy.ong.model.request.CreateTestimonialRequest;
 import com.alkemy.ong.model.response.TestimonialResponse;
 import org.junit.Test;
@@ -19,13 +21,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CreateTestimonialIntegrationTest extends AbstractBaseIntegrationTest {
-
-  private static final String PATH = "/testimonials";
+public class CreateTestimonialIntegrationTest extends AbstractBaseTestimonialIntegrationTest {
 
   @Test
   public void shouldCreateTestimonialWithRoleAdmin() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
+    when(testimonialRepository.save(any(Testimonial.class))).thenReturn(createTestimonialStub());
 
     CreateTestimonialRequest createTestimonialRequest = buildRequestPayload();
 
@@ -49,7 +50,7 @@ public class CreateTestimonialIntegrationTest extends AbstractBaseIntegrationTes
   @Test
   public void shouldCreateTestimonialWithRoleUser() {
     setAuthorizationHeaderBasedOn(RoleType.USER);
-
+    when(testimonialRepository.save(any(Testimonial.class))).thenReturn(createTestimonialStub());
     CreateTestimonialRequest createTestimonialRequest = buildRequestPayload();
 
     HttpEntity<CreateTestimonialRequest> requestEntity =
@@ -70,6 +71,22 @@ public class CreateTestimonialIntegrationTest extends AbstractBaseIntegrationTes
   }
 
   @Test
+  public void shouldReturnForbiddenWhenAccessWithoutRole() {
+    CreateTestimonialRequest createTestimonialRequest = buildRequestPayload();
+
+    HttpEntity<CreateTestimonialRequest> requestEntity =
+        new HttpEntity<>(createTestimonialRequest, headers);
+
+    ResponseEntity<ErrorResponse> response = restTemplate.exchange(
+        createURLWithPort(PATH),
+        HttpMethod.POST,
+        requestEntity,
+        ErrorResponse.class);
+    assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+    assertEquals(0, getAmountMessages(response));
+  }
+
+  @Test
   public void shouldReturnBadRequestWhenNameIsEmpty() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
 
@@ -84,11 +101,7 @@ public class CreateTestimonialIntegrationTest extends AbstractBaseIntegrationTes
         requestEntity,
         ErrorResponse.class);
 
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-
-    assertEquals(400, response.getBody().getStatus());
-    assertEquals(1, response.getBody().getMessages().size());
-    assertEquals("Name cannot be empty or null.", response.getBody().getMessages().get(0));
+    assertOneEmptyOrNullFieldInRequest(response, "Name cannot be empty or null.");
   }
 
   private CreateTestimonialRequest buildRequestPayloadWithEmptyName() {
@@ -96,12 +109,12 @@ public class CreateTestimonialIntegrationTest extends AbstractBaseIntegrationTes
   }
 
   private CreateTestimonialRequest buildRequestPayload() {
-    return buildRequestPayload("testimonial-name");
+    return buildRequestPayload(NAME);
   }
 
   private CreateTestimonialRequest buildRequestPayload(String name) {
     CreateTestimonialRequest createTestimonialRequest = new CreateTestimonialRequest();
-    createTestimonialRequest.setContent("testimonial-content");
+    createTestimonialRequest.setContent(CONTENT);
     createTestimonialRequest.setName(name);
     return createTestimonialRequest;
   }
