@@ -1,7 +1,7 @@
 package com.alkemy.ong.integration.testimonial;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 import com.alkemy.ong.config.segurity.RoleType;
@@ -21,7 +21,7 @@ public class DeleteTestimonialIntegrationTest extends AbstractBaseTestimonialInt
 
   @Test
   public void shouldSoftDeleteUserWhenAccessWithAdminRole() {
-    when(testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(TESTIMONIAL_ID)).thenReturn(
+    when(testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(eq(TESTIMONIAL_ID))).thenReturn(
         createTestimonialStub());
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
     HttpEntity<Object> request = new HttpEntity<>(headers);
@@ -36,9 +36,9 @@ public class DeleteTestimonialIntegrationTest extends AbstractBaseTestimonialInt
 
   @Test
   public void shouldSoftDeleteUserWhenAccessWithUserRole() {
-    when(testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(TESTIMONIAL_ID)).thenReturn(
+    when(testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(eq(TESTIMONIAL_ID))).thenReturn(
         createTestimonialStub());
-    setAuthorizationHeaderBasedOn(RoleType.ADMIN);
+    setAuthorizationHeaderBasedOn(RoleType.USER);
     HttpEntity<Object> request = new HttpEntity<>(headers);
 
     ResponseEntity<Void> response = restTemplate
@@ -60,16 +60,11 @@ public class DeleteTestimonialIntegrationTest extends AbstractBaseTestimonialInt
   @Test
   public void shouldReturnNotFoundWhenTestimonialDoesNotExist() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
-    when(testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(TESTIMONIAL_ID)).thenReturn(
+    when(testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(eq(TESTIMONIAL_ID))).thenReturn(
         null);
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity();
 
-    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-
-    assertNotNull(response.getBody());
-    assertEquals(1, getAmountMessages(response));
-    assertEquals("Testimonial not found.", getFirstMessageError(response));
-    assertEquals(404, getStatusValue(response));
+    assertObjectNotFound(response, "Testimonial not found.");
   }
 
   private ResponseEntity<ErrorResponse> getErrorResponseEntity() {

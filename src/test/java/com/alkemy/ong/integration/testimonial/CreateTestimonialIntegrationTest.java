@@ -101,11 +101,7 @@ public class CreateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
         requestEntity,
         ErrorResponse.class);
 
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-
-    assertEquals(400, response.getBody().getStatus());
-    assertEquals(1, getAmountMessages(response));
-    assertEquals("Name cannot be empty or null.", getFirstMessageError(response));
+    assertOneEmptyOrNullFieldInRequest(response, "Name cannot be empty or null.");
   }
 
   private CreateTestimonialRequest buildRequestPayloadWithEmptyName() {
