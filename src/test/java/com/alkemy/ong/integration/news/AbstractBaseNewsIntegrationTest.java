@@ -31,7 +31,7 @@ public abstract class AbstractBaseNewsIntegrationTest extends AbstractBaseIntegr
 
 
   protected Category stubCategory() {
-    return new Category(1l,
+    return new Category(1L,
         "news",
         "category of news",
         null,

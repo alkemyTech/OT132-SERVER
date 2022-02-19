@@ -37,15 +37,17 @@ public class CreateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
 
     CreateNewsRequest createNewsRequest = buildRequestPayLoad();
 
-    NewsResponse newsResponse = buildResponsePayLoad();
+    HttpEntity<CreateNewsRequest> requestEntity = new HttpEntity<>(createNewsRequest, headers);
 
-    HttpEntity<NewsResponse> responseEntity = new HttpEntity<>(newsResponse, headers);
-
-    ResponseEntity<NewsResponse> response = restTemplate.exchange(createURLWithPort(PATH),
-        HttpMethod.POST, responseEntity, NewsResponse.class);
+    ResponseEntity<NewsResponse> response = restTemplate.exchange(
+        createURLWithPort(PATH),
+        HttpMethod.POST,
+        requestEntity,
+        NewsResponse.class);
 
     assertEquals(HttpStatus.CREATED, response.getStatusCode());
 
+    NewsResponse newsResponse = response.getBody();
     assertNotNull(newsResponse);
     assertNotNull(createNewsRequest);
     assertNotNull(response.getBody());
@@ -53,8 +55,6 @@ public class CreateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
     assertEquals(createNewsRequest.getName(), newsResponse.getName());
     assertEquals(createNewsRequest.getImage(), newsResponse.getImage());
     assertEquals(createNewsRequest.getText(), newsResponse.getText());
-    assertEquals(stubNews().getNewsId(), newsResponse.getNewsId());
-    assertEquals(stubCategory().getName(), newsResponse.getCategoryName());
 
   }
 
@@ -145,15 +145,6 @@ public class CreateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
   private CreateNewsRequest buildRequestPayLoad(
       String name, String text, String image) {
     return new CreateNewsRequest(name, text, image);
-  }
-
-  private NewsResponse buildResponsePayLoad() {
-    return buildResponsePayLoad(NEWS_ID, NAME, TEXT, IMAGE, NEWS_CATEGORY);
-  }
-
-  private NewsResponse buildResponsePayLoad(Long id, String name, String text, String image,
-      String categoryName) {
-    return new NewsResponse(id, name, text, image, categoryName);
   }
 
   private ResponseEntity<ErrorResponse> getErrorResponseEntity(
