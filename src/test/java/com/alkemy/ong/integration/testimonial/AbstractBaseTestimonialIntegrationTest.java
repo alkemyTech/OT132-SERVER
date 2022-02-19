@@ -15,6 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
+
 public abstract class AbstractBaseTestimonialIntegrationTest extends AbstractBaseIntegrationTest {
 
   protected static final Long TESTIMONIAL_ID = 1L;
@@ -36,6 +37,7 @@ public abstract class AbstractBaseTestimonialIntegrationTest extends AbstractBas
     List<Testimonial> testimonials = new ArrayList<>();
     testimonials.add(createTestimonialStub());
     return new PageImpl<>(testimonials);
+
   }
 
   protected Testimonial createTestimonialStub() {

@@ -6,5 +6,5 @@ import org.springframework.security.core.Authentication;
 public interface IDeleteComment {
 
   void delete(Long id, Authentication authentication) throws InsufficientPermissionsException;
-  
+
 }

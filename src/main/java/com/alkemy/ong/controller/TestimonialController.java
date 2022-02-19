@@ -130,8 +130,7 @@ public class TestimonialController {
   }
 
   @DeleteMapping(value = "{id}", produces = {"application/json"})
-  @ApiOperation(value = "Delete a testimonial", produces = "application/json",
-      consumes = "application/json")
+  @ApiOperation(value = "Delete a testimonial", produces = "application/json")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "OK - Testimonial deleted",
           response = Void.class),

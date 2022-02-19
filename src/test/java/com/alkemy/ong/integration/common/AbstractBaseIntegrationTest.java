@@ -1,5 +1,8 @@
 package com.alkemy.ong.integration.common;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.model.entity.Role;
@@ -12,6 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 
@@ -72,5 +76,15 @@ public abstract class AbstractBaseIntegrationTest {
 
   protected int getAmountMessages(ResponseEntity<ErrorResponse> response) {
     return response.getBody().getMessages().size();
+  }
+
+  protected void assertOneEmptyOrNullFieldInRequest(ResponseEntity<ErrorResponse> response,
+      String expectedErrorMessage) {
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+
+    assertNotNull(response.getBody());
+    assertEquals(400, getStatusValue(response));
+    assertEquals(1, getAmountMessages(response));
+    assertEquals(expectedErrorMessage, getFirstMessageError(response));
   }
 }
