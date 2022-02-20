@@ -1,5 +1,6 @@
 package com.alkemy.ong.model.request;
 
+import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,12 +10,21 @@ import lombok.Setter;
 public class UpdateActivityRequest {
 
   @NotBlank(message = "Name cannot be empty or null.")
+  @ApiModelProperty(example = "Activity number 1",
+      required = true,
+      position = 0)
   private String name;
 
   @NotBlank(message = "Content cannot be empty or null.")
+  @ApiModelProperty(example = "This is content",
+      required = true,
+      position = 0)
   private String content;
 
   @NotBlank(message = "Image cannot be empty or null.")
+  @ApiModelProperty(example = "image.png",
+      required = true,
+      position = 0)
   private String image;
 
 }
