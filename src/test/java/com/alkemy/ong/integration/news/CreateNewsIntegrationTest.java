@@ -68,7 +68,7 @@ public class CreateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createNewsRequest);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
-    assertEquals(403, response.getBody().getStatus());
+    assertEquals(403, getStatusValue(response));
   }
 
   @Test
@@ -77,7 +77,7 @@ public class CreateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createNewsRequest);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
-    assertEquals(403, response.getBody().getStatus());
+    assertEquals(403, getStatusValue(response));
   }
 
   @Test
@@ -89,9 +89,7 @@ public class CreateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
 
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createNewsRequest);
 
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(400, response.getBody().getStatus());
-    assertEquals("Name cannot be null or empty.", getFirstMessageError(response));
+    assertOneEmptyOrNullFieldInRequest(response,"Name cannot be null or empty.");
 
   }
 
@@ -104,9 +102,7 @@ public class CreateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
 
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createNewsRequest);
 
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(400, response.getBody().getStatus());
-    assertEquals("Text cannot be null or empty.", getFirstMessageError(response));
+    assertOneEmptyOrNullFieldInRequest(response,"Text cannot be null or empty.");
 
   }
 
@@ -119,9 +115,7 @@ public class CreateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
 
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createNewsRequest);
 
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(400, response.getBody().getStatus());
-    assertEquals("Image cannot be null or empty.", getFirstMessageError(response));
+    assertOneEmptyOrNullFieldInRequest(response,"Image cannot be null or empty.");
 
   }
 
