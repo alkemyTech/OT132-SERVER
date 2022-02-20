@@ -60,49 +60,20 @@ public class MemberController {
   @GetMapping(produces = {"application/json"})
   @ApiOperation(value = "Return the list of members by severous pages")
   @ApiResponses(value = {
-      @ApiResponse(code = 200,
-          message = "OK - The list of members. The size of the page is the one"
-              + "passed in the parameters",
-          response = ListMembersResponse.class,
-          responseHeaders = {
-              @ResponseHeader(name = "Link",
-                  description = "Link of the previous page and another for the next page",
-                  response = String.class)
-          }),
-      @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
-          response = ErrorResponse.class)
-  })
+      @ApiResponse(code = 200, message = "OK - The list of members. The size of the page is the one"
+          + "passed in the parameters", response = ListMembersResponse.class, responseHeaders = {
+          @ResponseHeader(name = "Link", description = "Link of the previous page and another for the next page", response = String.class)}),
+      @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.", response = ErrorResponse.class)})
 
   @ApiImplicitParams(value = {
-      @ApiImplicitParam(name = "page",
-          value = "Page of the list",
-          required = true,
-          paramType = "query",
-          dataTypeClass = String.class,
-          example = "0"),
-      @ApiImplicitParam(name = "size",
-          value = "Size of the page",
-          required = false,
-          paramType = "query",
-          dataTypeClass = String.class,
-          example = "10"),
-      @ApiImplicitParam(name = "Authorization",
-          value = "Access Token",
-          required = true,
-          allowEmptyValue = false,
-          paramType = "header",
-          dataTypeClass = String.class,
-          example = "Bearer access_token")
-  })
+      @ApiImplicitParam(name = "page", value = "Page of the list", required = true, paramType = "query", dataTypeClass = String.class, example = "0"),
+      @ApiImplicitParam(name = "size", value = "Size of the page", required = false, paramType = "query", dataTypeClass = String.class, example = "10"),
+      @ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")})
   public ResponseEntity<ListMembersResponse> list(Pageable pageable,
       UriComponentsBuilder uriBuilder, HttpServletResponse response) {
     ListMembersResponse memberResponses = getMemberDetails.findAll(pageable);
-    resultsRetrieved.addLinkHeaderOnPagedResourceRetrieval(uriBuilder,
-        response,
-        MEMBER_PATH,
-        memberResponses.getPage(),
-        memberResponses.getTotalPages(),
-        memberResponses.getSize());
+    resultsRetrieved.addLinkHeaderOnPagedResourceRetrieval(uriBuilder, response, MEMBER_PATH,
+        memberResponses.getPage(), memberResponses.getTotalPages(), memberResponses.getSize());
     return ResponseEntity.ok().body(memberResponses);
   }
 
@@ -112,13 +83,11 @@ public class MemberController {
   @ApiResponses(value = {
       @ApiResponse(code = 201, message = "OK - The member was successfully created",
           response = MemberResponse.class),
+      @ApiResponse(code = 400, message = "INVALID_ARGUMENT - Certain arguments "
+          + "cannot be empty or null."),
       @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
-          response = ErrorResponse.class),
-      @ApiResponse(code = 404, message = "NOT_FOUND - Member not found.",
-          response = ErrorResponse.class)
-  })
-  @ApiImplicitParam(name = "Authorization",
-      value = "Access Token",
+          response = ErrorResponse.class)})
+  @ApiImplicitParam(name = "Authorization", value = "Access Token",
       required = true,
       allowEmptyValue = false,
       paramType = "header",
@@ -130,8 +99,7 @@ public class MemberController {
     return ResponseEntity.status(HttpStatus.CREATED).body(memberResponse);
   }
 
-  @PutMapping(value = "/{id}", produces = {"application/json"},
-      consumes = {"application/json"})
+  @PutMapping(value = "/{id}", produces = {"application/json"}, consumes = {"application/json"})
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @ApiOperation(value = "Update a member passed by id.")
   @ApiResponses(value = {
@@ -139,26 +107,12 @@ public class MemberController {
       @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
           response = ErrorResponse.class),
       @ApiResponse(code = 404, message = "NOT_FOUND - Member not found.",
-          response = ErrorResponse.class)
-  })
+          response = ErrorResponse.class)})
   @ApiImplicitParams(value = {
-      @ApiImplicitParam(name = "id",
-          value = "Id of the member we want to update",
-          required = true,
-          allowEmptyValue = false,
-          paramType = "path",
-          dataTypeClass = String.class,
-          example = "1"),
-      @ApiImplicitParam(name = "Authorization",
-          value = "Access Token",
-          required = true,
-          allowEmptyValue = false,
-          paramType = "header",
-          dataTypeClass = String.class,
-          example = "Bearer access_token")
-  })
-  public ResponseEntity<Void> update(@PathVariable Long id, @Valid @RequestBody
-      UpdateMemberRequest updateMemberRequest) {
+      @ApiImplicitParam(name = "id", value = "Id of the member we want to update", required = true, allowEmptyValue = false, paramType = "path", dataTypeClass = String.class, example = "1"),
+      @ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")})
+  public ResponseEntity<Void> update(@PathVariable Long id,
+      @Valid @RequestBody UpdateMemberRequest updateMemberRequest) {
     updateMember.update(id, updateMemberRequest);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
@@ -171,24 +125,10 @@ public class MemberController {
       @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
           response = ErrorResponse.class),
       @ApiResponse(code = 404, message = "NOT_FOUND - Member not found.",
-          response = ErrorResponse.class)
-  })
+          response = ErrorResponse.class)})
   @ApiImplicitParams(value = {
-      @ApiImplicitParam(name = "id",
-          value = "Id of the member we want to delete",
-          required = true,
-          allowEmptyValue = false,
-          paramType = "path",
-          dataTypeClass = String.class,
-          example = "1"),
-      @ApiImplicitParam(name = "Authorization",
-          value = "Access Token",
-          required = true,
-          allowEmptyValue = false,
-          paramType = "header",
-          dataTypeClass = String.class,
-          example = "Bearer access_token")
-  })
+      @ApiImplicitParam(name = "id", value = "Id of the member we want to delete", required = true, allowEmptyValue = false, paramType = "path", dataTypeClass = String.class, example = "1"),
+      @ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")})
   public ResponseEntity<Void> delete(@PathVariable Long id) throws NotFoundException {
     deleteMember.delete(id);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
