@@ -21,27 +21,27 @@ public class MemberResponse {
 
   @ApiModelProperty(example = "Facebook.url",
       required = false,
-      position = 0)
+      position = 1)
   private String facebookUrl;
 
   @ApiModelProperty(example = "Instagram.url",
       required = false,
-      position = 0)
+      position = 2)
   private String instagramUrl;
 
   @ApiModelProperty(example = "Linkedin.url",
       required = false,
-      position = 0)
+      position = 3)
   private String linkedinUrl;
 
   @ApiModelProperty(example = "https://cohorte-enero-835eb560.s3.amazonaws.com/image.png",
       required = true,
-      position = 0)
+      position = 4)
   private String image;
 
   @ApiModelProperty(example = "This is a descritpion",
       required = true,
-      position = 0)
+      position = 5)
   private String description;
 
 
