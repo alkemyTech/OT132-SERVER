@@ -20,23 +20,23 @@ public class UpdateMemberRequest {
   private String name;
   @ApiModelProperty(example = "Facebook.url",
       required = false,
-      position = 0)
+      position = 1)
   private String facebookUrl;
   @ApiModelProperty(example = "Instagram.url",
       required = false,
-      position = 0)
+      position = 2)
   private String instagramUrl;
   @ApiModelProperty(example = "Linkedin.url",
       required = false,
-      position = 0)
+      position = 3)
   private String linkedinUrl;
   @NotBlank(message = "Image cannot be null or empty.")
   @ApiModelProperty(example = "image.png",
       required = true,
-      position = 0)
+      position = 4)
   private String image;
   @ApiModelProperty(example = "This is a descritpion",
       required = true,
-      position = 0)
+      position = 5)
   private String description;
 }
