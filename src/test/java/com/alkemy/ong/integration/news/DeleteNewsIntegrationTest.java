@@ -23,20 +23,18 @@ public class DeleteNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
   public void shouldSetSoftDeleteTrueWithAdminRole() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
 
-    checkFindMethod();
-
     HttpEntity<Object> request = new HttpEntity<>(headers);
-
-    ResponseEntity<Void> response = restTemplate.exchange(createURLWithPort(PATH_ID),
-        HttpMethod.DELETE, request, Void.class);
+    ResponseEntity<Void> response = restTemplate.exchange(
+        createURLWithPort(PATH_ID),
+        HttpMethod.DELETE,
+        request,
+        Void.class);
 
     assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-
   }
 
   @Test
   public void shouldReturnForbiddenWhenRoleIsUser() {
-
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.DELETE, headers);
@@ -47,7 +45,6 @@ public class DeleteNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
 
   @Test
   public void shouldReturnForbiddenWhenNotAuthenticated() {
-
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.DELETE, headers);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
@@ -57,17 +54,10 @@ public class DeleteNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
   @Test
   public void shouldReturnNotFoundWhenNewsDoesNotExist() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
+    when(newsRepository.findByNewsIdAndSoftDeleteFalse(NEWS_ID)).thenReturn(null);
 
-    when(newsRepository
-        .findByNewsIdAndSoftDeleteFalse(NEWS_ID))
-        .thenReturn(null);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.DELETE, headers);
 
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(
-        HttpMethod.DELETE, headers);
-
-    assertNotNull(response);
-    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    assertEquals(404, getStatusValue(response));
-    assertEquals("News not found", getFirstMessageError(response));
+    assertObjectNotFound(response, "News not found");
   }
 }

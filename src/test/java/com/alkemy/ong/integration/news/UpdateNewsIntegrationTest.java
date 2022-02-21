@@ -24,16 +24,11 @@ public class UpdateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
 
   @Test
   public void shouldUpdateNewsWithRoleAdmin() {
-
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
-
     when(newsRepository.save(any(News.class))).thenReturn(stubNews());
 
     UpdateNewsRequest updateNewsRequest = buildRequestPayLoad();
-
-    HttpEntity<UpdateNewsRequest> requestEntity = new HttpEntity<>(
-        updateNewsRequest, headers);
-
+    HttpEntity<UpdateNewsRequest> requestEntity = new HttpEntity<>(updateNewsRequest, headers);
     ResponseEntity<NewsResponse> response = restTemplate.exchange(
         createURLWithPort(PATH_ID),
         HttpMethod.PUT,
@@ -55,12 +50,10 @@ public class UpdateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
   }
 
   private UpdateNewsRequest buildRequestPayLoad() {
-
     return buildRequestPayLoad(NAME, TEXT, IMAGE);
   }
 
-  private UpdateNewsRequest buildRequestPayLoad(
-      String name, String text, String image) {
+  private UpdateNewsRequest buildRequestPayLoad(String name, String text, String image) {
     return new UpdateNewsRequest(name, text, image);
   }
 }
