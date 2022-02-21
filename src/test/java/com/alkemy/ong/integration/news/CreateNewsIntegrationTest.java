@@ -141,15 +141,5 @@ public class CreateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
     return new CreateNewsRequest(name, text, image);
   }
 
-  private ResponseEntity<ErrorResponse> getErrorResponseEntity(
-      CreateNewsRequest createRequest) {
 
-    HttpEntity<CreateNewsRequest> request =
-        new HttpEntity<>(createRequest, headers);
-
-    return restTemplate.exchange(createURLWithPort(PATH),
-        HttpMethod.POST,
-        request,
-        ErrorResponse.class);
-  }
 }
