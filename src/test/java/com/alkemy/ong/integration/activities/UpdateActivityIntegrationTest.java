@@ -1,6 +1,7 @@
 package com.alkemy.ong.integration.activities;
 
 
+import static java.util.Optional.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -11,6 +12,7 @@ import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.model.entity.Activity;
 import com.alkemy.ong.model.request.UpdateActivityRequest;
 import com.alkemy.ong.model.response.ActivityResponse;
+import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -70,15 +72,13 @@ public class UpdateActivityIntegrationTest extends AbstractBaseActivityIntegrati
   @Test
   public void shouldReturnNotFoundWhenActivityDoesNotExistWithRoleAdmin() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
-    when(activityRepository.findByActivityIdAndSoftDeleteFalse(ACTIVITY_ID)).thenReturn(
-        createActivityStub());
-    //.thenReturn(Optional.empty());
+    when(activityRepository.findByActivityIdAndSoftDeleteFalse(ACTIVITY_ID)).thenReturn(null);
     UpdateActivityRequest updateRequest = buildRequestPayload();
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(updateRequest);
 
-    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    //assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     assertNotNull(response.getBody());
-    assertEquals("Activity not found", getFirstMessageError(response));
+    assertEquals("Activity not found", response.getBody().getMessages().get(0));
     assertEquals(404, getStatusValue(response));
   }
 
