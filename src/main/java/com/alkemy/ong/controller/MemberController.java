@@ -102,7 +102,8 @@ public class MemberController {
       @ApiResponse(code = 201, message = "OK - The member was successfully created",
           response = MemberResponse.class),
       @ApiResponse(code = 400, message = "INVALID_ARGUMENT - Certain arguments "
-          + "cannot be empty or null."),
+          + "cannot be empty or null.",
+          response = ErrorResponse.class),
       @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
           response = ErrorResponse.class)})
   @ApiImplicitParam(name = "Authorization", value = "Access Token",
@@ -123,7 +124,8 @@ public class MemberController {
   @ApiResponses(value = {
       @ApiResponse(code = 204, message = "NO_CONTENT - The member was successfully updated"),
       @ApiResponse(code = 400, message = "INVALID_ARGUMENT - Certain arguments "
-          + "cannot be empty or null."),
+          + "cannot be empty or null.",
+          response = ErrorResponse.class),
       @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
           response = ErrorResponse.class),
       @ApiResponse(code = 404, message = "NOT_FOUND - Member not found.",

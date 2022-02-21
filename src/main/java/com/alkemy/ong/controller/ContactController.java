@@ -62,7 +62,8 @@ public class ContactController {
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "OK - The contact was successfully created"),
       @ApiResponse(code = 400, message = "INVALID_ARGUMENT - Certain arguments "
-          + "cannot be empty or null."),
+          + "cannot be empty or null.",
+          response = ErrorResponse.class),
       @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
           response = ErrorResponse.class)})
   @ApiImplicitParam(name = "Authorization", value = "Access Token",

@@ -4,7 +4,6 @@ import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.model.request.CreateActivityRequest;
 import com.alkemy.ong.model.request.UpdateActivityRequest;
 import com.alkemy.ong.model.response.ActivityResponse;
-import com.alkemy.ong.model.response.ListMembersResponse;
 import com.alkemy.ong.service.abstraction.ICreateActivity;
 import com.alkemy.ong.service.abstraction.IUpdateActivity;
 import io.swagger.annotations.Api;
@@ -13,7 +12,6 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import io.swagger.annotations.ResponseHeader;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,7 +44,8 @@ public class ActivityController {
           message = "CREATED - The activity was successfully created.",
           response = ActivityResponse.class),
       @ApiResponse(code = 400, message = "INVALID_ARGUMENT - Certain arguments "
-          + "cannot be empty or null."),
+          + "cannot be empty or null.",
+          response = ErrorResponse.class),
       @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
           response = ErrorResponse.class)
   })

@@ -77,7 +77,8 @@ public class CommentController {
   @ApiResponses(value = {
       @ApiResponse(code = 204, message = "NO_CONTENT - The comment was successfully created"),
       @ApiResponse(code = 400, message = "INVALID_ARGUMENT - Certain arguments "
-          + "cannot be empty or null."),
+          + "cannot be empty or null.",
+          response = ErrorResponse.class),
       @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
           response = ErrorResponse.class)})
   @ApiImplicitParam(name = "Authorization", value = "Access Token",
@@ -98,7 +99,8 @@ public class CommentController {
       @ApiResponse(code = 200, message = "OK - The comment was successfully updated",
           response = CommentResponse.class),
       @ApiResponse(code = 400, message = "INVALID_ARGUMENT - Certain arguments "
-          + "cannot be empty or null."),
+          + "cannot be empty or null.",
+          response = ErrorResponse.class),
       @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
           response = ErrorResponse.class),
       @ApiResponse(code = 404, message = "NOT_FOUND - Comment not found.",
