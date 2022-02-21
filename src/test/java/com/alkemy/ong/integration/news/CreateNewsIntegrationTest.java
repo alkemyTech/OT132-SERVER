@@ -24,15 +24,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CreateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
 
-
   @Test
   public void shouldCreateNewsWithRoleAdmin() {
-
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
-
     when(categoryRepository.findByNameIgnoreCase(eq(NEWS_CATEGORY)))
         .thenReturn(stubCategory());
-
     when(newsRepository.save(any(News.class))).thenReturn(stubNews());
 
     CreateNewsRequest createNewsRequest = buildRequestPayLoad();
@@ -65,6 +61,7 @@ public class CreateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
 
     CreateNewsRequest createNewsRequest = buildRequestPayLoad();
 
+
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createNewsRequest);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
@@ -86,11 +83,9 @@ public class CreateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
 
     CreateNewsRequest createNewsRequest = buildRequestWithNullName();
-
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createNewsRequest);
 
-    assertOneEmptyOrNullFieldInRequest(response,"Name cannot be null or empty.");
-
+    assertOneEmptyOrNullFieldInRequest(response, "Name cannot be null or empty.");
   }
 
   @Test
@@ -116,7 +111,6 @@ public class CreateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createNewsRequest);
 
     assertOneEmptyOrNullFieldInRequest(response,"Image cannot be null or empty.");
-
   }
 
   private CreateNewsRequest buildRequestWithNullName() {
@@ -140,6 +134,4 @@ public class CreateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
       String name, String text, String image) {
     return new CreateNewsRequest(name, text, image);
   }
-
-
 }

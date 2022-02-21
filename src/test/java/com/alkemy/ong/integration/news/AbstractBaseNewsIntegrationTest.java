@@ -1,8 +1,5 @@
 package com.alkemy.ong.integration.news;
 
-
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import com.alkemy.ong.exception.ErrorResponse;
@@ -79,5 +76,4 @@ public abstract class AbstractBaseNewsIntegrationTest extends AbstractBaseIntegr
         request,
         ErrorResponse.class);
   }
-
 }
