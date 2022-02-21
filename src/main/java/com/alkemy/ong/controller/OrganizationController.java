@@ -31,7 +31,7 @@ public class OrganizationController {
   private IUpdateOrganization updateOrganization;
 
 
-  @GetMapping("/public")
+  @GetMapping(value = "/public", produces = {"application/json"})
   @ApiOperation(value = "Return organization details")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "OK - The organization's details.",
@@ -41,7 +41,8 @@ public class OrganizationController {
     return ResponseEntity.ok().body(organizationResponse);
   }
 
-  @PostMapping("/public")
+  @PostMapping(value = "/public",consumes = {"application/json"},
+              produces = {"application/json"})
   @ApiOperation(value = "Update the organization details")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "OK - The organization was successfully updated",

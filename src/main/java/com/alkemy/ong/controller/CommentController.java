@@ -49,7 +49,7 @@ public class CommentController {
   @Autowired
   private IDeleteComment deleteComment;
 
-  @GetMapping
+  @GetMapping(produces = {"application/json"})
   @ApiOperation(value = "Return the list of comments")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "OK - The list of comments.",
@@ -71,7 +71,8 @@ public class CommentController {
     return ResponseEntity.ok().body(listResponse);
   }
 
-  @PostMapping
+  @PostMapping(consumes = {"application/json"},
+      produces = {"application/json"})
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @ApiOperation(value = "Create a comment")
   @ApiResponses(value = {
@@ -93,8 +94,9 @@ public class CommentController {
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 
-  @PutMapping("/{id}")
-  @ApiOperation(value = "Update a member passed by id.")
+  @PutMapping(value = "/{id}", consumes = {"application/json"},
+      produces = {"application/json"})
+  @ApiOperation(value = "Update a comment passed by id.")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "OK - The comment was successfully updated",
           response = CommentResponse.class),
@@ -125,7 +127,8 @@ public class CommentController {
     return ResponseEntity.ok().body(commentResponse);
   }
 
-  @DeleteMapping("/{id}")
+  @DeleteMapping(value = "/{id}", consumes = {"application/json"},
+      produces = {"application/json"})
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @ApiOperation(value = "Delete a comment passed by id.")
   @ApiResponses(value = {

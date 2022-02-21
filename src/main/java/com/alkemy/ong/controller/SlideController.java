@@ -50,7 +50,7 @@ public class SlideController {
   @Autowired
   private IUpdateSlide updateSlide;
 
-  @GetMapping
+  @GetMapping(produces = {"application/json"})
   @ApiOperation(value = "Return the list of slides")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "OK - The list of slides.",
@@ -71,7 +71,8 @@ public class SlideController {
     return ResponseEntity.ok().body(getSlideDetails.list());
   }
 
-  @PostMapping
+  @PostMapping(consumes = {"application/json"},
+      produces = {"application/json"})
   @ApiOperation(value = "Create a slide")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "OK - The slide was successfully created"),
@@ -109,7 +110,7 @@ public class SlideController {
         .body(createSlide.create(request, fileName, contentType));
   }
 
-  @DeleteMapping("/{id}")
+  @DeleteMapping(value = "/{id}", produces = {"application/json"})
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @ApiOperation(value = "Delete a slide passed by id.")
   @ApiResponses(value = {
@@ -136,7 +137,7 @@ public class SlideController {
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 
-  @GetMapping("/{id}")
+  @GetMapping(value = "/{id}", produces = {"application/json"})
   @ApiOperation(value = "Return the slide detail passed by id")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "OK - The slide's details.",
@@ -160,7 +161,8 @@ public class SlideController {
     return ResponseEntity.ok().body(response);
   }
 
-  @PutMapping("/{id}")
+  @PutMapping(value = "/{id}",consumes = {"application/json"},
+      produces = {"application/json"})
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @ApiOperation(value = "Update a slide passed by id.")
   @ApiResponses(value = {
