@@ -7,8 +7,6 @@ import static org.junit.Assert.assertTrue;
 import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.model.response.ListTestimonialResponse;
-import com.alkemy.ong.model.response.TestimonialResponse;
-import java.util.List;
 import java.util.Objects;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,9 +36,7 @@ public class ListTestimonialIntegrationTest extends AbstractBaseTestimonialInteg
             ListTestimonialResponse.class);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertNotNull(response.getBody());
-    List<TestimonialResponse> testimonialResponses = response.getBody().getTestimonialResponses();
-    assertSuccessResponse(response, testimonialResponses);
+    assertSuccessResponse(response);
   }
 
   @Test
@@ -53,9 +49,7 @@ public class ListTestimonialIntegrationTest extends AbstractBaseTestimonialInteg
             ListTestimonialResponse.class);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertNotNull(response.getBody());
-    List<TestimonialResponse> testimonialResponses = response.getBody().getTestimonialResponses();
-    assertSuccessResponse(response, testimonialResponses);
+    assertSuccessResponse(response);
   }
 
   @Test
@@ -69,14 +63,16 @@ public class ListTestimonialIntegrationTest extends AbstractBaseTestimonialInteg
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
   }
 
-  private void assertSuccessResponse(ResponseEntity<ListTestimonialResponse> response,
-      List<TestimonialResponse> testimonialResponses) {
-    assertNotNull(testimonialResponses);
-    assertEquals(1, testimonialResponses.size());
-    assertNotNull(response.getBody());
-    assertEquals(PAGE, response.getBody().getPage());
-    assertEquals(1, response.getBody().getTotalPages());
+  private void assertSuccessResponse(ResponseEntity<ListTestimonialResponse> response) {
+    ListTestimonialResponse listTestimonialResponse = response.getBody();
+
+    assertNotNull(listTestimonialResponse);
+    assertEquals(PAGE, listTestimonialResponse.getPage());
+    assertEquals(1, listTestimonialResponse.getTotalPages());
     assertTrue(Objects.requireNonNull(response.getHeaders().getFirst(HttpHeaders.LINK)).isEmpty());
+
+    assertNotNull(listTestimonialResponse.getTestimonialResponses());
+    assertEquals(1, listTestimonialResponse.getTestimonialResponses().size());
   }
 
 }
