@@ -135,5 +135,4 @@ public class UpdateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
     assertEquals(request.getName(), testimonialResponse.getName());
     assertEquals(request.getContent(), testimonialResponse.getContent());
   }
-
 }
