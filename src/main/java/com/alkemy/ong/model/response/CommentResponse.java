@@ -12,9 +12,10 @@ import lombok.Setter;
 public class CommentResponse {
 
   @ApiModelProperty(example = "This is a comment",
-      required = true,
+      required = false,
       position = 0)
   private String body;
+
   @ApiModelProperty(dataType = "string",
       example = "2020-02-01T21:26:22Z",
       position = 1)
