@@ -2,6 +2,7 @@ package com.alkemy.ong.integration.member;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import com.alkemy.ong.config.segurity.RoleType;
@@ -9,6 +10,7 @@ import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.model.response.ListMembersResponse;
 import com.alkemy.ong.model.response.MemberResponse;
 import java.util.List;
+import java.util.Objects;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,12 +41,13 @@ public class ListMembersIntegrationTest extends AbstractBaseMemberIntegrationTes
             ListMembersResponse.class);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertNull(response.getBody());
     List<MemberResponse> membersResponse = response.getBody().getMemberResponses();
     assertNotNull(membersResponse);
     assertEquals(1, membersResponse.size());
     assertEquals(PAGE, response.getBody().getPage());
     assertEquals(1, response.getBody().getTotalPages());
-    assertTrue(response.getHeaders().getFirst(HttpHeaders.LINK).isEmpty());
+    assertTrue(Objects.requireNonNull(response.getHeaders().getFirst(HttpHeaders.LINK)).isEmpty());
   }
 
   @Test

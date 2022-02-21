@@ -9,6 +9,7 @@ import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.model.response.ListTestimonialResponse;
 import com.alkemy.ong.model.response.TestimonialResponse;
 import java.util.List;
+import java.util.Objects;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,6 +38,7 @@ public class ListTestimonialIntegrationTest extends AbstractBaseTestimonialInteg
             ListTestimonialResponse.class);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertNotNull(response.getBody());
     List<TestimonialResponse> testimonialResponses = response.getBody().getTestimonialResponses();
     assertSuccessResponse(response, testimonialResponses);
   }
@@ -51,6 +53,7 @@ public class ListTestimonialIntegrationTest extends AbstractBaseTestimonialInteg
             ListTestimonialResponse.class);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertNotNull(response.getBody());
     List<TestimonialResponse> testimonialResponses = response.getBody().getTestimonialResponses();
     assertSuccessResponse(response, testimonialResponses);
   }
@@ -70,9 +73,10 @@ public class ListTestimonialIntegrationTest extends AbstractBaseTestimonialInteg
       List<TestimonialResponse> testimonialResponses) {
     assertNotNull(testimonialResponses);
     assertEquals(1, testimonialResponses.size());
+    assertNotNull(response.getBody());
     assertEquals(PAGE, response.getBody().getPage());
     assertEquals(1, response.getBody().getTotalPages());
-    assertTrue(response.getHeaders().getFirst(HttpHeaders.LINK).isEmpty());
+    assertTrue(Objects.requireNonNull(response.getHeaders().getFirst(HttpHeaders.LINK)).isEmpty());
   }
 
 }

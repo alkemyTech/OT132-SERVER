@@ -21,8 +21,8 @@ public class DeleteTestimonialIntegrationTest extends AbstractBaseTestimonialInt
 
   @Test
   public void shouldSoftDeleteUserWhenAccessWithAdminRole() {
-    when(testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(eq(TESTIMONIAL_ID))).thenReturn(
-        createTestimonialStub());
+    when(testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(eq(TESTIMONIAL_ID)))
+        .thenReturn(createTestimonialStub());
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
     HttpEntity<Object> request = new HttpEntity<>(headers);
 
@@ -31,13 +31,14 @@ public class DeleteTestimonialIntegrationTest extends AbstractBaseTestimonialInt
             HttpMethod.DELETE,
             request,
             Void.class);
+
     assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
   }
 
   @Test
   public void shouldSoftDeleteUserWhenAccessWithUserRole() {
-    when(testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(eq(TESTIMONIAL_ID))).thenReturn(
-        createTestimonialStub());
+    when(testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(eq(TESTIMONIAL_ID)))
+        .thenReturn(createTestimonialStub());
     setAuthorizationHeaderBasedOn(RoleType.USER);
     HttpEntity<Object> request = new HttpEntity<>(headers);
 
@@ -46,12 +47,12 @@ public class DeleteTestimonialIntegrationTest extends AbstractBaseTestimonialInt
             HttpMethod.DELETE,
             request,
             Void.class);
+
     assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
   }
 
   @Test
   public void shouldReturnForbiddenWhenAccessWithoutRole() {
-
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity();
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
@@ -60,8 +61,9 @@ public class DeleteTestimonialIntegrationTest extends AbstractBaseTestimonialInt
   @Test
   public void shouldReturnNotFoundWhenTestimonialDoesNotExist() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
-    when(testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(eq(TESTIMONIAL_ID))).thenReturn(
-        null);
+    when(testimonialRepository.findByTestimonialIdAndSoftDeleteFalse(eq(TESTIMONIAL_ID)))
+        .thenReturn(null);
+
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity();
 
     assertObjectNotFound(response, "Testimonial not found.");
