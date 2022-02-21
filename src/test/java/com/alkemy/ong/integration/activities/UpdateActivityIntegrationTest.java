@@ -1,7 +1,5 @@
 package com.alkemy.ong.integration.activities;
 
-
-import static java.util.Optional.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -12,7 +10,6 @@ import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.model.entity.Activity;
 import com.alkemy.ong.model.request.UpdateActivityRequest;
 import com.alkemy.ong.model.response.ActivityResponse;
-import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -76,14 +73,24 @@ public class UpdateActivityIntegrationTest extends AbstractBaseActivityIntegrati
     UpdateActivityRequest updateRequest = buildRequestPayload();
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(updateRequest);
 
-    //assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     assertNotNull(response.getBody());
-    assertEquals("Activity not found", response.getBody().getMessages().get(0));
+    assertEquals("Activity not found", getFirstMessageError(response));
     assertEquals(404, getStatusValue(response));
   }
 
-  //@Test
-  //  public void shouldReturnNotFoundWhenActivityDoesNotExistWithRoleUser() {
+  @Test
+  public void shouldReturnNotFoundWhenActivityDoesNotExistWithRoleUser() {
+    setAuthorizationHeaderBasedOn(RoleType.USER);
+    when(activityRepository.findByActivityIdAndSoftDeleteFalse(ACTIVITY_ID)).thenReturn(null);
+    UpdateActivityRequest updateRequest = buildRequestPayload();
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(updateRequest);
+
+    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    assertNotNull(response.getBody());
+    assertEquals("Activity not found", getFirstMessageError(response));
+    assertEquals(404, getStatusValue(response));
+  }
 
   @Test
   public void shouldReturnBadRequestWithEmptyNameAndRoleAdmin() {
@@ -196,7 +203,7 @@ public class UpdateActivityIntegrationTest extends AbstractBaseActivityIntegrati
 
     HttpEntity<UpdateActivityRequest> request = new HttpEntity<>(updateRequest, headers);
 
-    return restTemplate.exchange(createURLWithPort(PATH), HttpMethod.POST, request,
+    return restTemplate.exchange(createURLWithPort(PATH_ID), HttpMethod.PUT, request,
         ErrorResponse.class);
   }
 
