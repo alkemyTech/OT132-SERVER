@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.util.UriComponentsBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -32,7 +33,8 @@ public class SwaggerConfig {
         .useDefaultResponseMessages(false)
         .ignoredParameterTypes(Principal.class, Pageable.class,
             UriComponentsBuilder.class,
-            HttpServletResponse.class)
+            HttpServletResponse.class,
+            Authentication.class)
         .apiInfo(apiInfo());
   }
 
