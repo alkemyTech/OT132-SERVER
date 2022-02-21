@@ -2,7 +2,6 @@ package com.alkemy.ong.integration.member;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import com.alkemy.ong.config.segurity.RoleType;
@@ -41,7 +40,8 @@ public class ListMembersIntegrationTest extends AbstractBaseMemberIntegrationTes
             ListMembersResponse.class);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertNull(response.getBody());
+    assertNotNull(response.getBody());
+
     List<MemberResponse> membersResponse = response.getBody().getMemberResponses();
     assertNotNull(membersResponse);
     assertEquals(1, membersResponse.size());
