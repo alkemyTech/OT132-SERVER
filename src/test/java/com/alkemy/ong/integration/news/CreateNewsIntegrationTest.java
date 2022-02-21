@@ -126,7 +126,6 @@ public class CreateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
   }
 
   private CreateNewsRequest buildRequestPayLoad() {
-
     return buildRequestPayLoad(NAME, TEXT, IMAGE);
   }
 
