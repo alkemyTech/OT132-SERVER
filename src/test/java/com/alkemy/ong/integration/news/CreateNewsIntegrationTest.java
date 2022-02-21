@@ -24,19 +24,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CreateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
 
-
   @Test
   public void shouldCreateNewsWithRoleAdmin() {
-
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
-
     when(categoryRepository.findByNameIgnoreCase(eq(NEWS_CATEGORY)))
         .thenReturn(stubCategory());
-
     when(newsRepository.save(any(News.class))).thenReturn(stubNews());
 
     CreateNewsRequest createNewsRequest = buildRequestPayLoad();
-
     HttpEntity<CreateNewsRequest> requestEntity = new HttpEntity<>(createNewsRequest, headers);
 
     ResponseEntity<NewsResponse> response = restTemplate.exchange(
@@ -60,11 +55,9 @@ public class CreateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
 
   @Test
   public void shouldReturnForbiddenWhenRoleIsUser() {
-
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
     CreateNewsRequest createNewsRequest = buildRequestPayLoad();
-
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createNewsRequest);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
@@ -82,41 +75,32 @@ public class CreateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
 
   @Test
   public void shouldReturnBadRequestWhenNameIsEmpty() {
-
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
 
     CreateNewsRequest createNewsRequest = buildRequestWithNullName();
-
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createNewsRequest);
 
-    assertOneEmptyOrNullFieldInRequest(response,"Name cannot be null or empty.");
-
+    assertOneEmptyOrNullFieldInRequest(response, "Name cannot be null or empty.");
   }
 
   @Test
   public void shouldReturnBadRequestWhenTextIsEmpty() {
-
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
 
     CreateNewsRequest createNewsRequest = buildRequestWithNullText();
-
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createNewsRequest);
 
-    assertOneEmptyOrNullFieldInRequest(response,"Text cannot be null or empty.");
-
+    assertOneEmptyOrNullFieldInRequest(response, "Text cannot be null or empty.");
   }
 
   @Test
   public void shouldReturnBadRequestWhenImageIsEmpty() {
-
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
 
     CreateNewsRequest createNewsRequest = buildRequestWithNullImage();
-
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createNewsRequest);
 
-    assertOneEmptyOrNullFieldInRequest(response,"Image cannot be null or empty.");
-
+    assertOneEmptyOrNullFieldInRequest(response, "Image cannot be null or empty.");
   }
 
   private CreateNewsRequest buildRequestWithNullName() {
@@ -132,20 +116,15 @@ public class CreateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
   }
 
   private CreateNewsRequest buildRequestPayLoad() {
-
     return buildRequestPayLoad(NAME, TEXT, IMAGE);
   }
 
-  private CreateNewsRequest buildRequestPayLoad(
-      String name, String text, String image) {
+  private CreateNewsRequest buildRequestPayLoad(String name, String text, String image) {
     return new CreateNewsRequest(name, text, image);
   }
 
-  private ResponseEntity<ErrorResponse> getErrorResponseEntity(
-      CreateNewsRequest createRequest) {
-
-    HttpEntity<CreateNewsRequest> request =
-        new HttpEntity<>(createRequest, headers);
+  private ResponseEntity<ErrorResponse> getErrorResponseEntity(CreateNewsRequest createRequest) {
+    HttpEntity<CreateNewsRequest> request = new HttpEntity<>(createRequest, headers);
 
     return restTemplate.exchange(createURLWithPort(PATH),
         HttpMethod.POST,

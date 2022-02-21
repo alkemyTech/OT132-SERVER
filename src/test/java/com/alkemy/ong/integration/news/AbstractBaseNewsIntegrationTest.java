@@ -1,9 +1,6 @@
 package com.alkemy.ong.integration.news;
 
 
-import static org.junit.Assert.assertNotNull;
-
-import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.integration.common.AbstractBaseIntegrationTest;
 import com.alkemy.ong.model.entity.Category;
 import com.alkemy.ong.model.entity.News;
@@ -12,7 +9,6 @@ import com.alkemy.ong.repository.INewsRepository;
 import java.sql.Timestamp;
 import java.time.Instant;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.ResponseEntity;
 
 public abstract class AbstractBaseNewsIntegrationTest extends AbstractBaseIntegrationTest {
 
@@ -29,7 +25,6 @@ public abstract class AbstractBaseNewsIntegrationTest extends AbstractBaseIntegr
   protected static final String TEXT = "We found the cure for clumsy programming. Yey!!";
   protected static final String IMAGE = "http://fake-url-image.com/this-is-not-a-pipe.jpg";
 
-
   protected Category stubCategory() {
     return new Category(1L,
         "news",
@@ -44,7 +39,4 @@ public abstract class AbstractBaseNewsIntegrationTest extends AbstractBaseIntegr
         Timestamp.from(Instant.now()));
   }
 
-  protected String getFirstMessageError(ResponseEntity<ErrorResponse> response) {
-    return response.getBody().getMessages().get(0);
-  }
 }
