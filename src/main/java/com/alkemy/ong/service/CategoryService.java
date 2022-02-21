@@ -21,7 +21,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CategoryService implements IGetCategoryDetails, ICreateCategory, IUpdateCategory,IDeleteCategory {
+public class CategoryService implements IGetCategoryDetails, ICreateCategory, IUpdateCategory,
+    IDeleteCategory {
 
   @Autowired
   private CategoryMapper categoryMapper;
@@ -82,10 +83,11 @@ public class CategoryService implements IGetCategoryDetails, ICreateCategory, IU
     return categoryMapper.map(category, CategoryAttributes.CATEGORY_ID, CategoryAttributes.NAME,
         CategoryAttributes.IMAGE, CategoryAttributes.DESCRIPTION);
   }
+
   @Override
   public void delete(Long id) {
     Category category = findBy(id);
-        category.setSoftDelete(true);
-        categoryRepository.save(category);
-    }
+    category.setSoftDelete(true);
+    categoryRepository.save(category);
+  }
 }

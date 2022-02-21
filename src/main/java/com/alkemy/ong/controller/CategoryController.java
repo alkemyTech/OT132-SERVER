@@ -80,6 +80,7 @@ public class CategoryController {
       @Valid @RequestBody UpdateCategoryRequest updateCategoryRequest) {
     return ResponseEntity.ok().body(updateCategory.update(id, updateCategoryRequest));
   }
+
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Long id) throws NotFoundException {
     deleteCategory.delete(id);
