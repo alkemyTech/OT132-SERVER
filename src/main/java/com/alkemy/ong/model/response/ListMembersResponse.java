@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ListMembersResponse {
+public class ListMembersResponse extends PaginationResponse {
 
   @JsonProperty("members")
   private List<MemberResponse> memberResponses;

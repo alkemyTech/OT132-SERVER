@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "e9d48048-071f-40f9-a411-0c9f8f6284c2",
+    "_postman_id": "6be820f1-86f6-466c-a646-a0557fee0519",
     "name": "OT132",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
@@ -111,7 +111,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\" : \"admin1@gmail.com\",\r\n    \"password\" : \"123456\"\r\n}",
+              "raw": "{\r\n    \"email\" : \"etluit12@gmail.com\",\r\n    \"password\" : \"t0400e3ps\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -398,6 +398,45 @@
             "description": "ROLE USER AND ADMIN"
           },
           "response": []
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNjQ0NTk3NTAzLCJleHAiOjE2NDQ2MzM1MDN9.zwLKEy7qw6K7fAmx2z0y0QqTBqxx1gpr1M6ZKr7E5sw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \r\n    \"lastName\": \"Perez\",\r\n    \"photo\": \"https://www.nikon.es/microsites/digitutors/es_ES/img/sample/function/dslr/thumbnail/picturecontrol_dsc_0768_standard.jpg\"\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users/4",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "4"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -512,6 +551,105 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Edit News",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDQzMjk4MDEsImV4cCI6MTY0NDM2NTgwMX0.EuPzWhkQr87lraiTCtgm5Itgme2rNO768DcSgqFuAgU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\" : \"news title 01\",\r\n    \"text\" : \"this is a text\",\r\n    \"image\" : \"image http link\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update News",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImV0bHVpdDEyQGdtYWlsLmNvbSIsImlhdCI6MTY0NDkzODU0NywiZXhwIjoxNjQ0OTc0NTQ3fQ.jP_Ax4oiQzxsgjkil6vjd2KEfMBZu31dBO3-GBfMiA0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\" : \"name modificacion\",\n    \"text\" : \"text modificado\",\n    \"image\" : \"image1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/news/6",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "news",
+                "6"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get By ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImV0bHVpdDEyQGdtYWlsLmNvbSIsImlhdCI6MTY0NDkzODU0NywiZXhwIjoxNjQ0OTc0NTQ3fQ.jP_Ax4oiQzxsgjkil6vjd2KEfMBZu31dBO3-GBfMiA0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/news/13",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "news",
+                "13"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -545,6 +683,113 @@
               ]
             },
             "description": "ROLE USER AND ADMIN"
+          },
+          "response": []
+        },
+        {
+          "name": "Post Comment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNjQ0ODAwMjcxLCJleHAiOjE2NDQ4MzYyNzF9.-HMrb1YUxJ1lJhiAovKONNzcGCd2goqjPdXeJsDiw9s",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"userId\":\"4\",\r\n    \"newsId\":\"2\",\r\n    \"body\":\"First comment.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/comments",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "comments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Comment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2NDUxMjg5MDAsImV4cCI6MTY0NTE2NDkwMH0.2-oRywlitGinv6mdjf2oAX5WxvVy-i3IjO2iAYQUgDw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/comments/7",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "comments",
+                "7"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Comment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoiYnNrdW5pZ3VuZGUxOEBnbWFpbC5jb20iLCJpYXQiOjE2NDUxMjc5ODgsImV4cCI6MTY0NTE2Mzk4OH0.kGGhiPma3oGFLNOihcWs6kpswzp5kaeIzwpAXenM7K8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"userId\":\"1\",\r\n    \"newsId\":\"1\",\r\n    \"body\":\"First comment.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/comments/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "comments",
+                "1"
+              ]
+            }
           },
           "response": []
         }
@@ -783,6 +1028,45 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Get Testimonial",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImV0bHVpdDEyQGdtYWlsLmNvbSIsImlhdCI6MTY0NDYwMjMxOSwiZXhwIjoxNjQ0NjM4MzE5fQ.2qWHqvmozBCH-U6WidxbeNH7RNQc7T5MWhI_LpcI3ps",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/testimonials?page=1&size=10",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "testimonials"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -826,6 +1110,35 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "PUT Activity",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\" : \"activity\",\r\n    \"content\" : \"activity content\",\r\n    \"image\" : \"image\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/activities/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "activities",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -835,10 +1148,20 @@
         {
           "name": "Get members",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImV0bHVpdDEyQGdtYWlsLmNvbSIsImlhdCI6MTY0NDk2NjIxNiwiZXhwIjoxNjQ1MDAyMjE2fQ.KyMkqXQK2osC-Yqj3-9fciWp_XxULgPNBZ0-U_-fWvw",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/members",
+              "raw": "http://localhost:8080/members?page=1&size=10",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -846,6 +1169,16 @@
               "port": "8080",
               "path": [
                 "members"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
               ]
             },
             "description": "ROLE ADMIN"
@@ -878,6 +1211,84 @@
               ]
             },
             "description": "ROLE USER"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Member",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoiYnNrdW5pZ3VuZGUxOEBnbWFpbC5jb20iLCJpYXQiOjE2NDQ5Njg3MDgsImV4cCI6MTY0NTAwNDcwOH0.kVArZorD4QwBkcfFC4m8RR2G3zBzjbqBNW-PpVSllvw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\" : \"name\",\r\n    \"facebookUrl\" : \"facebookUrl\",\r\n    \"instagramUrl\"  : \"instagramUrl\",\r\n    \"linkedinUrl\" : \"linkedinUrl\",\r\n    \"image\" : \"image\",\r\n    \"description\" : \"description\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/members/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "members",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Member",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwic3ViIjoiYnNrdW5pZ3VuZGUxOEBnbWFpbC5jb20iLCJpYXQiOjE2NDQ5Njg3MDgsImV4cCI6MTY0NTAwNDcwOH0.kVArZorD4QwBkcfFC4m8RR2G3zBzjbqBNW-PpVSllvw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\" : \"name\",\r\n    \"facebookUrl\" : \"facebookUrl\",\r\n    \"instagramUrl\"  : \"instagramUrl\",\r\n    \"linkedinUrl\" : \"linkedinUrl\",\r\n    \"image\" : \"image\",\r\n    \"description\" : \"description\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/members/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "members",
+                "1"
+              ]
+            }
           },
           "response": []
         }

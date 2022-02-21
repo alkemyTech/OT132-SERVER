@@ -39,6 +39,14 @@ In this project run:
 mvn spring-boot:run
 ```
 
+### SWAGGER DOCUMENTATION
+
+If you want to display the API documentation go to below page after run the project:
+
+```
+http://localhost:8080/swagger-ui/index.html
+```
+
 ### CHECKSTYLE
 
 You can generate the Checkstyle report by explicitly executing below command from the command line.

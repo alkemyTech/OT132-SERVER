@@ -1,6 +1,10 @@
 package com.alkemy.ong.integration.common;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import com.alkemy.ong.config.segurity.RoleType;
+import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.model.entity.Role;
 import com.alkemy.ong.model.entity.User;
 import com.alkemy.ong.repository.IUserRepository;
@@ -11,12 +15,17 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 
 public abstract class AbstractBaseIntegrationTest {
 
   protected static final long USER_ID = 1L;
+  protected static final String FIRST_NAME = "John";
+  protected static final String LAST_NAME = "Doe";
   protected static final String EMAIL = "johnny@doe.com";
+  protected static final String PHOTO = "https://foo.jpg";
 
   protected TestRestTemplate restTemplate = new TestRestTemplate();
   protected HttpHeaders headers = new HttpHeaders();
@@ -35,7 +44,7 @@ public abstract class AbstractBaseIntegrationTest {
   }
 
   protected void setAuthorizationHeaderBasedOn(RoleType role) {
-    String jwt = SecurityTestConfig.createToken("johnny@doe.com", role);
+    String jwt = SecurityTestConfig.createToken(EMAIL, role);
     headers.set("Authorization", jwt);
   }
 
@@ -47,13 +56,45 @@ public abstract class AbstractBaseIntegrationTest {
 
   protected User stubUser(RoleType role) {
     return new User(USER_ID,
-        "John",
-        "Doe",
-        "johnny@doe.com",
+        FIRST_NAME,
+        LAST_NAME,
+        EMAIL,
         "123456789",
-        "https://foo.jpg",
+        PHOTO,
         Lists.list(stubRole(role)),
         Timestamp.from(Instant.now()),
         false);
+  }
+
+  protected String getFirstMessageError(ResponseEntity<ErrorResponse> response) {
+    return response.getBody().getMessages().get(0);
+  }
+
+  protected int getStatusValue(ResponseEntity<ErrorResponse> response) {
+    return response.getBody().getStatus();
+  }
+
+  protected int getAmountMessages(ResponseEntity<ErrorResponse> response) {
+    return response.getBody().getMessages().size();
+  }
+
+  protected void assertOneEmptyOrNullFieldInRequest(ResponseEntity<ErrorResponse> response,
+      String expectedErrorMessage) {
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+
+    assertNotNull(response.getBody());
+    assertEquals(400, getStatusValue(response));
+    assertEquals(1, getAmountMessages(response));
+    assertEquals(expectedErrorMessage, getFirstMessageError(response));
+  }
+
+  protected void assertObjectNotFound(ResponseEntity<ErrorResponse> response,
+      String expectedErrorMessage) {
+    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+
+    assertNotNull(response.getBody());
+    assertEquals(404, getStatusValue(response));
+    assertEquals(1, getAmountMessages(response));
+    assertEquals(expectedErrorMessage, getFirstMessageError(response));
   }
 }

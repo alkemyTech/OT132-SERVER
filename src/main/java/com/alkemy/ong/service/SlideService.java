@@ -8,12 +8,14 @@ import com.alkemy.ong.mapper.SlideMapper;
 import com.alkemy.ong.mapper.attribute.SlideAttributes;
 import com.alkemy.ong.model.entity.Slide;
 import com.alkemy.ong.model.request.CreateSlideRequest;
+import com.alkemy.ong.model.request.UpdateSlideRequest;
 import com.alkemy.ong.model.response.ListSlideResponse;
 import com.alkemy.ong.model.response.SlideResponse;
 import com.alkemy.ong.repository.ISlideRepository;
 import com.alkemy.ong.service.abstraction.ICreateSlide;
 import com.alkemy.ong.service.abstraction.IDeleteSlide;
 import com.alkemy.ong.service.abstraction.IGetSlideDetails;
+import com.alkemy.ong.service.abstraction.IUpdateSlide;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SlideService implements IGetSlideDetails, ICreateSlide, IDeleteSlide {
+public class SlideService implements IGetSlideDetails, ICreateSlide, IDeleteSlide, IUpdateSlide {
 
   @Autowired
   private SlideMapper slideMapper;
@@ -40,11 +42,7 @@ public class SlideService implements IGetSlideDetails, ICreateSlide, IDeleteSlid
 
   @Override
   public SlideResponse getBy(Long id) {
-    Optional<Slide> result = slideRepository.findById(id);
-    if (result.isEmpty()) {
-      throw new NotFoundException("Slide could not be found.");
-    }
-    return slideMapper.map(result.get(), SlideAttributes.SLIDE_ID, SlideAttributes.IMAGE_URL,
+    return slideMapper.map(find(id), SlideAttributes.SLIDE_ID, SlideAttributes.IMAGE_URL,
         SlideAttributes.TEXT, SlideAttributes.ORDER);
   }
 
@@ -91,6 +89,25 @@ public class SlideService implements IGetSlideDetails, ICreateSlide, IDeleteSlid
       throw new NotFoundException(MessageFormat.format("Slide ID: {0} not found.", id));
     }
     slideRepository.deleteById(id);
+  }
+
+  @Override
+  public SlideResponse update(UpdateSlideRequest updateSlideRequest, Long id) {
+    Slide slide = find(id);
+    slide.setImageUrl(updateSlideRequest.getImageUrl());
+    slide.setOrder(updateSlideRequest.getOrder());
+    slide.setText(updateSlideRequest.getText());
+    return slideMapper.map(slideRepository.save(slide), SlideAttributes.IMAGE_URL,
+        SlideAttributes.ORDER,
+        SlideAttributes.TEXT);
+  }
+
+  private Slide find(Long id) {
+    Optional<Slide> result = slideRepository.findById(id);
+    if (result.isEmpty()) {
+      throw new NotFoundException("Slide could not be found.");
+    }
+    return result.get();
   }
 }
 

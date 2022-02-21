@@ -6,23 +6,36 @@ import com.alkemy.ong.mapper.attribute.TestimonialAttributes;
 import com.alkemy.ong.model.entity.Testimonial;
 import com.alkemy.ong.model.request.CreateTestimonialRequest;
 import com.alkemy.ong.model.request.UpdateTestimonialRequest;
+import com.alkemy.ong.model.response.ListTestimonialResponse;
 import com.alkemy.ong.model.response.TestimonialResponse;
 import com.alkemy.ong.repository.ITestimonialRepository;
 import com.alkemy.ong.service.abstraction.ICreateTestimonial;
 import com.alkemy.ong.service.abstraction.IDeleteTestimonial;
+import com.alkemy.ong.service.abstraction.IGetTestimonialDetails;
 import com.alkemy.ong.service.abstraction.IUpdateTestimonial;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TestimonialService implements ICreateTestimonial, IDeleteTestimonial,
-    IUpdateTestimonial {
+    IUpdateTestimonial, IGetTestimonialDetails {
 
   @Autowired
   private ITestimonialRepository testimonialRepository;
 
   @Autowired
   private TestimonialMapper testimonialMapper;
+
+  @Override
+  public ListTestimonialResponse findAll(Pageable pageable) {
+    Page<Testimonial> page = testimonialRepository.findBySoftDeleteFalseOrderByTimestampDesc(
+        pageable);
+    List<TestimonialResponse> testimonialResponses = testimonialMapper.map(page.getContent());
+    return buildListResponse(testimonialResponses, page);
+  }
 
   @Override
   public TestimonialResponse create(CreateTestimonialRequest createTestimonialRequest) {
@@ -70,4 +83,13 @@ public class TestimonialService implements ICreateTestimonial, IDeleteTestimonia
     return testimonial;
   }
 
+  private ListTestimonialResponse buildListResponse(List<TestimonialResponse> testimonialResponses,
+      Page<Testimonial> page) {
+    ListTestimonialResponse listTestimonialResponse = new ListTestimonialResponse();
+    listTestimonialResponse.setTestimonialResponses(testimonialResponses);
+    listTestimonialResponse.setPage(page.getNumber());
+    listTestimonialResponse.setSize(page.getSize());
+    listTestimonialResponse.setTotalPages(page.getTotalPages());
+    return listTestimonialResponse;
+  }
 }

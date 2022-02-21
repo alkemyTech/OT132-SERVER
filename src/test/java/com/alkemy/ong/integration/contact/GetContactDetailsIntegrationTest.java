@@ -40,7 +40,7 @@ public class GetContactDetailsIntegrationTest extends AbstractBaseContactIntegra
             new HttpEntity<>(headers),
             ListContactResponse.class);
 
-    assertEquals(HttpStatus.OK,response.getStatusCode());
+    assertEquals(HttpStatus.OK, response.getStatusCode());
     ListContactResponse listContactResponse = response.getBody();
     assertNotNull(listContactResponse);
   }
@@ -55,7 +55,7 @@ public class GetContactDetailsIntegrationTest extends AbstractBaseContactIntegra
             new HttpEntity<>(headers),
             ErrorResponse.class);
 
-    assertEquals(HttpStatus.FORBIDDEN,response.getStatusCode());
+    assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     ErrorResponse errorResponse = response.getBody();
     assertNotNull(errorResponse);
     assertEquals(403, errorResponse.getStatus());

@@ -65,7 +65,7 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
         ErrorResponse.class);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
-    assertEquals(0, getMessageSizeError(response));
+    assertEquals(0, getAmountMessages(response));
   }
 
   @Test
@@ -80,7 +80,7 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
         HttpMethod.POST, requestEntity, ErrorResponse.class);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
-    assertEquals(0, getMessageSizeError(response));
+    assertEquals(0, getAmountMessages(response));
   }
 
   @Test
@@ -99,7 +99,7 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
         ErrorResponse.class);
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(1, getMessageSizeError(response));
+    assertEquals(1, getAmountMessages(response));
     assertEquals("Name field can not be null or empty.", getFirstMessageError(response));
   }
 
@@ -119,7 +119,7 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
         ErrorResponse.class);
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(1, getMessageSizeError(response));
+    assertEquals(1, getAmountMessages(response));
     assertEquals("Email field can not be null or empty.", getFirstMessageError(response));
   }
 
@@ -139,7 +139,7 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
         ErrorResponse.class);
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(1, getMessageSizeError(response));
+    assertEquals(1, getAmountMessages(response));
     assertEquals("Image field can not be null or empty.", getFirstMessageError(response));
   }
 
@@ -159,7 +159,7 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
         ErrorResponse.class);
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(1, getMessageSizeError(response));
+    assertEquals(1, getAmountMessages(response));
     assertEquals("Welcome text field can not be null or empty.",
         getFirstMessageError(response));
   }
@@ -196,11 +196,4 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
     return request;
   }
 
-  private String getFirstMessageError(ResponseEntity<ErrorResponse> response) {
-    return response.getBody().getMessages().get(0);
-  }
-
-  private int getMessageSizeError(ResponseEntity<ErrorResponse> response) {
-    return response.getBody().getMessages().size();
-  }
 }
