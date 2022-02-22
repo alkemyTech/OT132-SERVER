@@ -4,10 +4,12 @@ import com.alkemy.ong.common.PaginatedResultsRetrieved;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.model.request.CreateNewsRequest;
 import com.alkemy.ong.model.request.UpdateNewsRequest;
+import com.alkemy.ong.model.response.ListCommentsInNewsResponse;
 import com.alkemy.ong.model.response.ListNewsResponse;
 import com.alkemy.ong.model.response.NewsResponse;
 import com.alkemy.ong.service.abstraction.ICreateNews;
 import com.alkemy.ong.service.abstraction.IDeleteNews;
+import com.alkemy.ong.service.abstraction.IGetCommentsFromNews;
 import com.alkemy.ong.service.abstraction.IGetNewsDetails;
 import com.alkemy.ong.service.abstraction.IUpdateNews;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +25,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -48,6 +49,9 @@ public class NewsController {
   @Autowired
   private IUpdateNews updateNews;
 
+  @Autowired
+  private IGetCommentsFromNews getCommentsFromNews;
+
   @GetMapping
   public ResponseEntity<ListNewsResponse> list(Pageable pageable, UriComponentsBuilder uriBuilder,
       HttpServletResponse response) {
@@ -62,19 +66,23 @@ public class NewsController {
     return ResponseEntity.ok(listNewsResponse);
   }
 
+  @GetMapping("/{id}/comments")
+  public ResponseEntity<ListCommentsInNewsResponse> listCommentsBy(
+      @PathVariable(value = "id") Long id)
+      throws NotFoundException {
+    ListCommentsInNewsResponse listCommentsInNewsResponse = getCommentsFromNews.list(id);
+    return ResponseEntity.ok().body(listCommentsInNewsResponse);
+  }
+
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Long id) throws NotFoundException {
-
     deleteNews.delete(id);
-
     return ResponseEntity.noContent().build();
   }
 
   @PostMapping
-  @ResponseStatus(HttpStatus.CREATED)
   public ResponseEntity<NewsResponse> create(
       @RequestBody @Valid CreateNewsRequest createNewsRequest) {
-
     return ResponseEntity.status(HttpStatus.CREATED).body(createNews.create(createNewsRequest));
   }
 
@@ -90,5 +98,4 @@ public class NewsController {
       throws NotFoundException {
     return ResponseEntity.ok().body(getNewsDetails.getBy(id));
   }
-
 }
