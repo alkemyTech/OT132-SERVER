@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -34,7 +33,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class NewsController {
 
   private static final String NEWS_PATH = "/news";
-  private static final String NEWS_COMMENTS_PATH = "/news/{id}/comments";
 
   @Autowired
   private ICreateNews createNews;
@@ -69,26 +67,22 @@ public class NewsController {
   }
 
   @GetMapping("/{id}/comments")
-  public ResponseEntity<ListCommentsInNewsResponse> list(@PathVariable(value = "id") Long id)
+  public ResponseEntity<ListCommentsInNewsResponse> listCommentsBy(
+      @PathVariable(value = "id") Long id)
       throws NotFoundException {
     ListCommentsInNewsResponse listCommentsInNewsResponse = getCommentsFromNews.list(id);
-
     return ResponseEntity.ok().body(listCommentsInNewsResponse);
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Long id) throws NotFoundException {
-
     deleteNews.delete(id);
-
     return ResponseEntity.noContent().build();
   }
 
   @PostMapping
-  @ResponseStatus(HttpStatus.CREATED)
   public ResponseEntity<NewsResponse> create(
       @RequestBody @Valid CreateNewsRequest createNewsRequest) {
-
     return ResponseEntity.status(HttpStatus.CREATED).body(createNews.create(createNewsRequest));
   }
 
