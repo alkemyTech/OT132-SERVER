@@ -1,4 +1,4 @@
-package com.alkemy.ong.integration.activities;
+package com.alkemy.ong.integration.activity;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -30,7 +30,7 @@ public class CreateActivityIntegrationTest extends AbstractBaseActivityIntegrati
     when(activityRepository.save(any(Activity.class))).thenReturn(createActivityStub());
     CreateActivityRequest request = buildRequestPayload();
 
-    assertOneEmptyOrNullFieldInRequest(request);
+    executeAndAssertSuccessRequest(request);
   }
 
   @Test
@@ -39,7 +39,7 @@ public class CreateActivityIntegrationTest extends AbstractBaseActivityIntegrati
     when(activityRepository.save(any(Activity.class))).thenReturn(createActivityStub());
     CreateActivityRequest request = buildRequestPayload();
 
-    assertOneEmptyOrNullFieldInRequest(request);
+    executeAndAssertSuccessRequest(request);
   }
 
   @Test
@@ -56,7 +56,7 @@ public class CreateActivityIntegrationTest extends AbstractBaseActivityIntegrati
     setAuthorizationHeaderBasedOn(RoleType.USER);
     CreateActivityRequest request = buildRequestWithEmptyName();
 
-    assertObjectNotFound(request, NAME_OBJ);
+    executeAndAssertOneEmptyOrNullFieldInRequest(request, NAME_OBJ);
   }
 
   @Test
@@ -64,7 +64,7 @@ public class CreateActivityIntegrationTest extends AbstractBaseActivityIntegrati
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
     CreateActivityRequest request = buildRequestWithEmptyName();
 
-    assertObjectNotFound(request, NAME_OBJ);
+    executeAndAssertOneEmptyOrNullFieldInRequest(request, NAME_OBJ);
   }
 
   @Test
@@ -72,7 +72,7 @@ public class CreateActivityIntegrationTest extends AbstractBaseActivityIntegrati
     setAuthorizationHeaderBasedOn(RoleType.USER);
     CreateActivityRequest request = buildRequestWithEmptyContent();
 
-    assertObjectNotFound(request, CONTENT_OBJ);
+    executeAndAssertOneEmptyOrNullFieldInRequest(request, CONTENT_OBJ);
   }
 
   @Test
@@ -80,7 +80,7 @@ public class CreateActivityIntegrationTest extends AbstractBaseActivityIntegrati
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
     CreateActivityRequest request = buildRequestWithEmptyContent();
 
-    assertObjectNotFound(request, CONTENT_OBJ);
+    executeAndAssertOneEmptyOrNullFieldInRequest(request, CONTENT_OBJ);
   }
 
   @Test
@@ -88,7 +88,7 @@ public class CreateActivityIntegrationTest extends AbstractBaseActivityIntegrati
     setAuthorizationHeaderBasedOn(RoleType.USER);
     CreateActivityRequest request = buildRequestWithEmptyImage();
 
-    assertObjectNotFound(request, IMAGE_OBJ);
+    executeAndAssertOneEmptyOrNullFieldInRequest(request, IMAGE_OBJ);
   }
 
   @Test
@@ -96,7 +96,7 @@ public class CreateActivityIntegrationTest extends AbstractBaseActivityIntegrati
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
     CreateActivityRequest request = buildRequestWithEmptyImage();
 
-    assertObjectNotFound(request, IMAGE_OBJ);
+    executeAndAssertOneEmptyOrNullFieldInRequest(request, IMAGE_OBJ);
   }
 
   private CreateActivityRequest buildRequestWithEmptyName() {
@@ -131,7 +131,7 @@ public class CreateActivityIntegrationTest extends AbstractBaseActivityIntegrati
         ErrorResponse.class);
   }
 
-  public void assertOneEmptyOrNullFieldInRequest(CreateActivityRequest request) {
+  public void executeAndAssertSuccessRequest(CreateActivityRequest request) {
 
     HttpEntity<CreateActivityRequest> requestEntity = new HttpEntity<>(request, headers);
     ResponseEntity<ActivityResponse> response = restTemplate.exchange(createURLWithPort(PATH),
@@ -146,11 +146,10 @@ public class CreateActivityIntegrationTest extends AbstractBaseActivityIntegrati
     assertEquals(request.getImage(), activityResponse.getImage());
   }
 
-  private void assertObjectNotFound(CreateActivityRequest request, String object) {
+  private void executeAndAssertOneEmptyOrNullFieldInRequest(CreateActivityRequest request,
+      String object) {
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(request);
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(400, getStatusValue(response));
-    assertEquals(object + " cannot be empty or null.", getFirstMessageError(response));
+    assertOneEmptyOrNullFieldInRequest(response, object + " cannot be empty or null.");
   }
 
 }

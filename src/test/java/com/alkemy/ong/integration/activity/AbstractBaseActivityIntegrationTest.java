@@ -1,4 +1,4 @@
-package com.alkemy.ong.integration.activities;
+package com.alkemy.ong.integration.activity;
 
 import static org.mockito.Mockito.when;
 
@@ -9,7 +9,6 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.junit.Before;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -39,10 +38,6 @@ public abstract class AbstractBaseActivityIntegrationTest extends AbstractBaseIn
     List<Activity> activities = new ArrayList<>();
     activities.add(createActivityStub());
     return activities;
-  }
-
-  protected Optional<Activity> optionalActivityStub() {
-    return Optional.of(createActivityStub());
   }
 
   protected Activity createActivityStub() {

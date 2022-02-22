@@ -1,4 +1,4 @@
-package com.alkemy.ong.integration.activities;
+package com.alkemy.ong.integration.activity;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -28,8 +28,9 @@ public class UpdateActivityIntegrationTest extends AbstractBaseActivityIntegrati
   public void shouldUpdateActivityWithAdminRole() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
     when(activityRepository.save(any(Activity.class))).thenReturn(createActivityStub());
-    when(activityRepository.findByActivityIdAndSoftDeleteFalse(ACTIVITY_ID)).thenReturn(
-        createActivityStub());
+    when(activityRepository.findByActivityIdAndSoftDeleteFalse(ACTIVITY_ID))
+        .thenReturn(createActivityStub());
+
     UpdateActivityRequest request = buildRequestPayload();
 
     assertSuccessResponse(request);
@@ -39,8 +40,9 @@ public class UpdateActivityIntegrationTest extends AbstractBaseActivityIntegrati
   public void shouldUpdateActivityWithUserRole() {
     setAuthorizationHeaderBasedOn(RoleType.USER);
     when(activityRepository.save(any(Activity.class))).thenReturn(createActivityStub());
-    when(activityRepository.findByActivityIdAndSoftDeleteFalse(ACTIVITY_ID)).thenReturn(
-        createActivityStub());
+    when(activityRepository.findByActivityIdAndSoftDeleteFalse(ACTIVITY_ID))
+        .thenReturn(createActivityStub());
+
     UpdateActivityRequest request = buildRequestPayload();
 
     assertSuccessResponse(request);
@@ -59,18 +61,20 @@ public class UpdateActivityIntegrationTest extends AbstractBaseActivityIntegrati
   public void shouldReturnNotFoundWhenActivityDoesNotExistWithRoleAdmin() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
     when(activityRepository.findByActivityIdAndSoftDeleteFalse(ACTIVITY_ID)).thenReturn(null);
+
     UpdateActivityRequest request = buildRequestPayload();
 
-    assertObjectNotFound(request);
+    executeAndAssertObjectNotFoundRequest(request);
   }
 
   @Test
   public void shouldReturnNotFoundWhenActivityDoesNotExistWithRoleUser() {
     setAuthorizationHeaderBasedOn(RoleType.USER);
     when(activityRepository.findByActivityIdAndSoftDeleteFalse(ACTIVITY_ID)).thenReturn(null);
+
     UpdateActivityRequest request = buildRequestPayload();
 
-    assertObjectNotFound(request);
+    executeAndAssertObjectNotFoundRequest(request);
   }
 
   @Test
@@ -78,7 +82,7 @@ public class UpdateActivityIntegrationTest extends AbstractBaseActivityIntegrati
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
     UpdateActivityRequest request = buildRequestWithEmptyName();
 
-    assertOneEmptyOrNullFieldInRequest(request, NAME_OBJ);
+    executeAndAssertOneEmptyOrNullFieldInRequest(request, NAME_OBJ);
   }
 
   @Test
@@ -86,7 +90,7 @@ public class UpdateActivityIntegrationTest extends AbstractBaseActivityIntegrati
     setAuthorizationHeaderBasedOn(RoleType.USER);
     UpdateActivityRequest request = buildRequestWithEmptyName();
 
-    assertOneEmptyOrNullFieldInRequest(request, NAME_OBJ);
+    executeAndAssertOneEmptyOrNullFieldInRequest(request, NAME_OBJ);
   }
 
   @Test
@@ -94,7 +98,7 @@ public class UpdateActivityIntegrationTest extends AbstractBaseActivityIntegrati
     setAuthorizationHeaderBasedOn(RoleType.USER);
     UpdateActivityRequest request = buildRequestWithEmptyContent();
 
-    assertOneEmptyOrNullFieldInRequest(request, CONTENT_OBJ);
+    executeAndAssertOneEmptyOrNullFieldInRequest(request, CONTENT_OBJ);
   }
 
   @Test
@@ -102,7 +106,7 @@ public class UpdateActivityIntegrationTest extends AbstractBaseActivityIntegrati
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
     UpdateActivityRequest request = buildRequestWithEmptyContent();
 
-    assertOneEmptyOrNullFieldInRequest(request, CONTENT_OBJ);
+    executeAndAssertOneEmptyOrNullFieldInRequest(request, CONTENT_OBJ);
   }
 
   @Test
@@ -110,7 +114,7 @@ public class UpdateActivityIntegrationTest extends AbstractBaseActivityIntegrati
     setAuthorizationHeaderBasedOn(RoleType.USER);
     UpdateActivityRequest request = buildRequestWithEmptyImage();
 
-    assertOneEmptyOrNullFieldInRequest(request, IMAGE_OBJ);
+    executeAndAssertOneEmptyOrNullFieldInRequest(request, IMAGE_OBJ);
   }
 
   @Test
@@ -118,7 +122,7 @@ public class UpdateActivityIntegrationTest extends AbstractBaseActivityIntegrati
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
     UpdateActivityRequest request = buildRequestWithEmptyImage();
 
-    assertOneEmptyOrNullFieldInRequest(request, IMAGE_OBJ);
+    executeAndAssertOneEmptyOrNullFieldInRequest(request, IMAGE_OBJ);
   }
 
   private UpdateActivityRequest buildRequestWithEmptyName() {
@@ -165,21 +169,15 @@ public class UpdateActivityIntegrationTest extends AbstractBaseActivityIntegrati
     assertEquals(request.getImage(), activityResponse.getImage());
   }
 
-  public void assertObjectNotFound(UpdateActivityRequest request) {
+  public void executeAndAssertObjectNotFoundRequest(UpdateActivityRequest request) {
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(request);
-    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    assertNotNull(response.getBody());
-    assertEquals("Activity not found", getFirstMessageError(response));
-    assertEquals(404, getStatusValue(response));
+    assertObjectNotFound(response, "Activity not found");
   }
 
-  public void assertOneEmptyOrNullFieldInRequest(UpdateActivityRequest request, String object) {
+  public void executeAndAssertOneEmptyOrNullFieldInRequest(UpdateActivityRequest request,
+      String object) {
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(request);
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertNotNull(response.getBody());
-    assertEquals(1, getAmountMessages(response));
-    assertEquals(object + " cannot be empty or null.", getFirstMessageError(response));
-    assertEquals(400, getStatusValue(response));
+    assertOneEmptyOrNullFieldInRequest(response, object + " cannot be empty or null.");
   }
 
 }
