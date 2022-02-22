@@ -27,13 +27,10 @@ public class UpdateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
   public void shouldUpdateNewsWithRoleAdmin() {
 
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
-
     when(newsRepository.save(any(News.class))).thenReturn(stubNews());
 
     UpdateNewsRequest updateNewsRequest = buildRequestPayLoad();
-
-    HttpEntity<UpdateNewsRequest> requestEntity = new HttpEntity<>(
-        updateNewsRequest, headers);
+    HttpEntity<UpdateNewsRequest> requestEntity = new HttpEntity<>(updateNewsRequest, headers);
 
     ResponseEntity<NewsResponse> response = restTemplate.exchange(
         createURLWithPort(PATH_ID),
@@ -63,7 +60,8 @@ public class UpdateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
     UpdateNewsRequest updateNewsRequest = buildRequestPayLoad();
 
     HttpEntity<UpdateNewsRequest> request = new HttpEntity<>(updateNewsRequest, headers);
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.PUT, request, PATH_ID);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.PUT, request,
+        PATH_ID);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     assertEquals(403, getStatusValue(response));
@@ -75,7 +73,8 @@ public class UpdateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
     UpdateNewsRequest updateNewsRequest = buildRequestPayLoad();
 
     HttpEntity<UpdateNewsRequest> request = new HttpEntity<>(updateNewsRequest, headers);
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.PUT, request, PATH_ID);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.PUT, request,
+        PATH_ID);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     assertEquals(403, getStatusValue(response));
@@ -105,11 +104,13 @@ public class UpdateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
 
     UpdateNewsRequest updateNewsRequest = buildRequestWithNullText();
     HttpEntity<UpdateNewsRequest> request = new HttpEntity<>(updateNewsRequest, headers);
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.PUT, request, PATH_ID);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.PUT, request,
+        PATH_ID);
 
-    assertOneEmptyOrNullFieldInRequest(response,"The content cannot be empty or null.");
+    assertOneEmptyOrNullFieldInRequest(response, "The content cannot be empty or null.");
 
   }
+
   @Test
   public void shouldReturnBadRequestWhenImageIsEmpty() {
 
@@ -117,19 +118,10 @@ public class UpdateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
 
     UpdateNewsRequest updateNewsRequest = buildRequestWithNullImage();
     HttpEntity<UpdateNewsRequest> request = new HttpEntity<>(updateNewsRequest, headers);
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.PUT, request, PATH_ID);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.PUT, request,
+        PATH_ID);
 
-    assertOneEmptyOrNullFieldInRequest(response,"Image cannot be null or empty.");
-  }
-
-  private UpdateNewsRequest buildRequestPayLoad() {
-
-    return buildRequestPayLoad(NAME, TEXT, IMAGE);
-  }
-
-  private UpdateNewsRequest buildRequestPayLoad(
-      String name, String text, String image) {
-    return new UpdateNewsRequest(name, text, image);
+    assertOneEmptyOrNullFieldInRequest(response, "Image cannot be null or empty.");
   }
 
   private UpdateNewsRequest buildRequestWithNullName() {
@@ -143,4 +135,13 @@ public class UpdateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
   private UpdateNewsRequest buildRequestWithNullImage() {
     return buildRequestPayLoad(NAME, TEXT, null);
   }
+
+  private UpdateNewsRequest buildRequestPayLoad() {
+    return buildRequestPayLoad(NAME, TEXT, IMAGE);
+  }
+
+  private UpdateNewsRequest buildRequestPayLoad(String name, String text, String image) {
+    return new UpdateNewsRequest(name, text, image);
+  }
+
 }

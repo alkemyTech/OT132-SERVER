@@ -13,4 +13,5 @@ public interface IUserRepository extends JpaRepository<User, Long> {
   List<User> findBySoftDeleteFalse();
 
   User findByUserIdAndSoftDeleteFalse(Long id);
+
 }

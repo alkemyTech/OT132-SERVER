@@ -1,11 +1,13 @@
 package com.alkemy.ong.controller;
 
 import com.alkemy.ong.common.PaginatedResultsRetrieved;
+import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.model.request.CreateCategoryRequest;
 import com.alkemy.ong.model.request.UpdateCategoryRequest;
 import com.alkemy.ong.model.response.CategoryResponse;
 import com.alkemy.ong.model.response.ListCategoriesResponse;
 import com.alkemy.ong.service.abstraction.ICreateCategory;
+import com.alkemy.ong.service.abstraction.IDeleteCategory;
 import com.alkemy.ong.service.abstraction.IGetCategoryDetails;
 import com.alkemy.ong.service.abstraction.IUpdateCategory;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,6 +43,9 @@ public class CategoryController {
 
   @Autowired
   private IUpdateCategory updateCategory;
+
+  @Autowired
+  private IDeleteCategory deleteCategory;
 
   @GetMapping
   public ResponseEntity<ListCategoriesResponse> list(Pageable pageable,
@@ -73,5 +79,11 @@ public class CategoryController {
   public ResponseEntity<CategoryResponse> update(@PathVariable("id") long id,
       @Valid @RequestBody UpdateCategoryRequest updateCategoryRequest) {
     return ResponseEntity.ok().body(updateCategory.update(id, updateCategoryRequest));
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> delete(@PathVariable Long id) throws NotFoundException {
+    deleteCategory.delete(id);
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 }

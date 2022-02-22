@@ -1,7 +1,6 @@
 package com.alkemy.ong.integration.news;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 import com.alkemy.ong.config.segurity.RoleType;
@@ -26,21 +25,22 @@ public class DeleteNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
     checkFindMethod();
 
     HttpEntity<Object> request = new HttpEntity<>(headers);
-
-    ResponseEntity<Void> response = restTemplate.exchange(createURLWithPort(PATH_ID),
-        HttpMethod.DELETE, request, Void.class);
+    ResponseEntity<Void> response = restTemplate.exchange(
+        createURLWithPort(PATH_ID),
+        HttpMethod.DELETE,
+        request,
+        Void.class);
 
     assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-
   }
 
   @Test
   public void shouldReturnForbiddenWhenRoleIsUser() {
-
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
     HttpEntity<Object> request = new HttpEntity<>(headers);
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.DELETE, request, PATH_ID);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.DELETE, request,
+        PATH_ID);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     assertEquals(403, getStatusValue(response));
@@ -50,7 +50,8 @@ public class DeleteNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
   public void shouldReturnForbiddenWhenNotAuthenticated() {
 
     HttpEntity<Object> request = new HttpEntity<>(headers);
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.DELETE, request, PATH_ID);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.DELETE, request,
+        PATH_ID);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     assertEquals(403, getStatusValue(response));
@@ -65,11 +66,11 @@ public class DeleteNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
         .thenReturn(null);
 
     HttpEntity<Object> request = new HttpEntity<>(headers);
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.DELETE, request, PATH_ID);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(
+        HttpMethod.DELETE,
+        request,
+        PATH_ID);
 
-    assertNotNull(response);
-    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    assertEquals(404, getStatusValue(response));
-    assertEquals("News not found", getFirstMessageError(response));
+    assertObjectNotFound(response, "News not found");
   }
 }
