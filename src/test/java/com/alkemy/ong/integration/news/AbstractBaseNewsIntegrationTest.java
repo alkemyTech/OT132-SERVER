@@ -11,10 +11,13 @@ import com.alkemy.ong.repository.ICategoryRepository;
 import com.alkemy.ong.repository.INewsRepository;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Before;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
@@ -54,6 +57,12 @@ public abstract class AbstractBaseNewsIntegrationTest extends AbstractBaseIntegr
         Timestamp.from(Instant.now()));
   }
 
+  protected Page<News> buildNewsStubPage() {
+    List<News> news = new ArrayList<>(1);
+    news.add(stubNews());
+    return new PageImpl<>(news);
+  }
+
   protected ResponseEntity<ErrorResponse> getErrorResponseEntity(
       CreateNewsRequest createRequest) {
 
@@ -66,9 +75,10 @@ public abstract class AbstractBaseNewsIntegrationTest extends AbstractBaseIntegr
         ErrorResponse.class);
   }
 
-  protected ResponseEntity<ErrorResponse> getErrorResponseEntity(HttpMethod httpMethod, HttpEntity request) {
+  protected ResponseEntity<ErrorResponse> getErrorResponseEntity(HttpMethod httpMethod,
+      HttpEntity request, String path) {
 
-    return restTemplate.exchange(createURLWithPort(PATH_ID),
+    return restTemplate.exchange(createURLWithPort(path),
         httpMethod,
         request,
         ErrorResponse.class);

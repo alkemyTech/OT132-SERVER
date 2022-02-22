@@ -63,7 +63,7 @@ public class UpdateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
     UpdateNewsRequest updateNewsRequest = buildRequestPayLoad();
 
     HttpEntity<UpdateNewsRequest> request = new HttpEntity<>(updateNewsRequest, headers);
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.PUT, request);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.PUT, request, PATH_ID);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     assertEquals(403, getStatusValue(response));
@@ -75,7 +75,7 @@ public class UpdateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
     UpdateNewsRequest updateNewsRequest = buildRequestPayLoad();
 
     HttpEntity<UpdateNewsRequest> request = new HttpEntity<>(updateNewsRequest, headers);
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.PUT, request);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.PUT, request, PATH_ID);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     assertEquals(403, getStatusValue(response));
@@ -105,7 +105,7 @@ public class UpdateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
 
     UpdateNewsRequest updateNewsRequest = buildRequestWithNullText();
     HttpEntity<UpdateNewsRequest> request = new HttpEntity<>(updateNewsRequest, headers);
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.PUT, request);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.PUT, request, PATH_ID);
 
     assertOneEmptyOrNullFieldInRequest(response,"The content cannot be empty or null.");
 
@@ -117,7 +117,7 @@ public class UpdateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
 
     UpdateNewsRequest updateNewsRequest = buildRequestWithNullImage();
     HttpEntity<UpdateNewsRequest> request = new HttpEntity<>(updateNewsRequest, headers);
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.PUT, request);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.PUT, request, PATH_ID);
 
     assertOneEmptyOrNullFieldInRequest(response,"Image cannot be null or empty.");
   }
