@@ -106,9 +106,6 @@ public class CategoryController {
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "OK - The category was found and it return their details",
           response = CategoryResponse.class),
-      @ApiResponse(code = 400, message = "INVALID_ARGUMENT - Certain arguments "
-          + "cannot be empty or null.",
-          response = ErrorResponse.class),
       @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
           response = ErrorResponse.class)})
   @ApiImplicitParam(name = "Authorization", value = "Access Token",
