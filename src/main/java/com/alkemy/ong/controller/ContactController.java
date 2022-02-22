@@ -61,7 +61,7 @@ public class ContactController {
   @ResponseStatus(HttpStatus.CREATED)
   @ApiOperation(value = "Create a contact")
   @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "OK - The contact was successfully created"),
+      @ApiResponse(code = 201, message = "CREATED - The contact was successfully created"),
       @ApiResponse(code = 400, message = "INVALID_ARGUMENT - Certain arguments "
           + "cannot be empty or null.",
           response = ErrorResponse.class),
