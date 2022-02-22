@@ -11,12 +11,14 @@ import com.alkemy.ong.model.request.CreateCommentRequest;
 import com.alkemy.ong.model.request.UpdateCommentRequest;
 import com.alkemy.ong.model.response.CommentResponse;
 import com.alkemy.ong.model.response.ListCommentResponse;
+import com.alkemy.ong.model.response.ListCommentsInNewsResponse;
 import com.alkemy.ong.repository.ICommentRepository;
 import com.alkemy.ong.repository.INewsRepository;
 import com.alkemy.ong.repository.IUserRepository;
 import com.alkemy.ong.service.abstraction.ICreateComment;
 import com.alkemy.ong.service.abstraction.IDeleteComment;
 import com.alkemy.ong.service.abstraction.IGetComment;
+import com.alkemy.ong.service.abstraction.IGetCommentsFromNews;
 import com.alkemy.ong.service.abstraction.IUpdateComment;
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -27,7 +29,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CommentService implements IGetComment, ICreateComment, IUpdateComment, IDeleteComment {
+public class CommentService implements IGetComment, ICreateComment, IUpdateComment, IDeleteComment,
+    IGetCommentsFromNews {
 
   @Autowired
   private ICommentRepository commentRepository;
@@ -121,4 +124,13 @@ public class CommentService implements IGetComment, ICreateComment, IUpdateComme
     return news;
   }
 
+  @Override
+  public ListCommentsInNewsResponse list(Long id) {
+    return commentMapper.map(findAllByNewsId(id), getNews(id));
+  }
+
+  private ListCommentResponse findAllByNewsId(Long id) {
+    return new ListCommentResponse(
+        commentMapper.map(commentRepository.findAllByNewsIdOrderByTimestampAsc(id)));
+  }
 }

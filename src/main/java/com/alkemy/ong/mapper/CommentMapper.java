@@ -5,6 +5,8 @@ import com.alkemy.ong.model.entity.News;
 import com.alkemy.ong.model.entity.User;
 import com.alkemy.ong.model.request.CreateCommentRequest;
 import com.alkemy.ong.model.response.CommentResponse;
+import com.alkemy.ong.model.response.ListCommentResponse;
+import com.alkemy.ong.model.response.ListCommentsInNewsResponse;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;
@@ -33,5 +35,12 @@ public class CommentMapper {
     commentResponse.setBody(comment.getBody());
     commentResponse.setTimestamp(comment.getTimestamp());
     return commentResponse;
+  }
+
+  public ListCommentsInNewsResponse map(ListCommentResponse listCommentResponse, News news) {
+    ListCommentsInNewsResponse listCommentsInNewsResponse = new ListCommentsInNewsResponse();
+    listCommentsInNewsResponse.setNewsName(news.getName());
+    listCommentsInNewsResponse.setCommentResponses(listCommentResponse.getCommentResponses());
+    return listCommentsInNewsResponse;
   }
 }

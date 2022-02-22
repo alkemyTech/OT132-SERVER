@@ -4,10 +4,12 @@ import com.alkemy.ong.common.PaginatedResultsRetrieved;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.model.request.CreateNewsRequest;
 import com.alkemy.ong.model.request.UpdateNewsRequest;
+import com.alkemy.ong.model.response.ListCommentsInNewsResponse;
 import com.alkemy.ong.model.response.ListNewsResponse;
 import com.alkemy.ong.model.response.NewsResponse;
 import com.alkemy.ong.service.abstraction.ICreateNews;
 import com.alkemy.ong.service.abstraction.IDeleteNews;
+import com.alkemy.ong.service.abstraction.IGetCommentsFromNews;
 import com.alkemy.ong.service.abstraction.IGetNewsDetails;
 import com.alkemy.ong.service.abstraction.IUpdateNews;
 import javax.servlet.http.HttpServletResponse;
@@ -32,6 +34,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class NewsController {
 
   private static final String NEWS_PATH = "/news";
+  private static final String NEWS_COMMENTS_PATH = "/news/{id}/comments";
 
   @Autowired
   private ICreateNews createNews;
@@ -48,6 +51,9 @@ public class NewsController {
   @Autowired
   private IUpdateNews updateNews;
 
+  @Autowired
+  private IGetCommentsFromNews getCommentsFromNews;
+
   @GetMapping
   public ResponseEntity<ListNewsResponse> list(Pageable pageable, UriComponentsBuilder uriBuilder,
       HttpServletResponse response) {
@@ -60,6 +66,14 @@ public class NewsController {
         listNewsResponse.getSize());
 
     return ResponseEntity.ok(listNewsResponse);
+  }
+
+  @GetMapping("/{id}/comments")
+  public ResponseEntity<ListCommentsInNewsResponse> list(@PathVariable(value = "id") Long id)
+      throws NotFoundException {
+    ListCommentsInNewsResponse listCommentsInNewsResponse = getCommentsFromNews.list(id);
+
+    return ResponseEntity.ok().body(listCommentsInNewsResponse);
   }
 
   @DeleteMapping("/{id}")
@@ -90,5 +104,4 @@ public class NewsController {
       throws NotFoundException {
     return ResponseEntity.ok().body(getNewsDetails.getBy(id));
   }
-
 }

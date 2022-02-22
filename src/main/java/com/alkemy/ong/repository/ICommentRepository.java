@@ -10,4 +10,5 @@ public interface ICommentRepository extends JpaRepository<Comment, Long> {
 
   List<Comment> findAllByOrderByTimestampAsc();
 
+  List<Comment> findAllByNewsIdOrderByTimestampAsc(Long id);
 }
