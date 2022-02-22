@@ -1,6 +1,7 @@
 package com.alkemy.ong.model.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,5 +23,7 @@ public class NewsResponse {
   private String image;
 
   private String categoryName;
+
+  private List<CommentResponse> comments;
 
 }

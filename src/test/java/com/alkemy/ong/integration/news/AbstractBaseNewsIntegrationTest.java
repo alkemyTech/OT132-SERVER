@@ -53,7 +53,12 @@ public abstract class AbstractBaseNewsIntegrationTest extends AbstractBaseIntegr
   }
 
   protected News stubNews() {
-    return new News(NEWS_ID, NAME, TEXT, IMAGE, stubCategory(), false,
+    return new News(NEWS_ID,
+        NAME,
+        TEXT,
+        IMAGE,
+        stubCategory(),
+        false,
         Timestamp.from(Instant.now()));
   }
 
