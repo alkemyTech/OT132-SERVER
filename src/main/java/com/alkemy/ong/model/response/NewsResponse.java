@@ -17,7 +17,6 @@ import lombok.Setter;
 public class NewsResponse {
 
   @ApiModelProperty(example = "ID",
-      dataType = "long",
       position = 0)
   private Long newsId;
 

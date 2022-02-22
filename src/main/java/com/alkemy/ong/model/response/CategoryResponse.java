@@ -13,7 +13,6 @@ import lombok.Setter;
 public class CategoryResponse {
 
   @ApiModelProperty(example = "ID",
-      dataType = "long",
       position = 0)
   private Long idCategory;
 

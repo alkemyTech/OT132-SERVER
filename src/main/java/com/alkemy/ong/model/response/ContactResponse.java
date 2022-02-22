@@ -11,7 +11,6 @@ import lombok.Setter;
 public class ContactResponse {
 
   @ApiModelProperty(example = "Id",
-      dataType = "long",
       position = 0)
   private long contactId;
 

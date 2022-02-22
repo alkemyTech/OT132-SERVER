@@ -60,7 +60,8 @@ public class CategoryController {
   @GetMapping(produces = {"application/json"})
   @ApiOperation(value = "Return the list of categories by severous pages")
   @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "OK - The list of categories. The size of the page is the one"
+      @ApiResponse(code = 200,
+          message = "OK - The list of categories. The size of the page is the one"
           + "passed in the parameters", response = ListCategoriesResponse.class, responseHeaders = {
           @ResponseHeader(name = "Link",
               description = "Link of the previous page and another for the next page",

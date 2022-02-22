@@ -12,7 +12,6 @@ import lombok.Setter;
 public class CommentResponse {
 
   @ApiModelProperty(example = "This is a comment",
-      required = false,
       position = 0)
   private String body;
 
