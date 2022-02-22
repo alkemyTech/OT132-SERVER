@@ -43,14 +43,17 @@ public abstract class AbstractBaseIntegrationTest {
     return "http://localhost:" + port + uri;
   }
 
-  protected void setAuthorizationHeaderBasedOn(RoleType role) {
-    String jwt = SecurityTestConfig.createToken(EMAIL, role);
-    headers.set("Authorization", jwt);
+  protected void setExpiredAuthorizationHeaderBasedOn(RoleType roleType) {
+    setAuthorizationHeader(SecurityTestConfig.createExpiredToken(EMAIL, roleType));
   }
 
-  protected Role stubRole(RoleType name) {
+  protected void setAuthorizationHeaderBasedOn(RoleType roleType) {
+    setAuthorizationHeader(SecurityTestConfig.createToken(EMAIL, roleType));
+  }
+
+  protected Role stubRole(RoleType roleType) {
     Role role = new Role();
-    role.setName(name.getFullRoleName());
+    role.setName(roleType.getFullRoleName());
     return role;
   }
 
@@ -96,5 +99,9 @@ public abstract class AbstractBaseIntegrationTest {
     assertEquals(404, getStatusValue(response));
     assertEquals(1, getAmountMessages(response));
     assertEquals(expectedErrorMessage, getFirstMessageError(response));
+  }
+
+  private void setAuthorizationHeader(String jwtToken) {
+    headers.set("Authorization", jwtToken);
   }
 }
