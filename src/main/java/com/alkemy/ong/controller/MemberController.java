@@ -67,7 +67,6 @@ public class MemberController {
               response = String.class)}),
       @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
           response = ErrorResponse.class)})
-
   @ApiImplicitParams(value = {
       @ApiImplicitParam(name = "page", value = "Page of the list",
           required = true,
@@ -99,7 +98,7 @@ public class MemberController {
   @ResponseStatus(HttpStatus.CREATED)
   @ApiOperation(value = "Create a member and return it.")
   @ApiResponses(value = {
-      @ApiResponse(code = 201, message = "OK - The member was successfully created",
+      @ApiResponse(code = 201, message = "CREATED - The member was successfully created",
           response = MemberResponse.class),
       @ApiResponse(code = 400, message = "INVALID_ARGUMENT - Certain arguments "
           + "cannot be empty or null.",
