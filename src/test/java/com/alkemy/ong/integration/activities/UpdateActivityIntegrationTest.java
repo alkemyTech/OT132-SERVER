@@ -30,14 +30,9 @@ public class UpdateActivityIntegrationTest extends AbstractBaseActivityIntegrati
     when(activityRepository.save(any(Activity.class))).thenReturn(createActivityStub());
     when(activityRepository.findByActivityIdAndSoftDeleteFalse(ACTIVITY_ID)).thenReturn(
         createActivityStub());
+    UpdateActivityRequest request = buildRequestPayload();
 
-    UpdateActivityRequest updateRequest = buildRequestPayload();
-
-    HttpEntity<UpdateActivityRequest> request = new HttpEntity<>(updateRequest, headers);
-    ResponseEntity<ActivityResponse> response = restTemplate.exchange(createURLWithPort(PATH_ID),
-        HttpMethod.PUT, request, ActivityResponse.class);
-
-    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertSuccessResponse(request);
   }
 
   @Test
@@ -46,20 +41,14 @@ public class UpdateActivityIntegrationTest extends AbstractBaseActivityIntegrati
     when(activityRepository.save(any(Activity.class))).thenReturn(createActivityStub());
     when(activityRepository.findByActivityIdAndSoftDeleteFalse(ACTIVITY_ID)).thenReturn(
         createActivityStub());
+    UpdateActivityRequest request = buildRequestPayload();
 
-    UpdateActivityRequest updateRequest = buildRequestPayload();
-
-    HttpEntity<UpdateActivityRequest> request = new HttpEntity<>(updateRequest, headers);
-    ResponseEntity<ActivityResponse> response = restTemplate.exchange(createURLWithPort(PATH_ID),
-        HttpMethod.PUT, request, ActivityResponse.class);
-
-    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertSuccessResponse(request);
   }
 
   @Test
   public void shouldReturnForbiddenWhenAccessWithoutRole() {
     UpdateActivityRequest updateRequest = buildRequestPayload();
-
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(updateRequest);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
@@ -70,108 +59,66 @@ public class UpdateActivityIntegrationTest extends AbstractBaseActivityIntegrati
   public void shouldReturnNotFoundWhenActivityDoesNotExistWithRoleAdmin() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
     when(activityRepository.findByActivityIdAndSoftDeleteFalse(ACTIVITY_ID)).thenReturn(null);
-    UpdateActivityRequest updateRequest = buildRequestPayload();
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(updateRequest);
+    UpdateActivityRequest request = buildRequestPayload();
 
-    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    assertNotNull(response.getBody());
-    assertEquals("Activity not found", getFirstMessageError(response));
-    assertEquals(404, getStatusValue(response));
+    assertObjectNotFound(request);
   }
 
   @Test
   public void shouldReturnNotFoundWhenActivityDoesNotExistWithRoleUser() {
     setAuthorizationHeaderBasedOn(RoleType.USER);
     when(activityRepository.findByActivityIdAndSoftDeleteFalse(ACTIVITY_ID)).thenReturn(null);
-    UpdateActivityRequest updateRequest = buildRequestPayload();
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(updateRequest);
+    UpdateActivityRequest request = buildRequestPayload();
 
-    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    assertNotNull(response.getBody());
-    assertEquals("Activity not found", getFirstMessageError(response));
-    assertEquals(404, getStatusValue(response));
+    assertObjectNotFound(request);
   }
 
   @Test
   public void shouldReturnBadRequestWithEmptyNameAndRoleAdmin() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
+    UpdateActivityRequest request = buildRequestWithEmptyName();
 
-    UpdateActivityRequest updateRequest = buildRequestWithEmptyName();
-
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(updateRequest);
-
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertNotNull(response.getBody());
-    assertEquals(1, getAmountMessages(response));
-    assertEquals("Name cannot be empty or null.", getFirstMessageError(response));
-    assertEquals(400, getStatusValue(response));
+    assertOneEmptyOrNullFieldInRequest(request, NAME_OBJ);
   }
 
   @Test
   public void shouldReturnBadRequestWithEmptyNameAndRoleUser() {
     setAuthorizationHeaderBasedOn(RoleType.USER);
+    UpdateActivityRequest request = buildRequestWithEmptyName();
 
-    UpdateActivityRequest updateRequest = buildRequestWithEmptyName();
-
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(updateRequest);
-
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertNotNull(response.getBody());
-    assertEquals(1, getAmountMessages(response));
-    assertEquals("Name cannot be empty or null.", getFirstMessageError(response));
-    assertEquals(400, getStatusValue(response));
+    assertOneEmptyOrNullFieldInRequest(request, NAME_OBJ);
   }
 
   @Test
   public void shouldReturnBadRequestWhenContentIsEmptyWithRoleUser() {
     setAuthorizationHeaderBasedOn(RoleType.USER);
+    UpdateActivityRequest request = buildRequestWithEmptyContent();
 
-    UpdateActivityRequest createRequest = buildRequestWithEmptyContent();
-
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createRequest);
-
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(400, getStatusValue(response));
-    assertEquals("Content cannot be empty or null.", getFirstMessageError(response));
+    assertOneEmptyOrNullFieldInRequest(request, CONTENT_OBJ);
   }
 
   @Test
   public void shouldReturnBadRequestWhenContentIsEmptyWithRoleAdmin() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
+    UpdateActivityRequest request = buildRequestWithEmptyContent();
 
-    UpdateActivityRequest createRequest = buildRequestWithEmptyContent();
-
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createRequest);
-
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(400, getStatusValue(response));
-    assertEquals("Content cannot be empty or null.", getFirstMessageError(response));
+    assertOneEmptyOrNullFieldInRequest(request, CONTENT_OBJ);
   }
 
   @Test
   public void shouldReturnBadRequestWhenImageIsEmptyWithRoleUser() {
     setAuthorizationHeaderBasedOn(RoleType.USER);
+    UpdateActivityRequest request = buildRequestWithEmptyImage();
 
-    UpdateActivityRequest createRequest = buildRequestWithEmptyImage();
-
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createRequest);
-
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(400, getStatusValue(response));
-    assertEquals("Image cannot be empty or null.", getFirstMessageError(response));
+    assertOneEmptyOrNullFieldInRequest(request, IMAGE_OBJ);
   }
 
   @Test
   public void shouldReturnBadRequestWhenImageIsEmptyWithRoleAdmin() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
+    UpdateActivityRequest request = buildRequestWithEmptyImage();
 
-    UpdateActivityRequest createRequest = buildRequestWithEmptyImage();
-
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(createRequest);
-
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(400, getStatusValue(response));
-    assertEquals("Image cannot be empty or null.", getFirstMessageError(response));
+    assertOneEmptyOrNullFieldInRequest(request, IMAGE_OBJ);
   }
 
   private UpdateActivityRequest buildRequestWithEmptyName() {
@@ -200,11 +147,39 @@ public class UpdateActivityIntegrationTest extends AbstractBaseActivityIntegrati
 
   private ResponseEntity<ErrorResponse> getErrorResponseEntity(
       UpdateActivityRequest updateRequest) {
-
     HttpEntity<UpdateActivityRequest> request = new HttpEntity<>(updateRequest, headers);
 
     return restTemplate.exchange(createURLWithPort(PATH_ID), HttpMethod.PUT, request,
         ErrorResponse.class);
+  }
+
+  private void assertSuccessResponse(UpdateActivityRequest request) {
+    HttpEntity<UpdateActivityRequest> requestEntity = new HttpEntity<>(request, headers);
+    ResponseEntity<ActivityResponse> response = restTemplate.exchange(createURLWithPort(PATH_ID),
+        HttpMethod.PUT, requestEntity, ActivityResponse.class);
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    ActivityResponse activityResponse = response.getBody();
+    assertNotNull(activityResponse);
+    assertEquals(request.getName(), activityResponse.getName());
+    assertEquals(request.getContent(), activityResponse.getContent());
+    assertEquals(request.getImage(), activityResponse.getImage());
+  }
+
+  public void assertObjectNotFound(UpdateActivityRequest request) {
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(request);
+    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    assertNotNull(response.getBody());
+    assertEquals("Activity not found", getFirstMessageError(response));
+    assertEquals(404, getStatusValue(response));
+  }
+
+  public void assertOneEmptyOrNullFieldInRequest(UpdateActivityRequest request, String object) {
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(request);
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    assertNotNull(response.getBody());
+    assertEquals(1, getAmountMessages(response));
+    assertEquals(object + " cannot be empty or null.", getFirstMessageError(response));
+    assertEquals(400, getStatusValue(response));
   }
 
 }

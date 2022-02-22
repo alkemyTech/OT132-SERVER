@@ -22,6 +22,10 @@ public abstract class AbstractBaseActivityIntegrationTest extends AbstractBaseIn
   protected static final String PATH = "/activities";
   protected final static String PATH_ID = PATH + "/" + ACTIVITY_ID;
   protected final static boolean SOFT_DELETE = false;
+  protected static final String NAME_OBJ = "Name";
+  protected static final String CONTENT_OBJ = "Content";
+  protected static final String IMAGE_OBJ = "Image";
+
 
   @MockBean
   protected IActivityRepository activityRepository;
@@ -50,7 +54,5 @@ public abstract class AbstractBaseActivityIntegrationTest extends AbstractBaseIn
     activity.setTimestamp(Timestamp.from(Instant.now()));
     return activity;
   }
-
-
 
 }
