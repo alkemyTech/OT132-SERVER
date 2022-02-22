@@ -17,7 +17,7 @@ public class CategoryMapper {
     for (CategoryAttributes categoryAttribute : categoryAttributes) {
       switch (categoryAttribute) {
         case CATEGORY_ID:
-          categoryResponse.setIdCategory(category.getCategoryId());
+          categoryResponse.setCategoryId(category.getCategoryId());
           break;
         case NAME:
           categoryResponse.setName(category.getName());

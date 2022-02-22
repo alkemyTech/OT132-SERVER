@@ -9,7 +9,7 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CategoryResponse {
 
-  private Long idCategory;
+  private Long categoryId;
 
   private String name;
 
