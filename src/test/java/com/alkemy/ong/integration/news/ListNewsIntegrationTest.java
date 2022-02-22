@@ -32,7 +32,6 @@ public class ListNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
 
   @Test
   public void shouldReturnOkWhenAccessedWithRoleUser() {
-
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
     when(newsRepository.findBySoftDeleteFalseOrderByTimestampDesc(any()))
@@ -44,12 +43,12 @@ public class ListNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
         new HttpEntity<>(headers),
         ListNewsResponse.class);
 
-    List<NewsResponse> newsResponseList = response.getBody().getNewsResponse();
-    assertNotNull(newsResponseList);
     assertNotNull(response.getBody());
+    List<NewsResponse> newsResponses = response.getBody().getNewsResponse();
+    assertNotNull(newsResponses);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertEquals(1, newsResponseList.size());
+    assertEquals(1, newsResponses.size());
     assertEquals(PAGE, response.getBody().getPage());
     assertEquals(SIZE, response.getBody().getSize());
     assertEquals(1, response.getBody().getTotalPages());
@@ -58,27 +57,26 @@ public class ListNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
 
   @Test
   public void shouldReturnForbiddenWhenAccessedWithRoleAdmin() {
-
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
 
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.GET,
-        new HttpEntity<>(headers), PAGINATION_PATH);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity();
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     assertEquals(403, getStatusValue(response));
-
   }
 
   @Test
   public void shouldReturnForbiddenWhenNotAuthenticated() {
-
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.GET,
-        new HttpEntity<>(headers), PAGINATION_PATH);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity();
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     assertEquals(403, getStatusValue(response));
-
   }
 
-
+  protected ResponseEntity<ErrorResponse> getErrorResponseEntity() {
+    return restTemplate.exchange(createURLWithPort(PAGINATION_PATH),
+        HttpMethod.GET,
+        new HttpEntity<>(headers),
+        ErrorResponse.class);
+  }
 }

@@ -22,13 +22,10 @@ public class DeleteNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
   public void shouldSetSoftDeleteTrueWithAdminRole() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
 
-    checkFindMethod();
-
-    HttpEntity<Object> request = new HttpEntity<>(headers);
     ResponseEntity<Void> response = restTemplate.exchange(
         createURLWithPort(PATH_ID),
         HttpMethod.DELETE,
-        request,
+        new HttpEntity<>(headers),
         Void.class);
 
     assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
@@ -38,9 +35,7 @@ public class DeleteNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
   public void shouldReturnForbiddenWhenRoleIsUser() {
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
-    HttpEntity<Object> request = new HttpEntity<>(headers);
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.DELETE, request,
-        PATH_ID);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(new HttpEntity<>(headers));
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     assertEquals(403, getStatusValue(response));
@@ -48,10 +43,7 @@ public class DeleteNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
 
   @Test
   public void shouldReturnForbiddenWhenNotAuthenticated() {
-
-    HttpEntity<Object> request = new HttpEntity<>(headers);
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.DELETE, request,
-        PATH_ID);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(new HttpEntity<>(headers));
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     assertEquals(403, getStatusValue(response));
@@ -61,16 +53,17 @@ public class DeleteNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
   public void shouldReturnNotFoundWhenNewsDoesNotExist() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
 
-    when(newsRepository
-        .findByNewsIdAndSoftDeleteFalse(NEWS_ID))
-        .thenReturn(null);
+    when(newsRepository.findByNewsIdAndSoftDeleteFalse(NEWS_ID)).thenReturn(null);
 
-    HttpEntity<Object> request = new HttpEntity<>(headers);
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(
-        HttpMethod.DELETE,
-        request,
-        PATH_ID);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(new HttpEntity<>(headers));
 
     assertObjectNotFound(response, "News not found");
+  }
+
+  protected ResponseEntity<ErrorResponse> getErrorResponseEntity(HttpEntity<Object> request) {
+    return restTemplate.exchange(createURLWithPort(AbstractBaseNewsIntegrationTest.PATH_ID),
+        HttpMethod.DELETE,
+        request,
+        ErrorResponse.class);
   }
 }
