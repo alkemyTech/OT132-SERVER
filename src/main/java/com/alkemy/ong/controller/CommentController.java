@@ -127,8 +127,7 @@ public class CommentController {
     return ResponseEntity.ok().body(commentResponse);
   }
 
-  @DeleteMapping(value = "/{id}", consumes = {"application/json"},
-      produces = {"application/json"})
+  @DeleteMapping(value = "/{id}", produces = {"application/json"})
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @ApiOperation(value = "Delete a comment passed by id.")
   @ApiResponses(value = {

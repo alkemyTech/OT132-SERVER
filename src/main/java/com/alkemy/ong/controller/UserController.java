@@ -41,8 +41,7 @@ public class UserController {
   @Autowired
   private IUpdateUserDetails updateUserDetails;
 
-  @GetMapping(consumes = {"application/json"},
-      produces = {"application/json"})
+  @GetMapping(produces = {"application/json"})
   @ApiOperation(value = "Return the list of users")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "OK - The list of users.",
@@ -63,8 +62,7 @@ public class UserController {
     return ResponseEntity.ok().body(getUserDetails.findActiveUsers());
   }
 
-  @DeleteMapping(value = "/{id}", consumes = {"application/json"},
-      produces = {"application/json"})
+  @DeleteMapping(value = "/{id}", produces = {"application/json"})
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @ApiOperation(value = "Delete an user passed by id.")
   @ApiResponses(value = {

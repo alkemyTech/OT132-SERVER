@@ -100,7 +100,28 @@ public class NewsController {
     return ResponseEntity.ok(listNewsResponse);
   }
 
-  @DeleteMapping("/{id}")
+  @DeleteMapping(value = "/{id}", produces = {"application/json"})
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  @ApiOperation(value = "Delete a news passed by id.")
+  @ApiResponses(value = {
+      @ApiResponse(code = 204, message = "NO_CONTENT - The news was successfully deleted"),
+      @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
+          response = ErrorResponse.class),
+      @ApiResponse(code = 404, message = "NOT_FOUND - News not found.",
+          response = ErrorResponse.class)})
+  @ApiImplicitParams(value = {
+      @ApiImplicitParam(name = "id",
+          value = "Id of the news we want to delete",
+          required = true, allowEmptyValue = false,
+          paramType = "path", dataTypeClass = String.class,
+          example = "1"),
+      @ApiImplicitParam(name = "Authorization",
+          value = "Access Token",
+          required = true,
+          allowEmptyValue = false,
+          paramType = "header",
+          dataTypeClass = String.class,
+          example = "Bearer access_token")})
   public ResponseEntity<Void> delete(@PathVariable Long id) throws NotFoundException {
 
     deleteNews.delete(id);
@@ -163,8 +184,7 @@ public class NewsController {
     return ResponseEntity.status(HttpStatus.OK).body(newsResponse);
   }
 
-  @GetMapping(value = "/{id}",consumes = {"application/json"},
-      produces = {"application/json"})
+  @GetMapping(value = "/{id}", produces = {"application/json"})
   @ApiOperation(value = "Return a news details passed by id.")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "OK - The news was found and it return their details"),

@@ -35,8 +35,7 @@ public class ContactController {
   @Autowired
   public IGetContactDetails getContactDetails;
 
-  @GetMapping(consumes = {"application/json"},
-      produces = {"application/json"})
+  @GetMapping(produces = {"application/json"})
   @ApiOperation(value = "Return the list of contacts")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "OK - The list of contacts.",
