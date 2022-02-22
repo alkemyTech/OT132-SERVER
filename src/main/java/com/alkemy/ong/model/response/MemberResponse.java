@@ -12,7 +12,7 @@ import lombok.Setter;
 @ApiModel
 public class MemberResponse {
 
-  @ApiModelProperty(example = "ID",
+  @ApiModelProperty(example = "1",
       position = 0)
   private Long memberId;
 

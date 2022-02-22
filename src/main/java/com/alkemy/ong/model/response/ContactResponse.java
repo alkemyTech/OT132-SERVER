@@ -10,7 +10,7 @@ import lombok.Setter;
 @ApiModel
 public class ContactResponse {
 
-  @ApiModelProperty(example = "Id",
+  @ApiModelProperty(example = "1",
       position = 0)
   private long contactId;
 

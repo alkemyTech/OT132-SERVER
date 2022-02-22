@@ -12,7 +12,7 @@ import lombok.Setter;
 @ApiModel
 public class SlideResponse {
 
-  @ApiModelProperty(example = "ID",
+  @ApiModelProperty(example = "1",
       position = 0)
   private Long slideId;
   @ApiModelProperty(example = "https://cohorte-enero-835eb560.s3.amazonaws.com/name.png",
