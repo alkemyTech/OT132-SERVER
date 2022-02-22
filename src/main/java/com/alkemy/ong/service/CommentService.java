@@ -131,6 +131,6 @@ public class CommentService implements IGetComment, ICreateComment, IUpdateComme
 
   private ListCommentResponse findAllByNewsId(Long id) {
     return new ListCommentResponse(
-        commentMapper.map(commentRepository.findAllByNewsIdOrderByTimestampAsc(id)));
+        commentMapper.map(commentRepository.findAllByNewsOrderByTimestampAsc(getNews(id))));
   }
 }
