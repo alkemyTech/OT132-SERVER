@@ -118,7 +118,7 @@ public class UpdateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
     UpdateNewsRequest updateNewsRequest = buildRequestWithNullImage();
     HttpEntity<UpdateNewsRequest> request = new HttpEntity<>(updateNewsRequest, headers);
     ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.PUT, request);
-
+    assertNotNull(response.getBody());
     assertOneEmptyOrNullFieldInRequest(response,"Image cannot be null or empty.");
   }
 

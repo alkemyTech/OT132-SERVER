@@ -80,7 +80,7 @@ public class NewsController {
 
   @PutMapping("/{id}")
   public ResponseEntity<NewsResponse> update(@PathVariable(value = "id") Long id,
-      @RequestBody UpdateNewsRequest updateNewsRequest) throws NotFoundException {
+      @RequestBody @Valid UpdateNewsRequest updateNewsRequest) throws NotFoundException {
     NewsResponse newsResponse = updateNews.update(id, updateNewsRequest);
     return ResponseEntity.status(HttpStatus.OK).body(newsResponse);
   }
