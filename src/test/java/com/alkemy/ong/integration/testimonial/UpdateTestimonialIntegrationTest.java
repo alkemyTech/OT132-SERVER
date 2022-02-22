@@ -37,6 +37,7 @@ public class UpdateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
         HttpMethod.PUT,
         requestEntity,
         TestimonialResponse.class);
+
     assertSuccessResponse(response, request);
   }
 
@@ -55,6 +56,7 @@ public class UpdateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
         HttpMethod.PUT,
         requestEntity,
         TestimonialResponse.class);
+
     assertSuccessResponse(response, request);
   }
 
@@ -65,11 +67,13 @@ public class UpdateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
     HttpEntity<UpdateTestimonialRequest> requestEntity = new HttpEntity<>(
         updateTestimonialRequest, headers);
 
-    ResponseEntity<ErrorResponse> response = restTemplate.exchange(createURLWithPort(PATH_ID),
-        HttpMethod.PUT, requestEntity, ErrorResponse.class);
+    ResponseEntity<ErrorResponse> response = restTemplate.exchange(
+        createURLWithPort(PATH_ID),
+        HttpMethod.PUT,
+        requestEntity,
+        ErrorResponse.class);
 
-    assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
-    assertEquals(0, getAmountMessages(response));
+    assertCustomForbiddenResponse(response);
   }
 
   @Test
@@ -86,6 +90,7 @@ public class UpdateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
         HttpMethod.PUT,
         requestEntity,
         ErrorResponse.class);
+
     assertOneEmptyOrNullFieldInRequest(response, "Name cannot be empty or null.");
   }
 

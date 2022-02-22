@@ -179,7 +179,7 @@ public class NewsController {
           dataTypeClass = String.class,
           example = "Bearer access_token")})
   public ResponseEntity<NewsResponse> update(@PathVariable(value = "id") Long id,
-      @RequestBody UpdateNewsRequest updateNewsRequest) throws NotFoundException {
+      @RequestBody @Valid UpdateNewsRequest updateNewsRequest) throws NotFoundException {
     NewsResponse newsResponse = updateNews.update(id, updateNewsRequest);
     return ResponseEntity.status(HttpStatus.OK).body(newsResponse);
   }

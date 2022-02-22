@@ -2,6 +2,7 @@ package com.alkemy.ong.config.segurity;
 
 import com.alkemy.ong.common.JwtUtils;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,9 +21,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-  private static final String BEARER_PART = "Bearer ";
-  private static final String EMPTY = "";
   private static final String AUTHORITIES = "authorities";
+  private static final Object WITHOUT_CREDENTIALS = null;
 
   @Autowired
   private JwtUtils jwtUtil;
@@ -32,30 +32,35 @@ public class JwtRequestFilter extends OncePerRequestFilter {
       FilterChain filterChain) throws ServletException, IOException {
     String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-    if (isTokenSet(authorizationHeader)) {
-      authentication(authorizationHeader);
+    if (jwtUtil.isTokenSet(authorizationHeader)) {
+      try {
+        authentication(authorizationHeader);
+        filterChain.doFilter(request, response);
+      } catch (JwtException e) {
+        ErrorResponseUtils.setCustomResponse(response);
+      }
     } else {
       SecurityContextHolder.clearContext();
+      filterChain.doFilter(request, response);
     }
-
-    filterChain.doFilter(request, response);
   }
 
   private void authentication(String authorizationHeader) {
-    String jwtToken = authorizationHeader.replace(BEARER_PART, EMPTY);
-    Claims claims = jwtUtil.extractAllClaims(jwtToken);
+    Claims claims = jwtUtil.extractAllClaims(authorizationHeader);
     List<String> authorities = (List) claims.get(AUTHORITIES);
     if (authorities != null) {
       UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-          claims.getSubject(), null,
-          authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
+          claims.getSubject(),
+          WITHOUT_CREDENTIALS,
+          getGrantedAuthorities(authorities));
       SecurityContextHolder.getContext().setAuthentication(auth);
     } else {
       SecurityContextHolder.clearContext();
     }
   }
 
-  private boolean isTokenSet(String authorizationHeader) {
-    return authorizationHeader != null && authorizationHeader.startsWith(BEARER_PART);
+  private List<SimpleGrantedAuthority> getGrantedAuthorities(List<String> authorities) {
+    return authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
   }
+
 }

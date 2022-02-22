@@ -82,8 +82,8 @@ public class CreateTestimonialIntegrationTest extends AbstractBaseTestimonialInt
         HttpMethod.POST,
         requestEntity,
         ErrorResponse.class);
-    assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
-    assertEquals(0, getAmountMessages(response));
+
+    assertCustomForbiddenResponse(response);
   }
 
   @Test

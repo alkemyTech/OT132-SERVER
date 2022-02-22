@@ -64,8 +64,7 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
         requestEntity,
         ErrorResponse.class);
 
-    assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
-    assertEquals(0, getAmountMessages(response));
+    assertCustomForbiddenResponse(response);
   }
 
   @Test
@@ -76,11 +75,13 @@ public class UpdateOrganizationIntegrationTest extends AbstractBaseOrganizationI
     HttpEntity<UpdateOrganizationRequest> requestEntity = new HttpEntity<>(
         updateOrganizationRequest, headers);
 
-    ResponseEntity<ErrorResponse> response = restTemplate.exchange(createURLWithPort(PATH),
-        HttpMethod.POST, requestEntity, ErrorResponse.class);
+    ResponseEntity<ErrorResponse> response = restTemplate.exchange(
+        createURLWithPort(PATH),
+        HttpMethod.POST,
+        requestEntity,
+        ErrorResponse.class);
 
-    assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
-    assertEquals(0, getAmountMessages(response));
+    assertCustomForbiddenResponse(response);
   }
 
   @Test

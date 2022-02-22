@@ -14,7 +14,7 @@ public class CategoryResponse {
 
   @ApiModelProperty(example = "1",
       position = 0)
-  private Long idCategory;
+  private Long categoryId;
 
   @ApiModelProperty(example = "Category number 1",
       position = 1)
