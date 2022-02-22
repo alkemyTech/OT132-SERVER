@@ -2,6 +2,7 @@ package com.alkemy.ong.model.response;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.sql.Timestamp;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +10,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @ApiModel
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CommentResponse {
+
+  @ApiModelProperty(example = "Jane",
+      position = 0)
+  private String username;
 
   @ApiModelProperty(example = "This is a comment",
       position = 0)

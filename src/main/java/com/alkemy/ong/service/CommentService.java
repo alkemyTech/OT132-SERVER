@@ -4,6 +4,9 @@ import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.exception.InsufficientPermissionsException;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.CommentMapper;
+import com.alkemy.ong.mapper.NewsMapper;
+import com.alkemy.ong.mapper.attribute.CommentAttributes;
+import com.alkemy.ong.mapper.attribute.NewsAttributes;
 import com.alkemy.ong.model.entity.Comment;
 import com.alkemy.ong.model.entity.News;
 import com.alkemy.ong.model.entity.User;
@@ -11,12 +14,15 @@ import com.alkemy.ong.model.request.CreateCommentRequest;
 import com.alkemy.ong.model.request.UpdateCommentRequest;
 import com.alkemy.ong.model.response.CommentResponse;
 import com.alkemy.ong.model.response.ListCommentResponse;
+import com.alkemy.ong.model.response.ListCommentsInNewsResponse;
+import com.alkemy.ong.model.response.NewsResponse;
 import com.alkemy.ong.repository.ICommentRepository;
 import com.alkemy.ong.repository.INewsRepository;
 import com.alkemy.ong.repository.IUserRepository;
 import com.alkemy.ong.service.abstraction.ICreateComment;
 import com.alkemy.ong.service.abstraction.IDeleteComment;
 import com.alkemy.ong.service.abstraction.IGetComment;
+import com.alkemy.ong.service.abstraction.IGetCommentsFromNews;
 import com.alkemy.ong.service.abstraction.IUpdateComment;
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -27,7 +33,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CommentService implements IGetComment, ICreateComment, IUpdateComment, IDeleteComment {
+public class CommentService implements IGetComment, ICreateComment, IUpdateComment, IDeleteComment,
+    IGetCommentsFromNews {
 
   @Autowired
   private ICommentRepository commentRepository;
@@ -37,11 +44,15 @@ public class CommentService implements IGetComment, ICreateComment, IUpdateComme
   private INewsRepository newsRepository;
   @Autowired
   private IUserRepository userRepository;
+  @Autowired
+  private NewsMapper newsMapper;
 
   @Override
   public ListCommentResponse findAll() {
     List<Comment> comments = commentRepository.findAllByOrderByTimestampAsc();
-    List<CommentResponse> commentResponse = commentMapper.map(comments);
+    List<CommentResponse> commentResponse = commentMapper.map(comments,
+        CommentAttributes.BODY,
+        CommentAttributes.TIMESTAMP);
     return new ListCommentResponse(commentResponse);
   }
 
@@ -61,7 +72,7 @@ public class CommentService implements IGetComment, ICreateComment, IUpdateComme
     checkUser(comment, authentication);
     updateValues(comment, updateCommentRequest, news, user);
     commentRepository.save(comment);
-    return commentMapper.map(comment);
+    return commentMapper.map(comment, CommentAttributes.BODY, CommentAttributes.TIMESTAMP);
   }
 
   @Override
@@ -70,6 +81,26 @@ public class CommentService implements IGetComment, ICreateComment, IUpdateComme
     Comment comment = findBy(id);
     checkUser(comment, authentication);
     commentRepository.delete(comment);
+  }
+
+  @Override
+  public ListCommentsInNewsResponse list(Long id) {
+    News news = getNews(id);
+    List<Comment> comments = commentRepository.findByNewsId(id);
+    return buildListCommentsInNewsResponse(news, comments);
+  }
+
+  private ListCommentsInNewsResponse buildListCommentsInNewsResponse(News news,
+      List<Comment> comments) {
+    NewsResponse newsResponse = newsMapper.map(news, NewsAttributes.NAME);
+    newsResponse.setComments(commentMapper.map(comments,
+        CommentAttributes.USERNAME,
+        CommentAttributes.BODY,
+        CommentAttributes.TIMESTAMP));
+
+    ListCommentsInNewsResponse listCommentsInNewsResponse = new ListCommentsInNewsResponse();
+    listCommentsInNewsResponse.setNews(newsResponse);
+    return listCommentsInNewsResponse;
   }
 
   private Comment findBy(Long id) {

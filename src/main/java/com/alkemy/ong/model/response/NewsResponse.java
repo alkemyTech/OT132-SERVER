@@ -3,6 +3,7 @@ package com.alkemy.ong.model.response;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,5 +36,7 @@ public class NewsResponse {
   @ApiModelProperty(example = "Name of the category",
       position = 4)
   private String categoryName;
+
+  private List<CommentResponse> comments;
 
 }

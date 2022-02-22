@@ -5,11 +5,13 @@ import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.model.request.CreateNewsRequest;
 import com.alkemy.ong.model.request.UpdateNewsRequest;
+import com.alkemy.ong.model.response.ListCommentsInNewsResponse;
 import com.alkemy.ong.model.response.ListNewsResponse;
 import com.alkemy.ong.model.response.MemberResponse;
 import com.alkemy.ong.model.response.NewsResponse;
 import com.alkemy.ong.service.abstraction.ICreateNews;
 import com.alkemy.ong.service.abstraction.IDeleteNews;
+import com.alkemy.ong.service.abstraction.IGetCommentsFromNews;
 import com.alkemy.ong.service.abstraction.IGetNewsDetails;
 import com.alkemy.ong.service.abstraction.IUpdateNews;
 import io.swagger.annotations.Api;
@@ -58,6 +60,8 @@ public class NewsController {
   @Autowired
   private IUpdateNews updateNews;
 
+  @Autowired
+  private IGetCommentsFromNews getCommentsFromNews;
   @GetMapping(produces = {"application/json"})
   @ApiOperation(value = "Return the list of news by severous pages")
   @ApiResponses(value = {
@@ -100,6 +104,34 @@ public class NewsController {
     return ResponseEntity.ok(listNewsResponse);
   }
 
+  @GetMapping(value = "/{id}/comments", produces = {"application/json"})
+  @ApiOperation(value = "Return a list of comment passed by news id.")
+  @ApiResponses(value = {
+      @ApiResponse(code = 200, message = "OK - The news was found and it return the list of comment"),
+      @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
+          response = ErrorResponse.class),
+      @ApiResponse(code = 404, message = "NOT_FOUND - News not found.",
+          response = ErrorResponse.class)})
+  @ApiImplicitParams(value = {
+      @ApiImplicitParam(name = "id",
+          value = "Id of the news we want to get their comments",
+          required = true, allowEmptyValue = false,
+          paramType = "path", dataTypeClass = String.class,
+          example = "1"),
+      @ApiImplicitParam(name = "Authorization",
+          value = "Access Token",
+          required = true,
+          allowEmptyValue = false,
+          paramType = "header",
+          dataTypeClass = String.class,
+          example = "Bearer access_token")})
+  public ResponseEntity<ListCommentsInNewsResponse> listCommentsBy(
+      @PathVariable(value = "id") Long id)
+      throws NotFoundException {
+    ListCommentsInNewsResponse listCommentsInNewsResponse = getCommentsFromNews.list(id);
+    return ResponseEntity.ok().body(listCommentsInNewsResponse);
+  }
+
   @DeleteMapping(value = "/{id}", produces = {"application/json"})
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @ApiOperation(value = "Delete a news passed by id.")
@@ -123,9 +155,7 @@ public class NewsController {
           dataTypeClass = String.class,
           example = "Bearer access_token")})
   public ResponseEntity<Void> delete(@PathVariable Long id) throws NotFoundException {
-
     deleteNews.delete(id);
-
     return ResponseEntity.noContent().build();
   }
 
@@ -149,7 +179,6 @@ public class NewsController {
       example = "Bearer access_token")
   public ResponseEntity<NewsResponse> create(
       @RequestBody @Valid CreateNewsRequest createNewsRequest) {
-
     return ResponseEntity.status(HttpStatus.CREATED).body(createNews.create(createNewsRequest));
   }
 
@@ -188,9 +217,6 @@ public class NewsController {
   @ApiOperation(value = "Return a news details passed by id.")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "OK - The news was found and it return their details"),
-      @ApiResponse(code = 400, message = "INVALID_ARGUMENT - Certain arguments "
-          + "cannot be empty or null.",
-          response = ErrorResponse.class),
       @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
           response = ErrorResponse.class),
       @ApiResponse(code = 404, message = "NOT_FOUND - News not found.",
@@ -212,5 +238,4 @@ public class NewsController {
       throws NotFoundException {
     return ResponseEntity.ok().body(getNewsDetails.getBy(id));
   }
-
 }
