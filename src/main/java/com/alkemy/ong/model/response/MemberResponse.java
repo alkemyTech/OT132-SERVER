@@ -12,37 +12,32 @@ import lombok.Setter;
 @ApiModel
 public class MemberResponse {
 
+  @ApiModelProperty(example = "ID",
+      dataType = "long",
+      position = 0)
   private Long memberId;
 
   @ApiModelProperty(example = "Jane",
-      required = true,
-      position = 0)
+      position = 1)
   private String name;
 
   @ApiModelProperty(example = "Facebook.url",
-      required = false,
-      position = 1)
+      position = 2)
   private String facebookUrl;
 
   @ApiModelProperty(example = "Instagram.url",
-      required = false,
-      position = 2)
+      position = 3)
   private String instagramUrl;
 
   @ApiModelProperty(example = "Linkedin.url",
-      required = false,
-      position = 3)
+      position = 4)
   private String linkedinUrl;
 
   @ApiModelProperty(example = "https://cohorte-enero-835eb560.s3.amazonaws.com/image.png",
-      required = true,
-      position = 4)
+      position = 5)
   private String image;
 
   @ApiModelProperty(example = "This is a descritpion",
-      required = true,
-      position = 5)
+      position = 6)
   private String description;
-
-
 }
