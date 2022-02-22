@@ -2,6 +2,7 @@ package com.alkemy.ong.config.segurity;
 
 import com.alkemy.ong.common.JwtUtils;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,12 +33,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
     if (jwtUtil.isTokenSet(authorizationHeader)) {
-      authentication(authorizationHeader);
+      try {
+        authentication(authorizationHeader);
+        filterChain.doFilter(request, response);
+      } catch (JwtException e) {
+        ErrorResponseUtils.setCustomResponse(response);
+      }
     } else {
       SecurityContextHolder.clearContext();
+      filterChain.doFilter(request, response);
     }
-
-    filterChain.doFilter(request, response);
   }
 
   private void authentication(String authorizationHeader) {

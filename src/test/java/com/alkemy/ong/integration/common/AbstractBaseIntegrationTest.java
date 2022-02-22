@@ -26,6 +26,7 @@ public abstract class AbstractBaseIntegrationTest {
   protected static final String LAST_NAME = "Doe";
   protected static final String EMAIL = "johnny@doe.com";
   protected static final String PHOTO = "https://foo.jpg";
+  protected static final String EXPECTED_MESSAGE = "Access denied. Please, try to login again or contact your admin.";
 
   protected TestRestTemplate restTemplate = new TestRestTemplate();
   protected HttpHeaders headers = new HttpHeaders();
@@ -101,7 +102,13 @@ public abstract class AbstractBaseIntegrationTest {
     assertEquals(expectedErrorMessage, getFirstMessageError(response));
   }
 
+  protected void assertCustomForbiddenResponse(ResponseEntity<ErrorResponse> response) {
+    assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+    assertNotNull(response.getBody());
+    assertEquals(EXPECTED_MESSAGE, getFirstMessageError(response));
+  }
+
   private void setAuthorizationHeader(String jwtToken) {
-    headers.set("Authorization", jwtToken);
+    headers.set(HttpHeaders.AUTHORIZATION, jwtToken);
   }
 }
