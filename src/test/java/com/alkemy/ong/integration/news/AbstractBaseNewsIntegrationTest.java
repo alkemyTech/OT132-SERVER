@@ -66,10 +66,7 @@ public abstract class AbstractBaseNewsIntegrationTest extends AbstractBaseIntegr
         ErrorResponse.class);
   }
 
-  protected ResponseEntity<ErrorResponse> getErrorResponseEntity(HttpMethod httpMethod, HttpHeaders httpHeaders) {
-
-    HttpEntity<Object> request =
-        new HttpEntity<>(httpHeaders);
+  protected ResponseEntity<ErrorResponse> getErrorResponseEntity(HttpMethod httpMethod, HttpEntity request) {
 
     return restTemplate.exchange(createURLWithPort(PATH_ID),
         httpMethod,

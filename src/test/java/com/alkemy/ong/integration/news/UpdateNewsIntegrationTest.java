@@ -6,6 +6,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import com.alkemy.ong.config.segurity.RoleType;
+import com.alkemy.ong.exception.ErrorResponse;
 import com.alkemy.ong.model.entity.News;
 import com.alkemy.ong.model.request.UpdateNewsRequest;
 import com.alkemy.ong.model.response.NewsResponse;
@@ -54,6 +55,73 @@ public class UpdateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
 
   }
 
+  @Test
+  public void shouldReturnForbiddenWhenRoleIsUser() {
+
+    setAuthorizationHeaderBasedOn(RoleType.USER);
+
+    UpdateNewsRequest updateNewsRequest = buildRequestPayLoad();
+
+    HttpEntity<UpdateNewsRequest> request = new HttpEntity<>(updateNewsRequest, headers);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.PUT, request);
+
+    assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+    assertEquals(403, getStatusValue(response));
+  }
+
+  @Test
+  public void shouldReturnForbiddenWhitNoAuthentication() {
+
+    UpdateNewsRequest updateNewsRequest = buildRequestPayLoad();
+
+    HttpEntity<UpdateNewsRequest> request = new HttpEntity<>(updateNewsRequest, headers);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.PUT, request);
+
+    assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+    assertEquals(403, getStatusValue(response));
+  }
+
+  @Test
+  public void shouldReturnBadRequestWhenNameIsEmpty() {
+
+    setAuthorizationHeaderBasedOn(RoleType.ADMIN);
+
+    UpdateNewsRequest updateNewsRequest = buildRequestWithNullName();
+
+    HttpEntity<UpdateNewsRequest> request = new HttpEntity<>(updateNewsRequest, headers);
+
+    ResponseEntity<ErrorResponse> response = restTemplate.exchange(createURLWithPort(PATH_ID),
+        HttpMethod.PUT,
+        request,
+        ErrorResponse.class);
+
+    assertOneEmptyOrNullFieldInRequest(response, "Name cannot be empty or null.");
+  }
+
+  @Test
+  public void shouldReturnBadRequestWhenTextIsEmpty() {
+
+    setAuthorizationHeaderBasedOn(RoleType.ADMIN);
+
+    UpdateNewsRequest updateNewsRequest = buildRequestWithNullText();
+    HttpEntity<UpdateNewsRequest> request = new HttpEntity<>(updateNewsRequest, headers);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.PUT, request);
+    System.out.println("///////"+response.getStatusCode());
+    assertOneEmptyOrNullFieldInRequest(response,"The content cannot be empty or null.");
+
+  }
+  @Test
+  public void shouldReturnBadRequestWhenImageIsEmpty() {
+
+    setAuthorizationHeaderBasedOn(RoleType.ADMIN);
+
+    UpdateNewsRequest updateNewsRequest = buildRequestWithNullImage();
+    HttpEntity<UpdateNewsRequest> request = new HttpEntity<>(updateNewsRequest, headers);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.PUT, request);
+
+    assertOneEmptyOrNullFieldInRequest(response,"Image cannot be null or empty.");
+  }
+
   private UpdateNewsRequest buildRequestPayLoad() {
 
     return buildRequestPayLoad(NAME, TEXT, IMAGE);
@@ -62,5 +130,17 @@ public class UpdateNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
   private UpdateNewsRequest buildRequestPayLoad(
       String name, String text, String image) {
     return new UpdateNewsRequest(name, text, image);
+  }
+
+  private UpdateNewsRequest buildRequestWithNullName() {
+    return buildRequestPayLoad(null, TEXT, IMAGE);
+  }
+
+  private UpdateNewsRequest buildRequestWithNullText() {
+    return buildRequestPayLoad(NAME, null, IMAGE);
+  }
+
+  private UpdateNewsRequest buildRequestWithNullImage() {
+    return buildRequestPayLoad(NAME, TEXT, null);
   }
 }

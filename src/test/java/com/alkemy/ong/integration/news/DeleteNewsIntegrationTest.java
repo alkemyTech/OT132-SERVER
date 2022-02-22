@@ -39,7 +39,8 @@ public class DeleteNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
 
     setAuthorizationHeaderBasedOn(RoleType.USER);
 
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.DELETE, headers);
+    HttpEntity<Object> request = new HttpEntity<>(headers);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.DELETE, request);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     assertEquals(403, getStatusValue(response));
@@ -48,7 +49,8 @@ public class DeleteNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
   @Test
   public void shouldReturnForbiddenWhenNotAuthenticated() {
 
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.DELETE, headers);
+    HttpEntity<Object> request = new HttpEntity<>(headers);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.DELETE, request);
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     assertEquals(403, getStatusValue(response));
@@ -62,8 +64,8 @@ public class DeleteNewsIntegrationTest extends AbstractBaseNewsIntegrationTest {
         .findByNewsIdAndSoftDeleteFalse(NEWS_ID))
         .thenReturn(null);
 
-    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(
-        HttpMethod.DELETE, headers);
+    HttpEntity<Object> request = new HttpEntity<>(headers);
+    ResponseEntity<ErrorResponse> response = getErrorResponseEntity(HttpMethod.DELETE, request);
 
     assertNotNull(response);
     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
