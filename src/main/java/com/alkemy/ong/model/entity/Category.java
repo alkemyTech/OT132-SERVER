@@ -7,7 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -15,6 +17,8 @@ import org.hibernate.annotations.CreationTimestamp;
 @Getter
 @Setter
 @Table(name = "CATEGORIES")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Category {
 
   @Id

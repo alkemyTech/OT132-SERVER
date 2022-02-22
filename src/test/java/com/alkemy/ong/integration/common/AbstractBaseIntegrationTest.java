@@ -87,4 +87,14 @@ public abstract class AbstractBaseIntegrationTest {
     assertEquals(1, getAmountMessages(response));
     assertEquals(expectedErrorMessage, getFirstMessageError(response));
   }
+
+  protected void assertObjectNotFound(ResponseEntity<ErrorResponse> response,
+      String expectedErrorMessage) {
+    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+
+    assertNotNull(response.getBody());
+    assertEquals(404, getStatusValue(response));
+    assertEquals(1, getAmountMessages(response));
+    assertEquals(expectedErrorMessage, getFirstMessageError(response));
+  }
 }

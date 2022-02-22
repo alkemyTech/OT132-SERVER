@@ -10,6 +10,7 @@ import com.alkemy.ong.model.response.CategoryResponse;
 import com.alkemy.ong.model.response.ListCategoriesResponse;
 import com.alkemy.ong.repository.ICategoryRepository;
 import com.alkemy.ong.service.abstraction.ICreateCategory;
+import com.alkemy.ong.service.abstraction.IDeleteCategory;
 import com.alkemy.ong.service.abstraction.IGetCategoryDetails;
 import com.alkemy.ong.service.abstraction.IUpdateCategory;
 import java.util.List;
@@ -20,14 +21,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CategoryService implements IGetCategoryDetails, ICreateCategory, IUpdateCategory {
-
+public class CategoryService implements IGetCategoryDetails, ICreateCategory, IUpdateCategory,
+    IDeleteCategory {
 
   @Autowired
   private CategoryMapper categoryMapper;
 
   @Autowired
   private ICategoryRepository categoryRepository;
+
 
   @Override
   public ListCategoriesResponse findAll(Pageable pageable) {
@@ -80,5 +82,12 @@ public class CategoryService implements IGetCategoryDetails, ICreateCategory, IU
     categoryRepository.save(category);
     return categoryMapper.map(category, CategoryAttributes.CATEGORY_ID, CategoryAttributes.NAME,
         CategoryAttributes.IMAGE, CategoryAttributes.DESCRIPTION);
+  }
+
+  @Override
+  public void delete(Long id) {
+    Category category = findBy(id);
+    category.setSoftDelete(true);
+    categoryRepository.save(category);
   }
 }

@@ -11,7 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -19,6 +21,8 @@ import org.hibernate.annotations.CreationTimestamp;
 @Table(name = "NEWS")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class News {
 
   @Id

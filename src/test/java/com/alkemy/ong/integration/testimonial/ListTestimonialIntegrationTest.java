@@ -1,4 +1,4 @@
-package com.alkemy.ong.integration.member;
+package com.alkemy.ong.integration.testimonial;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -6,14 +6,11 @@ import static org.junit.Assert.assertTrue;
 
 import com.alkemy.ong.config.segurity.RoleType;
 import com.alkemy.ong.exception.ErrorResponse;
-import com.alkemy.ong.model.response.ListMembersResponse;
-import com.alkemy.ong.model.response.MemberResponse;
-import java.util.List;
+import com.alkemy.ong.model.response.ListTestimonialResponse;
 import java.util.Objects;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -22,8 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class ListMembersIntegrationTest extends AbstractBaseMemberIntegrationTest {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class ListTestimonialIntegrationTest extends AbstractBaseTestimonialIntegrationTest {
 
   private final static int PAGE = 0;
   private final static int SIZE = 10;
@@ -32,28 +29,31 @@ public class ListMembersIntegrationTest extends AbstractBaseMemberIntegrationTes
   @Test
   public void shouldReturnOkWhenAccessedWithAdminRole() {
     setAuthorizationHeaderBasedOn(RoleType.ADMIN);
-
-    ResponseEntity<ListMembersResponse> response = restTemplate
+    ResponseEntity<ListTestimonialResponse> response = restTemplate
         .exchange(createURLWithPort(PAGINATION_PATH),
             HttpMethod.GET,
             new HttpEntity<>(headers),
-            ListMembersResponse.class);
+            ListTestimonialResponse.class);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertNotNull(response.getBody());
-
-    List<MemberResponse> membersResponse = response.getBody().getMemberResponses();
-    assertNotNull(membersResponse);
-    assertEquals(1, membersResponse.size());
-    assertEquals(PAGE, response.getBody().getPage());
-    assertEquals(1, response.getBody().getTotalPages());
-    assertTrue(Objects.requireNonNull(response.getHeaders().getFirst(HttpHeaders.LINK)).isEmpty());
+    assertSuccessResponse(response);
   }
 
   @Test
-  public void shouldReturnForbiddenWhenAccessedWithUserRole() {
+  public void shouldReturnOkWhenAccessedWithUserRole() {
     setAuthorizationHeaderBasedOn(RoleType.USER);
+    ResponseEntity<ListTestimonialResponse> response = restTemplate
+        .exchange(createURLWithPort(PAGINATION_PATH),
+            HttpMethod.GET,
+            new HttpEntity<>(headers),
+            ListTestimonialResponse.class);
 
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertSuccessResponse(response);
+  }
+
+  @Test
+  public void shouldReturnForbiddenWhenAccessedWithoutRole() {
     ResponseEntity<ErrorResponse> response = restTemplate
         .exchange(createURLWithPort(PAGINATION_PATH),
             HttpMethod.GET,
@@ -62,4 +62,17 @@ public class ListMembersIntegrationTest extends AbstractBaseMemberIntegrationTes
 
     assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
   }
+
+  private void assertSuccessResponse(ResponseEntity<ListTestimonialResponse> response) {
+    ListTestimonialResponse listTestimonialResponse = response.getBody();
+
+    assertNotNull(listTestimonialResponse);
+    assertEquals(PAGE, listTestimonialResponse.getPage());
+    assertEquals(1, listTestimonialResponse.getTotalPages());
+    assertTrue(Objects.requireNonNull(response.getHeaders().getFirst(HttpHeaders.LINK)).isEmpty());
+
+    assertNotNull(listTestimonialResponse.getTestimonialResponses());
+    assertEquals(1, listTestimonialResponse.getTestimonialResponses().size());
+  }
+
 }

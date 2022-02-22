@@ -84,7 +84,7 @@ public class NewsService implements ICreateNews, IDeleteNews, IGetNewsDetails, I
   public NewsResponse update(Long id, UpdateNewsRequest updateNewsRequest) {
     return newsMapper.map(newsRepository.save(updateValues(getNews(id), updateNewsRequest)),
         NewsAttributes.NEWS_ID,
-        NewsAttributes.CATEGORY_NAME,
+        NewsAttributes.NAME,
         NewsAttributes.IMAGE,
         NewsAttributes.TEXT,
         NewsAttributes.CATEGORY_NAME);
