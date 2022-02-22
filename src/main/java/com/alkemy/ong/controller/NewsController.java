@@ -62,6 +62,7 @@ public class NewsController {
 
   @Autowired
   private IGetCommentsFromNews getCommentsFromNews;
+
   @GetMapping(produces = {"application/json"})
   @ApiOperation(value = "Return the list of news by severous pages")
   @ApiResponses(value = {
@@ -107,7 +108,8 @@ public class NewsController {
   @GetMapping(value = "/{id}/comments", produces = {"application/json"})
   @ApiOperation(value = "Return a list of comment passed by news id.")
   @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "OK - The news was found and it return the list of comment"),
+      @ApiResponse(code = 200,
+          message = "OK - The news was found and it return the list of comment"),
       @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
           response = ErrorResponse.class),
       @ApiResponse(code = 404, message = "NOT_FOUND - News not found.",
