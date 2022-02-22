@@ -75,7 +75,7 @@ public class SlideController {
       produces = {"application/json"})
   @ApiOperation(value = "Create a slide")
   @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "OK - The slide was successfully created"),
+      @ApiResponse(code = 201, message = "CREATED - The slide was successfully created"),
       @ApiResponse(code = 400, message = "INVALID_ARGUMENT - Certain arguments "
           + "cannot be empty or null.",
           response = ErrorResponse.class),
@@ -161,7 +161,7 @@ public class SlideController {
     return ResponseEntity.ok().body(response);
   }
 
-  @PutMapping(value = "/{id}",consumes = {"application/json"},
+  @PutMapping(value = "/{id}", consumes = {"application/json"},
       produces = {"application/json"})
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @ApiOperation(value = "Update a slide passed by id.")

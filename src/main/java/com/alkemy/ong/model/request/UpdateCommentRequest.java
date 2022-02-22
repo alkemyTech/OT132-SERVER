@@ -13,13 +13,13 @@ import lombok.Setter;
 public class UpdateCommentRequest {
 
   @NotNull(message = "The user ID cannot be null or empty.")
-  @ApiModelProperty(example = "UserId",
+  @ApiModelProperty(example = "2",
       required = true,
       position = 0)
   private Long userId;
 
   @NotNull(message = "The news ID cannot be null or empty.")
-  @ApiModelProperty(example = "NewsId",
+  @ApiModelProperty(example = "3",
       required = true,
       position = 1)
   private Long newsId;

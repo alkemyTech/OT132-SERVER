@@ -41,8 +41,8 @@ public class OrganizationController {
     return ResponseEntity.ok().body(organizationResponse);
   }
 
-  @PostMapping(value = "/public",consumes = {"application/json"},
-              produces = {"application/json"})
+  @PostMapping(value = "/public", consumes = {"application/json"},
+      produces = {"application/json"})
   @ApiOperation(value = "Update the organization details")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "OK - The organization was successfully updated",

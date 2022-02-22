@@ -89,8 +89,11 @@ public class MemberController {
   public ResponseEntity<ListMembersResponse> list(Pageable pageable,
       UriComponentsBuilder uriBuilder, HttpServletResponse response) {
     ListMembersResponse memberResponses = getMemberDetails.findAll(pageable);
-    resultsRetrieved.addLinkHeaderOnPagedResourceRetrieval(uriBuilder, response, MEMBER_PATH,
-        memberResponses.getPage(), memberResponses.getTotalPages(), memberResponses.getSize());
+    resultsRetrieved.addLinkHeaderOnPagedResourceRetrieval(uriBuilder,
+        response, MEMBER_PATH,
+        memberResponses.getPage(),
+        memberResponses.getTotalPages(),
+        memberResponses.getSize());
     return ResponseEntity.ok().body(memberResponses);
   }
 

@@ -184,7 +184,7 @@ public class NewsController {
     return ResponseEntity.status(HttpStatus.CREATED).body(createNews.create(createNewsRequest));
   }
 
-  @PutMapping(value = "/{id}",consumes = {"application/json"},
+  @PutMapping(value = "/{id}", consumes = {"application/json"},
       produces = {"application/json"})
   @ApiOperation(value = "Update a news passed by id.")
   @ApiResponses(value = {

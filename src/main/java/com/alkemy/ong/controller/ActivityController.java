@@ -61,13 +61,13 @@ public class ActivityController {
     return ResponseEntity.status(HttpStatus.CREATED).body(activityResponse);
   }
 
-  @PutMapping(value = "/{id}",produces = {"application/json"},
+  @PutMapping(value = "/{id}", produces = {"application/json"},
       consumes = {"application/json"})
   @ApiOperation(value = "Update a member passed by id.")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "OK - The activity was successfully updated.",
           response = ActivityResponse.class),
-      @ApiResponse(code = 400,message = "INVALID_ARGUMENT - Certain arguments "
+      @ApiResponse(code = 400, message = "INVALID_ARGUMENT - Certain arguments "
           + "cannot be empty or null."),
       @ApiResponse(code = 403, message = "PERMISSION_DENIED - Forbidden.",
           response = ErrorResponse.class),
